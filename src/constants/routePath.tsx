@@ -26,9 +26,9 @@ export const ROUTE_PATH: RoutePath[] = [
   //   { path: "/about", Component: <About /> },
   //   { path: "/project/*", Component: <Project /> },
   // { path: '/myschedule/*', Component: <MySchedule /> },
-  //   { path: "/Board", Component: <Board /> },
+  // { path: "/Board", Component: <Board /> },
   //   { path: "/contact", Component: <Contact /> },
-  //   { path: "/blog/*", Component: <Blog /> },
+  { path: "/blog/*", Component: <Blog /> },
   //   { path: "/Admin", Component: <AuthCheck /> },
   //   { path: "/*", Component: <NotfoundPage redirectPath={"/"} /> },
 ];

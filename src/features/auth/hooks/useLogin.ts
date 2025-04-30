@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { LoginRequestProps, LoginResponseProps } from "@/type/AuthTypes";
 import { toast } from "react-toastify";
-import { fetchLogin } from "services/authService";
+import { fetchLogin } from "@/services/authService";
 
-import useStore from "store/zustandStore";
+import useStore from "@/store/zustandStore";
 
 const useLogin = () => {
   const { login } = useStore((state) => ({ login: state.userAuthLogin }));

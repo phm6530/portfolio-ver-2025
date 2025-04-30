@@ -6,7 +6,7 @@ import BoardCommentForm from "@/features/Board/BoardCommentForm/BoardCommentForm
 import BoardCommentList from "@/features/Board/BoardCommentList/BoardCommentList";
 import { PageWrapper } from "@/layout/Grid";
 import { RightWrap, SubTitle } from "@/style/commonStyle";
-import { Grid } from "@mui/material";
+
 import styled from "styled-components";
 
 const PageText = styled.div`
@@ -34,11 +34,11 @@ const BoardDashBoard = styled.div`
   }
 `;
 
-const CustomGrid = styled(Grid)`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-`;
+// const CustomGrid = styled(Grid)`
+//   display: flex;
+//   flex-direction: row;
+//   align-items: flex-start;
+// `;
 
 const CustomRightWrap = styled(RightWrap)`
   margin-left: 3rem;
@@ -57,30 +57,28 @@ export default function Board(): JSX.Element {
         />
         {/* Body */}{" "}
         <Motion.FadeInOut>
-          <CustomGrid>
-            {/* Prifile */}
-            <UserProfile />
-            <CustomRightWrap>
-              <BoardDashBoard>
-                <SubTitle>
-                  <div className="subText">
-                    <span className="point">GUEST BOARD</span>
-                  </div>
-                </SubTitle>
-                <PageText>
-                  bcrypt를 이용하여 암호화 저장하고 있으며 해싱된 비밀번호 이외
-                  어떠한 정보도 수집하지 않습니다.
-                </PageText>
-              </BoardDashBoard>
+          {/* Prifile */}
+          <UserProfile />
+          <CustomRightWrap>
+            <BoardDashBoard>
+              <SubTitle>
+                <div className="subText">
+                  <span className="point">GUEST BOARD</span>
+                </div>
+              </SubTitle>
+              <PageText>
+                bcrypt를 이용하여 암호화 저장하고 있으며 해싱된 비밀번호 이외
+                어떠한 정보도 수집하지 않습니다.
+              </PageText>
+            </BoardDashBoard>
 
-              {/* addForm  */}
+            {/* addForm  */}
 
-              <BoardCommentForm />
+            <BoardCommentForm />
 
-              {/* BoardComment */}
-              <BoardCommentList />
-            </CustomRightWrap>{" "}
-          </CustomGrid>
+            {/* BoardComment */}
+            <BoardCommentList />
+          </CustomRightWrap>{" "}
         </Motion.FadeInOut>
       </PageWrapper>
     </>

@@ -43,15 +43,15 @@ const Home = () => {
                 <div className="flex gap-3">
                   <MainvannerBtn to="/about">
                     <TbUserSquareRounded size={20} />
-                    About me
+                    ABOUT ME
                   </MainvannerBtn>{" "}
                   <MainvannerBtn to="/board">
                     <IoChatbubbleEllipsesSharp size={20} />
-                    Guest Board
+                    GUEST BOOK
                   </MainvannerBtn>{" "}
                   <MainvannerBtn to="/project">
                     <VscProject size={20} />
-                    Web Project
+                    WEB PROJECT
                   </MainvannerBtn>
                 </div>
               </S.ButtomWrapper>

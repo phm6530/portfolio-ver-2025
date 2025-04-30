@@ -1,11 +1,12 @@
 import "./global.css";
+import "./style/editor.css";
 
 // Rounter
 import { BrowserRouter } from "react-router-dom";
 import AppRoute from "./Route/AppRoute";
 
 // layOut
-import { GlobalStyle } from "./style/CssinJsTheme";
+
 import { ToastContainer } from "react-toastify";
 import { toastConfig } from "./config/toast";
 

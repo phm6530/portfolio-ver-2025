@@ -1,6 +1,6 @@
 import { device } from "@/config/DeviceConfig";
 import styled from "styled-components";
-import PostTimestamp from "component/ui/PostTimestamp";
+import PostTimestamp from "@/component/ui/PostTimestamp";
 
 export const PostTitle = styled.div`
   font-size: 2rem;

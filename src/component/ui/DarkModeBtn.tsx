@@ -2,8 +2,8 @@ import styled, { keyframes } from "styled-components";
 import { LuSunDim } from "react-icons/lu";
 import { IoMoon } from "react-icons/io5";
 
-import useStore from "store/zustandStore";
-import useScrollY from "@hooks/useScrollY";
+import useStore from "@/store/zustandStore";
+import useScrollY from "@/hooks/useScrollY";
 import { device } from "@/config/DeviceConfig";
 
 const DarkmodeButton = styled.div<{ $scrollOver: boolean }>`

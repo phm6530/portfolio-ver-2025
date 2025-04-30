@@ -1,5 +1,5 @@
-import DashBoard from "component/ui/DashBoard/DashBoard";
-import { Grid, PageWrapper } from "@layout/Grid";
+import DashBoard from "@/component/ui/DashBoard/DashBoard";
+import { Grid, PageWrapper } from "@/layout/Grid";
 import styled from "styled-components";
 import MailComponent from "@features/contact/MailComponent";
 import ContactAboutme from "@features/contact/ContactAboutme";

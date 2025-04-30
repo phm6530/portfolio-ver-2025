@@ -6,7 +6,7 @@ import ProjectEditor from "@/features/project/ProjectEditor/ProjectEditor";
 import ProjectDetail from "@/features/project/ProjectDetail";
 import withAuth from "@/hoc/WithAuth";
 import withFetchData from "@/hoc/withFetchData";
-import Motion from "@/component/animations/Motion";
+import Motion from "@/@/component/animations/Motion";
 import ProjectList from "@/features/project/ProjectList";
 
 const FlexMotion = styled(Motion.FadeInOut)`

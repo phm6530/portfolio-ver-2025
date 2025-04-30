@@ -1,8 +1,8 @@
-import AccodianTab from "@features/Blog/BlogTab.js/BlogTabAcodian";
+import AccodianTab from "@/features/Blog/BlogTab.js/BlogTabAcodian";
 import { useQuery } from "@tanstack/react-query";
-import { queryKey } from "services/queryKey";
+import { queryKey } from "@/services/queryKey";
 import { requestHandler } from "@/utils/apiUtils";
-import { axiosApi } from "config/axios.config";
+import { axiosApi } from "@/config/axios.config";
 import { useNavigate } from "react-router-dom";
 
 export type CategoryModel = {

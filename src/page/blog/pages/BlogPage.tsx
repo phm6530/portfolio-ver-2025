@@ -1,27 +1,27 @@
-import SearchForm from 'component/ui/SearchForm';
-import BlogTab from '@features/Blog/BlogTab.js/BlogTab';
-import BlogNewPostList from 'features/Blog/BlogNewPostList/BlogNewPostList';
-import BlogList from '@features/Blog/BlogList/BlogList';
-import BlogSUbCategoryTitle from '@features/Blog/BlogSubCategoryTitle';
+import SearchForm from "@/component/ui/SearchForm";
+import BlogList from "@/features/Blog/BlogList/BlogList";
+import BlogNewPostList from "@/features/Blog/BlogNewPostList/BlogNewPostList";
+import BlogSUbCategoryTitle from "@/features/Blog/BlogSubCategoryTitle";
+import BlogTab from "@/features/Blog/BlogTab.js/BlogTab";
 
 const BlogPage = (): JSX.Element => {
-    return (
-        <>
-            <div className="flex flex-1 gap-7 mb-10 border-b ">
-                {/* 최신글 */}
-                <BlogNewPostList />
-                <BlogTab />
-            </div>
+  return (
+    <>
+      <div className="flex flex-1 gap-7 border-b border-border ">
+        {/* 최신글 */}
+        <BlogNewPostList />
+        <BlogTab />
+      </div>
 
-            <BlogSUbCategoryTitle />
+      <BlogSUbCategoryTitle />
 
-            {/* Search */}
-            <SearchForm />
+      {/* Search */}
+      <SearchForm />
 
-            {/* Board List */}
-            <BlogList />
-        </>
-    );
+      {/* Board List */}
+      <BlogList />
+    </>
+  );
 };
 
 export default BlogPage;

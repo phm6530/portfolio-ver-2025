@@ -1,4 +1,4 @@
-import { transImgSrc } from "component/editor/EditorGetPreview";
+import { transImgSrc } from "./EditorGetPreview";
 import { device } from "@/config/DeviceConfig";
 
 import styled from "styled-components";

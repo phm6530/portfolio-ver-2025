@@ -1,13 +1,13 @@
-import { Grid } from "@layout/Grid";
-import { BoardWrapper } from "@features/Blog/BlogStyle";
-import DashBoard from "component/ui/DashBoard/DashBoard";
+import { Grid } from "@/layout/Grid";
+import { BoardWrapper } from "@/features/Blog/BlogStyle";
+import DashBoard from "@/component/ui/DashBoard/DashBoard";
 
-import BlogRoutes from "Route/BlogRoutes";
+import BlogRoutes from "@/Route/BlogRoutes";
 import styled from "styled-components";
 
-import { PageWrapper } from "@layout/Grid";
+import { PageWrapper } from "@/layout/Grid";
 import { device } from "@/config/DeviceConfig";
-import Motion from "component/animations/Motion";
+import Motion from "@/component/animations/Motion";
 
 const CustomGrid = styled(Grid)`
   width: 100%;

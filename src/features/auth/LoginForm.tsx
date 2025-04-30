@@ -15,7 +15,7 @@ import {
   LabelStyle,
   LabelWrap,
   ErrorMessage,
-} from "@features/auth/LoginFormStyle";
+} from "@/features/auth/LoginFormStyle";
 import useLogin from "./hooks/useLogin";
 import { LoginRequestProps } from "@/type/AuthTypes";
 import { loginSchema } from "./schema/login-schema";
@@ -29,6 +29,10 @@ export default function LoginForm() {
     register,
     formState: { errors },
   } = useForm({
+    defaultValues: {
+      user_id: "",
+      user_password: "",
+    },
     resolver: zodResolver(loginSchema),
   });
   const onSubmitHandler = async (loginData: LoginRequestProps) => {

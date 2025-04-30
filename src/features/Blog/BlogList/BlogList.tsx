@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import NonData from "component/NonData";
-import Motion from "component/animations/Motion";
-import { SpinnerLoading } from "component/loading/SpinnerLoading";
-import { axiosApi } from "config/axios.config";
+import NonData from "@/component/NonData";
+import Motion from "@/component/animations/Motion";
+import { SpinnerLoading } from "@/component/loading/SpinnerLoading";
+import { axiosApi } from "@/config/axios.config";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";

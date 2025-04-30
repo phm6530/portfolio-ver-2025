@@ -1,14 +1,21 @@
 import { useParams } from "react-router-dom";
-import { SpinnerLoading } from "component/loading/SpinnerLoading";
-import QuillView from "component/editor/QuillView";
-import NotfoundPage from "component/error/NotfoundPage";
+import { SpinnerLoading } from "@/component/loading/SpinnerLoading";
+import QuillView from "@/component/editor/QuillView";
+import NotfoundPage from "@/component/error/NotfoundPage";
 
 import * as S from "./BlogDetailStyle";
-import { queryKey } from "services/queryKey";
+import { queryKey } from "@/services/queryKey";
 import { requestHandler } from "@/utils/apiUtils";
-import { axiosApi } from "config/axios.config";
+import { axiosApi } from "@/config/axios.config";
 import { useQuery } from "@tanstack/react-query";
-import { DateUtils } from "utils/dateUtil";
+import { DateUtils } from "@/utils/dateUtil";
+import {
+  EditorProvider,
+  SimpleEditorContents,
+  SimpleToolTip,
+  useSimpleEditor,
+} from "@squirrel309/my-testcounter";
+import { HtmlContentNormalizer } from "@/utils/HtmlContentNormalizer";
 
 export enum POST_STATUS {
   DRAFT = "draft",
@@ -64,6 +71,7 @@ export interface BlogDetailResponse {
 
 const BlogDetail = (): JSX.Element => {
   const { id } = useParams();
+  const { editor } = useSimpleEditor({ editable: false });
 
   const { data, isLoading, isError } = useQuery<BlogDetailResponse>({
     queryKey: [queryKey.blogDetail, id],
@@ -127,7 +135,12 @@ const BlogDetail = (): JSX.Element => {
 
         {/* Quill View */}
         <S.QuillViewWrapper>
-          <QuillView contents={contents} />
+          <EditorProvider editor={editor}>
+            <SimpleEditorContents
+              value={HtmlContentNormalizer.setImgUrl(contents)}
+            />
+          </EditorProvider>
+          {/* <QuillView contents={contents} /> */}
 
           {/* {data?.update_date && (
                         <PostTimestamp

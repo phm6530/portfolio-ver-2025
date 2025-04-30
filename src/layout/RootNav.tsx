@@ -68,7 +68,7 @@ export default function RootNav() {
               setDrawerView={setDrawerView}
             />
             {/* Nav */}
-            {/* <RootNavList drawerView={drawerView} scrollOver={scrollOver} /> */}
+            <RootNavList drawerView={drawerView} scrollOver={scrollOver} />
           </S.Nav>
         </Grid>
       </S.Header>

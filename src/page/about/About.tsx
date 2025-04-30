@@ -1,7 +1,7 @@
 import { BoardWrapper } from "@features/Blog/BlogStyle";
-import { Grid, PageWrapper } from "@layout/Grid";
+import { Grid, PageWrapper } from "@/layout/Grid";
 import UserProfile from "component/profile/UserProfile";
-import DashBoard from "component/ui/DashBoard/DashBoard";
+import DashBoard from "@/component/ui/DashBoard/DashBoard";
 import * as S from "@page/about/AboutStyle";
 
 import { SubTitle } from "component/ui/Subtitle";
@@ -10,7 +10,7 @@ import EmbosingButton from "component/ui/EmbosingButton";
 import { HashTag } from "@style/commonStyle";
 import styled from "styled-components";
 import { device } from "@/config/DeviceConfig";
-import Motion from "component/animations/Motion";
+import Motion from "@/component/animations/Motion";
 import { AiFillSafetyCertificate } from "react-icons/ai";
 import { IoSchool } from "react-icons/io5";
 import { RiAwardFill } from "react-icons/ri";

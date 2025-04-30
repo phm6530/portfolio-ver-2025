@@ -6,9 +6,6 @@ import usePopupHook from "@/hooks/usePopupHook";
 import * as S from "./RootNavStyle";
 import useStore from "@/store/zustandStore";
 import { useLocation, useNavigate } from "react-router-dom";
-import styled, { css } from "styled-components";
-import { Link } from "react-router-dom";
-import { device } from "@/config/DeviceConfig";
 
 const RootNavList: React.FC<{ drawerView: boolean; scrollOver: boolean }> = ({
   drawerView,
@@ -25,7 +22,6 @@ const RootNavList: React.FC<{ drawerView: boolean; scrollOver: boolean }> = ({
     <>
       {/* 팝업 커스텀 훅 */}
       <PopupComponent type="modal" Component={LoginForm} />
-
       <S.LinkWrapper $toggle={drawerView}>
         <S.UiStyle $link={true}>
           {NAVPAGE_OBJECT.map((e, idx) => {
@@ -37,12 +33,7 @@ const RootNavList: React.FC<{ drawerView: boolean; scrollOver: boolean }> = ({
             }
 
             return (
-              <List
-                key={idx}
-                $scrollOver={scrollOver}
-                $darkMode={darkMode}
-                $path={pathname === "/"}
-                $active={pathname === e.path}
+              <span
                 onClick={() => {
                   if (e.path === pathname) return; //같은 path 재랜더링 방지
                   if (!e.AuthPage || userAuth.login) {
@@ -51,7 +42,7 @@ const RootNavList: React.FC<{ drawerView: boolean; scrollOver: boolean }> = ({
                 }}
               >
                 {e.pathName}
-              </List>
+              </span>
             );
           })}
         </S.UiStyle>
@@ -59,27 +50,9 @@ const RootNavList: React.FC<{ drawerView: boolean; scrollOver: boolean }> = ({
           {/* 다크모드 버튼 */}
           <DarkModeBtn />
           {/* login Component */}
-          {!userAuth.login && (
-            <List
-              $scrollOver={scrollOver}
-              $darkMode={darkMode}
-              onClick={() => popupSetView(true)}
-              $not={true}
-              $logout={true}
-            >
-              로그인
-            </List>
-          )}
+          {!userAuth.login && <span>로그인</span>}
           {userAuth.login && (
-            <List
-              $scrollOver={scrollOver}
-              $darkMode={darkMode}
-              onClick={async () => await mutateAsync()}
-              not={true}
-              $logout={true}
-            >
-              로그아웃
-            </List>
+            <span onClick={async () => await mutateAsync()}>로그아웃</span>
           )}{" "}
         </S.UiStyle>
       </S.LinkWrapper>

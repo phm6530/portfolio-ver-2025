@@ -1,47 +1,8 @@
-import styled, { css } from "styled-components";
 import useQueryString from "../../../hooks/useSearchQueryString";
 import { useSearchParams } from "react-router-dom";
-import { BlogCategoryDetail } from "@type/BlogTypes";
-import { device } from "@/config/DeviceConfig";
-import PostNewIcon from "component/ui/PostNewIcon";
-
-const CategoryList = styled.div<{ $select: boolean }>`
-  height: 2.4rem;
-  font-size: 14px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  /* border: 1px solid #354363; */
-  padding: 1rem;
-  border-radius: 3rem;
-  margin: 0.4rem;
-  &:hover {
-    color: var(--hover-color);
-  }
-  background: var(--background-category-color);
-  ${(props) =>
-    props.$select
-      ? css`
-          background: var(--background-category-active);
-          color: #fff;
-        `
-      : css`
-          color: var(--color-hash-tag-text);
-        `};
-  @media ${device.tablet} {
-    height: 2rem;
-    padding: 0.9rem;
-  }
-
-  /* background: var(--color-hash-tag-background);
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1); */
-`;
-
-const Cnt = styled.span`
-  color: ${({ theme }) => theme.tabCnt};
-  font-size: 12px;
-  margin: 0 1px 0 2px;
-`;
+import { BlogCategoryDetail } from "@/type/BlogTypes";
+import PostNewIcon from "@/component/ui/PostNewIcon";
+import { cn } from "@/utils/cn";
 
 interface BlogTabDetailProps extends BlogCategoryDetail {
   category: string;
@@ -62,8 +23,11 @@ const BlogTabDetail: React.FC<BlogTabDetailProps> = ({
 
   return (
     <>
-      <CategoryList
-        $select={categoryParams === category && itemParams === item}
+      <button
+        className={cn(
+          "items-center border border-border p-2 px-3 text-sm rounded-full",
+          categoryParams === category && itemParams === item && "border-red-200"
+        )}
         onClick={() =>
           navigateHandler({
             category,
@@ -71,8 +35,9 @@ const BlogTabDetail: React.FC<BlogTabDetailProps> = ({
           })
         }
       >
-        {item} <Cnt>({cnt})</Cnt> {newPost && <PostNewIcon />}
-      </CategoryList>
+        {item} <span className="text-xs text-count">({cnt})</span>{" "}
+        {newPost && <PostNewIcon />}
+      </button>
     </>
   );
 };

@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
-import FadeInAnimation from "component/animations/FadeInAnimation";
-import Thumbnail from "component/ui/Thumbnail";
-import { IMG_URL } from "constants/apiUrl";
+import FadeInAnimation from "@/component/animations/FadeInAnimation";
+import Thumbnail from "@/component/ui/Thumbnail";
+import { IMG_URL } from "@/constants/apiUrl";
 import { device } from "@/config/DeviceConfig";
-import PostNewIcon from "component/ui/PostNewIcon";
-import { DateUtils } from "utils/dateUtil";
+import PostNewIcon from "@/component/ui/PostNewIcon";
+import { DateUtils } from "@/utils/dateUtil";
 import { PostItemModel } from "../BlogList/BlogList";
 import { useCallback } from "react";
 
