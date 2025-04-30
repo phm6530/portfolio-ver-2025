@@ -1,21 +1,18 @@
 import ProjectListItem from '@features/project/ProjectListItem';
 import { SubTitle } from 'component/ui/Subtitle';
-import PostAddBtn from 'component/ui/PostAddBtn';
 import CateGoryButton from 'component/ui/CateGoryButton';
 import { ReactRouteDom } from 'lib/lib';
 import SkeletonPost from 'component/loading/Skeleton';
 import SearchForm from 'component/ui/SearchForm';
-
 import * as S from '@features/project/ProjectListStyle';
 
 import useFetchProjectList from '@features/project/hooks/useFetchProjectList';
-import useStore from 'store/zustandStore';
 
 const { useSearchParams } = ReactRouteDom;
 
 export default function ProjectList(): JSX.Element {
     const { data = [], isLoading, isError } = useFetchProjectList();
-    const login = useStore(state => state.userAuth.login);
+
     const [param] = useSearchParams();
     const SeachValue = param.get('search');
 
@@ -42,8 +39,6 @@ export default function ProjectList(): JSX.Element {
                         <span className="point">MY PORTfOLIO</span>{' '}
                         <span style={{ marginRight: 'auto' }}>LIST</span>
                     </div>
-                    {/* add Project */}
-                    {login && <PostAddBtn />}
                 </SubTitle>
 
                 {/* List */}

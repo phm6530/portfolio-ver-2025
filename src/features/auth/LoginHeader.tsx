@@ -1,14 +1,14 @@
-import { LoginHeaderStyle } from '@features/auth/LoginFormStyle';
+import { LoginHeaderStyle } from "./LoginFormStyle";
 
 const LoginHeader = () => {
-    return (
-        <LoginHeaderStyle>
-            Login
-            <p>
-                My Portfolio Admin Login<br></br>
-            </p>
-        </LoginHeaderStyle>
-    );
+  return (
+    <LoginHeaderStyle>
+      Login
+      <p>
+        My Portfolio Admin Login<br></br>
+      </p>
+    </LoginHeaderStyle>
+  );
 };
 
 export default LoginHeader;

@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
  :root {
@@ -118,129 +118,129 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const lightTheme = {
-    textColor: '#333',
-    backgroundColor: '#FFF',
-    asdf: '#ebe5e5',
-    descriptionColor: '#63676f',
-    boxBackground: '#fff',
+  textColor: "#333",
+  backgroundColor: "#FFF",
+  asdf: "#ebe5e5",
+  descriptionColor: "#63676f",
+  boxBackground: "#fff",
 
-    // input
-    searchBackground: '#f7f4f4',
-    searchBorder: '1px solid transparent',
+  // input
+  searchBackground: "#f7f4f4",
+  searchBorder: "1px solid transparent",
 
-    backgroundColorType1: '#fff',
+  backgroundColorType1: "#fff",
 
-    inputBackground: '#fcfeff',
+  inputBackground: "#fcfeff",
 
-    // errorColor
-    tabCnt: 'rgb(60 114 166)',
+  // errorColor
+  tabCnt: "rgb(60 114 166)",
 
-    tagColor: '#19171d',
-    tagBackground: '#fff',
+  tagColor: "#19171d",
+  tagBackground: "#fff",
 
-    btnBackground: '#212b35',
-    listBackground: 'rgb(238 238 238 / 15%)',
+  btnBackground: "#212b35",
+  listBackground: "rgb(238 238 238 / 15%)",
 
-    listColor: 'rgba(61, 71, 81, 0.3)',
+  listColor: "rgba(61, 71, 81, 0.3)",
 
-    btnBorderType1: '1px solid rgb(47 59 73 / 5%)',
-    toolbarColor: '#444',
+  btnBorderType1: "1px solid rgb(47 59 73 / 5%)",
+  toolbarColor: "#444",
 
-    gradiendtTitle: 'linear-gradient(to left, #7264ef, #7264ef, #dd8efc)',
-    gradiendSubTitle: 'linear-gradient(to left, #a35d5d, #6a5f86, #5262a8)',
-    // border line Style
-    borderColor: 'rgb(0 0 0 / 10%)',
+  gradiendtTitle: "linear-gradient(to left, #7264ef, #7264ef, #dd8efc)",
+  gradiendSubTitle: "linear-gradient(to left, #a35d5d, #6a5f86, #5262a8)",
+  // border line Style
+  borderColor: "rgb(0 0 0 / 10%)",
 
-    div_BoxShaodw: '50px 50px 55px rgba(0, 0, 0, 0.1)',
-    background_disable_input: '#ededed',
+  div_BoxShaodw: "50px 50px 55px rgba(0, 0, 0, 0.1)",
+  background_disable_input: "#ededed",
 
-    border_picture_color: '#fff',
+  border_picture_color: "#fff",
 
-    //navTheme
-    navBackground: '#ffffff80',
-    navColor: '#333',
-    navBorder: '1px solid rgb(158 158 158 / 10%)',
+  //navTheme
+  navBackground: "#ffffff80",
+  navColor: "#333",
+  navBorder: "1px solid rgb(158 158 158 / 10%)",
 
-    // tabBUtton
-    tabButtonColor: '#d6d6d652',
-    boderDarkModeButton: '#bbbbbb4f',
+  // tabBUtton
+  tabButtonColor: "#d6d6d652",
+  boderDarkModeButton: "#bbbbbb4f",
 
-    //project
-    ProjectSummaryBackground: 'rgba(0, 0, 0, 0.02)',
+  //project
+  ProjectSummaryBackground: "rgba(0, 0, 0, 0.02)",
 
-    buttonStyleSolidType_1: '#00000005;',
+  buttonStyleSolidType_1: "#00000005;",
 
-    aboutfontColor: '#333',
-    aboutGradient: 'linear-gradient(to left, #7877af, #45406f, #525db2)',
+  aboutfontColor: "#333",
+  aboutGradient: "linear-gradient(to left, #7877af, #45406f, #525db2)",
 
-    EmbosingButton:
-        'linear-gradient(90deg, #53479c 0%, #98b7f4 100%, #c981cb 100.01%)',
+  EmbosingButton:
+    "linear-gradient(90deg, #53479c 0%, #98b7f4 100%, #c981cb 100.01%)",
 
-    //linkCOlor
-    link: '#3963a7',
-    fontBold: 'bold',
+  //linkCOlor
+  link: "#3963a7",
+  fontBold: "bold",
 
-    categoryActive: '#2e2e2e',
+  categoryActive: "#2e2e2e",
 };
 
 export const darkTheme = {
-    textColor: '#e7e7e7',
-    backgroundColor: '#191e22',
-    asdf: '#454545',
-    descriptionColor: '#c5c5c5',
-    boxBackground: '#1b1d21',
+  textColor: "#e7e7e7",
+  backgroundColor: "#191e22",
+  asdf: "#454545",
+  descriptionColor: "#c5c5c5",
+  boxBackground: "#1b1d21",
 
-    // input
-    searchBackground: '#252931',
-    searchBorder: '1px solid rgb(71 77 89)',
+  // input
+  searchBackground: "#252931",
+  searchBorder: "1px solid rgb(71 77 89)",
 
-    btnBackground: '#212b35',
+  btnBackground: "#212b35",
 
-    backgroundColorType1: '#191e22',
-    inputBackground: '#1d2025',
+  backgroundColorType1: "#191e22",
+  inputBackground: "#1d2025",
 
-    tabCnt: 'rgb(102, 179, 255)',
+  tabCnt: "rgb(102, 179, 255)",
 
-    // hash
-    tagColor: 'rgb(229 223 252)',
-    tagBackground: 'rgb(0 0 0 / 32%)',
+  // hash
+  tagColor: "rgb(229 223 252)",
+  tagBackground: "rgb(0 0 0 / 32%)",
 
-    listBackground: 'rgb(71 78 87 / 10%)',
-    listColor: 'rgba(61, 71, 81, 0.3)',
+  listBackground: "rgb(71 78 87 / 10%)",
+  listColor: "rgba(61, 71, 81, 0.3)",
 
-    btnBorderType1: '1px solid rgba(48, 56, 64, 0.5)',
+  btnBorderType1: "1px solid rgba(48, 56, 64, 0.5)",
 
-    toolbarColor: 'rgb(120, 141, 170)',
-    gradiendtTitle: 'linear-gradient(to left, #64c7ef, #a9a5cc, #8e9bfc)',
-    gradiendSubTitle: 'linear-gradient(to left, #64c7ef, #a9a5cc, #8e9bfc)',
+  toolbarColor: "rgb(120, 141, 170)",
+  gradiendtTitle: "linear-gradient(to left, #64c7ef, #a9a5cc, #8e9bfc)",
+  gradiendSubTitle: "linear-gradient(to left, #64c7ef, #a9a5cc, #8e9bfc)",
 
-    // border line Style
-    borderColor: 'rgb(98 114 129 / 19%)',
-    div_BoxShaodw: '0 0px 40px rgba(0, 0, 0, 0.4)',
-    background_disable_input: '#0000004f',
+  // border line Style
+  borderColor: "rgb(98 114 129 / 19%)",
+  div_BoxShaodw: "0 0px 40px rgba(0, 0, 0, 0.4)",
+  background_disable_input: "#0000004f",
 
-    border_picture_color: '#515867',
+  border_picture_color: "#515867",
 
-    //Nav Theme
-    navBackground: '#191e2282',
-    navColor: '#fff',
-    navBorder: '1px solid rgb(158 158 158 / 10%)',
+  //Nav Theme
+  navBackground: "#191e2282",
+  navColor: "#fff",
+  navBorder: "1px solid rgb(158 158 158 / 10%)",
 
-    // tabBUtton
-    tabButtonColor: '#2d2d2d52',
-    boderDarkModeButton: '#ffffff2b',
-    ProjectSummaryBackground: 'rgb(37 41 56 / 30%)',
+  // tabBUtton
+  tabButtonColor: "#2d2d2d52",
+  boderDarkModeButton: "#ffffff2b",
+  ProjectSummaryBackground: "rgb(37 41 56 / 30%)",
 
-    buttonStyleSolidType_1: '#00000026;',
-    aboutfontColor: '#d1d2eb',
-    aboutGradient: 'linear-gradient(to left, #f0f0f0, #a9a5cc, #8e9bfc)',
+  buttonStyleSolidType_1: "#00000026;",
+  aboutfontColor: "#d1d2eb",
+  aboutGradient: "linear-gradient(to left, #f0f0f0, #a9a5cc, #8e9bfc)",
 
-    EmbosingButton: '#252b39',
+  EmbosingButton: "#252b39",
 
-    //linkCOlor
-    link: '#7baed8',
+  //linkCOlor
+  link: "#7baed8",
 
-    fontBold: 'auto',
+  fontBold: "auto",
 
-    categoryActive: 'rgb(0 0 0 / 32%)',
+  categoryActive: "rgb(0 0 0 / 32%)",
 };

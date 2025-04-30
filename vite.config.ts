@@ -2,11 +2,13 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import viteCompression from 'vite-plugin-compression';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
     plugins: [
         react(),
         tsconfigPaths(),
+        tailwindcss(),
         viteCompression({
             verbose: true,
             disable: false,

@@ -1,6 +1,10 @@
 {
     "extends": "./tsconfig.paths.json",
     "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./src/*"]
+        },
         "target": "esnext" /* 최신 ES 버전을 사용 */,
         "module": "ESNext" /* Vite는 ESM을 기본으로 사용하므로 이 옵션이 유효합니다 */,
         "lib": [

@@ -4,9 +4,7 @@ import BlogDetail from 'page/blog/pages/BlogDetail';
 
 import { AnimatePresence } from 'framer-motion';
 import Motion from 'component/animations/Motion';
-import BlogAdd from 'page/blog/pages/BlogAdd';
 import BlogPage from 'page/blog/pages/BlogPage';
-import withAuth from 'hoc/WithAuth';
 
 const MotionStyle = styled(Motion.FadeInOut)`
     flex: 1;
@@ -15,14 +13,9 @@ const MotionStyle = styled(Motion.FadeInOut)`
 
 const BlogRoutes = (): JSX.Element => {
     const location = useLocation();
-    const AuthenticatedBlodAdd = withAuth(BlogAdd, '/blog');
     const paths = [
         { path: '/', index: true, Component: <BlogPage /> },
-        { path: '/:key', Component: <BlogDetail /> },
-        {
-            path: '/add',
-            Component: <AuthenticatedBlodAdd />,
-        },
+        { path: '/:id', Component: <BlogDetail /> },
     ];
 
     return (

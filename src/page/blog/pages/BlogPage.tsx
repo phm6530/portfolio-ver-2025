@@ -1,5 +1,4 @@
 import SearchForm from 'component/ui/SearchForm';
-import { Tab } from 'features/Blog/BlogStyle';
 import BlogTab from '@features/Blog/BlogTab.js/BlogTab';
 import BlogNewPostList from 'features/Blog/BlogNewPostList/BlogNewPostList';
 import BlogList from '@features/Blog/BlogList/BlogList';
@@ -8,14 +7,17 @@ import BlogSUbCategoryTitle from '@features/Blog/BlogSubCategoryTitle';
 const BlogPage = (): JSX.Element => {
     return (
         <>
-            <Tab>
+            <div className="flex flex-1 gap-7 mb-10 border-b ">
                 {/* 최신글 */}
                 <BlogNewPostList />
                 <BlogTab />
-            </Tab>
+            </div>
+
             <BlogSUbCategoryTitle />
+
             {/* Search */}
             <SearchForm />
+
             {/* Board List */}
             <BlogList />
         </>
