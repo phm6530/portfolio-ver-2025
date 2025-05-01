@@ -4,6 +4,7 @@ import { queryKey } from "@/services/queryKey";
 import { requestHandler } from "@/utils/apiUtils";
 import { axiosApi } from "@/config/axios.config";
 import { useNavigate } from "react-router-dom";
+import React from "react";
 
 export type CategoryModel = {
   id: number;
@@ -45,7 +46,7 @@ const BlogTab = () => {
           const item = data.category[category];
 
           return (
-            <>
+            <React.Fragment key={`blog-tab-${idx}`}>
               {idx === 0 && (
                 <div
                   className="flex items-center gap-1"
@@ -58,7 +59,7 @@ const BlogTab = () => {
                 </div>
               )}
               <AccodianTab key={idx} idx={idx} {...item} />
-            </>
+            </React.Fragment>
           );
         })}
     </div>

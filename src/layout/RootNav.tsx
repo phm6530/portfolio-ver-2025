@@ -5,9 +5,9 @@ import useScrollY from "@/hooks/useScrollY";
 import useStore from "@/store/zustandStore";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Grid } from "./Grid";
 import DrawerMenu from "@/component/ui/DrawerMenu";
 import RootNavList from "./RootNavList";
+import { cn } from "@/lib/utils";
 
 export default function RootNav() {
   const darkMode = useStore((state) => state.darkMode);
@@ -35,7 +35,6 @@ export default function RootNav() {
       window.removeEventListener("wheel", handleScroll);
     }
 
-    // cleanup 함수를 사용하여 useEffect가 unmount될 때 이벤트 리스너를 제거합니다.
     return () => {
       window.removeEventListener("wheel", handleScroll);
     };
@@ -45,33 +44,34 @@ export default function RootNav() {
     <>
       {drawerView && <BackDrop onClick={() => setDrawerView(false)} />}
 
+      {/* Top Button  */}
       <TopButton />
 
-      <S.Header
-        $scrollOver={scrollOver}
-        $path={location.pathname === "/"}
-        $darkMode={darkMode}
+      <header
+        style={{
+          backdropFilter: "blur(20px)",
+        }}
+        className="fixed  z-100 w-full border-b border-border/10 bg-background/0 "
       >
-        <Grid>
-          <S.Nav>
-            {" "}
-            <S.MyName
-              $scrollOver={scrollOver}
-              $darkMode={darkMode}
-              onClick={() => navigate("/")}
-            >
-              PHM{`'`} Portfolio .
-            </S.MyName>{" "}
-            <DrawerMenu
-              drawerView={drawerView}
-              scrollOver={scrollOver}
-              setDrawerView={setDrawerView}
-            />
-            {/* Nav */}
-            <RootNavList drawerView={drawerView} scrollOver={scrollOver} />
-          </S.Nav>
-        </Grid>
-      </S.Header>
+        <div
+          className={cn(
+            "text-white flex items-center layout-center justify-between py-5"
+          )}
+        >
+          <span className="font-Montserrat" onClick={() => navigate("/")}>
+            PHM{`'`} Portfolio .
+          </span>
+
+          <DrawerMenu
+            drawerView={drawerView}
+            scrollOver={scrollOver}
+            setDrawerView={setDrawerView}
+          />
+
+          {/* Nav */}
+          <RootNavList drawerView={drawerView} scrollOver={scrollOver} />
+        </div>
+      </header>
     </>
   );
 }

@@ -6,7 +6,6 @@ import { BrowserRouter } from "react-router-dom";
 import AppRoute from "./Route/AppRoute";
 
 // layOut
-
 import { ToastContainer } from "react-toastify";
 import { toastConfig } from "./config/toast";
 
@@ -24,6 +23,21 @@ function App(): JSX.Element {
       history.scrollRestoration = "manual";
     }
   }, []);
+
+  // useEffect(() => {
+  //   const checkConnection = async () => {
+  //     const pool = SupabasePool.getInstance();
+  //     const { data, error } = await pool.from("project_meta").select("*");
+
+  //     if (error) {
+  //       console.error("❌ 연결 실패:", error.message);
+  //     } else {
+  //       console.log("✅ 연결 성공:", data);
+  //     }
+  //   };
+
+  //   checkConnection();
+  // }, []);
 
   return (
     <>

@@ -1,5 +1,5 @@
 import PostNewIcon from "@/component/ui/PostNewIcon";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 import { DateUtils } from "@/utils/dateUtil";
 import { useNavigate } from "react-router-dom";
 

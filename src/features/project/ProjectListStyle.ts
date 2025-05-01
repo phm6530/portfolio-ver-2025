@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import FadeInAnimation from "component/animations/FadeInAnimation";
+import FadeInAnimation from "@/component/animations/FadeInAnimation";
 import { device } from "@/config/DeviceConfig";
 
 export const NoSeachingData = styled(FadeInAnimation)`

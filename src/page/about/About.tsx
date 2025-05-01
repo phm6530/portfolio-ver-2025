@@ -1,13 +1,13 @@
-import { BoardWrapper } from "@features/Blog/BlogStyle";
+import { BoardWrapper } from "@/features/Blog/BlogStyle";
 import { Grid, PageWrapper } from "@/layout/Grid";
-import UserProfile from "component/profile/UserProfile";
+import UserProfile from "@/component/profile/UserProfile";
 import DashBoard from "@/component/ui/DashBoard/DashBoard";
-import * as S from "@page/about/AboutStyle";
+import * as S from "./AboutStyle";
 
-import { SubTitle } from "component/ui/Subtitle";
-import Icon from "component/icon/Icon";
-import EmbosingButton from "component/ui/EmbosingButton";
-import { HashTag } from "@style/commonStyle";
+import { SubTitle } from "@/component/ui/Subtitle";
+import Icon from "@/component/icon/Icon";
+import EmbosingButton from "@/component/ui/EmbosingButton";
+import { HashTag } from "@/style/commonStyle";
 import styled from "styled-components";
 import { device } from "@/config/DeviceConfig";
 import Motion from "@/component/animations/Motion";
@@ -15,7 +15,14 @@ import { AiFillSafetyCertificate } from "react-icons/ai";
 import { IoSchool } from "react-icons/io5";
 import { RiAwardFill } from "react-icons/ri";
 import { MdOutlineWork } from "react-icons/md";
-import ReactIcon from "component/icon/ReactIcon";
+import ReactIcon from "@/component/icon/ReactIcon";
+import {
+  AWARD,
+  CERTS,
+  EDUCATION,
+  EXPERIENCE,
+} from "@/constants/AboutConstancts";
+import { AboutWrapper } from "./components/about-card";
 
 const CustomGrid = styled(Grid)`
   display: flex;
@@ -43,29 +50,12 @@ const About = (): JSX.Element => {
             <UserProfile />
             <CustomBoardWrapper>
               <S.AboutMeDeps>
-                <SubTitle>
-                  <div className="subText">
-                    <span className="point">HELLO!</span>
-                    <S.AniPoint
-                      className="point"
-                      style={{ marginRight: "auto" }}
-                    >
-                      _
-                    </S.AniPoint>
-                  </div>
-                </SubTitle>
-
                 <S.AboutMe>
-                  <S.IconWrapper>
-                    <Icon
-                      src="/img/about/me2.png"
-                      alt="클라이언트"
-                      width={50}
-                    />
+                  <h1 className="text-3xl leading-11">
                     안녕하세요! <br></br>더욱 전문적인 UX와 기술을 반영하여
                     성장하는
                     <span>FRONT END</span> 개발자가 되려합니다.
-                  </S.IconWrapper>{" "}
+                  </h1>
                   <br></br>
                   <p>
                     혼자서 능동적으로 해결하였던 문제 점들과 퍼블리셔로서의
@@ -96,20 +86,53 @@ const About = (): JSX.Element => {
                   <br></br>{" "}
                 </S.AboutMe>
               </S.AboutMeDeps>
+              <AboutWrapper></AboutWrapper>
               <S.AboutContentWrap>
                 <S.CertList>
                   <S.AboutContentsTitle>
                     <ReactIcon IconComponent={<AiFillSafetyCertificate />} />
                     SKILL
                   </S.AboutContentsTitle>
+                  <S.SkillItem>
+                    <S.SkillList>
+                      <HashTag>Next.js</HashTag>
+                    </S.SkillList>
+                    <S.SkillText>
+                      Next App Route를 주력으로 사용하며, 기능에 대해 깊게
+                      다룹니다.
+                    </S.SkillText>
+                    <S.SkillText>
+                      Server Component, Client Component의 경계선과 Hydurtaion을
+                      이해합니다.
+                    </S.SkillText>
+                    <S.SkillText>
+                      Full Route Cache, Data Cache를 주로 활용하며며 이를 이용해
+                      캐싱이나 최적화 Revaildate Tags & Path를 이용하여 초기화을
+                      진행합니다.
+                    </S.SkillText>
 
+                    <S.SkillText>
+                      Fiber를 통한 스트리밍을 통한 SUspense의 작동방식, soft,
+                      Hard Navigation등 동작 방식에 대해 이해하고 있습니다.
+                    </S.SkillText>
+
+                    <S.SkillText>
+                      TanStack을 이용하여 prefetch 하고 Hyduration Boundary를
+                      통한 인스턴스의 재사용을 이용하여 Client 환경에서도
+                      트래픽최소화를 고민하며 프로그래밍을 진행합니다.
+                    </S.SkillText>
+
+                    <S.SkillText>
+                      Next환경에서는 Css in Js는 배제하며, 주로 Scss, Tailwind
+                      V4를 사용합니다.
+                    </S.SkillText>
+                  </S.SkillItem>
                   <S.SkillItem>
                     <S.SkillList>
                       <HashTag>ReactJs</HashTag>
                     </S.SkillList>
                     <S.SkillText>
-                      React Toolkit, Zustand를 이용한 전역 상태관리를 이해하고
-                      있습니다.
+                      Redux, Zustand를 이용한 전역 상태관리를 주로 사용합니다.
                     </S.SkillText>
                     <S.SkillText>
                       axios , useQuery를 이용하여 데이터의 패치 mutation을
@@ -143,8 +166,15 @@ const About = (): JSX.Element => {
                       <HashTag>typeScript</HashTag>
                     </S.SkillList>
                     <S.SkillText>
-                      ES6 문법을 사용하며, 프로미스 ,스코프 ,클로저 개념을
-                      이해하며 심도 있게 공부 중에 있습니다.
+                      ES6문법을 사용하며 클로저, 프로미스 , 프로토타입 등을
+                      이해하고 있습니다.
+                    </S.SkillText>
+                    <S.SkillText>
+                      자료 매핑이나 검색 등에서 HashMap, JS의 참조등을 활용하며
+                      반복문의 경우 시간복잡도를 고려합니다.
+                    </S.SkillText>
+                    <S.SkillText>
+                      대댓글이나, 반복의 경우는 재귀 함수를 적극 활용합니다.
                     </S.SkillText>
                     <S.SkillText>
                       타입가드 | 유니온 | 제네릭을 이용하여 데이터의 통일성,
@@ -157,6 +187,7 @@ const About = (): JSX.Element => {
                       <HashTag>Css</HashTag>
                       <HashTag>Scss</HashTag>
                       <HashTag>Styled Component</HashTag>
+                      <HashTag>tailwind V4</HashTag>
                     </S.SkillList>
                     <S.SkillText>
                       flex, grid , position을 이해하고 있으며, css 선택자 , 가상
@@ -175,16 +206,22 @@ const About = (): JSX.Element => {
                   <S.SkillItem>
                     <S.SkillList>
                       <HashTag>Mysql</HashTag>
+                      <HashTag>postgreSQL</HashTag>
+                      <HashTag>typeORM</HashTag>
+                      <HashTag>drizzleORM</HashTag>
                     </S.SkillList>
                     <S.SkillText>
-                      WorkBench와 PhpMyAdmin을 주로 사용합니다.
+                      WorkBench와 PhpMyAdmin을 주로 사용하였고 최근에는
+                      Supabase를 주로 사용합니다.
                     </S.SkillText>
                     <S.SkillText>
-                      최대 3NF를 고려하여 테이블의 중복을 최소화합니다.
+                      Nest.js를 사용하여 구축 시에 typeORM을 이용한 경험이
+                      있으며 최근엔 빌더느낌의 drizzleORM을 더 선호합니다.
                     </S.SkillText>
                     <S.SkillText>
-                      Join과 Case End 문을 사용하여 데이터를 정규화하고,
-                      트랜잭션을 이용해 작업 단위의 REDO/UNDO를 이해합니다.
+                      JOIN과 ~3 정규형까지 고려하여 스키마를 설계합니다.
+                      CASCADE, Restrict 필요시엔 다형성을 위해 관계를 끊고 DB
+                      테이블 내 상태를 통하여 JOIN을 활용합니다.
                     </S.SkillText>
                   </S.SkillItem>
 
@@ -217,8 +254,8 @@ const About = (): JSX.Element => {
                       전 회사에서 주로 SVN을 이용하여 형상관리를 하였습니다.
                     </S.SkillText>
                     <S.SkillText>
-                      Git - Branch, Merge등을 이해하고 있으며 협업 위해
-                      익숙해지려고 훈련하고 있습니다.
+                      Git - Branch, Merge등을 이해하고 있으며 본 작업 시에도
+                      PR을 기재하며 활용 중입니다.
                     </S.SkillText>
                   </S.SkillItem>
 
@@ -235,7 +272,7 @@ const About = (): JSX.Element => {
                     </S.SkillText>
                     <S.SkillText>
                       Photo Shop을 이용한 보정 작업, Mask , filter 작업에
-                      익숙합니다.{" "}
+                      익숙합니다.
                     </S.SkillText>
                   </S.SkillItem>
 
@@ -243,19 +280,20 @@ const About = (): JSX.Element => {
                     <S.SkillList>
                       <HashTag>Centos 7</HashTag>
                       <HashTag>Linux</HashTag>
+                      <HashTag>Nginx</HashTag>
+                      <HashTag>AWS</HashTag>
                     </S.SkillList>
                     <S.SkillText>
-                      Centos 7 + Tomcat을 이용하여 IDC, Home Server를 구축한
-                      경험이 있습니다.
+                      Centos 7 + Tomcat을 이용하여 IDC, Home Server를 구축하여
+                      테스트서버로 활용하여 외주 건을 처리한 경험이 있습니다.
                     </S.SkillText>
-                  </S.SkillItem>
-
-                  <S.SkillItem>
-                    <S.SkillList>
-                      <HashTag>관심..</HashTag>
-                    </S.SkillList>
                     <S.SkillText>
-                      Next.js , Nest.js에 관심이 있습니다.
+                      EC2 인스턴스 서버를 통해 Nginx와 pm2 등을 이용한 Proxy
+                      서버 SSL 인증 등을 처리 한 경험이 있습니다.
+                    </S.SkillText>
+                    <S.SkillText>
+                      S3, CloudFront를 이해하며 개인사용 시엔 비용 문제로
+                      Vercel을 주로 사용합니다.
                     </S.SkillText>
                   </S.SkillItem>
                 </S.CertList>
@@ -265,7 +303,7 @@ const About = (): JSX.Element => {
                     CERTIFICATE
                   </S.AboutContentsTitle>
                   <S.CertWrap>
-                    {ABOUTCONSTANS.CERTS.map((e, idx) => {
+                    {CERTS.map((e, idx) => {
                       return <HashTag key={`cert_${idx}`}>{e}</HashTag>;
                     })}
                   </S.CertWrap>
@@ -276,7 +314,7 @@ const About = (): JSX.Element => {
                     <ReactIcon IconComponent={<MdOutlineWork />} />
                     Experience
                   </S.AboutContentsTitle>
-                  {ABOUTCONSTANS.EXPERIENCE.map((e, idx) => {
+                  {EXPERIENCE.map((e, idx) => {
                     return (
                       <S.CertItem key={`cert_${idx}`}>
                         <S.CompanyTitle $idx={idx === 0}>
@@ -317,7 +355,7 @@ const About = (): JSX.Element => {
                     <ReactIcon IconComponent={<IoSchool />} />
                     Education
                   </S.AboutContentsTitle>
-                  {ABOUTCONSTANS.EDUCATION.map((e, idx) => {
+                  {EDUCATION.map((e, idx) => {
                     return <HashTag key={`cert_${idx}`}>{e.name}</HashTag>;
                   })}
                 </S.CertList>
@@ -327,7 +365,7 @@ const About = (): JSX.Element => {
                     <ReactIcon IconComponent={<RiAwardFill />} />
                     AWARD
                   </S.AboutContentsTitle>
-                  {ABOUTCONSTANS.AWARD.map((e, idx) => {
+                  {AWARD.map((e, idx) => {
                     return <HashTag key={`cert_${idx}`}>{e}</HashTag>;
                   })}
                 </S.CertList>

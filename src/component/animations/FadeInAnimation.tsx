@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import styled, { css, keyframes } from 'styled-components';
+import { useEffect, useRef, useState } from "react";
+import styled, { css, keyframes } from "styled-components";
 
 const fadeInLeft = keyframes`
 from {
@@ -35,75 +35,75 @@ to {
 `;
 
 const Component = styled.div<{ $visible: boolean; $position?: string }>`
-    opacity: 0;
-    width: 100%;
-    ${props => {
-        if (props.$visible) {
-            switch (props.$position) {
-                case 'left':
-                    return css`
-                        transform: translateX(-40px);
-                        animation: ${fadeInLeft} 0.5s ease forwards;
-                    `;
-                case 'right':
-                    return css`
-                        transform: translateX(40px);
-                        animation: ${fadeInRight} 0.5s ease forwards;
-                    `;
-                default:
-                    return css`
-                        animation: ${fadeInUp} 0.5s ease forwards;
-                    `;
-            }
-        }
-    }}
+  opacity: 0;
+  width: 100%;
+  ${(props) => {
+    if (props.$visible) {
+      switch (props.$position) {
+        case "left":
+          return css`
+            transform: translateX(-40px);
+            animation: ${fadeInLeft} 0.5s ease forwards;
+          `;
+        case "right":
+          return css`
+            transform: translateX(40px);
+            animation: ${fadeInRight} 0.5s ease forwards;
+          `;
+        default:
+          return css`
+            animation: ${fadeInUp} 0.5s ease forwards;
+          `;
+      }
+    }
+  }}
 `;
 interface FadeInAnimationProps {
-    board?: string;
-    position?: string;
-    children?: React.ReactNode;
-    onClick?: () => void;
+  board?: string;
+  position?: string;
+  children?: React.ReactNode;
+  onClick?: () => void;
 }
 
 const FadeInAnimation: React.FC<FadeInAnimationProps> = ({
-    position,
-    children,
-    onClick,
-    ...props
+  position,
+  children,
+  onClick,
+  ...props
 }) => {
-    const ref = useRef<HTMLDivElement>(null);
-    const [visible, setVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
 
-    const slideHandler = (entries: IntersectionObserverEntry[]) => {
-        if (entries[0].isIntersecting) {
-            setVisible(true);
-        }
-    };
+  const slideHandler = (entries: IntersectionObserverEntry[]) => {
+    if (entries[0].isIntersecting) {
+      setVisible(true);
+    }
+  };
 
-    // div 관찰
-    useEffect(() => {
-        if (!ref.current) return;
-        // console.log(ref);/
-        const view = ref.current;
-        const io = new IntersectionObserver(slideHandler, {
-            threshold: 0.5,
-        });
-        io.observe(view);
+  // div 관찰
+  useEffect(() => {
+    if (!ref.current) return;
+    // console.log(ref);/
+    const view = ref.current;
+    const io = new IntersectionObserver(slideHandler, {
+      threshold: 0.5,
+    });
+    io.observe(view);
 
-        return () => io.disconnect();
-    }, []);
+    return () => io.disconnect();
+  }, []);
 
-    return (
-        <Component
-            onClick={onClick}
-            {...props}
-            $visible={visible}
-            ref={ref}
-            $position={position}
-        >
-            {children}
-        </Component>
-    );
+  return (
+    <Component
+      onClick={onClick}
+      {...props}
+      $visible={visible}
+      ref={ref}
+      $position={position}
+    >
+      {children}
+    </Component>
+  );
 };
 
 export default FadeInAnimation;

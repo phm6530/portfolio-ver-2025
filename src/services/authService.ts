@@ -1,20 +1,7 @@
 import axios from "axios";
-import { LoginResponseProps, tokenResponseProps } from "@/type/AuthTypes";
+import { tokenResponseProps } from "@/type/AuthTypes";
 import { ENDPOINT_URL } from "@/constants/apiUrl";
 import { requestHandler } from "@/utils/apiUtils";
-
-// 로그인
-const fetchLogin = async (loginData: {
-  user_id: string;
-  user_password: string;
-}): Promise<LoginResponseProps> => {
-  const url = `${ENDPOINT_URL}/login`;
-  const result = await requestHandler<LoginResponseProps>(() =>
-    axios.post(url, loginData)
-  );
-
-  return result;
-};
 
 //로그아웃
 const fetchLogout = async (token: string) => {
@@ -42,4 +29,4 @@ const tokenCheck = async (): Promise<tokenResponseProps> => {
   );
 };
 
-export { tokenCheck, fetchLogout, fetchLogin };
+export { tokenCheck, fetchLogout };

@@ -79,7 +79,7 @@ const BlogList = (): JSX.Element => {
         }>(async () => {
           return await axiosApi.get(baseUrl);
         });
-        console.log(tet.result);
+
         return tet.result;
       },
       getNextPageParam: (lastPage) => {

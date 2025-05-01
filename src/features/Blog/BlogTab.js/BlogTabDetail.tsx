@@ -2,7 +2,7 @@ import useQueryString from "../../../hooks/useSearchQueryString";
 import { useSearchParams } from "react-router-dom";
 import { BlogCategoryDetail } from "@/type/BlogTypes";
 import PostNewIcon from "@/component/ui/PostNewIcon";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 
 interface BlogTabDetailProps extends BlogCategoryDetail {
   category: string;

@@ -1,35 +1,27 @@
 import "quill/dist/quill.snow.css";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { Button } from "component/ui/Button";
-import QuillView from "component/editor/QuillView";
-import ProjectDetailControlsWrap from "@features/project/ProjectDetailControls/ProjectDetailControlsWrap";
-import {
-  ProjectThumbNail,
-  CustumStyle,
-  ProjectSummary,
-  ProjectViewFooter,
-  SkillWrapper,
-  SKill,
-  SummaryType,
-  SummaryWrapper,
-  SummaryWrap,
-  ProjectTitle,
-  ProjectDescription,
-} from "@features/project/ProjectDetailStyle";
-import { ProjectPostProps } from "@type/ProjectTypes";
-import { IMG_URL } from "constants/apiUrl";
+import { Button } from "@/component/ui/Button";
+import QuillView from "@/component/editor/QuillView";
+import ProjectDetailControlsWrap from "@/features/project/ProjectDetailControls/ProjectDetailControlsWrap";
+
+import { ProjectPostProps } from "@/type/ProjectTypes";
+import { IMG_URL } from "@/constants/apiUrl";
 import styled from "styled-components";
 
-import ProjectNextPrevNav from "@features/project/ProjectNextPrevNav";
-import Prograssbar from "component/ui/Prograssbar";
-import Icon from "component/icon/Icon";
-import FadeInAnimation from "component/animations/FadeInAnimation";
-import EmbosingButton from "component/ui/EmbosingButton";
-import { HashTag } from "@style/commonStyle";
+import ProjectNextPrevNav from "@/features/project/ProjectNextPrevNav";
+import Prograssbar from "@/component/ui/Prograssbar";
+import Icon from "@/component/icon/Icon";
+import FadeInAnimation from "@/component/animations/FadeInAnimation";
+import EmbosingButton from "@/component/ui/EmbosingButton";
+import { HashTag } from "@/style/commonStyle";
 import { device } from "@/config/DeviceConfig";
-import useStore from "store/zustandStore";
+import useStore from "@/store/zustandStore";
+import { useQuery } from "@tanstack/react-query";
+import { requestHandler } from "@/utils/apiUtils";
+import SupabasePool from "@/lib/supabaseClient";
+import NotfoundPage from "@/component/error/NotfoundPage";
 const DepsProjectSummary = styled.div`
   display: flex;
   width: 100%;
@@ -66,55 +58,74 @@ const Title = styled.div`
   font-weight: bold;
 `;
 
-const ProjectDetail: React.FC<ProjectPostProps> = (props) => {
+type DetailProps = {
+  company: string;
+  description: string;
+  end_date: string;
+  id: number;
+  img_key: string;
+  project_url: string;
+  start_date: string;
+  thumbnail: string;
+  title: string;
+};
+
+const ProjectDetail = () => {
   const navigate = useNavigate();
   const login = useStore((state) => state.userAuth.login);
+  const { id } = useParams<{ id: string }>();
 
-  const {
-    projectKey,
-    title,
-    company,
-    skill,
-    startDate,
-    projectUrl,
-    description,
-    endDate,
-    projectDescription,
-    thumbnail,
-    projectRoles,
-  } = props;
+  const { data, isLoading, isError } = useQuery({
+    queryKey: [`PROJECT_DETAIL:${id}`],
+    queryFn: async () => {
+      return await requestHandler(async () => {
+        const response = await SupabasePool.getInstance()
+          .from("project_meta")
+          .select("*")
+          .eq("id", id);
+
+        if (response.error || !response.data || response.data.length === 0) {
+          throw new Error(
+            `요청 실패 : ${response.error?.message ?? "데이터 없음"}`
+          );
+        }
+
+        return response;
+      });
+    },
+    staleTime: Infinity,
+  });
+
+  if (isLoading) {
+    return "loading.....";
+  }
+
+  if (isError || !data) {
+    return <NotfoundPage redirectPath={"/project"} />;
+  }
+
+  const { title } = data[0] as DetailProps;
 
   return (
     <>
       <CustumStyle>
         <ProjectSummary>
           <div>
-            <ProjectTitle>
-              <Title> {title}</Title>
-            </ProjectTitle>
-            <ProjectDescription>{description}</ProjectDescription>
+            <ProjectTitle>{title}</ProjectTitle>
+            {/* <ProjectDescription>{description}</ProjectDescription> */}
           </div>
-          {/* <HashtagArea>
-                        {hashtag.map((e: string, idx: number) => {
-                            return (
-                                <HashTag
-                                    className="hashTag"
-                                    key={`hash-${idx}`}
-                                >{`# ${e}`}</HashTag>
-                            );
-                        })}
-                    </HashtagArea> */}
-          {login && (
+
+          {/* {login && (
             <div>
               {projectKey && (
                 <ProjectDetailControlsWrap projectKey={projectKey} />
               )}
             </div>
-          )}
+          )} */}
         </ProjectSummary>
         <DepsProjectSummary>
           <SummaryWrap>
-            <ProjectThumbNail $thumbNail={`${IMG_URL}/${thumbnail}`} />
+            {/* <ProjectThumbNail $thumbNail={`${IMG_URL}/${thumbnail}`} /> */}
 
             <Wrapper>
               <SummaryWrapper>
@@ -127,27 +138,26 @@ const ProjectDetail: React.FC<ProjectPostProps> = (props) => {
                   클라이언트
                 </SummaryType>
                 <div className="project_date">
-                  <SKill>{company}</SKill>
+                  {/* <SKill>{company}</SKill> */}
                 </div>
               </SummaryWrapper>
               <SummaryWrapper>
                 <SummaryType>프로젝트 기간</SummaryType>
 
                 <div className="project_date">
-                  <SKill>
+                  {/* <SKill>
                     {startDate?.toString()} - {endDate?.toString()}
-                  </SKill>
+                  </SKill> */}
                 </div>
               </SummaryWrapper>
               <SummaryWrapper style={{ width: "100%" }}>
                 <SummaryType>사용스킬 </SummaryType>
 
                 <SkillWrapper>
-                  {skill.map((e: string, idx: number) => {
-                    // 첫 문자를 대문자로 변환하고 나머지 문자열과 이어붙입니다.
+                  {/* {skill.map((e: string, idx: number) => {
                     const fullString = e.charAt(0).toUpperCase() + e.slice(1);
                     return <HashTag key={idx}>{fullString}</HashTag>;
-                  })}
+                  })} */}
                 </SkillWrapper>
               </SummaryWrapper>
 
@@ -160,33 +170,33 @@ const ProjectDetail: React.FC<ProjectPostProps> = (props) => {
                   참여도
                 </SummaryType>
 
-                {projectRoles.map((e, idx) => {
+                {/* {projectRoles.map((e, idx) => {
                   return (
                     <ProgassWrapper key={idx}>
                       <PrograssTitle>{e.roleName}</PrograssTitle>
                       <Prograssbar percent={e.rolePercent} key={idx} />
                     </ProgassWrapper>
                   );
-                })}
+                })} */}
               </SummaryWrapper>
               <SummaryWrapper>
                 {/* <Src onClick={() => projectView(projectUrl)}>
                                     {projectUrl}
                                 </Src> */}
-                <EmbosingButton to={projectUrl}>
+                {/* <EmbosingButton to={projectUrl}>
                   <Icon
                     src="/img/common/arrow2.png"
                     alt="클라이언트"
                     width={20}
                   />
                   사이트 보러가기
-                </EmbosingButton>{" "}
+                </EmbosingButton> */}
               </SummaryWrapper>
             </Wrapper>
           </SummaryWrap>
         </DepsProjectSummary>{" "}
         {/* quill-view */}
-        <QuillView contents={projectDescription} />{" "}
+        {/* <QuillView contents={projectDescription} />{" "} */}
         <Button.Type onClick={() => navigate("/project")}>
           &lt;&nbsp;&nbsp; 목록으로
         </Button.Type>{" "}

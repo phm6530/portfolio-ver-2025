@@ -1,6 +1,6 @@
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-import { Button } from "component/ui/Button";
+import { Button } from "@/component/ui/Button";
 import { device } from "@/config/DeviceConfig";
 
 const CateGoryArea = styled.div`

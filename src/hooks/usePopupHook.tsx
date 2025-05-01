@@ -4,6 +4,8 @@ import Confirm from "@/component/ui/Confirm";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import useStore from "@/store/zustandStore";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface ConfirmProps {
   event: () => Promise<void>;
@@ -25,6 +27,7 @@ const usePopupHook = () => {
   //애니메이션 트리거 만듬
   const triggerAnimation = () => {
     setAnimationState(true);
+
     setTimeout(() => {
       popupSetView(false);
       setAnimationState(false);
@@ -68,8 +71,14 @@ const usePopupHook = () => {
               document.getElementById("backdrop-root")!
             )}
             {ReactDOM.createPortal(
-              <PopupStyle>
-                <PopupWrap $close={animationState}>
+              <div className="popup-layout  ">
+                <div
+                  className={cn(
+                    "p-5 bg-background shadow-2xl rounded-xl border border-border ",
+                    popupView && "animate-popup-in",
+                    animationState && "animate-popup-out"
+                  )}
+                >
                   {/* 외부 컴포넌트 모달 or Confirm 타입좁히기*/}
                   {isModal(props) ? (
                     <>
@@ -79,11 +88,15 @@ const usePopupHook = () => {
                     <Confirm message="제거" confirm={completeClose} />
                   )}
 
-                  <button className="close" onClick={delayClosePopup}>
-                    <span>Close</span>
-                  </button>
-                </PopupWrap>
-              </PopupStyle>,
+                  <Button
+                    className="close mt-1 rounded-full"
+                    variant={"ghost"}
+                    onClick={delayClosePopup}
+                  >
+                    Close
+                  </Button>
+                </div>
+              </div>,
               document.getElementById("modal-root")!
             )}
           </>

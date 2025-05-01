@@ -120,12 +120,7 @@ const DashBoard: React.FC<DashBoardProps> = ({
           {/* <Division>.me()</Division> */}
         </DashBoardTitle>
 
-        {subComment && (
-          <PageInfoText>
-            <img src="/img/contact/talk2.png" style={{ width: "20px" }} />
-            {subComment}
-          </PageInfoText>
-        )}
+        {subComment && <PageInfoText>{subComment}</PageInfoText>}
 
         {/* <PathStyle>
                     <IoMdHome /> HOME {pathname.replace('/', ' / ')}

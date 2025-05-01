@@ -1,63 +1,61 @@
-import ProjectListItem from "@features/project/ProjectListItem";
-import { SubTitle } from "component/ui/Subtitle";
-import CateGoryButton from "component/ui/CateGoryButton";
-import { ReactRouteDom } from "lib/lib";
-import SkeletonPost from "component/loading/Skeleton";
-import SearchForm from "component/ui/SearchForm";
-import * as S from "@features/project/ProjectListStyle";
+import ProjectListItem from "@/features/project/ProjectListItem";
+import { SubTitle } from "@/component/ui/Subtitle";
+import CateGoryButton from "@/component/ui/CateGoryButton";
+import { ReactRouteDom } from "@/lib/lib";
+import SkeletonPost from "@/component/loading/Skeleton";
+import SearchForm from "@/component/ui/SearchForm";
+import * as S from "@/features/project/ProjectListStyle";
 
-import useFetchProjectList from "@features/project/hooks/useFetchProjectList";
+import { useQuery } from "@tanstack/react-query";
+import { requestHandler } from "@/utils/apiUtils";
+import SupabasePool from "@/lib/supabaseClient";
+import { Button } from "@/components/ui/button";
+import { useNavigate, useNavigation } from "react-router-dom";
 
 const { useSearchParams } = ReactRouteDom;
 
-export default function ProjectList(): JSX.Element {
-  const { data = [], isLoading, isError } = useFetchProjectList();
+export default function ProjectList() {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["project-list"],
+    queryFn: async () => {
+      return await requestHandler(async () => {
+        const rows = await SupabasePool.getInstance()
+          .from("project_meta")
+          .select("*")
+          .order("id", { ascending: false });
+
+        if (rows.error || !rows.data) {
+          throw new Error(`요청 실패 : ${rows.error.message}`);
+        }
+
+        return rows;
+      });
+    },
+    staleTime: Infinity,
+  });
 
   const [param] = useSearchParams();
   const SeachValue = param.get("search");
 
-  const SeachArr = data.filter((e) => {
-    if (SeachValue === "All") {
-      return true;
-    }
-    if (SeachValue && SeachValue !== "All") {
-      return e.hashtag.some((tag) =>
-        tag.toLowerCase().includes(SeachValue.toLowerCase())
-      );
-    }
-    return false;
-  });
+  const nav = useNavigate();
 
-  const ProjectArr = SeachValue ? SeachArr : data && data;
   const CateGory = ["All", "반응형", "React", "참여율 100%"];
 
   return (
     <>
-      <S.ProjectListStyle>
-        <SubTitle>
-          <div className="subText">
-            <span className="point">MY PORTfOLIO</span>{" "}
-            <span style={{ marginRight: "auto" }}>LIST</span>
-          </div>
-        </SubTitle>
-
+      <div className="grid grid-cols-3 gap-5 layout-center">
         {/* List */}
-        <S.FlexRow>
+        <div className="col-span-3 flex items-center">
           <CateGoryButton CateGory={CateGory} type={"queryString"} />
-          {/* 검색창 */}
-          <SearchForm />
-        </S.FlexRow>
 
-        {!isLoading && SeachValue && SeachArr.length === 0 && (
-          <S.NoSeachingData>
-            &quot;{SeachValue}&quot; 키워드와 일치하는 항목이 없음
-          </S.NoSeachingData>
-        )}
+          <Button onClick={() => nav("write")}>글쓰기</Button>
+        </div>
+
         {!isLoading && isError && "error"}
         {!isLoading ? (
           <>
             {data.length === 0 && "등록된 프로젝트가 없습니다.."}
-            {ProjectArr.map((project) => {
+            {data.map((project) => {
               return (
                 <ProjectListItem
                   project={project}
@@ -72,7 +70,7 @@ export default function ProjectList(): JSX.Element {
             <SkeletonPost listCnt={6} />
           </>
         )}
-      </S.ProjectListStyle>
+      </div>
     </>
   );
 }

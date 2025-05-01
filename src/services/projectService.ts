@@ -1,7 +1,7 @@
 import axios from "axios";
 import { requestHandler } from "@/utils/apiUtils";
-import { ENDPOINT_URL } from "constants/apiUrl";
-import { ProjectDetailProps, ProjectPostProps } from "@type/ProjectTypes";
+import { ENDPOINT_URL } from "@/constants/apiUrl";
+import { ProjectDetailProps, ProjectPostProps } from "@/type/ProjectTypes";
 
 interface ApiResData<T> {
   resData: T;

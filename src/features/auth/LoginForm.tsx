@@ -1,80 +1,120 @@
-import { Button } from "@/component/ui/Button";
 import { useForm } from "react-hook-form";
-import * as Yup from "yup";
 
-import { RiLockPasswordFill } from "react-icons/ri";
-import { IoPersonCircleSharp } from "react-icons/io5";
 // 인증로직
-import { useRef } from "react";
-import LoginHeader from "./LoginHeader";
+import { useEffect, useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-import {
-  LoginInputStyle,
-  LoginStyle,
-  LabelStyle,
-  LabelWrap,
-  ErrorMessage,
-} from "@/features/auth/LoginFormStyle";
-import useLogin from "./hooks/useLogin";
-import { LoginRequestProps } from "@/type/AuthTypes";
 import { loginSchema } from "./schema/login-schema";
+import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
+import InputField from "@/components/shared/inputField";
+import PasswordInputField from "@/components/shared/inputPasswordField";
+import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { LockKeyhole } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import useStore from "@/store/zustandStore";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { z } from "zod";
+import SupabasePool from "@/lib/supabaseClient";
+
+export interface LoginSchemaProps {
+  message?: string;
+  token: string;
+  Auth: boolean;
+}
 
 export default function LoginForm() {
   const ref = useRef<boolean>(false);
-  const { mutate } = useLogin();
+  const { login } = useStore((state) => ({ login: state.userAuthLogin }));
+  const [lock, setLock] = useState(false);
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm({
+  const { mutate } = useMutation({
+    mutationFn: async (data: z.infer<typeof loginSchema>) => {
+      const pool = SupabasePool.getInstance();
+
+      const { data: loginData, error: loginError } =
+        await pool.auth.signInWithPassword({
+          email: data.user_id,
+          password: data.user_password,
+        });
+
+      if (loginData?.session) {
+        return { token: loginData.session.access_token };
+      }
+
+      throw loginError;
+    },
+
+    onSuccess: ({ token }) => {
+      toast.success("로그인 되었습니다.");
+      login(token); // 상태 저장 등
+    },
+
+    onError: () => {
+      toast.error(`정보가 일치하지 않거나 존재하지 않는 아이디 입니다.`);
+    },
+  });
+
+  const form = useForm({
     defaultValues: {
       user_id: "",
       user_password: "",
     },
     resolver: zodResolver(loginSchema),
   });
-  const onSubmitHandler = async (loginData: LoginRequestProps) => {
+
+  const onSubmitHandler = async (loginData: z.infer<typeof loginSchema>) => {
     if (ref.current) return;
+    setLock(true);
     ref.current = true;
+    console.log(loginData);
     mutate(loginData);
 
     setTimeout(() => {
       ref.current = false;
-    }, 1000);
+      setLock(false);
+    }, 2000);
   };
 
   return (
     <>
-      <LoginStyle onSubmit={handleSubmit(onSubmitHandler)}>
-        <LoginHeader />
+      <div className="mb-4 flex flex-col gap-2  py-5">
+        <CardTitle className="text-4xl text-center">Sign In</CardTitle>
 
-        <LabelStyle>
-          <LabelWrap $error={!!errors.user_id}>
-            <IoPersonCircleSharp size={22} />
-            <LoginInputStyle {...register("user_id")} placeholder="Admin Id" />
-          </LabelWrap>
-          {errors.user_id && (
-            <ErrorMessage>{errors.user_id.message}</ErrorMessage>
-          )}
-        </LabelStyle>
+        <Alert className="border-indigo-300/30 mt-3 ">
+          <LockKeyhole className="h-4 w-4 " />
+          <AlertTitle className="text-indigo-300 font-semibold">
+            Admin
+          </AlertTitle>
+          <AlertDescription className="break-keep">
+            해당 PORTFOLIO는 권한이 인가 된 사용자만 사용가능합니다.
+          </AlertDescription>
+        </Alert>
+      </div>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmitHandler)}
+          className="flex flex-col gap-4"
+        >
+          {/* <LoginHeader /> */}
+          <InputField
+            name="user_id"
+            placeholder="Admin Id"
+            label="User"
+            className="py-3  px-0 border-0 border-b  focus-visible:ring-0 transition-all"
+          />
 
-        <LabelStyle>
-          <LabelWrap $error={!!errors.user_password}>
-            <RiLockPasswordFill size={22} />
-            <LoginInputStyle
-              {...register("user_password")}
-              placeholder="password"
-              type="password"
-            />
-          </LabelWrap>
-          {errors.user_password && (
-            <ErrorMessage>{errors.user_password.message}</ErrorMessage>
-          )}
-        </LabelStyle>
-        <Button.Submit>Login</Button.Submit>
-      </LoginStyle>
+          <PasswordInputField
+            name="user_password"
+            placeholder="password"
+            className="py-3  px-0 border-0 border-b   focus-visible:ring-0 transition-all"
+          />
+
+          <Button disabled={lock} className="w-full  p-6">
+            Login
+          </Button>
+        </form>
+      </Form>
     </>
   );
 }

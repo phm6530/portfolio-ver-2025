@@ -1,4 +1,4 @@
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 import useBlogNewPostList from "../hooks/useBlogNewPostLIst";
 import PostItem from "./BlogPostItem";
 
