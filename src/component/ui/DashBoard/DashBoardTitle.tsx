@@ -62,7 +62,7 @@ const DashBoardShadow = styled.div`
 
 const RelativeContainer = styled.div`
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: -rem;
 `;
 
 // ... 기존의 styled-components 정의 ...

@@ -1,8 +1,16 @@
 import styled from "styled-components";
-import InputErrorMessage from "component/error/InputErrorMessage";
-import { Button } from "component/ui/Button";
+import InputErrorMessage from "@/component/error/InputErrorMessage";
 import { useFormContext } from "react-hook-form";
-import useThumbnailUploader from "@features/project/hooks/useThumbnailUploader";
+import { useMutation } from "@tanstack/react-query";
+import { requestHandler } from "@/utils/apiUtils";
+import { axiosApi } from "@/config/axios.config";
+import { cn } from "@/lib/utils";
+import { useRef } from "react";
+import { z } from "zod";
+import { projectSchema } from "../schema/project-schema";
+import { IMG_URL } from "@/constants/apiUrl";
+import { Button } from "@/components/ui/button";
+import { Delete, ReceiptEuroIcon, Recycle, Upload } from "lucide-react";
 
 const UPloadFileName = styled.div`
   font-size: 12px;
@@ -26,7 +34,6 @@ const Wrapper = styled.div`
 `;
 
 interface ProjectThumbnailUploaderProps {
-  label: string;
   value: string;
   projectKey: string;
 }
@@ -35,13 +42,25 @@ const ProjectThumbnailUploader: React.FC<ProjectThumbnailUploaderProps> = ({
   value,
   projectKey,
 }) => {
-  const {
-    watch,
-    setValue,
-    formState: { errors },
-  } = useFormContext();
-  const thumNail = watch("thumbnail");
-  const { mutateAsync } = useThumbnailUploader();
+  const { watch, setValue, trigger } =
+    useFormContext<z.infer<typeof projectSchema>>();
+
+  const ref = useRef<HTMLInputElement>(null);
+
+  const { mutateAsync } = useMutation({
+    mutationFn: async (formData: FormData) => {
+      return await requestHandler(async () => {
+        const response = await axiosApi.post(`/upload`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        return response;
+      });
+    },
+  });
+
   const fileFiler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const ImgFile = e.target.files![0];
 
@@ -60,35 +79,58 @@ const ProjectThumbnailUploader: React.FC<ProjectThumbnailUploaderProps> = ({
     const formData = new FormData();
     const newFileName = ImgFile.name.replace(/[^\w.-]/g, "_");
 
-    formData.append("image", ImgFile, newFileName); // 'img' 필드에 파일 추가
+    formData.append("file", ImgFile, newFileName); // 'img' 필드에 파일 추가
+    formData.append("imgKey", projectKey);
 
     //서버요청
-    const { imgUrl } = await mutateAsync({ img: formData, projectKey });
-    setValue(value, imgUrl, { shouldValidate: true });
+    const test = await mutateAsync(formData);
+
+    setValue("thumbnail", test.result.url, { shouldValidate: true });
     // shouldValidate = 설정된 값이 true일때 유효성 검사를 진행함.
     // 값이 변경될때도 반영됨
   };
 
-  const errorMessage = errors[value]?.message as string | null;
-
   return (
-    <Wrapper>
-      {/* <InputLabel>{label}</InputLabel> */}
-      <WrapperFlex>
-        <Button.UploadButton htmlFor="input-file">
-          Upload a File
-        </Button.UploadButton>
-        <input
-          type="file"
-          style={{ display: "none" }}
-          id="input-file"
-          onChange={(e) => fileFiler(e)}
-        />
-        <UPloadFileName>{thumNail ? thumNail : "파일없음"}</UPloadFileName>
-      </WrapperFlex>
+    <>
+      <input
+        type="file"
+        className="hidden"
+        id="input-file"
+        onChange={(e) => fileFiler(e)}
+        ref={ref}
+      />
+      <div className="border p-5 grid grid-cols-2 gap-10 border-foreground/50">
+        <div className="flex justify-between flex-col">
+          <h1>배너 이미지</h1>
 
-      {errorMessage && <InputErrorMessage>{errorMessage}</InputErrorMessage>}
-    </Wrapper>
+          <div className="grid grid-cols-2 gap-2">
+            <Button
+              variant={"ghost"}
+              type="button"
+              className="border border-foreground/50 text-xs"
+              onClick={() => {
+                setValue("thumbnail", "");
+                trigger("thumbnail");
+              }}
+            >
+              <Delete /> 이미지 삭제
+            </Button>
+          </div>
+        </div>
+        <div
+          className={cn(
+            " border min-h-[200px] border-dotted rounded-xl hover:border-indigo-400 cursor-pointer flex items-center justify-center aspect-[16/9]"
+          )}
+          onClick={() => ref.current?.click()}
+        >
+          {watch("thumbnail") ? (
+            <img src={`${IMG_URL}/${watch("thumbnail")}`} alt="" />
+          ) : (
+            <span className="opacity-60">Img File을 Drag & Drop 해주세요</span>
+          )}
+        </div>
+      </div>
+    </>
   );
 };
 

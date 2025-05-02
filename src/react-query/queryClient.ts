@@ -1,4 +1,5 @@
 import { ReactQuery } from "@/lib/lib";
+import { MutationCache } from "@tanstack/react-query";
 const { QueryClient, QueryCache } = ReactQuery;
 import { toast } from "react-toastify";
 
@@ -21,6 +22,10 @@ export const queryClient = new QueryClient({
     },
   },
   queryCache: new QueryCache({
+    onError: queryErrorHandler,
+  }),
+
+  mutationCache: new MutationCache({
     onError: queryErrorHandler,
   }),
 });

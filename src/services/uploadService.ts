@@ -1,6 +1,6 @@
 import axios from "axios";
-import { UploadThumbnailResponseProps } from "@type/ProjectTypes";
-import { ENDPOINT_URL } from "constants/apiUrl";
+import { UploadThumbnailResponseProps } from "@/type/ProjectTypes";
+import { ENDPOINT_URL } from "@/constants/apiUrl";
 import { requestHandler } from "@/utils/apiUtils";
 
 // 썸네일 이미지 업로드

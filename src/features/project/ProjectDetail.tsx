@@ -1,8 +1,6 @@
 import "quill/dist/quill.snow.css";
 
 import { useNavigate, useParams } from "react-router-dom";
-
-import { Button } from "@/component/ui/Button";
 import QuillView from "@/component/editor/QuillView";
 import ProjectDetailControlsWrap from "@/features/project/ProjectDetailControls/ProjectDetailControlsWrap";
 
@@ -22,41 +20,21 @@ import { useQuery } from "@tanstack/react-query";
 import { requestHandler } from "@/utils/apiUtils";
 import SupabasePool from "@/lib/supabaseClient";
 import NotfoundPage from "@/component/error/NotfoundPage";
-const DepsProjectSummary = styled.div`
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-`;
-const ProgassWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 45%;
-  @media ${device.tablet} {
-    width: 100%;
-    flex-direction: column;
-  }
-`;
 
-const PrograssTitle = styled.div`
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 0.4rem;
-`;
-
-const Title = styled.div`
-  display: inline-block;
-  background: var(--gradient-aboutGradient-color);
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  font-weight: bold;
-`;
+import {
+  EditorProvider,
+  SimpleEditorContents,
+  useSimpleEditor,
+} from "@squirrel309/my-testcounter";
+import { HtmlContentNormalizer } from "@/utils/HtmlContentNormalizer";
+import { Button } from "@/components/ui/button";
+import { AccordionDemo } from "./project-acodian";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 type DetailProps = {
   company: string;
@@ -68,20 +46,33 @@ type DetailProps = {
   start_date: string;
   thumbnail: string;
   title: string;
+  project_contents: Array<{
+    id: number;
+    contents: string;
+  }>;
+  project_meta_stack: Array<{
+    project_stack: { type: string; stack: string };
+  }>;
+  project_surmmry: Array<{ title: string; contents: string }>;
 };
 
-const ProjectDetail = () => {
-  const navigate = useNavigate();
-  const login = useStore((state) => state.userAuth.login);
-  const { id } = useParams<{ id: string }>();
-
+const ProjectDetail = ({ id }: { id: number }) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: [`PROJECT_DETAIL:${id}`],
     queryFn: async () => {
       return await requestHandler(async () => {
         const response = await SupabasePool.getInstance()
           .from("project_meta")
-          .select("*")
+          .select(
+            `
+            *,
+            project_contents(*),
+            project_meta_stack(
+              project_stack(stack, type)
+            ),
+            project_surmmry(title,contents)
+          `
+          )
           .eq("id", id);
 
         if (response.error || !response.data || response.data.length === 0) {
@@ -95,7 +86,7 @@ const ProjectDetail = () => {
     },
     staleTime: Infinity,
   });
-
+  const { editor } = useSimpleEditor({ editable: false });
   if (isLoading) {
     return "loading.....";
   }
@@ -104,112 +95,70 @@ const ProjectDetail = () => {
     return <NotfoundPage redirectPath={"/project"} />;
   }
 
-  const { title } = data[0] as DetailProps;
+  const {
+    title,
+    thumbnail,
+    description,
+    project_contents,
+    project_meta_stack,
+    project_surmmry,
+  } = data[0] as DetailProps;
 
   return (
-    <>
-      <CustumStyle>
-        <ProjectSummary>
-          <div>
-            <ProjectTitle>{title}</ProjectTitle>
-            {/* <ProjectDescription>{description}</ProjectDescription> */}
+    <section className="grid grid-cols-[300px_auto] gap-20  bg-background my-20 p-15 shadow-2xl ">
+      <div className=" break-keep flex flex-col gap-7">
+        <h1 className="text-3xl leading-12">{title}</h1>
+        <p className="text-base leading-7">{description}</p>
+        <article>
+          <h1>Stack</h1>
+          <div className="flex flex-wrap gap-2">
+            {project_meta_stack.map((e) => (
+              <div className="border rounded-full text-xs p-2  border-indigo-500 text-indigo-600">
+                {e.project_stack.stack}
+              </div>
+            ))}
           </div>
+        </article>
+        <Button
+          variant={"ghost"}
+          className="w-full text-xs border border-foreground/30"
+        >
+          VIEW
+        </Button>
+      </div>
 
-          {/* {login && (
-            <div>
-              {projectKey && (
-                <ProjectDetailControlsWrap projectKey={projectKey} />
-              )}
-            </div>
-          )} */}
-        </ProjectSummary>
-        <DepsProjectSummary>
-          <SummaryWrap>
-            {/* <ProjectThumbNail $thumbNail={`${IMG_URL}/${thumbnail}`} /> */}
+      <div className="p-0 flex-1">
+        <img
+          src={`${IMG_URL}/${thumbnail}`}
+          alt=""
+          className="border border-foreground/30 w-[100%]"
+        />
 
-            <Wrapper>
-              <SummaryWrapper>
-                <SummaryType>
-                  {" "}
-                  <Icon
-                    src="/img/project/icon/client.png"
-                    alt="클라이언트"
-                  />{" "}
-                  클라이언트
-                </SummaryType>
-                <div className="project_date">
-                  {/* <SKill>{company}</SKill> */}
-                </div>
-              </SummaryWrapper>
-              <SummaryWrapper>
-                <SummaryType>프로젝트 기간</SummaryType>
-
-                <div className="project_date">
-                  {/* <SKill>
-                    {startDate?.toString()} - {endDate?.toString()}
-                  </SKill> */}
-                </div>
-              </SummaryWrapper>
-              <SummaryWrapper style={{ width: "100%" }}>
-                <SummaryType>사용스킬 </SummaryType>
-
-                <SkillWrapper>
-                  {/* {skill.map((e: string, idx: number) => {
-                    const fullString = e.charAt(0).toUpperCase() + e.slice(1);
-                    return <HashTag key={idx}>{fullString}</HashTag>;
-                  })} */}
-                </SkillWrapper>
-              </SummaryWrapper>
-
-              <SummaryWrapper style={{ width: "100%" }}>
-                <SummaryType>
-                  {/* <Icon
-                                        src="/img/project/icon/grape.png"
-                                        alt="시계 아이콘1"
-                                    /> */}
-                  참여도
-                </SummaryType>
-
-                {/* {projectRoles.map((e, idx) => {
-                  return (
-                    <ProgassWrapper key={idx}>
-                      <PrograssTitle>{e.roleName}</PrograssTitle>
-                      <Prograssbar percent={e.rolePercent} key={idx} />
-                    </ProgassWrapper>
-                  );
-                })} */}
-              </SummaryWrapper>
-              <SummaryWrapper>
-                {/* <Src onClick={() => projectView(projectUrl)}>
-                                    {projectUrl}
-                                </Src> */}
-                {/* <EmbosingButton to={projectUrl}>
-                  <Icon
-                    src="/img/common/arrow2.png"
-                    alt="클라이언트"
-                    width={20}
-                  />
-                  사이트 보러가기
-                </EmbosingButton> */}
-              </SummaryWrapper>
-            </Wrapper>
-          </SummaryWrap>
-        </DepsProjectSummary>{" "}
-        {/* quill-view */}
-        {/* <QuillView contents={projectDescription} />{" "} */}
-        <Button.Type onClick={() => navigate("/project")}>
-          &lt;&nbsp;&nbsp; 목록으로
-        </Button.Type>{" "}
-      </CustumStyle>{" "}
-      <FadeInAnimation>
-        <ProjectViewFooter>
-          ※ 본 게시물은 상업적 목적이 아닌 포트폴리오 목적으로만 사용됩니다.
-          아직 공개되지 않은 작업물은 포함하지 않으며, 오직 공개된 작업물만을
-          게시합니다.
-        </ProjectViewFooter>
-        <ProjectNextPrevNav />
-      </FadeInAnimation>
-    </>
+        <Accordion type="single" collapsible className="w-full my-7">
+          {project_surmmry.map((item, idx) => {
+            return (
+              <AccordionItem
+                value={`${idx}`}
+                key={`${idx}-acodian`}
+                className="outline px-4"
+              >
+                <AccordionTrigger className="font-bold">
+                  {item.title}
+                </AccordionTrigger>
+                <AccordionContent>{item.contents}</AccordionContent>
+              </AccordionItem>
+            );
+          })}
+        </Accordion>
+        <EditorProvider editor={editor}>
+          <SimpleEditorContents
+            value={HtmlContentNormalizer.setImgUrl(
+              project_contents[0].contents
+            )}
+          />
+        </EditorProvider>
+      </div>
+    </section>
   );
 };
 

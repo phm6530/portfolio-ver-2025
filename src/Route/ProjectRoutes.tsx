@@ -22,10 +22,6 @@ const ProjectRoutes = (): JSX.Element => {
       path: "/write",
       Component: <AthencatedProjectEditor />,
     },
-    {
-      path: "/:id",
-      Component: <ProjectDetail />,
-    },
   ];
 
   return (
