@@ -8,14 +8,6 @@ import { ProjectPostProps } from "@/type/ProjectTypes";
 import { IMG_URL } from "@/constants/apiUrl";
 import styled from "styled-components";
 
-import ProjectNextPrevNav from "@/features/project/ProjectNextPrevNav";
-import Prograssbar from "@/component/ui/Prograssbar";
-import Icon from "@/component/icon/Icon";
-import FadeInAnimation from "@/component/animations/FadeInAnimation";
-import EmbosingButton from "@/component/ui/EmbosingButton";
-import { HashTag } from "@/style/commonStyle";
-import { device } from "@/config/DeviceConfig";
-import useStore from "@/store/zustandStore";
 import { useQuery } from "@tanstack/react-query";
 import { requestHandler } from "@/utils/apiUtils";
 import SupabasePool from "@/lib/supabaseClient";
@@ -35,6 +27,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Calendar } from "lucide-react";
 
 type DetailProps = {
   company: string;
@@ -99,6 +92,8 @@ const ProjectDetail = ({ id }: { id: number }) => {
     title,
     thumbnail,
     description,
+    start_date,
+    end_date,
     project_contents,
     project_meta_stack,
     project_surmmry,
@@ -106,14 +101,24 @@ const ProjectDetail = ({ id }: { id: number }) => {
 
   return (
     <section className="grid grid-cols-[300px_auto] gap-20  bg-background my-20 p-15 shadow-2xl ">
-      <div className=" break-keep flex flex-col gap-7">
-        <h1 className="text-3xl leading-12">{title}</h1>
-        <p className="text-base leading-7">{description}</p>
+      <div className=" break-keep flex flex-col gap-12 items-start">
+        <div>
+          <h1 className="text-3xl leading-12">{title}</h1>
+          <p className="text-base leading-7 text-foreground/70">
+            {description}
+          </p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <h1 className="flex gap-2 items-center">프로젝트 기간</h1>
+          <div className="flex text-xs items-center gap-3 ">
+            <Calendar size={15} /> {start_date} - {end_date}
+          </div>
+        </div>
         <article>
           <h1>Stack</h1>
           <div className="flex flex-wrap gap-2">
             {project_meta_stack.map((e) => (
-              <div className="border rounded-full text-xs p-2  border-indigo-500 text-indigo-600">
+              <div className="border text-xs p-2  border-indigo-500 text-indigo-600">
                 {e.project_stack.stack}
               </div>
             ))}
@@ -121,9 +126,9 @@ const ProjectDetail = ({ id }: { id: number }) => {
         </article>
         <Button
           variant={"ghost"}
-          className="w-full text-xs border border-foreground/30"
+          className="w-full text-xs border border-foreground/30 rounded-xs"
         >
-          VIEW
+          View
         </Button>
       </div>
 
