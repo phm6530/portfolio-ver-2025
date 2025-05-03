@@ -100,7 +100,7 @@ const ProjectDetail = ({ id }: { id: number }) => {
   } = data[0] as DetailProps;
 
   return (
-    <section className="grid grid-cols-[300px_auto] gap-20  bg-background my-20 p-15 shadow-2xl ">
+    <section className="grid grid-cols-[300px_auto] gap-20    p-15 shadow-2xl ">
       <div className=" break-keep flex flex-col gap-12 items-start">
         <div>
           <h1 className="text-3xl leading-12">{title}</h1>

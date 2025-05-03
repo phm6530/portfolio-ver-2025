@@ -35,6 +35,7 @@ const ProjectListItem: React.FC<{ project: ProjectPostProps }> = ({
       document.body.style.overflow = "auto";
     };
   }, [viewDetail]);
+
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -58,13 +59,8 @@ const ProjectListItem: React.FC<{ project: ProjectPostProps }> = ({
   return (
     <>
       {viewDetail && (
-        <div
-          className="fixed flex  items-center top-0 left-0 justify-center   overflow-y-scroll w-full h-screen  z-100"
-          style={{
-            backdropFilter: "blur(10px)",
-          }}
-        >
-          <div className="h-full w-[80%]" style={{ marginBlockEnd: "20px" }}>
+        <div className="fixed inset-0 z-100 backdrop-blur-sm flex justify-center items-start overflow-y-auto">
+          <div className="w-[80%] my-20 bg-background max-w-[1200px]">
             <ProjectDetail id={+id} />
           </div>
         </div>
