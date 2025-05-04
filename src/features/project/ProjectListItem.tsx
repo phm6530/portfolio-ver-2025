@@ -1,10 +1,7 @@
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { HashTag } from "@/style/commonStyle";
 import {
-  ProjectFadeinStyle,
-  ProjectImgArea,
   ProjectCompany,
-  ProjectDescription,
   ProjectItemHeaderStyle,
   ViewIconAnimation,
   ProjectItemWrap,
@@ -14,8 +11,8 @@ import { ProjectPostProps } from "@/type/ProjectTypes";
 import { IMG_URL } from "@/constants/apiUrl";
 import { useEffect, useState } from "react";
 import ProjectDetail from "./ProjectDetail";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 
 const ProjectListItem: React.FC<{ project: ProjectPostProps }> = ({
   project,
@@ -60,7 +57,18 @@ const ProjectListItem: React.FC<{ project: ProjectPostProps }> = ({
     <>
       {viewDetail && (
         <div className="fixed inset-0 z-100 backdrop-blur-sm flex justify-center items-start overflow-y-auto">
-          <div className="w-[80%] my-20 bg-background max-w-[1200px]">
+          <div className="w-[80%] animate-popup-in my-20 bg-background max-w-[1100px] relative">
+            <div className="absolute -right-[70px] w-[50px] h-full ">
+              <div className="top-5 sticky">
+                <Button
+                  variant={"ghost"}
+                  className="size-10 rounded-full bg-transparent border-foreground/50 border"
+                  onClick={() => setViewDetail(false)}
+                >
+                  <X />
+                </Button>
+              </div>
+            </div>
             <ProjectDetail id={+id} />
           </div>
         </div>

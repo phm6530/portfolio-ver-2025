@@ -1,13 +1,4 @@
-import "quill/dist/quill.snow.css";
-
-import { useNavigate, useParams } from "react-router-dom";
-import QuillView from "@/component/editor/QuillView";
-import ProjectDetailControlsWrap from "@/features/project/ProjectDetailControls/ProjectDetailControlsWrap";
-
-import { ProjectPostProps } from "@/type/ProjectTypes";
 import { IMG_URL } from "@/constants/apiUrl";
-import styled from "styled-components";
-
 import { useQuery } from "@tanstack/react-query";
 import { requestHandler } from "@/utils/apiUtils";
 import SupabasePool from "@/lib/supabaseClient";
