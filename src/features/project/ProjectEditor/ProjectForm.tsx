@@ -25,10 +25,10 @@ import { z } from "zod";
 import { DatePickerWithRange } from "./project-date-picker";
 import ProjectSummry from "./project-summry";
 import { cn } from "@/lib/utils";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import SupabasePool from "@/lib/supabaseClient";
 import { toast } from "react-toastify";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import ProjectThumbnailUploader from "./ProjectThumbnailUploader";
 import { getPlainText } from "@/utils/plain-text";
@@ -57,7 +57,11 @@ export interface ProjectDetailProps {
 export default function ProjectForm() {
   const [search] = useSearchParams();
   const projectNum = search.get("edit");
+  const nav = useNavigate();
+  const [imgKey, setImgkey] = useState<string>(useMemo(() => uuidv4(), []));
+  const queryclient = useQueryClient();
 
+  // Get
   const { data } = useQuery({
     queryKey: [`PROJECT_DETAIL:${projectNum}`],
     queryFn: async () => {
@@ -89,11 +93,7 @@ export default function ProjectForm() {
     staleTime: Infinity,
   });
 
-  // 이미지키
-  const imgKey = useMemo(() => uuidv4(), []);
-
-  const nav = useNavigate();
-
+  // 수정 or insert
   const { mutate } = useMutation({
     mutationFn: async (body: z.infer<typeof projectSchema>) => {
       try {
@@ -250,13 +250,17 @@ export default function ProjectForm() {
         throw new Error("등록 실패 하였습니다.");
       }
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("프로젝트가 등록 되었습니다.");
       nav("/project");
       form.reset();
+      await queryclient.invalidateQueries({
+        queryKey: ["project-list"],
+      });
     },
   });
 
+  // form
   const form = useForm<z.infer<typeof projectSchema>>({
     defaultValues: {
       title: "",
@@ -306,6 +310,9 @@ export default function ProjectForm() {
         },
         contents: result.project_contents[0].contents,
       });
+
+      // Imgkey
+      setImgkey(result.img_key);
     }
   }, [data]);
 
