@@ -15,7 +15,7 @@ export default function ProjectSummry() {
   const onClickHandler = () => {
     append({
       title: "",
-      description: "",
+      contents: "",
     });
   };
 

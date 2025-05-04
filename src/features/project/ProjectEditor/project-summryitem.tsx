@@ -49,7 +49,7 @@ export default function SummryItem({
           <textarea
             className="w-full placeholder:text-foreground/60"
             placeholder="해당 항목 내용을 입력해주세요"
-            {...register(`surmmry.${idx}.description`)}
+            {...register(`surmmry.${idx}.contents`)}
           />
         </div>
       </div>

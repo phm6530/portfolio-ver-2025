@@ -11,8 +11,9 @@ export const projectSchema = z.object({
     .min(1, { message: "기술을 하나 이상 선택하세요." }),
   surmmry: z.array(
     z.object({
+      id: z.number().optional(),
       title: z.string().min(1, { message: "필수항목" }),
-      description: z.string().min(1, { message: "필수항목" }),
+      contents: z.string().min(1, { message: "필수항목" }),
     })
   ),
   workRange: z

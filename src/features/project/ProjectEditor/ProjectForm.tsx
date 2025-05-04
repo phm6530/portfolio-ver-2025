@@ -25,14 +25,16 @@ import { z } from "zod";
 import { DatePickerWithRange } from "./project-date-picker";
 import ProjectSummry from "./project-summry";
 import { cn } from "@/lib/utils";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import SupabasePool from "@/lib/supabaseClient";
 import { toast } from "react-toastify";
-import { useCallback, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useMemo } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ProjectThumbnailUploader from "./ProjectThumbnailUploader";
 import { getPlainText } from "@/utils/plain-text";
 import { DateUtils } from "@/utils/dateUtil";
+import { requestHandler } from "@/utils/apiUtils";
+import { DetailProps } from "../ProjectDetail";
 
 export interface ProjectDetailProps {
   id: string;
@@ -45,13 +47,48 @@ export interface ProjectDetailProps {
     start: Date | null;
     end: Date | null;
   };
-  surmmry: Array<{ title: string; description: string }>;
+  surmmry: Array<{ id?: number; title: string; contents: string }>;
   thumbnail: string;
   contents: string;
   projectRoles: projectRoles[];
+  img_key: string;
 }
 
 export default function ProjectForm() {
+  const [search] = useSearchParams();
+  const projectNum = search.get("edit");
+
+  const { data } = useQuery({
+    queryKey: [`PROJECT_DETAIL:${projectNum}`],
+    queryFn: async () => {
+      return await requestHandler(async () => {
+        const response = await SupabasePool.getInstance()
+          .from("project_meta")
+          .select(
+            `
+            *,
+            project_contents(*),
+            project_meta_stack(
+              project_stack(id, stack, type)
+            ),
+            project_surmmry(id, title, contents)
+          `
+          )
+          .eq("id", projectNum);
+
+        if (response.error || !response.data || response.data.length === 0) {
+          throw new Error(
+            `요청 실패 : ${response.error?.message ?? "데이터 없음"}`
+          );
+        }
+
+        return response;
+      });
+    },
+    enabled: !!projectNum,
+    staleTime: Infinity,
+  });
+
   // 이미지키
   const imgKey = useMemo(() => uuidv4(), []);
 
@@ -61,12 +98,13 @@ export default function ProjectForm() {
     mutationFn: async (body: z.infer<typeof projectSchema>) => {
       try {
         const pool = SupabasePool.getInstance();
+        const isEdit = !!projectNum;
 
-        // meta
-        const { data: metaData, error: metaError } = await pool
-          .from("project_meta")
-          .insert([
-            {
+        if (isEdit) {
+          // ✅ 수정(PATCH)
+          const { error: updateError } = await pool
+            .from("project_meta")
+            .update({
               title: body.title,
               company: body.company,
               description: getPlainText(body.contents, 200),
@@ -80,67 +118,133 @@ export default function ProjectForm() {
               ),
               project_url: body.url,
               thumbnail: body.thumbnail,
-              img_key: imgKey,
-            },
-          ])
-          .select("id")
-          .single();
+            })
+            .eq("id", projectNum);
 
-        if (metaError) {
-          console.error("project_meta insert 실패:", metaError.message);
-          throw metaError;
-        }
+          if (updateError) throw updateError;
 
-        // content
-        const { error: contentError } = await pool
-          .from("project_contents")
-          .insert([
-            {
-              project_id: metaData.id,
+          // ✅ 내용 수정
+          const { error: contentError } = await pool
+            .from("project_contents")
+            .update({
               contents: body.contents,
-            },
-          ]);
+            })
+            .eq("project_id", projectNum);
 
-        if (contentError) {
-          console.error("project_content insert 실패:", contentError);
-          throw contentError;
-        }
+          if (contentError) throw contentError;
 
-        const surmmryValues = body.surmmry.map((item) => {
-          return {
-            project_id: metaData.id,
+          // ✅ 요약 삭제 후 재삽입
+          await pool
+            .from("project_surmmry")
+            .delete()
+            .eq("project_id", projectNum);
+
+          const summaryValues = body.surmmry.map((item) => ({
+            project_id: projectNum,
             title: item.title,
-            contents: item.description,
-          };
-        });
+            contents: item.contents,
+          }));
+          const { error: summaryError } = await pool
+            .from("project_surmmry")
+            .insert(summaryValues);
 
-        const { error: surmrryError } = await pool
-          .from("project_surmmry")
-          .insert(surmmryValues);
+          if (summaryError) throw summaryError;
 
-        if (surmrryError) {
-          console.error(
-            "summry insert 실패:",
-            surmrryError.message ?? surmrryError
-          );
-          throw surmrryError;
-        }
-
-        // stack은 다 대 다임 statck은 id만 전달함
-
-        const stackValues = body.useStack.map((item) => {
-          return {
-            project_id: metaData.id,
+          // ✅ 스택도 삭제 후 재삽입
+          await pool
+            .from("project_meta_stack")
+            .delete()
+            .eq("project_id", projectNum);
+          const stackValues = body.useStack.map((item) => ({
+            project_id: projectNum,
             stack_id: item,
-          };
-        });
-        const { error: stackError } = await pool
-          .from("project_meta_stack")
-          .insert(stackValues);
+          }));
+          const { error: stackError } = await pool
+            .from("project_meta_stack")
+            .insert(stackValues);
 
-        if (stackError) {
-          console.error("project_stack 실패:", stackError.message);
-          throw stackError;
+          if (stackError) throw stackError;
+        } else {
+          // meta
+          const { data: metaData, error: metaError } = await pool
+            .from("project_meta")
+            .insert([
+              {
+                title: body.title,
+                company: body.company,
+                description: getPlainText(body.contents, 200),
+                start_date: DateUtils.dateFormatKR(
+                  body.workRange.start!,
+                  "YYYY. MM. DD"
+                ),
+                end_date: DateUtils.dateFormatKR(
+                  body.workRange.end!,
+                  "YYYY. MM. DD"
+                ),
+                project_url: body.url,
+                thumbnail: body.thumbnail,
+                img_key: imgKey,
+              },
+            ])
+            .select("id")
+            .single();
+
+          if (metaError) {
+            console.error("project_meta insert 실패:", metaError.message);
+            throw metaError;
+          }
+
+          // content
+          const { error: contentError } = await pool
+            .from("project_contents")
+            .insert([
+              {
+                project_id: metaData.id,
+                contents: body.contents,
+              },
+            ]);
+
+          if (contentError) {
+            console.error("project_content insert 실패:", contentError);
+            throw contentError;
+          }
+
+          const surmmryValues = body.surmmry.map((item) => {
+            return {
+              project_id: metaData.id,
+              title: item.title,
+              contents: item.contents,
+            };
+          });
+
+          const { error: surmrryError } = await pool
+            .from("project_surmmry")
+            .insert(surmmryValues);
+
+          if (surmrryError) {
+            console.error(
+              "summry insert 실패:",
+              surmrryError.message ?? surmrryError
+            );
+            throw surmrryError;
+          }
+
+          // stack은 다 대 다임 statck은 id만 전달함
+
+          const stackValues = body.useStack.map((item) => {
+            return {
+              project_id: metaData.id,
+              stack_id: item,
+            };
+          });
+          const { error: stackError } = await pool
+            .from("project_meta_stack")
+            .insert(stackValues);
+
+          if (stackError) {
+            console.error("project_stack 실패:", stackError.message);
+            throw stackError;
+          }
         }
       } catch (err) {
         throw new Error("등록 실패 하였습니다.");
@@ -162,7 +266,7 @@ export default function ProjectForm() {
       surmmry: [
         {
           title: "",
-          description: "",
+          contents: "",
         },
       ],
       workRange: {
@@ -173,8 +277,37 @@ export default function ProjectForm() {
     resolver: zodResolver(projectSchema),
   });
 
-  console.log(form.watch());
-  console.log(form.formState.errors);
+  useEffect(() => {
+    if (!!projectNum && data) {
+      const result = data[0] as DetailProps;
+
+      // Stack
+      const stacks = result.project_meta_stack.map((e) => e.project_stack.id);
+
+      // Summry
+      const surmmrys = result.project_surmmry.map((e) => {
+        return {
+          id: e.id,
+          title: e.title,
+          contents: e.contents,
+        };
+      });
+
+      form.reset({
+        title: result.title,
+        company: result.company,
+        thumbnail: result.thumbnail,
+        url: result.project_url,
+        useStack: stacks,
+        surmmry: surmmrys,
+        workRange: {
+          start: new Date(result.start_date),
+          end: new Date(result.end_date),
+        },
+        contents: result.project_contents[0].contents,
+      });
+    }
+  }, [data]);
 
   const { editor } = useSimpleEditor({
     placeholder: "프로젝트 내용을 입력해주세요 .",
@@ -182,8 +315,6 @@ export default function ProjectForm() {
   });
 
   const onSubmitHandler = (e: z.infer<typeof projectSchema>) => {
-    console.log("submit::", e);
-
     mutate(e);
   };
 
@@ -262,7 +393,10 @@ export default function ProjectForm() {
                     <FormControl>
                       <EditorProvider editor={editor}>
                         <SimpleToolTip />
-                        <SimpleEditorContents onChange={field.onChange} />
+                        <SimpleEditorContents
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
                       </EditorProvider>
                     </FormControl>{" "}
                     <FormMessage />

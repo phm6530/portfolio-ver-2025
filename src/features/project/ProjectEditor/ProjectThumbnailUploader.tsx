@@ -39,7 +39,6 @@ interface ProjectThumbnailUploaderProps {
 }
 
 const ProjectThumbnailUploader: React.FC<ProjectThumbnailUploaderProps> = ({
-  value,
   projectKey,
 }) => {
   const { watch, setValue, trigger } =
@@ -91,7 +90,7 @@ const ProjectThumbnailUploader: React.FC<ProjectThumbnailUploaderProps> = ({
   };
 
   return (
-    <>
+    <div className="flex flex-col gap-3 overflow-hidden">
       <input
         type="file"
         className="hidden"
@@ -99,38 +98,30 @@ const ProjectThumbnailUploader: React.FC<ProjectThumbnailUploaderProps> = ({
         onChange={(e) => fileFiler(e)}
         ref={ref}
       />
-      <div className="border p-5 grid grid-cols-2 gap-10 border-foreground/50">
-        <div className="flex justify-between flex-col">
-          <h1>배너 이미지</h1>
-
-          <div className="grid grid-cols-2 gap-2">
-            <Button
-              variant={"ghost"}
-              type="button"
-              className="border border-foreground/50 text-xs"
-              onClick={() => {
-                setValue("thumbnail", "");
-                trigger("thumbnail");
-              }}
-            >
-              <Delete /> 이미지 삭제
-            </Button>
-          </div>
-        </div>
-        <div
-          className={cn(
-            " border min-h-[200px] border-dotted rounded-xl hover:border-indigo-400 cursor-pointer flex items-center justify-center aspect-[16/9]"
-          )}
-          onClick={() => ref.current?.click()}
-        >
-          {watch("thumbnail") ? (
-            <img src={`${IMG_URL}/${watch("thumbnail")}`} alt="" />
-          ) : (
-            <span className="opacity-60">Img File을 Drag & Drop 해주세요</span>
-          )}
-        </div>
+      <div
+        className={cn(
+          " border min-h-[200px] border-dotted rounded-xl hover:border-indigo-400 overflow-hidden cursor-pointer flex items-center justify-center aspect-[16/9]"
+        )}
+        onClick={() => ref.current?.click()}
+      >
+        {watch("thumbnail") ? (
+          <img src={`${IMG_URL}/${watch("thumbnail")}`} alt="" />
+        ) : (
+          <span className="opacity-60">Img File을 Drag & Drop 해주세요</span>
+        )}
       </div>
-    </>
+      <Button
+        variant={"ghost"}
+        type="button"
+        className="border border-foreground/50 text-xs"
+        onClick={() => {
+          setValue("thumbnail", "");
+          trigger("thumbnail");
+        }}
+      >
+        <Delete /> 이미지 삭제
+      </Button>
+    </div>
   );
 };
 

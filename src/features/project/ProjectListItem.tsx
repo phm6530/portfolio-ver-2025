@@ -9,16 +9,17 @@ import {
 
 import { ProjectPostProps } from "@/type/ProjectTypes";
 import { IMG_URL } from "@/constants/apiUrl";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProjectDetail from "./ProjectDetail";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { useGSAP } from "@gsap/react";
 
 const ProjectListItem: React.FC<{ project: ProjectPostProps }> = ({
   project,
 }) => {
   const [viewDetail, setViewDetail] = useState<boolean>(false);
-
+  const ref = useRef<HTMLDivElement>(null);
   const { thumbnail, company, hashtag, description, id } = project;
 
   useEffect(() => {
@@ -36,7 +37,7 @@ const ProjectListItem: React.FC<{ project: ProjectPostProps }> = ({
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setViewDetail(false);
+        closeModal();
       }
     };
 
@@ -53,23 +54,36 @@ const ProjectListItem: React.FC<{ project: ProjectPostProps }> = ({
     };
   }, [viewDetail]);
 
+  const closeModal = () => {
+    ref.current?.classList.remove("animate-popup-in");
+    ref.current?.classList.add("animate-popup-out");
+    setTimeout(() => {
+      setViewDetail(false);
+    }, 300);
+  };
+
+  useGSAP(() => {});
+
   return (
     <>
       {viewDetail && (
         <div className="fixed inset-0 z-100 backdrop-blur-sm flex justify-center items-start overflow-y-auto">
-          <div className="w-[80%] animate-popup-in my-20 bg-background max-w-[1100px] relative">
+          <div
+            className="w-[80%] animate-popup-in my-20 bg-background max-w-[1100px] relative"
+            ref={ref}
+          >
             <div className="absolute -right-[70px] w-[50px] h-full ">
               <div className="top-5 sticky">
                 <Button
                   variant={"ghost"}
                   className="size-10 rounded-full bg-transparent border-foreground/50 border"
-                  onClick={() => setViewDetail(false)}
+                  onClick={closeModal}
                 >
                   <X />
                 </Button>
               </div>
             </div>
-            <ProjectDetail id={+id} />
+            <ProjectDetail id={+id} closeModal={closeModal} />
           </div>
         </div>
       )}

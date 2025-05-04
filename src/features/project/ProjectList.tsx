@@ -1,7 +1,5 @@
 import ProjectListItem from "@/features/project/ProjectListItem";
-import CateGoryButton from "@/component/ui/CateGoryButton";
 import { ReactRouteDom } from "@/lib/lib";
-import SkeletonPost from "@/component/loading/Skeleton";
 
 import { useQuery } from "@tanstack/react-query";
 import { requestHandler } from "@/utils/apiUtils";
@@ -52,11 +50,11 @@ export default function ProjectList() {
           <>
             {data && data.length === 0 && "등록된 프로젝트가 없습니다.."}
             {data &&
-              data.map((project) => {
+              data.map((project, idx) => {
                 return (
                   <ProjectListItem
                     project={project}
-                    key={project.projectKey! + SeachValue}
+                    key={`projectList:${idx}`}
                   />
                 );
               })}
@@ -64,7 +62,7 @@ export default function ProjectList() {
         ) : (
           <>
             {/* 스켈레톤 */}
-            <SkeletonPost listCnt={6} />
+            <div />
           </>
         )}
       </div>
