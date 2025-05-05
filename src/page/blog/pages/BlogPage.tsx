@@ -7,7 +7,7 @@ import BlogTab from "@/features/Blog/BlogTab.js/BlogTab";
 const BlogPage = (): JSX.Element => {
   return (
     <>
-      <div className="flex flex-1 gap-7 border-b border-border ">
+      <div className="flex flex-1 gap-7 border-b border-border pb-8">
         {/* 최신글 */}
         <BlogNewPostList />
         <BlogTab />

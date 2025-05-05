@@ -2,7 +2,11 @@ import { z } from "zod";
 
 export const projectSchema = z.object({
   title: z.string().min(1, { message: "필수항목" }),
-  company: z.string().min(1, { message: "필수 항목" }),
+  company: z
+    .string()
+    .min(1, { message: "필수 항목 입니다" })
+    .max(200, { message: "200글자 내외로 기재해주세요" }),
+  description: z.string().min(1, { message: "설명을 입력해주세요." }),
   contents: z.string().min(1, { message: "필수 항목" }),
   url: z.string().nullable(),
   thumbnail: z.string().min(1, { message: "필수항목" }),

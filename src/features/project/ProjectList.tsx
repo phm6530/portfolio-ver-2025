@@ -1,17 +1,14 @@
 import ProjectListItem from "@/features/project/ProjectListItem";
-import { ReactRouteDom } from "@/lib/lib";
-
 import { useQuery } from "@tanstack/react-query";
 import { requestHandler } from "@/utils/apiUtils";
 import SupabasePool from "@/lib/supabaseClient";
 import { Button } from "@/components/ui/button";
-import { useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useStore from "@/store/zustandStore";
-
-const { useSearchParams } = ReactRouteDom;
 
 export default function ProjectList() {
   const login = useStore((state) => state.userAuth.login);
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ["project-list"],
     queryFn: async () => {
@@ -31,17 +28,14 @@ export default function ProjectList() {
     staleTime: Infinity,
   });
 
-  const [param] = useSearchParams();
-  const SeachValue = param.get("search");
-
   const nav = useNavigate();
 
   return (
     <>
-      <div className="grid grid-cols-3 gap-5 layout-center">
+      <div className="grid grid-cols-3 gap-5 layout-center ">
         {login && (
           <div className="col-span-3 flex items-center">
-            <Button onClick={() => nav("write")}>글쓰기</Button>
+            <Button onClick={() => nav("write")}>+ Add</Button>
           </div>
         )}
 
@@ -62,7 +56,18 @@ export default function ProjectList() {
         ) : (
           <>
             {/* 스켈레톤 */}
-            <div />
+            {Array.from({ length: 6 }).map((_, idx) => {
+              return (
+                <div key={`skeleton-${idx}`}>
+                  <div className="bg-foreground/10  aspect-[16/9] animate-pulse " />
+                  <div className="flex flex-col gap-3 mt-4">
+                    <div className="bg-foreground/10 animate-wiggle w-[100px] h-3 rounded-full"></div>
+                    <div className="bg-foreground/10 animate-wiggle w-2xs h-3 rounded-full"></div>
+                    <div className="bg-foreground/10 animate-wiggle w-2xs h-3 rounded-full"></div>
+                  </div>
+                </div>
+              );
+            })}
           </>
         )}
       </div>

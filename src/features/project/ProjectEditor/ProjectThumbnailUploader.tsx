@@ -11,6 +11,7 @@ import { projectSchema } from "../schema/project-schema";
 import { IMG_URL } from "@/constants/apiUrl";
 import { Button } from "@/components/ui/button";
 import { Delete, ReceiptEuroIcon, Recycle, Upload } from "lucide-react";
+import { FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
 const UPloadFileName = styled.div`
   font-size: 12px;
@@ -41,7 +42,7 @@ interface ProjectThumbnailUploaderProps {
 const ProjectThumbnailUploader: React.FC<ProjectThumbnailUploaderProps> = ({
   projectKey,
 }) => {
-  const { watch, setValue, trigger } =
+  const { watch, setValue, trigger, formState } =
     useFormContext<z.infer<typeof projectSchema>>();
 
   const ref = useRef<HTMLInputElement>(null);
@@ -85,43 +86,55 @@ const ProjectThumbnailUploader: React.FC<ProjectThumbnailUploaderProps> = ({
     const test = await mutateAsync(formData);
 
     setValue("thumbnail", test.result.url, { shouldValidate: true });
-    // shouldValidate = 설정된 값이 true일때 유효성 검사를 진행함.
-    // 값이 변경될때도 반영됨
   };
 
   return (
-    <div className="flex flex-col gap-3 overflow-hidden">
-      <input
-        type="file"
-        className="hidden"
-        id="input-file"
-        onChange={(e) => fileFiler(e)}
-        ref={ref}
-      />
-      <div
+    <>
+      <FormItem
         className={cn(
-          " border min-h-[200px] border-dotted rounded-xl hover:border-indigo-400 overflow-hidden cursor-pointer flex items-center justify-center aspect-[16/9]"
+          "w-full p-5 border border-foreground/20 rounded-lg",
+          !!formState.errors.thumbnail?.message && "border-destructive"
         )}
-        onClick={() => ref.current?.click()}
       >
-        {watch("thumbnail") ? (
-          <img src={`${IMG_URL}/${watch("thumbnail")}`} alt="" />
-        ) : (
-          <span className="opacity-60">Img File을 Drag & Drop 해주세요</span>
+        <FormLabel>메인 이미지</FormLabel>
+        <input
+          type="file"
+          className="hidden"
+          id="input-file"
+          onChange={(e) => fileFiler(e)}
+          ref={ref}
+        />
+        <div
+          className={cn(
+            "bg-foreground/5 min-h-[200px] rounded-xl hover:border-indigo-400 overflow-hidden cursor-pointer flex items-center justify-center aspect-[16/5]"
+          )}
+          onClick={() => ref.current?.click()}
+        >
+          {watch("thumbnail") ? (
+            <img src={`${IMG_URL}/${watch("thumbnail")}`} alt="" />
+          ) : (
+            <span className="opacity-60">Img File을 Drag & Drop 해주세요</span>
+          )}
+        </div>
+
+        <div className="flex flex-col justify-between">
+          <Button
+            variant={"ghost"}
+            type="button"
+            className="border border-foreground/50 text-xs"
+            onClick={() => {
+              setValue("thumbnail", "");
+              trigger("thumbnail");
+            }}
+          >
+            <Delete /> 이미지 삭제
+          </Button>
+        </div>
+        {!!formState.errors.thumbnail?.message && (
+          <FormMessage>{formState.errors.thumbnail?.message}</FormMessage>
         )}
-      </div>
-      <Button
-        variant={"ghost"}
-        type="button"
-        className="border border-foreground/50 text-xs"
-        onClick={() => {
-          setValue("thumbnail", "");
-          trigger("thumbnail");
-        }}
-      >
-        <Delete /> 이미지 삭제
-      </Button>
-    </div>
+      </FormItem>
+    </>
   );
 };
 

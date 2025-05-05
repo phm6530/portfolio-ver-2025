@@ -35,6 +35,7 @@ import { getPlainText } from "@/utils/plain-text";
 import { DateUtils } from "@/utils/dateUtil";
 import { requestHandler } from "@/utils/apiUtils";
 import { DetailProps } from "../ProjectDetail";
+import TextareaFormField from "@/components/shared/textareaField";
 
 export interface ProjectDetailProps {
   id: string;
@@ -101,13 +102,12 @@ export default function ProjectForm() {
         const isEdit = !!projectNum;
 
         if (isEdit) {
-          // ✅ 수정(PATCH)
           const { error: updateError } = await pool
             .from("project_meta")
             .update({
               title: body.title,
               company: body.company,
-              description: getPlainText(body.contents, 200),
+              description: body.description,
               start_date: DateUtils.dateFormatKR(
                 body.workRange.start!,
                 "YYYY. MM. DD"
@@ -172,7 +172,7 @@ export default function ProjectForm() {
               {
                 title: body.title,
                 company: body.company,
-                description: getPlainText(body.contents, 200),
+                description: body.description,
                 start_date: DateUtils.dateFormatKR(
                   body.workRange.start!,
                   "YYYY. MM. DD"
@@ -267,6 +267,7 @@ export default function ProjectForm() {
       company: "",
       contents: "",
       useStack: [],
+      description: "",
       surmmry: [
         {
           title: "",
@@ -304,6 +305,7 @@ export default function ProjectForm() {
         url: result.project_url,
         useStack: stacks,
         surmmry: surmmrys,
+        description: result.description,
         workRange: {
           start: new Date(result.start_date),
           end: new Date(result.end_date),
@@ -326,7 +328,7 @@ export default function ProjectForm() {
   };
 
   return (
-    <section className="max-w-[800px] mx-auto">
+    <section className="max-w-[800px] mx-auto mb-20">
       <h1 className="border-b border-foreground/40 text-2xl pb-3 mb-10">
         Project Created
       </h1>
@@ -336,11 +338,10 @@ export default function ProjectForm() {
           onSubmit={form.handleSubmit(onSubmitHandler)}
         >
           {/* Title */}
-
           <div className="grid w-full gap-2 grid-cols-2">
             <InputField
               name="title"
-              className="p-2"
+              className="p-2 "
               placeholder="프로젝트 제목을 입력해주세요"
               label="프로젝트 제목"
               errorField
@@ -349,29 +350,38 @@ export default function ProjectForm() {
             {/* Title */}
             <InputField
               name="company"
-              className="p-2"
+              className="p-2 "
               placeholder="프로젝트 제목을 입력해주세요"
               label="프로젝트 기관"
               errorField
             />
           </div>
 
-          <ProjectThumbnailUploader value="thumbnail" projectKey={imgKey} />
-
-          {/* Title */}
-          <InputField
-            name="url"
-            className="p-2 w-full"
-            placeholder="공개 된 url을 입력해주세요"
-            label="URL"
-            errorField
+          <TextareaFormField
+            label="설명"
+            name="description"
+            className="w-full"
+            placeholder="내용을 입력해주세요"
           />
 
-          {/* Pop Over */}
-          <FormItem>
-            <FormLabel>작업기간</FormLabel>
-            <DatePickerWithRange />
-          </FormItem>
+          {/* Title */}
+          <div className="w-full grid grid-cols-2 gap-2">
+            <InputField
+              name="url"
+              className="p-2 w-[100%] flex-1 border border-foreground/50!"
+              placeholder="공개 된 url을 입력해주세요"
+              label="URL"
+              errorField
+            />
+
+            {/* Pop Over */}
+            <FormItem>
+              <FormLabel>작업기간</FormLabel>
+              <DatePickerWithRange />
+            </FormItem>
+          </div>
+
+          <ProjectThumbnailUploader value="thumbnail" projectKey={imgKey} />
 
           {/* Stack */}
           <ProjectStackHandler />
@@ -405,15 +415,15 @@ export default function ProjectForm() {
                           onChange={field.onChange}
                         />
                       </EditorProvider>
-                    </FormControl>{" "}
+                    </FormControl>
                     <FormMessage />
-                  </FormItem>{" "}
+                  </FormItem>
                 </div>
               );
             }}
           />
 
-          <Button className="" type="submit">
+          <Button className="w-full" type="submit">
             Submit
           </Button>
         </form>

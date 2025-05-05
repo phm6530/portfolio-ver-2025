@@ -1,6 +1,6 @@
-import { BoardInfinityResponse } from "@type/BoardTypes";
+import { BoardInfinityResponse } from "@/type/BoardTypes";
 import axios from "axios";
-import { ENDPOINT_URL } from "constants/apiUrl";
+import { ENDPOINT_URL } from "@/constants/apiUrl";
 import { requestHandler } from "@/utils/apiUtils";
 
 // 초기 데이터 + 페이징

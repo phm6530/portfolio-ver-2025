@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import { SpinnerLoading } from "@/component/loading/SpinnerLoading";
-import QuillView from "@/component/editor/QuillView";
 import NotfoundPage from "@/component/error/NotfoundPage";
 
 import * as S from "./BlogDetailStyle";
@@ -12,7 +11,6 @@ import { DateUtils } from "@/utils/dateUtil";
 import {
   EditorProvider,
   SimpleEditorContents,
-  SimpleToolTip,
   useSimpleEditor,
 } from "@squirrel309/my-testcounter";
 import { HtmlContentNormalizer } from "@/utils/HtmlContentNormalizer";

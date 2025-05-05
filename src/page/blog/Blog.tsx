@@ -26,13 +26,14 @@ const Blog = (): JSX.Element => {
           pageTitle={"Blog"}
           subComment={'"퍼블리셔와 개발자 사이 그어딘가"'}
         />
-        <CustomGrid>
+
+        <div className="layout-center">
           <BoardWrapper>
             <Motion.FadeInOut>
               <BlogRoutes />
             </Motion.FadeInOut>
           </BoardWrapper>
-        </CustomGrid>
+        </div>
       </PageWrapper>
     </>
   );

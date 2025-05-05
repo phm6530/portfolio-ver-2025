@@ -1,5 +1,4 @@
 import axios from "axios";
-import { toast } from "react-toastify";
 
 export async function requestHandler<T>(
   cb: () => Promise<{ data: T }>
@@ -8,11 +7,12 @@ export async function requestHandler<T>(
     const { data } = await cb();
     return data;
   } catch (e) {
-    const errMsg =
-      axios.isAxiosError(e) && e.response?.data.message
-        ? e.response.data.message
-        : "알 수 없는 오류";
-    toast.error(errMsg);
-    throw e;
+    if (axios.isAxiosError(e)) {
+      throw new Error(e.response?.data.message);
+    } else if (e instanceof Error) {
+      throw new Error(e.message);
+    } else {
+      throw new Error("알 수 없는 오류");
+    }
   }
 }

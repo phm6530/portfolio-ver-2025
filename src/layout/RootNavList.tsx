@@ -14,11 +14,11 @@ const RootNavList: React.FC<{ drawerView: boolean; scrollOver: boolean }> = ({
   drawerView,
   scrollOver,
 }) => {
-  const { darkMode, userAuth } = useStore((state) => state);
+  const { userAuth } = useStore((state) => state);
   const { popupSetView, PopupComponent } = usePopupHook();
   const logout = useStore((state) => state.userAuthLogout);
 
-  const { mutate, mutateAsync } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: async () => {
       await SupabasePool.getInstance().auth.signOut();
     },
@@ -38,22 +38,26 @@ const RootNavList: React.FC<{ drawerView: boolean; scrollOver: boolean }> = ({
 
       <nav
         className={cn(
-          `flex gap-3 md:flex-row md:static md:bg-transparent md:h-auto md:w-auto md:max-w-none`,
-          "flex-col fixed bg-background -right-[100%] h-screen   w-[calc(100%-50px)] max-w-[400px]",
+          `flex gap-3 md:flex-row md:static top-0 md:bg-transparent md:h-auto md:w-auto md:max-w-none`,
+          "flex-col fixed bg-background   px-5 md:px-0 pt-4 md:pt-0 -right-[100%] items-start  md:items-center h-screen  z-200 w-[calc(100%-50px)] max-w-[400px] ",
           drawerView && "right-0"
         )}
         style={{
           transition: "right 0.75s cubic-bezier(0.77, 0.2, 0.05, 1)",
         }}
       >
-        <div className="md:order-1 order-2 flex gap-5 items-center md:flex-row flex-col">
+        <div className="md:order-1 mt-10 md:mt-0 pl-5 md:pl-0  w-full items-start  md:w-auto order-2 flex gap-0 md:gap-5 md:items-center md:flex-row flex-col">
           {NAVPAGE_OBJECT.map((e, idx) => {
             const onAuthPage = e.AuthPage === true;
 
             if (!userAuth.login && onAuthPage) return;
             return (
               <span
-                className="text-sm cursor-pointer"
+                className={cn(
+                  "text-2xl py-5 md:py-0 md:text-sm relative  cursor-pointer group font-bold md:font-normal hover:pl-5  md:hover:pl-0 transition-all w-full md:text-red-50 font-Montserrat md:font-Poppins menu-item",
+                  e.path === pathname && " pl-5 md:pl-0 text-indigo-500",
+                  drawerView && "on"
+                )}
                 key={`nav-${idx}`}
                 onClick={() => {
                   if (e.path === pathname) return;
@@ -62,6 +66,10 @@ const RootNavList: React.FC<{ drawerView: boolean; scrollOver: boolean }> = ({
                   }
                 }}
               >
+                {e.path === pathname && (
+                  <div className="absolute h-[50%] border-l-4 -left-[10px] md:hidden block" />
+                )}
+                <div className="absolute h-[50%] border-l-4 -left-[10px] md:group-hover:hidden group-hover:block hidden animate-wiggle" />
                 {e.pathName}
               </span>
             );
@@ -74,7 +82,10 @@ const RootNavList: React.FC<{ drawerView: boolean; scrollOver: boolean }> = ({
 
           {/* login */}
           {!userAuth.login && (
-            <span className="text-sm" onClick={() => popupSetView(true)}>
+            <span
+              className="text-sm cursor-pointer"
+              onClick={() => popupSetView(true)}
+            >
               로그인
             </span>
           )}

@@ -1,8 +1,6 @@
-import * as S from "@/layout/RootNavStyle";
 import BackDrop from "@/component/popup/Backdrop";
 import TopButton from "@/component/ui/TopButton";
 import useScrollY from "@/hooks/useScrollY";
-import useStore from "@/store/zustandStore";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import DrawerMenu from "@/component/ui/DrawerMenu";
@@ -10,7 +8,6 @@ import RootNavList from "./RootNavList";
 import { cn } from "@/lib/utils";
 
 export default function RootNav() {
-  const darkMode = useStore((state) => state.darkMode);
   const { scrollOver } = useScrollY(430);
   const location = useLocation();
   const navigate = useNavigate();

@@ -1,180 +1,151 @@
-import styled from 'styled-components';
-const { useLocation } = ReactRouteDom;
+import { Controller } from "react-hook-form";
+import BoardCommentInput from "./BoardCommentInput";
+import { useForm } from "react-hook-form";
 
-import { Controller, SubmitHandler } from 'react-hook-form';
-import { v4 as uuidv4 } from 'uuid';
+import useCommentAdd from "../hooks/useCommentAdd";
+import BoardCrector from "@/features/Board/BoardCrector/BoardCrector";
+import { randomCrector } from "@/features/Board/BoardCrector/randomCrector";
+import { useCallback, useEffect } from "react";
+import useStore from "@/store/zustandStore";
+import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useLocation } from "react-router-dom";
+import { z } from "zod";
+import { CommentFormSchema, dynamicSchema } from "../schema";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { requestHandler } from "@/utils/apiUtils";
+import { axiosApi } from "@/config/axios.config";
+import useThrottling from "@/hooks/useThrottling";
+import { cn } from "@/lib/utils";
+import { Mail, Pen, PenBoxIcon, Send } from "lucide-react";
+import ErrorBubble from "@/component/error/ErrorBubble";
 
-import { findForBadword, scriptReplace } from 'utils/wordingFilters';
-import BoardCommentInput from './BoardCommentInput';
+type CommentFormValues = z.infer<ReturnType<typeof dynamicSchema>>;
 
-import { Button } from 'component/ui/Button';
-import { ReactRouteDom } from 'lib/lib';
-import { yupResolver } from '@hookform/resolvers/yup'; // Yup + form hook 연동
-import { useForm } from 'react-hook-form';
+export default function BoardCommentForm({
+  parent_id,
+}: {
+  parent_id?: null | number;
+}) {
+  const login = useStore((state) => state.userAuth.login);
+  const { commentsViewOff } = useStore(); // Zustand로 공유
+  const { throttle } = useThrottling();
 
-import useCommentAdd from '../hooks/useCommentAdd';
-import BoardCrector from '@features/Board/BoardCrector/BoardCrector';
-import CrectorView from '@features/Board/BoardCrector/BoardCrectorView';
-
-import { randomCrector } from '@features/Board/BoardCrector/randomCrector';
-import { useEffect } from 'react';
-import { yupSchema } from '@features/Board/BoardCommentForm/YupSchema';
-import useStore from 'store/zustandStore';
-
-const BoardReplyStyle = styled.div`
-    border-radius: 1em 1em 0 0;
-    display: flex;
-    position: relative;
-    .InputWrap {
-        flex-grow: 1;
-        width: 100%;
-    }
-`;
-
-const FormStyle = styled.form`
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    flex-grow: 1;
-    align-items: flex-start;
-    background-clip: text;
-    -webkit-background-clip: text;
-`;
-
-export default function BoardCommentForm() {
-    const login = useStore(state => state.userAuth.login);
-    // Comment Add Hook
-    const { mutate: addMutate } = useCommentAdd();
-    const location = useLocation();
-
-    // 유효성검사
-    const schema = yupSchema(login);
-
-    // React-hook-form
-    const {
-        reset,
-        handleSubmit,
-        control,
-        watch,
-        formState: { errors },
-        getValues,
-    } = useForm({
-        resolver: yupResolver(schema),
-        defaultValues: {
-            userIcon: '',
-            userName: login ? 'Admin' : '',
-            contents: '',
-            password: '',
-        },
-    });
-
-    useEffect(() => {
-        const currentValues = getValues();
-        reset({
-            ...currentValues,
-            userName: login ? 'Admin' : '',
-            userIcon: randomCrector(login),
-        });
-    }, [login, reset, getValues]);
-
-    // submit
-    const onSubmitHandlr: SubmitHandler<{
-        contents: string;
-        userName: string;
-    }> = async ({ contents, userName, ...data }) => {
-        // 욕설 필터링
-        if (!findForBadword(contents)) return;
-
-        const formData = {
-            idx: uuidv4(),
-            contents: scriptReplace(contents),
-            userName: scriptReplace(userName),
-            ...data,
-            page: new URLSearchParams(location.search).get('page') || 1,
-        };
-
-        // 요청
-        addMutate(formData);
-
-        reset({
-            ...getValues(),
-            userName: login ? 'Admin' : '',
-            contents: '',
-            password: '',
-        });
+  const defaultValues = useCallback((parent_id?: number | null) => {
+    return {
+      guest: "",
+      userIcon: "",
+      comment: "",
+      password: "",
+      ...(parent_id && { parent_id }),
     };
+  }, []);
 
-    return (
-        <BoardReplyStyle>
-            {/* 캐릭터 뷰 */}
-            {login && <CrectorView watchIcon={watch('userIcon')} />}
+  const form = useForm<CommentFormSchema>({
+    defaultValues: defaultValues(parent_id),
+    resolver: zodResolver(dynamicSchema(!!parent_id, !!login)),
+  });
 
-            <FormStyle method="POST" onSubmit={handleSubmit(onSubmitHandlr)}>
-                {/* 캐릭터 영역 */}
-                {!login && (
-                    <Controller
-                        name="userIcon"
-                        control={control}
-                        render={({ field }) => (
-                            <BoardCrector
-                                value={field.value}
-                                onChange={field.onChange}
-                                name="userIcon"
-                            />
-                        )}
-                    />
+  const { mutate } = useMutation({
+    mutationFn: async (data: CommentFormValues) => {
+      return requestHandler(async () => {
+        return await axiosApi.post(
+          `/guestboard`,
+          parent_id ? { ...data, parent_id } : data
+        );
+      });
+    },
+    onSuccess: () => {
+      toast.success("등록 되었습니다.");
+      form.reset(defaultValues(parent_id));
+      if (!!parent_id) commentsViewOff();
+    },
+  });
+
+  const onSubmitHandlr = (data: CommentFormValues) => {
+    throttle(async () => mutate(data), 1500);
+  };
+
+  useEffect(() => {
+    form.reset({
+      ...defaultValues(),
+      userIcon: randomCrector(login),
+      ...(parent_id && { parent_id }),
+    });
+  }, [parent_id, login]);
+
+  const errors = Object.values(form.formState.errors).map((e) => e.message);
+  console.log(errors);
+
+  return (
+    <>
+      <form
+        className={cn(
+          "w-full flex flex-col items-start relative",
+          !!parent_id && "animate-wiggle"
+        )}
+        method="POST"
+        onSubmit={form.handleSubmit(onSubmitHandlr)}
+      >
+        {errors.length > 0 && <ErrorBubble>{errors[0]}</ErrorBubble>}
+        <div className="flex flex-wrap gap-3 w-full mt-5">
+          {!login && (
+            <>
+              <Controller
+                name="guest"
+                control={form.control}
+                render={({ field }) => (
+                  <BoardCommentInput
+                    {...field}
+                    label="닉네임"
+                    isAuth={login}
+                    placeholder={"닉네임"}
+                    type={"text"}
+                    error={form.formState.errors.guest}
+                  />
                 )}
+              />
 
-                <div className="InputWrap">
-                    <Controller
-                        name="userName"
-                        control={control}
-                        render={({ field }) => (
-                            <BoardCommentInput
-                                {...field}
-                                label="글쓴이"
-                                isAuth={login}
-                                placeholder={'이름을 입력해주세요.'}
-                                type={'text'}
-                                error={errors.userName}
-                            />
-                        )}
-                    />
-                    {!login && (
-                        <Controller
-                            name="password"
-                            control={control}
-                            render={({ field }) => (
-                                <BoardCommentInput
-                                    {...field}
-                                    label="password"
-                                    type={'password'}
-                                    placeholder={
-                                        '4자 이상의 비밀번호를 입력해주세요.'
-                                    }
-                                    error={errors?.password}
-                                />
-                            )}
-                        />
-                    )}
-                    <Controller
-                        name="contents"
-                        control={control}
-                        render={({ field }) => (
-                            <BoardCommentInput
-                                {...field}
-                                label="댓글"
-                                type={'textarea'}
-                                placeholder={'남기실 댓글 내용을 입력해주세요!'}
-                                error={errors?.contents}
-                            />
-                        )}
-                    />
-                    <Button.Submit style={{ marginLeft: 'auto' }}>
-                        Submit
-                    </Button.Submit>
-                </div>
-            </FormStyle>
-        </BoardReplyStyle>
-    );
+              <Controller
+                name="password"
+                control={form.control}
+                render={({ field }) => (
+                  <BoardCommentInput
+                    {...field}
+                    label="비밀번호"
+                    type={"password"}
+                    placeholder={"비밀번호"}
+                    error={form.formState.errors.password}
+                  />
+                )}
+              />
+            </>
+          )}
+        </div>
+
+        <div className="w-full flex mt-2 gap-3 mb-13 items-stretch">
+          <Controller
+            name="comment"
+            control={form.control}
+            render={({ field }) => (
+              <BoardCommentInput
+                {...field}
+                label="댓글"
+                type={"textarea"}
+                placeholder={"남기실 댓글 내용을 입력해주세요!"}
+                sum
+                error={form.formState.errors.comment}
+              />
+            )}
+          />
+          <button className="relative w-[100px] inline-flex items-center justify-center p-0.5  me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+            <span className="relative w-full h-full flex justify-center items-center  transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
+              <PenBoxIcon />
+            </span>
+          </button>
+        </div>
+      </form>
+    </>
+  );
 }

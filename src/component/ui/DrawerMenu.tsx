@@ -77,7 +77,7 @@ const MenuToggle = styled.div<{
     transform: translateY(-8px) rotate(-45deg);
   }
   display: none;
-  @media ${device.laptopL} {
+  @media ${device.tablet} {
     display: block;
   }
 `;

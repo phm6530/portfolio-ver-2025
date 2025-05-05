@@ -15,7 +15,8 @@ textarea:focus {
   outline: none;
 }
 
-textarea::-moz-placeholder, input::-moz-placeholder {
+textarea::-moz-placeholder,
+input::-moz-placeholder {
   font-size: 12px;
 }
 
@@ -28,11 +29,6 @@ input::placeholder {
   color: rgb(233, 97, 97);
 }
 
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 nav ul {
   display: flex;
 }
@@ -40,4 +36,4 @@ nav ul li {
   margin-left: 30px;
   padding: 25px 0px;
   font-size: 14px;
-}/*# sourceMappingURL=variable.css.map */
+} /*# sourceMappingURL=variable.css.map */

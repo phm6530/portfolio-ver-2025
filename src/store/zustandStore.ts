@@ -17,6 +17,12 @@ interface AuthState {
   user: User;
 }
 
+type CommentFormView = {
+  commentsViewId: number | null;
+  toggleFormView: (id: number) => void;
+  commentsViewOff: () => void;
+};
+
 //get userData
 const getUserdataLocalstorage = () => {
   const userFromStorage = localStorage.getItem("user");
@@ -49,9 +55,33 @@ const initialDarkModeState: boolean =
     ? true
     : localStorage.getItem("darkMode") === "true";
 
+// 대댓글 Ｆｏｒｍ
+const toggleForm = (
+  set: (fn: (state: CommentFormView) => Partial<CommentFormView>) => void
+) => {
+  return {
+    commentsViewId: null,
+    toggleFormView: (id: number) =>
+      set((state) => ({
+        commentsViewId: state.commentsViewId === id ? null : id,
+      })),
+    commentsViewOff: () =>
+      set(() => ({
+        commentsViewId: null,
+      })),
+  };
+};
+
 //Store 전체 타입
-interface StoreState extends DarkModeTypes, UserAuthTypes, ModalTypes {}
+interface StoreState
+  extends DarkModeTypes,
+    UserAuthTypes,
+    ModalTypes,
+    CommentFormView {}
+
 const useStore = create<StoreState>((set) => ({
+  ...toggleForm(set), //toogle Form
+
   //다크모드
   darkMode: initialDarkModeState,
   darkmodeToggle: () =>

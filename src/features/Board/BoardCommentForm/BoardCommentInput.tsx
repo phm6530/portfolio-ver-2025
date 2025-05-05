@@ -1,75 +1,46 @@
-import { forwardRef } from 'react';
-import { InputStyle, TextAreaStyle } from 'component/ui/TextArea';
+import { forwardRef } from "react";
+import ErrorBubble from "@/component/error/ErrorBubble";
+import { FieldError } from "react-hook-form";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+import { Textarea } from "@/components/ui/textarea";
 
-import styled from 'styled-components';
-import ErrorBubble from 'component/error/ErrorBubble';
-import { FieldError } from 'react-hook-form';
-
-const FormInputDiv = styled.div`
-    border-radius: 10px;
-    font-size: 14px;
-    margin-bottom: 10px;
-    display: flex;
-    position: relative;
-    flex-direction: column;
-
-    textarea {
-        width: 100%;
-        min-height: 10px;
-    }
-
-    input:focus,
-    textarea:focus {
-        background: #fff;
-    }
-
-    span {
-        left: 10px;
-        display: block;
-        font-weight: bold;
-        width: 80px;
-        margin-left: 5px;
-        margin-bottom: 4px;
-        margin-top: 0.2rem;
-    }
-`;
 interface BoardCommentInputProps {
-    label: string;
-    error?: FieldError;
-    type?: string;
-    name: string;
-    placeholder?: string;
-    disabled?: boolean;
-    isAuth?: boolean;
+  label: string;
+  error?: FieldError;
+  type?: string;
+  name: string;
+  placeholder?: string;
+  disabled?: boolean;
+  isAuth?: boolean;
+  sum?: boolean;
 }
 const BoardCommentInput = forwardRef<
-    HTMLInputElement | HTMLDivElement,
-    BoardCommentInputProps
->(({ label, error, type, isAuth, name, ...rest }, ref) => {
-    return (
-        <>
-            <FormInputDiv>
-                <span>{label}</span>
-                {type === 'textarea' ? (
-                    <TextAreaStyle
-                        ref={ref as React.Ref<HTMLTextAreaElement>}
-                        $error={!!error}
-                        {...rest}
-                    />
-                ) : (
-                    <InputStyle
-                        ref={ref as React.Ref<HTMLInputElement>}
-                        $error={!!error}
-                        type={name === 'password' ? 'password' : 'text'}
-                        autoComplete="off"
-                        disabled={isAuth}
-                        {...rest}
-                    />
-                )}
-                {error && <ErrorBubble>{error.message}</ErrorBubble>}
-            </FormInputDiv>
-        </>
-    );
+  HTMLInputElement | HTMLDivElement,
+  BoardCommentInputProps
+>(({ label, error, type, isAuth, name, sum, ...rest }, ref) => {
+  return (
+    <>
+      <div className={cn("relative", sum && "w-full")}>
+        {type === "textarea" ? (
+          <Textarea
+            ref={ref as React.Ref<HTMLTextAreaElement>}
+            {...rest}
+            className={cn("  rounded-lg", error && "border-destructive!")}
+          />
+        ) : (
+          <Input
+            disabled={isAuth}
+            autoComplete="off"
+            className={cn(" rounded-lg p-2", error && "border-destructive")}
+            {...rest}
+            type={type}
+          />
+        )}
+        {/* {error && <ErrorBubble>{error.message}</ErrorBubble>} */}
+      </div>
+    </>
+  );
 });
 
 export default BoardCommentInput;

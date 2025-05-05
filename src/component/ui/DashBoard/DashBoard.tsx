@@ -4,6 +4,7 @@ import DashBoardTitle from "./DashBoardTitle";
 import { Grid } from "@/layout/Grid";
 import BackgroundImgCover from "../BackgroundImgCover";
 import StarAnimation from "@/component/animations/StarAnimation";
+import { Button } from "@/components/ui/button";
 
 const PageBanner = styled.div`
   overflow: hidden;
@@ -111,7 +112,6 @@ const DashBoard: React.FC<DashBoardProps> = ({
       {/* 백그라운드 */}
       <BackgroundImgCover imgSrc="/img/Main_bg.webp">
         <StarAnimation />
-        {/* <ShootingStar /> <Star id="main"></Star> */}
       </BackgroundImgCover>
 
       <BannerGrid>
@@ -122,9 +122,15 @@ const DashBoard: React.FC<DashBoardProps> = ({
 
         {subComment && <PageInfoText>{subComment}</PageInfoText>}
 
-        {/* <PathStyle>
-                    <IoMdHome /> HOME {pathname.replace('/', ' / ')}
-                </PathStyle> */}
+        {/* <div className="border border-white/20 p-5 bg-white/10 rounded-lg">
+          <p className="text-sm">
+            해당 페이지는 개인 Next.js Blog Api를 통해 리스트만 가져옵니다.
+          </p>
+          <br></br>
+          <Button className="border" variant={"outline"}>
+            Next.js Blog 바로가기
+          </Button>
+        </div> */}
       </BannerGrid>
     </PageBanner>
   );

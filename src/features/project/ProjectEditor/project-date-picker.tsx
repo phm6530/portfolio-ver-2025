@@ -38,7 +38,7 @@ export function DatePickerWithRange({
                 id="date"
                 variant={"ghost"}
                 className={cn(
-                  "w-[300px] justify-start rounded-sm border text-left font-normal",
+                  " justify-start rounded-sm border text-left font-normal w-full",
                   !field.value?.start && "text-muted-foreground",
                   formState.errors.workRange && "border-destructive"
                 )}
@@ -71,7 +71,7 @@ export function DatePickerWithRange({
               )}
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
-              <FormItem>
+              <FormItem className="w-full">
                 <Calendar
                   locale={ko}
                   mode="range"

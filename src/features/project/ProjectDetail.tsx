@@ -18,7 +18,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Calendar } from "lucide-react";
+import { Calendar, Info, Link, Link2Icon } from "lucide-react";
 import ProjectDetailSkeleton from "./project-detail-skeleton";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -136,79 +136,114 @@ const ProjectDetail = ({
 
   return (
     <>
-      <section className="grid grid-cols-[300px_auto] gap-20 p-15 shadow-2xl animate-wiggle">
-        <div className="col-span-2 flex gap-2 justify-end">
-          <Button onClick={() => nav(`/project/write?edit=${id}`)}>수정</Button>
-          <Button onClick={deleteConfirm}>삭제</Button>
-        </div>
-        <div className=" break-keep flex flex-col gap-12 items-start">
-          <div>
-            <h1 className="text-3xl leading-12">{title}</h1>
-            <p className="text-base leading-7 text-foreground/70">
-              {description}
-            </p>
-          </div>
-          <div className="flex flex-col gap-2">
-            <h1 className="flex gap-2 items-center">프로젝트 기간</h1>
-            <div className="flex text-xs items-center gap-3 ">
-              <Calendar size={15} /> {start_date} - {end_date}
+      <section className="shadow-2xl animate-wiggle">
+        <div className="flex items-center bg-zinc-900 justify-center py-2">
+          <div className=" max-w-[calc(100%-112px)] w-full items-center flex">
+            <div className="text-xs flex items-center gap-2">
+              <Info size={14} className="text-white" />
+              <span className="text-indigo-100">
+                ESC를 누르면 팝업창이 닫힙니다.
+              </span>
+            </div>
+            <div className="w-full text-right flex  justify-end flex-1 divide-x">
+              <span
+                className="text-xs  cursor-pointer px-2"
+                onClick={() => nav(`/project/write?edit=${id}`)}
+              >
+                수정
+              </span>
+              <span
+                className="text-xs cursor-pointer px-2"
+                onClick={deleteConfirm}
+              >
+                삭제
+              </span>
             </div>
           </div>
-          <article>
-            <h1>Stack</h1>
-            <div className="flex flex-wrap gap-2">
-              {project_meta_stack.map((e, idx) => (
-                <div
-                  key={`stack:${idx}`}
-                  className="border text-xs p-2  border-indigo-500 text-indigo-600"
-                >
-                  {e.project_stack.stack}
-                </div>
-              ))}
-            </div>
-          </article>
-          <Button
-            variant={"ghost"}
-            className="w-full text-xs border border-foreground/30 rounded-xs"
-          >
-            View
-          </Button>
         </div>
 
-        <div className="p-0 flex-1">
-          <img
-            src={`${IMG_URL}/${thumbnail}`}
-            alt=""
-            className="border border-foreground/30 w-[100%]"
-          />
+        <div className="grid grid-cols-[300px_auto] divide-x divide-border p-14 bg-zinc-50 dark:bg-[#191919]">
+          <div className=" break-keep flex flex-col gap-12 items-start pr-10">
+            <div className="flex flex-col gap-5">
+              <h1 className="text-3xl leading-12 font-Montserrat font-bold">
+                {title}
+              </h1>
+              <p className="text-base leading-7 text-foreground/70">
+                {description}
+              </p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <h1 className="text-xl flex gap-2 items-center font-Montserrat font-bold text-indigo-200">
+                WORK RANGE
+              </h1>
+              <div className="flex text-xs items-center gap-3 ">
+                <Calendar size={15} /> {start_date} - {end_date}
+              </div>
+            </div>
+            <article>
+              <h1 className="text-xl font-semibold font-Montserrat text-indigo-200">
+                Stack
+              </h1>
+              <div className="flex flex-wrap gap-2">
+                {project_meta_stack.map((e, idx) => (
+                  <div
+                    key={`stack:${idx}`}
+                    className=" text-xs p-2 rounded-lg  border border-indigo-300/20"
+                  >
+                    {e.project_stack.stack}
+                  </div>
+                ))}
+              </div>
+            </article>
+            <Button
+              variant={"outline"}
+              className="w-full text-xs border border-foreground/30 rounded-xs bg-indigo-00!"
+            >
+              View <Link2Icon />
+            </Button>
+          </div>
 
-          <Accordion type="single" collapsible className="w-full my-7">
-            {project_surmmry.map((item, idx) => {
-              return (
-                <AccordionItem
-                  value={`${idx}`}
-                  key={`${idx}-acodian`}
-                  className="outline px-4"
-                >
-                  <AccordionTrigger className="font-bold">
-                    {item.title}
-                  </AccordionTrigger>
-                  <AccordionContent>{item.contents}</AccordionContent>
-                </AccordionItem>
-              );
-            })}
-          </Accordion>
-          <EditorProvider editor={editor}>
-            {project_contents.length > 0 && (
-              <EditorProvider editor={editor}>
-                <SimpleEditorContents
-                  value={HtmlContentNormalizer.setImgUrl(
-                    project_contents[0].contents
-                  )}
-                />
-              </EditorProvider>
-            )}
-          </EditorProvider>
+          <div className="p-0 flex-1 pl-10">
+            <img
+              src={`${IMG_URL}/${thumbnail}`}
+              alt=""
+              className="border border-border w-[100%] rounded-xl"
+            />
+
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full my-7 flex flex-col gap-3"
+            >
+              {project_surmmry.map((item, idx) => {
+                return (
+                  <AccordionItem
+                    value={`${idx}`}
+                    key={`${idx}-acodian`}
+                    className=" border-0!  "
+                  >
+                    <AccordionTrigger className=" px-4 border-zinc-200  dark:bg-zinc-800">
+                      {item.title}
+                    </AccordionTrigger>
+                    <AccordionContent className="p-3">
+                      {item.contents}
+                    </AccordionContent>
+                  </AccordionItem>
+                );
+              })}
+            </Accordion>
+            <EditorProvider editor={editor}>
+              {project_contents.length > 0 && (
+                <EditorProvider editor={editor}>
+                  <SimpleEditorContents
+                    value={HtmlContentNormalizer.setImgUrl(
+                      project_contents[0].contents
+                    )}
+                  />
+                </EditorProvider>
+              )}
+            </EditorProvider>
+          </div>
         </div>
       </section>
     </>

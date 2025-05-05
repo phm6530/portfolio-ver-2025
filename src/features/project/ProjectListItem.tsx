@@ -69,7 +69,7 @@ const ProjectListItem: React.FC<{ project: ProjectPostProps }> = ({
       {viewDetail && (
         <div className="fixed inset-0 z-100 backdrop-blur-sm flex justify-center items-start overflow-y-auto">
           <div
-            className="w-[80%] animate-popup-in my-20 bg-background max-w-[1100px] relative"
+            className="w-[80%] animate-popup-in my-20 bg-zinc-800 max-w-[1100px] relative"
             ref={ref}
           >
             <div className="absolute -right-[70px] w-[50px] h-full ">
@@ -88,7 +88,7 @@ const ProjectListItem: React.FC<{ project: ProjectPostProps }> = ({
         </div>
       )}
 
-      <div className="cursor-pointer" onClick={() => setViewDetail(true)}>
+      <div className="cursor-pointer mb-10" onClick={() => setViewDetail(true)}>
         <div
           className="aspect-[16/9] bg-cover relative"
           style={{ backgroundImage: `url(${IMG_URL}/${thumbnail})` }}
@@ -101,10 +101,10 @@ const ProjectListItem: React.FC<{ project: ProjectPostProps }> = ({
         <ProjectItemWrap>
           {/* Header */}
           <ProjectCompany>{company}</ProjectCompany>
-          <ProjectItemHeaderStyle>{project.title}</ProjectItemHeaderStyle>
+          <h1 className="mt-5 font-semibold text-lg mb-2">{project.title}</h1>
 
           {/* Company */}
-          <p className="line-clamp-2 text-xs leading-6">{description}</p>
+          <p className="line-clamp-2 text-sm leading-6">{description}</p>
           <div>
             {hashtag &&
               hashtag.map((e: string, idx: number) => (

@@ -4,6 +4,7 @@ import { X } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import { projectSchema } from "../schema/project-schema";
 import { z } from "zod";
+import useRows from "@/hooks/useRows";
 
 export default function SummryItem({
   idx,
@@ -14,7 +15,14 @@ export default function SummryItem({
   onDelete: (idx: number) => void;
   error: boolean;
 }) {
-  const { register, watch } = useFormContext<z.infer<typeof projectSchema>>();
+  const { register } = useFormContext<z.infer<typeof projectSchema>>();
+  const [rows, rowsHandler] = useRows();
+
+  const {
+    ref,
+    onChange: rhfOnChange,
+    ...rest
+  } = register(`surmmry.${idx}.contents`);
 
   return (
     <div
@@ -47,9 +55,15 @@ export default function SummryItem({
         </div>
         <div className="items-center gap-3 pt-3 ">
           <textarea
-            className="w-full placeholder:text-foreground/60"
+            className="w-full placeholder:text-foreground/60 resize-y"
             placeholder="해당 항목 내용을 입력해주세요"
-            {...register(`surmmry.${idx}.contents`)}
+            rows={rows}
+            onChange={(e) => {
+              rowsHandler(e);
+              rhfOnChange(e);
+            }}
+            ref={ref}
+            {...rest}
           />
         </div>
       </div>
