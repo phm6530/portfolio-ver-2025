@@ -25,8 +25,10 @@ const BlogTabDetail: React.FC<BlogTabDetailProps> = ({
     <>
       <button
         className={cn(
-          "items-center border border-border p-2 px-3 text-sm rounded-full",
-          categoryParams === category && itemParams === item && "border-red-200"
+          "border border-border p-3 text-sm",
+          categoryParams === category &&
+            itemParams === item &&
+            "bg-zinc-900 dark:bg-primary text-background dark:text-white"
         )}
         onClick={() =>
           navigateHandler({
@@ -35,7 +37,17 @@ const BlogTabDetail: React.FC<BlogTabDetailProps> = ({
           })
         }
       >
-        {item} <span className="text-xs text-count">({cnt})</span>{" "}
+        {item}{" "}
+        <span
+          className={cn(
+            "text-xs text-count",
+            categoryParams === category &&
+              itemParams === item &&
+              "bg-zinc-900 dark:bg-primary text-background dark:text-white/50"
+          )}
+        >
+          ({cnt})
+        </span>{" "}
         {newPost && <PostNewIcon />}
       </button>
     </>

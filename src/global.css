@@ -131,6 +131,19 @@
   .layout-center {
     @apply max-w-[1100px] w-full px-[25px] mx-auto;
   }
+
+  .subtext-gradient {
+    @apply font-Poppins font-semibold bg-clip-text text-transparent
+                        bg-gradient-to-b 
+                        dark:from-white dark:via-white dark:to-blue-300 
+                        from-white via-black to-blue-500;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
   .popup-layout {
     max-width: 400px;
     position: fixed;
@@ -183,6 +196,17 @@
     }
   }
 
+  @keyframes topIn {
+    from {
+      opacity: 0;
+      transform: translatey(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+
   @keyframes popup-in {
     from {
       opacity: 0;
@@ -202,6 +226,15 @@
     to {
       opacity: 0;
       transform: translateY(-50px);
+    }
+  }
+
+  @keyframes left-fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
     }
   }
 
@@ -241,6 +274,35 @@
     100% {
       transform: translateX(0px);
       opacity: 1;
+    }
+  }
+
+  @keyframes opacity {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes bgScaleInit {
+    0% {
+      transform: scale(1);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+  }
+
+  @keyframes bgScaleLoop {
+    0% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
     }
   }
 
@@ -284,11 +346,13 @@
 
 @theme {
   --animate-leftIn: leftIn 1s cubic-bezier(0.1, 0.45, 0, 1.09) forwards;
+  --animate-topIn: topIn 1s cubic-bezier(0.1, 0.45, 0, 1.09) forwards;
   --animate-popup-in: popup-in 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   --animate-popup-out: popup-out 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
   --animate-wiggle: wiggle 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --animate-opacity: opacity 1.4s ease;
 
+  --ani-delay-0.6: 0.6s;
   --ani-delay-0.5: 0.5s;
   --ani-delay-1: 1s;
 

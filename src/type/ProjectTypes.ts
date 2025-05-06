@@ -23,6 +23,12 @@ export interface ProjectDetailProps {
   description: string;
   projectDescription: string;
   projectRoles: projectRoles[];
+  project_meta_stack: Array<{
+    project_stack: {
+      type: "framework";
+      stack: string;
+    };
+  }>;
 }
 
 export interface ProjectPostProps extends ProjectDetailProps {}

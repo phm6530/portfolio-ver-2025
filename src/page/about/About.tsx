@@ -1,15 +1,11 @@
-import { BoardWrapper } from "@/features/Blog/BlogStyle";
 import { Grid, PageWrapper } from "@/layout/Grid";
 import UserProfile from "@/component/profile/UserProfile";
 import DashBoard from "@/component/ui/DashBoard/DashBoard";
 import * as S from "./AboutStyle";
-
-import { SubTitle } from "@/component/ui/Subtitle";
 import Icon from "@/component/icon/Icon";
 import EmbosingButton from "@/component/ui/EmbosingButton";
 import { HashTag } from "@/style/commonStyle";
 import styled from "styled-components";
-import { device } from "@/config/DeviceConfig";
 import Motion from "@/component/animations/Motion";
 import { AiFillSafetyCertificate } from "react-icons/ai";
 import { IoSchool } from "react-icons/io5";
@@ -30,13 +26,6 @@ const CustomGrid = styled(Grid)`
   align-items: flex-start;
 `;
 
-const CustomBoardWrapper = styled(BoardWrapper)`
-  margin-left: 3rem;
-  @media ${device.laptop} {
-    margin-left: 0;
-  }
-`;
-
 const About = (): JSX.Element => {
   return (
     <>
@@ -48,7 +37,7 @@ const About = (): JSX.Element => {
         <Motion.FadeInOut>
           <CustomGrid>
             <UserProfile />
-            <CustomBoardWrapper>
+            <div>
               <S.AboutMeDeps>
                 <S.AboutMe>
                   <h1 className="text-3xl leading-11">
@@ -370,7 +359,7 @@ const About = (): JSX.Element => {
                   })}
                 </S.CertList>
               </S.AboutContentWrap>
-            </CustomBoardWrapper>
+            </div>
           </CustomGrid>
         </Motion.FadeInOut>
       </PageWrapper>

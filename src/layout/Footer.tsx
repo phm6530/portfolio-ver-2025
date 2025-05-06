@@ -24,14 +24,14 @@ export default function Footer() {
         <Button
           onClick={() => Link("https://github.com/phm6530/MYportfolio")}
           variant={"outline"}
-          className="size-10 rounded-full"
+          className="size-10 rounded-full border-border "
         >
           <GitCompareIcon />
         </Button>
         <Button
           onClick={() => Link("https://blog.h-creations.com/")}
           variant={"outline"}
-          className="size-10 rounded-full"
+          className="size-10 rounded-full border-border "
         >
           <NotebookText />
         </Button>

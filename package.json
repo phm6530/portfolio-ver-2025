@@ -35,6 +35,7 @@
     "@radix-ui/react-select": "^2.2.2",
     "@radix-ui/react-slider": "^1.3.2",
     "@radix-ui/react-slot": "^1.2.0",
+    "@radix-ui/react-tabs": "^1.1.11",
     "@squirrel309/my-testcounter": "^0.0.37",
     "@supabase/supabase-js": "^2.49.4",
     "@tailwindcss/vite": "^4.1.4",

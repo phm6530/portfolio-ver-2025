@@ -1,41 +1,35 @@
-import styled, { keyframes } from "styled-components";
-
-import DashBoardTitle from "./DashBoardTitle";
-import { Grid } from "@/layout/Grid";
 import BackgroundImgCover from "../BackgroundImgCover";
 import StarAnimation from "@/component/animations/StarAnimation";
-import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import styled, { keyframes } from "styled-components";
 
-const PageBanner = styled.div`
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-`;
-
-const animation = keyframes`
+const animationShadow = keyframes`
     from{
         opacity: 0;
-        transform: translateX(-50px);
+        transform: translateX(0px);
     }
     to{
-        opacity: 1;
-        transform: translateX(0px);
+        opacity: .15;
+        transform: translateX(50px);
     }
 `;
 
-const PageInfoText = styled.div`
-  margin-bottom: 1rem;
-  img {
-    margin-right: 10px;
-  }
-  opacity: 0;
-  background: linear-gradient(to left, #f0f0f0, #a9a5cc, #8e9bfc);
+const DashBoardShadow = styled.div`
+  position: absolute;
+  font-size: 5rem;
+  z-index: 0;
+  font-family: "Poppins";
+  bottom: -25px;
+  background: linear-gradient(to top, #ffffff11, #c2c2c22b, #0000004a);
+  left: 10px;
   color: transparent;
   font-weight: bold;
   background-clip: text;
   -webkit-background-clip: text;
-  display: inline-flex;
-  animation: ${animation} 1s 0.6s cubic-bezier(0.1, 0.45, 0, 1.09) forwards;
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.1, 0.45, 0, 1.09);
+  animation: ${animationShadow} 1s 0.7s cubic-bezier(0.1, 0.45, 0, 1.09)
+    forwards;
 `;
 
 interface DashBoardProps {
@@ -44,95 +38,78 @@ interface DashBoardProps {
   subComment?: string;
   page?: string;
   children?: React.ReactNode;
+  align?: "left" | "center";
 }
-
-const BannerGrid = styled(Grid)`
-  padding-top: 12.5rem;
-  padding-bottom: 8rem;
-  width: 100%;
-
-  position: relative;
-  max-width: 1080px;
-  flex-grow: 1;
-  width: 100%;
-`;
 
 const DashBoard: React.FC<DashBoardProps> = ({
   className,
   pageTitle,
   subComment,
-  // children,
+  align = "left",
 }) => {
-  // const { pathname } = useLocation();
-
-  // class star {
-  //     x: number;
-  //     y: number;
-  //     size: number;
-  //     time: number;
-
-  //     constructor(x = 0, y = 0, size = 0, time = 1) {
-  //         this.x = x;
-  //         this.y = y;
-  //         this.size = size;
-  //         this.time = time;
-  //     }
-
-  //     set() {
-  //         this.x = Math.random() * window.innerWidth;
-  //         this.y = Math.random() * window.innerHeight;
-  //         this.size = Math.random() * 12;
-  //         this.time = (Math.random() + 0.2) * 8;
-
-  //         const background = document.getElementById('main')!;
-  //         const starDiv = document.createElement('div');
-  //         starDiv.className = 'star';
-
-  //         starDiv.style.position = 'absolute';
-  //         starDiv.style.left = this.x + 'px';
-  //         starDiv.style.top = this.y + 'px';
-  //         starDiv.style.width = this.size + 'px';
-  //         starDiv.style.height = this.size + 'px';
-  //         starDiv.style.backgroundColor = 'white';
-  //         starDiv.style.filter = 'blur(5px)';
-  //         starDiv.style.animation = `ani ${this.time}s  infinite`;
-  //         background.appendChild(starDiv);
-  //     }
-  // }
-
-  // useEffect(() => {
-  //     for (let i = 0; i < 15; i++) {
-  //         const newStar = new star();
-  //         newStar.set();
-  //     }
-  // }, []);
-
   return (
-    <PageBanner className={className}>
+    <div className={cn("w-full relative overflow-hidden")}>
       {/* 백그라운드 */}
       <BackgroundImgCover imgSrc="/img/Main_bg.webp">
         <StarAnimation />
       </BackgroundImgCover>
 
-      <BannerGrid>
-        <DashBoardTitle>
-          {pageTitle}
-          {/* <Division>.me()</Division> */}
-        </DashBoardTitle>
+      <div className="layout-center relative pt-[12.5rem] pb-[8rem]">
+        <div
+          className={cn(
+            "relative mb-5",
+            align === "center"
+              ? "text-center"
+              : align === "left"
+                ? "text-left"
+                : ""
+          )}
+        >
+          <div
+            className={cn(
+              "opacity-0 font-Poppins text-7xl text-transparent pb-3 -tracking-[0.1rem] font-bold animate-leftIn ani-delay-0.5 bg-gradient-to-t from-[#fff] via-[#fff] to-[#96c1ff] bg-clip-text inline-block",
 
-        {subComment && <PageInfoText>{subComment}</PageInfoText>}
+              align === "center" && "animate-topIn"
+            )}
+          >
+            {pageTitle}
+          </div>
+          <DashBoardShadow id="dashboardShadow" className={className}>
+            {pageTitle}
+          </DashBoardShadow>
+        </div>
 
-        {/* <div className="border border-white/20 p-5 bg-white/10 rounded-lg">
+        {subComment && (
+          <div
+            className={cn(
+              "inline-block text-sm md:text-base",
+              "bg-gradient-to-l opacity-0 from-[#f0f0f0] via-[#a9a5cc] to-[#8e9bfc] text-transparent bg-clip-text font-bold",
+              "animate-leftIn ani-delay-0.6"
+            )}
+          >
+            {subComment}
+          </div>
+        )}
+
+        {/* <div className="absolute bottom-10 right-0 border border-white/20 p-5 bg-white/5 rounded-lg">
           <p className="text-sm">
-            해당 페이지는 개인 Next.js Blog Api를 통해 리스트만 가져옵니다.
+            이 페이지는 별도의 블로그 페이지에서 작성된 글들을 Next.js API를
+            통해 불러오고 있습니다.
           </p>
           <br></br>
-          <Button className="border" variant={"outline"}>
+          <Button
+            className="border"
+            variant="outline"
+            onClick={() =>
+              window.open("https://blog.h-creations.com", "_blank")
+            }
+          >
+            <Lin className="mr-2" />
             Next.js Blog 바로가기
           </Button>
         </div> */}
-      </BannerGrid>
-    </PageBanner>
+      </div>
+    </div>
   );
 };
 

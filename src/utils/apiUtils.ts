@@ -8,7 +8,7 @@ export async function requestHandler<T>(
     return data;
   } catch (e) {
     if (axios.isAxiosError(e)) {
-      throw new Error(e.response?.data.message);
+      throw new Error(e.message);
     } else if (e instanceof Error) {
       throw new Error(e.message);
     } else {

@@ -3,12 +3,14 @@ import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 import viteCompression from "vite-plugin-compression";
 import tailwindcss from "@tailwindcss/vite";
+import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
   plugins: [
     react(),
     tsconfigPaths(),
     tailwindcss(),
+    svgr(),
     viteCompression({
       verbose: true,
       disable: false,

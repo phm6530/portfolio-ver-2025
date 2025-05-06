@@ -2,7 +2,6 @@ import styled, { keyframes } from "styled-components";
 
 import { device } from "@/config/DeviceConfig";
 
-import DashBoardTitle from "@/component/ui/DashBoard/DashBoardTitle";
 import BlogNewPostList from "@/features/Blog/BlogNewPostList/BlogNewPostList";
 
 export const infiniteBgAni = keyframes`
@@ -90,19 +89,6 @@ export const MainPoint = styled.div`
 type tst = {
   $mobileBiger?: boolean;
 };
-export const CustomDashBoardTitle = styled(DashBoardTitle)<tst>`
-  line-height: 4rem;
-  font-size: 4.5rem;
-  @media ${device.laptop} {
-    font-size: 4rem;
-    line-height: 4rem;
-  }
-  @media ${device.tablet} {
-    font-size: ${({ $mobileBiger }) => ($mobileBiger ? "13vw" : "9.5vw")};
-    line-height: 11vw;
-    margin-right: 0;
-  }
-`;
 
 export const TitleWrapper = styled.div``;
 

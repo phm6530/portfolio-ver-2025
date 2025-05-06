@@ -15,7 +15,14 @@ export default function ProjectList() {
       return await requestHandler(async () => {
         const rows = await SupabasePool.getInstance()
           .from("project_meta")
-          .select("*")
+          .select(
+            `
+            *,
+            project_meta_stack(
+              project_stack(*)
+            )
+          `
+          )
           .order("id", { ascending: false });
 
         if (rows.error || !rows.data) {
@@ -31,10 +38,10 @@ export default function ProjectList() {
   const nav = useNavigate();
 
   return (
-    <>
-      <div className="grid grid-cols-3 gap-5 layout-center ">
+    <div className="">
+      <div className="grid grid-cols-3 gap-6 layout-center ">
         {login && (
-          <div className="col-span-3 flex items-center">
+          <div className="col-span- flex items-center">
             <Button onClick={() => nav("write")}>+ Add</Button>
           </div>
         )}
@@ -71,6 +78,6 @@ export default function ProjectList() {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 }

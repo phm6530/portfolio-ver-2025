@@ -2,12 +2,15 @@ import useStore from "@/store/zustandStore";
 import { Button } from "@/components/ui/button";
 import { Github, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import BlogSvg from "@/asset/blog.svg?react";
+import GitSvg from "@/asset/git.svg?react";
+import Kakao from "@/asset/kakao.svg?react";
 
 export default function UserProfile() {
   const login = useStore((state) => state.userAuth.login);
 
   return (
-    <div className="border shadow-2xl md:flex hidden border-border  flex-col items-center justify-center -mt-10 bg-background rounded-2xl p-10 text-center sticky top-20  aspect-[16/16]">
+    <div className="border shadow-2xl md:flex hidden border-border  flex-col items-center justify-center -mt-10 bg-background rounded-2xl p-10 text-center sticky top-25  aspect-[16/16]">
       <div className="relative">
         <span
           className={cn(
@@ -27,24 +30,27 @@ export default function UserProfile() {
           <Button
             className="rounded-full size-10 bg-transparent! border border-border"
             variant={"outline"}
+            onClick={() => window.open("https://open.kakao.com/o/sq4skkTf")}
           >
-            <MessageCircle />
+            <Kakao className=" fill-foreground" />
           </Button>
           <Button
             className="rounded-full size-10 bg-transparent!  border border-border"
             variant={"outline"}
+            onClick={() => window.open("https://github.com/phm6530/")}
           >
-            <Github />
+            <GitSvg className=" fill-foreground" />
           </Button>
           <Button
             className="rounded-full size-10 bg-transparent!  border border-border"
             variant={"outline"}
+            onClick={() => window.open("https://blog.h-creations.com/")}
           >
-            {/* <BlogIcon className="fill-indigo-500 w-6 h-6" />;/ */}
+            <BlogSvg className=" fill-foreground" />
           </Button>
         </div>
 
-        <div className="flex flex-col mt-3">
+        <div className="flex flex-col mt-5">
           <p className="text-sub text-sm">@Web Publisher</p>
           <p className="text-sub text-sm">@Front Developer</p>
         </div>

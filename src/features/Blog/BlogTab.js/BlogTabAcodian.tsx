@@ -104,19 +104,7 @@ const AccodianTab: React.FC<CategoryModel & { idx: number }> = ({
         $view={view}
         ref={ref}
         // $height={height}
-      >
-        {subGroups.map((item, idx) => {
-          return (
-            <BlogTabDetail
-              category={groupName}
-              item={item.subGroupName}
-              post_count={item.postCount}
-              post_new={false}
-              key={`${item}-${idx}`}
-            />
-          );
-        })}
-      </ListWrapper>
+      ></ListWrapper>
     </CategoryWrapper>
   );
 };

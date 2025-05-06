@@ -9,6 +9,7 @@ import { useSearchParams } from "react-router-dom";
 import { requestHandler } from "@/utils/apiUtils";
 import styled from "styled-components";
 import BlogContentsItem from "../BlogContents/BlogContentsItem";
+import SearchField from "@/components/shared/search-input-field";
 
 export enum POST_STATUS {
   DRAFT = "draft",
@@ -35,21 +36,18 @@ const Contents = styled.div`
   border-radius: 1em;
   flex-grow: 1;
   width: 100%;
-  padding-top: 2rem;
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
 `;
 
 const BlogList = (): JSX.Element => {
-  // const { data, isLoading } = useBlog();
-
   const ref = useRef<HTMLDivElement>(null);
 
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category");
   const item = searchParams.get("item");
-  const search = searchParams.get("search");
+  const search = searchParams.get("keyword");
 
   const { data, fetchNextPage, isFetching, isPending, hasNextPage } =
     useInfiniteQuery<{
@@ -63,24 +61,20 @@ const BlogList = (): JSX.Element => {
 
         let baseUrl = `post?cursor=${cursor}&limit=${limit}`;
 
-        if (category && item) {
-          baseUrl += `&category=${category}&group=${item}`;
+        if (category) {
+          baseUrl += `&category=${category}`;
+        }
+
+        if (item) {
+          baseUrl += `&group=${item}`;
         }
 
         if (search) {
           baseUrl += `&keyword=${search.trim()}`;
         }
-
-        const tet = await requestHandler<{
-          result: {
-            list: Array<PostItemModel>;
-            isNextPage: boolean;
-          };
-        }>(async () => {
-          return await axiosApi.get(baseUrl);
-        });
-
-        return tet.result;
+        const response = await axiosApi.get(baseUrl);
+        console.log(response.data);
+        return response.data.result;
       },
       getNextPageParam: (lastPage) => {
         if (lastPage.isNextPage) {
@@ -141,7 +135,6 @@ const BlogList = (): JSX.Element => {
           )}
         </div>
       )}
-
       {isFetching && <SpinnerLoading />}
       {hasNextPage && <div ref={ref} />}
     </>

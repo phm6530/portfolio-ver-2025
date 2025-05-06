@@ -3,13 +3,13 @@ import ProjectRoutes from "@/Route/ProjectRoutes";
 
 export default function Project() {
   return (
-    <div>
+    <>
       <DashBoard
         pageTitle={"PROJECT"}
-        subComment={"외부로 공개된 참여한 프로젝트만 기재합니다."}
+        className="pb-[11rem]"
+        subComment="포트폴리오형 프로젝트 목록입니다"
       />
-
       <ProjectRoutes />
-    </div>
+    </>
   );
 }

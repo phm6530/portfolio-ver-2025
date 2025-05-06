@@ -1,15 +1,8 @@
-import styled from "styled-components";
 import { useLocation, Route, Routes } from "react-router-dom";
-
 import { AnimatePresence } from "framer-motion";
 import Motion from "@/component/animations/Motion";
 import BlogPage from "@/page/blog/pages/BlogPage";
 import BlogDetail from "@/page/blog/pages/BlogDetail";
-
-const MotionStyle = styled(Motion.FadeInOut)`
-  flex: 1;
-  width: 100%;
-`;
 
 const BlogRoutes = (): JSX.Element => {
   const location = useLocation();
@@ -33,7 +26,7 @@ const BlogRoutes = (): JSX.Element => {
               <Route
                 path={path.path}
                 key={path.path}
-                element={<MotionStyle>{path.Component}</MotionStyle>}
+                element={<Motion.FadeInOut>{path.Component}</Motion.FadeInOut>}
               />
             );
           })}

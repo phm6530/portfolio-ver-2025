@@ -2,24 +2,21 @@ import { Controller } from "react-hook-form";
 import BoardCommentInput from "./BoardCommentInput";
 import { useForm } from "react-hook-form";
 
-import useCommentAdd from "../hooks/useCommentAdd";
-import BoardCrector from "@/features/Board/BoardCrector/BoardCrector";
 import { randomCrector } from "@/features/Board/BoardCrector/randomCrector";
 import { useCallback, useEffect } from "react";
 import useStore from "@/store/zustandStore";
-import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLocation } from "react-router-dom";
 import { z } from "zod";
 import { CommentFormSchema, dynamicSchema } from "../schema";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { requestHandler } from "@/utils/apiUtils";
 import { axiosApi } from "@/config/axios.config";
 import useThrottling from "@/hooks/useThrottling";
 import { cn } from "@/lib/utils";
-import { Mail, Pen, PenBoxIcon, Send } from "lucide-react";
+import { PenBoxIcon } from "lucide-react";
 import ErrorBubble from "@/component/error/ErrorBubble";
+import { queryClient } from "@/react-query/queryClient";
 
 type CommentFormValues = z.infer<ReturnType<typeof dynamicSchema>>;
 
@@ -31,6 +28,7 @@ export default function BoardCommentForm({
   const login = useStore((state) => state.userAuth.login);
   const { commentsViewOff } = useStore(); // Zustand로 공유
   const { throttle } = useThrottling();
+  const queryClient = useQueryClient();
 
   const defaultValues = useCallback((parent_id?: number | null) => {
     return {
@@ -60,6 +58,9 @@ export default function BoardCommentForm({
       toast.success("등록 되었습니다.");
       form.reset(defaultValues(parent_id));
       if (!!parent_id) commentsViewOff();
+      queryClient.invalidateQueries({
+        queryKey: ["GUESTBOARD"],
+      });
     },
   });
 
@@ -76,7 +77,6 @@ export default function BoardCommentForm({
   }, [parent_id, login]);
 
   const errors = Object.values(form.formState.errors).map((e) => e.message);
-  console.log(errors);
 
   return (
     <>
@@ -140,8 +140,8 @@ export default function BoardCommentForm({
             )}
           />
           <button className="relative w-[100px] inline-flex items-center justify-center p-0.5  me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
-            <span className="relative w-full h-full flex justify-center items-center  transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
-              <PenBoxIcon />
+            <span className="relative w-full h-full gap-2 flex justify-center items-center  transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
+              <PenBoxIcon size={17} />
             </span>
           </button>
         </div>
