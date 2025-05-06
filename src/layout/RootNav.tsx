@@ -48,14 +48,23 @@ export default function RootNav() {
         style={{
           backdropFilter: "blur(20px)",
         }}
-        className="fixed  z-100 w-full border-b border-border/10 bg-background/0 "
+        className={cn(
+          "fixed  z-100 w-full border-b border-border/10 bg-background/0 ",
+          scrollOver && "border-border bg-background/70"
+        )}
       >
         <div
           className={cn(
             "text-white flex items-center layout-center justify-between py-5"
           )}
         >
-          <span className="font-Montserrat" onClick={() => navigate("/")}>
+          <span
+            className={cn(
+              "font-Montserrat font-extrabold",
+              scrollOver && "text-zinc-900 dark:text-white"
+            )}
+            onClick={() => navigate("/")}
+          >
             PHM{`'`} Portfolio .
           </span>
 

@@ -247,9 +247,9 @@
   @media screen and (max-width: 768px) {
     .menu-item {
       opacity: 0;
-      transform: translateX(100px);
+      transform: translateX(40px);
       transition-property: opacity, transform, padding;
-      transition-duration: 0.9s, 0.9s, 0.5s;
+      transition-duration: 0.9s, 0.9s, 0.3s;
       transition-timing-function: ease;
       transition-delay: 0s, 0s, 0s; /* 초기값은 전부 0s */
     }
