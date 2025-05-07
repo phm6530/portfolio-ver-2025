@@ -1,77 +1,180 @@
-import * as S from "./HomeStyle";
 import BackgroundImgCover from "@/component/ui/BackgroundImgCover";
 import ShootingStar from "@/component/animations/ShootingStar";
-import { Grid } from "@/layout/Grid";
-import ViewAnimation from "@/component/animations/ViewAnimation";
-import MainvannerBtn from "./components/main-btn";
-import { TbUserSquareRounded } from "react-icons/tb";
+import { Button } from "@/components/ui/button";
+import BlogSvg from "@/asset/blog.svg?react";
+import GitSvg from "@/asset/git.svg?react";
+import Kakao from "@/asset/kakao.svg?react";
+import {
+  ArrowBigLeft,
+  Book,
+  BubblesIcon,
+  CheckIcon,
+  ChevronRight,
+  Github,
+} from "lucide-react";
 import StarAnimation from "@/component/animations/StarAnimation";
 
 const PATHS = [
   {
-    label: "ABOUT ME",
+    label: "About",
     to: "/about",
   },
   {
-    label: "WEB PROJECT",
+    label: "Project",
     to: "/about",
   },
   {
-    label: "GUEST BOOK",
+    label: "Blog",
     to: "/about",
   },
 ];
 
 const Home = () => {
   return (
-    <>
-      <S.HomeContainer>
-        <BackgroundImgCover imgSrc="/img/Main_bg.webp">
-          <ShootingStar /> <StarAnimation />
-        </BackgroundImgCover>
+    <main className="h-screen text-white overflow-hidden relative">
+      <BackgroundImgCover imgSrc="/vanner/vanner_3.jpg">
+        <ShootingStar />
+        {/* <StarAnimation /> */}
+      </BackgroundImgCover>
 
-        <Grid>
-          <ViewAnimation>
-            <S.TitleWrapper>
-              <h2 className="mb-5 animate-leftIn font-SUIT-Regular  text-xl font-bold bg-gradient-to-r from-indigo-300 via-blue-500 to-green-400 text-transparent bg-clip-text">
-                FRONT END & Web Publisher
-              </h2>
-              <h1 className="animate-leftIn text-7xl font-Poppins font-semibold bg-gradient-to-t from-white via-white to-blue-300 text-transparent bg-clip-text">
-                PORTFOLIO
-              </h1>
-              <h1 className="animate-leftIn text-7xl font-Poppins font-semibold bg-gradient-to-t from-white via-white to-blue-300 text-transparent bg-clip-text">
-                WEB DEVELOPER<S.Division>&lt;/&gt;</S.Division>
-              </h1>
-            </S.TitleWrapper>
-            <S.BottomWrap>
-              <S.ButtomWrapper className="view-animation">
-                <S.CareerGoal>
-                  <br></br>
-                  더욱 전문성 있는 프론트엔드 개발자로 성장하고자 합니다.
-                  <br></br>
-                  새로운 기술을 학습하며, 익숙해지는 것에 전념하고 있습니다.
-                  <br></br>
-                </S.CareerGoal>
-                <div className="flex gap-2 md:flex-row flex-col">
-                  {PATHS.map((e) => {
-                    return (
-                      <MainvannerBtn to="/about" key={`${e.label}-btn`}>
-                        <TbUserSquareRounded size={20} />
+      {/* 메인 콘텐츠 영역 */}
+      <div className="flex flex-col h-full layout-center justify-center">
+        <div className="relative flex w-full gap-30">
+          {/* 오른쪽 영역 - 개발자 프로필 */}
+          <div className="w-1/2  flex flex-col justify-center">
+            {/* 섹션 인디케이터 */}
+            <div className="flex items-center gap-3 mb-4 text-white/40 animate-leftIn ani-delay-0.5 opacity-0">
+              <div className="text-xs tracking-wider">DEV & Publisher</div>
+            </div>
+
+            <h1 className="text-6xl animate-leftIn ani-delay-0.6 opacity-0">
+              Phm
+              <span className=" text-transparent bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text ">
+                {"'"}
+              </span>
+            </h1>
+            <h1 className="animate-leftIn ani-delay-0.7 opacity-0">
+              <span className="text-8xl bg-clip-text bg-gradient-to-t from-indigo-100 via-white to-indigo-300 text-transparent font-bold">
+                Developer
+              </span>
+            </h1>
+
+            <p className="text-white/60 text-sm max-w-md leading-relaxed py-7 animate-leftIn ani-delay-0.8 opacity-0 ">
+              전문성 있는 프론트엔드 개발자로 성장하고자 합니다. <br></br>새로운
+              기술을 학습하며, 익숙해지는 것에 전념하고 있습니다. <br></br>
+              경험을 통해 지속적으로 발전하는 개발자가 되겠습니다.
+            </p>
+
+            <div className="flex gap-2 animate-leftIn ani-delay-0.9 opacity-0  ">
+              <Button
+                className="rounded-full size-10 bg-transparent! border border-border"
+                variant={"outline"}
+                onClick={() => window.open("https://open.kakao.com/o/sq4skkTf")}
+              >
+                <Kakao className=" fill-foreground" />
+              </Button>
+              <Button
+                className="rounded-full size-10 bg-transparent!  border border-border"
+                variant={"outline"}
+                onClick={() => window.open("https://github.com/phm6530/")}
+              >
+                <GitSvg className=" fill-foreground" />
+              </Button>
+              <Button
+                className="rounded-full size-10 bg-transparent!  border border-border"
+                variant={"outline"}
+                onClick={() => window.open("https://blog.h-creations.com/")}
+              >
+                <BlogSvg className=" fill-foreground" />
+              </Button>
+            </div>
+          </div>
+
+          <div className="w-1/2  ">
+            {/* Home - nav Section  */}
+            <section className="w-full space-y-5 mb-12 animate-leftIn ani-delay-1 opacity-0">
+              {PATHS.map((e, idx) => {
+                return (
+                  <article className="cursor-pointer group" key={`list-${idx}`}>
+                    <div className="flex items-center">
+                      <div className="mt-2 text-xl font-medium group-hover:text-indigo-400 transition-colors flex items-center gap-2">
+                        <span className="text-indigo-300 ">0{idx + 1}.</span>{" "}
                         {e.label}
-                      </MainvannerBtn>
-                    );
-                  })}
+                        <div className="h-px w-0 bg-indigo-500 group-hover:w-12 transition-all duration-300 ml-2"></div>
+                      </div>
+                    </div>
+                    <div className="mt-1 text-xs text-white/60 pl-8">
+                      Developer profile
+                    </div>
+                  </article>
+                );
+              })}
+            </section>
+
+            {/* 블로그 포스트 섹션 */}
+            <div className="space-y-6 animate-leftIn ani-delay-1.1 opacity-0">
+              <h3 className="text-sm font-medium tracking-wider mb-6 flex items-center gap-2 group cursor-pointer">
+                <span className="text-xs text-indigo-200">RECENT POSTS</span>
+                <ChevronRight
+                  size={15}
+                  className="opacity-50 group-hover:opacity-100 transition-all text-indigo-200"
+                />
+              </h3>
+
+              {/* 블로그 포스트 1 */}
+              <div className="flex gap-4 group cursor-pointer">
+                <div className="flex-shrink-0 w-16 h-16 bg-zinc-800/50 rounded-md overflow-hidden flex items-center justify-center">
+                  <span className="text-white/20 text-xs">Image</span>
                 </div>
-              </S.ButtomWrapper>
-            </S.BottomWrap>
-            {/* <MainNavs /> */}
-            {/* <DashBoardTitle>
-                    <b>FRONTEND DEVELOPER</b>
-                </DashBoardTitle> */}
-          </ViewAnimation>{" "}
-        </Grid>
-      </S.HomeContainer>
-    </>
+                <div>
+                  <h4 className="text-white text-sm font-medium mb-1 group-hover:text-indigo-400 transition-colors">
+                    Next.js - CMS BLOG (1)
+                  </h4>
+                  <p className="text-xs text-white/50 mb-2 line-clamp-2">
+                    기술적 성장과 커리어 발전을 위한 프론트엔드 개발자의 학습
+                    로드맵
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] text-white/40">
+                      May 5, 2025
+                    </span>
+                    <span className="text-[10px] py-0.5 px-2 bg-white/10 text-white/60 rounded-full">
+                      Frontend
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 블로그 포스트 2 */}
+              <div className="flex gap-4 group cursor-pointer">
+                <div className="flex-shrink-0 w-16 h-16 bg-zinc-800/50 rounded-md overflow-hidden flex items-center justify-center">
+                  <span className="text-white/20 text-xs">Image</span>
+                </div>
+                <div>
+                  <h4 className="text-white text-sm font-medium mb-1 group-hover:text-indigo-400 transition-colors">
+                    AWS 클라우드 서비스 활용 가이드
+                  </h4>
+                  <p className="text-xs text-white/50 mb-2 line-clamp-2">
+                    웹 개발자를 위한 AWS 서비스 선택 및 비용 최적화 전략
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] text-white/40">
+                      Apr 28, 2025
+                    </span>
+                    <span className="text-[10px] py-0.5 px-2 bg-white/10 text-white/60 rounded-full">
+                      AWS
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 소셜 미디어 아이콘 */}
+      {/* 소셜 미디어 아이콘 - VIEW PORTFOLIO 버튼 대체 */}
+    </main>
   );
 };
 

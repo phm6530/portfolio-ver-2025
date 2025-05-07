@@ -39,12 +39,22 @@ export default function ProjectList() {
 
   return (
     <div className="">
+      <div className="layout-center flex gap-2">
+        <Button variant={"outline"} className="bg-orange-700!">
+          Next.js
+        </Button>
+        <Button variant={"outline"}>React</Button>
+        <Button variant={"outline"}>Design</Button>
+        <Button variant={"outline"}>Publishing</Button>
+      </div>
       <div className="grid grid-cols-3 gap-6 layout-center ">
-        {login && (
-          <div className="col-span- flex items-center">
-            <Button onClick={() => nav("write")}>+ Add</Button>
-          </div>
-        )}
+        <div className="col-span-full">
+          {login && (
+            <div className="col-span- flex items-center">
+              <Button onClick={() => nav("write")}>+ Add</Button>
+            </div>
+          )}
+        </div>
 
         {!isLoading && isError && "error"}
         {!isLoading ? (

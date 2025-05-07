@@ -5,7 +5,7 @@ import BlogTab from "@/features/Blog/BlogTab.js/BlogTab";
 
 const BlogPage = (): JSX.Element => {
   return (
-    <>
+    <div className="grid grid-cols-[230px_1fr]">
       <div className="flex flex-1 gap-7 border-border pb-8">
         {/* List */}
         <BlogTab />
@@ -15,7 +15,7 @@ const BlogPage = (): JSX.Element => {
         {/* Board List */}
         <BlogList />
       </div>
-    </>
+    </div>
   );
 };
 

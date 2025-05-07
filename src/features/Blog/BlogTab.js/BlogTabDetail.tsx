@@ -25,7 +25,7 @@ const BlogTabDetail: React.FC<BlogTabDetailProps> = ({
     <>
       <button
         className={cn(
-          "border border-border p-3 text-sm",
+          "p-2.5 px-3 text-sm rounded-full bg-zinc-500/10",
           categoryParams === category &&
             itemParams === item &&
             "bg-zinc-900 dark:bg-primary text-background dark:text-white"
@@ -40,7 +40,7 @@ const BlogTabDetail: React.FC<BlogTabDetailProps> = ({
         {item}{" "}
         <span
           className={cn(
-            "text-xs text-count",
+            "text-xs text-orange-300",
             categoryParams === category &&
               itemParams === item &&
               "bg-zinc-900 dark:bg-primary text-background dark:text-white/50"

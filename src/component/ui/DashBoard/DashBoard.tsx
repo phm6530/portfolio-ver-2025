@@ -45,6 +45,7 @@ const DashBoard: React.FC<DashBoardProps> = ({
   className,
   pageTitle,
   subComment,
+  children,
   align = "left",
 }) => {
   return (
@@ -54,7 +55,7 @@ const DashBoard: React.FC<DashBoardProps> = ({
         <StarAnimation />
       </BackgroundImgCover>
 
-      <div className="layout-center relative pt-[12.5rem] pb-[8rem]">
+      <div className="layout-center relative pt-[13.5rem] pb-[2em]">
         <div
           className={cn(
             "relative mb-5",
@@ -67,7 +68,7 @@ const DashBoard: React.FC<DashBoardProps> = ({
         >
           <div
             className={cn(
-              "opacity-0 font-Poppins text-7xl text-transparent pb-3 -tracking-[0.1rem] font-bold animate-leftIn ani-delay-0.5 bg-gradient-to-t from-[#fff] via-[#fff] to-[#96c1ff] bg-clip-text inline-block",
+              "opacity-0 font-Poppins text-[80px] text-transparent pb-3 -tracking-[0.1rem] font-bold animate-leftIn ani-delay-0.5 bg-gradient-to-t from-[#fff] via-[#fff] to-[#96c1ff] bg-clip-text inline-block",
 
               align === "center" && "animate-topIn"
             )}
@@ -83,31 +84,14 @@ const DashBoard: React.FC<DashBoardProps> = ({
           <div
             className={cn(
               "inline-block text-sm md:text-base",
-              "bg-gradient-to-l opacity-0 from-[#f0f0f0] via-[#a9a5cc] to-[#8e9bfc] text-transparent bg-clip-text font-bold",
+              "bg-gradient-to-l opacity-0 from-[#e2a285] via-[#ffffff] to-[#ffd099] text-transparent bg-clip-text font-bold",
               "animate-leftIn ani-delay-0.6"
             )}
           >
             {subComment}
           </div>
         )}
-
-        {/* <div className="absolute bottom-10 right-0 border border-white/20 p-5 bg-white/5 rounded-lg">
-          <p className="text-sm">
-            이 페이지는 별도의 블로그 페이지에서 작성된 글들을 Next.js API를
-            통해 불러오고 있습니다.
-          </p>
-          <br></br>
-          <Button
-            className="border"
-            variant="outline"
-            onClick={() =>
-              window.open("https://blog.h-creations.com", "_blank")
-            }
-          >
-            <Lin className="mr-2" />
-            Next.js Blog 바로가기
-          </Button>
-        </div> */}
+        {children}
       </div>
     </div>
   );

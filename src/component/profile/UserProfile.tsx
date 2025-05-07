@@ -1,6 +1,6 @@
 import useStore from "@/store/zustandStore";
 import { Button } from "@/components/ui/button";
-import { Github, MessageCircle } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import BlogSvg from "@/asset/blog.svg?react";
 import GitSvg from "@/asset/git.svg?react";

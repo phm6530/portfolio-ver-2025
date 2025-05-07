@@ -21,14 +21,6 @@ export const HomeContainer = styled.div`
   background-position: center bottom;
   background-repeat: no-repeat;
   /* height: 100vh; */
-  animation: ${infiniteBgAni} 10s cubic-bezier(0.2, 0.56, 0.38, 0.41) infinite
-    forwards alternate;
-  background-size: cover;
-  min-height: 100vh;
-
-  @media ${device.tablet} {
-    padding-top: 13rem;
-  }
 `;
 
 export const Division = styled.span`
