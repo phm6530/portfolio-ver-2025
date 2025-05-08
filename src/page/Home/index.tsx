@@ -4,15 +4,7 @@ import { Button } from "@/components/ui/button";
 import BlogSvg from "@/asset/blog.svg?react";
 import GitSvg from "@/asset/git.svg?react";
 import Kakao from "@/asset/kakao.svg?react";
-import {
-  ArrowBigLeft,
-  Book,
-  BubblesIcon,
-  CheckIcon,
-  ChevronRight,
-  Github,
-} from "lucide-react";
-import StarAnimation from "@/component/animations/StarAnimation";
+import { ChevronRight } from "lucide-react";
 
 const PATHS = [
   {
@@ -49,9 +41,7 @@ const Home = () => {
 
             <h1 className="text-6xl animate-leftIn ani-delay-0.6 opacity-0">
               Phm
-              <span className=" text-transparent bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text ">
-                {"'"}
-              </span>
+              <span className="text-red-300 font-semibold">'</span>
             </h1>
             <h1 className="animate-leftIn ani-delay-0.7 opacity-0">
               <span className="text-8xl bg-clip-text bg-gradient-to-t from-indigo-100 via-white to-indigo-300 text-transparent font-bold">
@@ -67,54 +57,96 @@ const Home = () => {
 
             <div className="flex gap-2 animate-leftIn ani-delay-0.9 opacity-0  ">
               <Button
-                className="rounded-full size-10 bg-transparent! border border-border"
+                className="rounded-lg size-10 bg-transparent! border border-border"
                 variant={"outline"}
                 onClick={() => window.open("https://open.kakao.com/o/sq4skkTf")}
               >
-                <Kakao className=" fill-foreground" />
+                <Kakao className=" fill-foreground opacity-50" />
               </Button>
               <Button
-                className="rounded-full size-10 bg-transparent!  border border-border"
+                className="rounded-lg size-10 bg-transparent!  border border-border"
                 variant={"outline"}
                 onClick={() => window.open("https://github.com/phm6530/")}
               >
-                <GitSvg className=" fill-foreground" />
+                <GitSvg className=" fill-foreground opacity-50" />
               </Button>
               <Button
-                className="rounded-full size-10 bg-transparent!  border border-border"
+                className="rounded-lg size-10 bg-transparent!  border border-border"
                 variant={"outline"}
                 onClick={() => window.open("https://blog.h-creations.com/")}
               >
-                <BlogSvg className=" fill-foreground" />
+                <BlogSvg className=" fill-foreground opacity-50" />
               </Button>
             </div>
           </div>
 
-          <div className="w-1/2  ">
-            {/* Home - nav Section  */}
-            <section className="w-full space-y-5 mb-12 animate-leftIn ani-delay-1 opacity-0">
-              {PATHS.map((e, idx) => {
-                return (
-                  <article className="cursor-pointer group" key={`list-${idx}`}>
-                    <div className="flex items-center">
-                      <div className="mt-2 text-xl font-medium group-hover:text-indigo-400 transition-colors flex items-center gap-2">
-                        <span className="text-indigo-300 ">0{idx + 1}.</span>{" "}
-                        {e.label}
-                        <div className="h-px w-0 bg-indigo-500 group-hover:w-12 transition-all duration-300 ml-2"></div>
-                      </div>
-                    </div>
-                    <div className="mt-1 text-xs text-white/60 pl-8">
-                      Developer profile
-                    </div>
-                  </article>
-                );
-              })}
-            </section>
+          <div className="w-1/2  flex flex-col gap-10">
+            {/* 블로그 포스트 섹션 */}
+            <div className="space-y-6 animate-leftIn ani-delay-1.1 opacity-0">
+              <h3 className="text-sm font-medium tracking-wider mb-3 flex items-center gap-2 group cursor-pointer">
+                <span className="text-[11px] text-indigo-200">
+                  RECENT POSTS
+                </span>
+                <ChevronRight
+                  size={15}
+                  className="opacity-50 group-hover:opacity-100 transition-all text-indigo-200"
+                />
+              </h3>
+
+              {/* 블로그 포스트 1 */}
+              <div className="flex gap-4 group cursor-pointer">
+                <div className="flex-shrink-0 w-16 h-16 bg-zinc-800/50 rounded-md overflow-hidden flex items-center justify-center">
+                  <span className="text-white/20 text-xs">Image</span>
+                </div>
+                <div>
+                  <h4 className="text-white text-sm font-medium mb-1 group-hover:text-indigo-400 transition-colors">
+                    Next.js - CMS BLOG (1)
+                  </h4>
+                  <p className="text-xs text-white/50 mb-2 line-clamp-2">
+                    기술적 성장과 커리어 발전을 위한 프론트엔드 개발자의 학습
+                    로드맵
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] text-white/40">
+                      May 5, 2025
+                    </span>
+                    <span className="text-[10px] py-0.5 px-2 bg-white/10 text-white/60 rounded-full">
+                      Frontend
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 블로그 포스트 2 */}
+              <div className="flex gap-4 group cursor-pointer">
+                <div className="flex-shrink-0 w-16 h-16 bg-zinc-800/50 rounded-md overflow-hidden flex items-center justify-center">
+                  <span className="text-white/20 text-xs">Image</span>
+                </div>
+                <div>
+                  <h4 className="text-white text-sm font-medium mb-1 group-hover:text-indigo-400 transition-colors">
+                    AWS 클라우드 서비스 활용 가이드
+                  </h4>
+                  <p className="text-xs text-white/50 mb-2 line-clamp-2">
+                    웹 개발자를 위한 AWS 서비스 선택 및 비용 최적화 전략
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] text-white/40">
+                      Apr 28, 2025
+                    </span>
+                    <span className="text-[10px] py-0.5 px-2 bg-white/10 text-white/60 rounded-full">
+                      AWS
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             {/* 블로그 포스트 섹션 */}
             <div className="space-y-6 animate-leftIn ani-delay-1.1 opacity-0">
-              <h3 className="text-sm font-medium tracking-wider mb-6 flex items-center gap-2 group cursor-pointer">
-                <span className="text-xs text-indigo-200">RECENT POSTS</span>
+              <h3 className="text-sm font-medium tracking-wider mb-3 flex items-center gap-2 group cursor-pointer">
+                <span className="text-[11px] text-indigo-200">
+                  RECENT POSTS
+                </span>
                 <ChevronRight
                   size={15}
                   className="opacity-50 group-hover:opacity-100 transition-all text-indigo-200"

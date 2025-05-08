@@ -8,12 +8,7 @@ const BlogSUbCategoryTitle = () => {
 
   return (
     <div className="subText py-4 flex gap-3 items-center justify-between border-b border-border mb-5">
-      <div className="flex gap-2 items-center">
-        <span className="text-3xl subtext-gradient">{group}</span> /
-        {item && <span className="text-lg subtext-gradient">{item}</span>}
-      </div>
       {/* Search */}
-      <SearchField name="keyword" />
     </div>
   );
 };

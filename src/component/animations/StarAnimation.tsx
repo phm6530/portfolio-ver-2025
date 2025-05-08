@@ -1,12 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
 
-const StartAniWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
-`;
-
 const opacity = keyframes`
     0%{
         opacity: 0;
@@ -97,7 +91,7 @@ const StarAnimation = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   // 반짝이 갯수 배열
-  const starCntArr = [...Array(15)].map((_, idx) => idx + 1);
+  const starCntArr = [...Array(5)].map((_, idx) => idx + 1);
 
   useLayoutEffect(() => {
     if (ref.current && !offset) {
@@ -117,7 +111,7 @@ const StarAnimation = () => {
   };
 
   return (
-    <StartAniWrapper ref={ref}>
+    <div className="w-full h-screen fixed z-100" ref={ref}>
       {offset &&
         starCntArr.map((_, idx) => {
           const [left, top] = offsetCalculator(offset);
@@ -132,7 +126,7 @@ const StarAnimation = () => {
             />
           );
         })}
-    </StartAniWrapper>
+    </div>
   );
 };
 

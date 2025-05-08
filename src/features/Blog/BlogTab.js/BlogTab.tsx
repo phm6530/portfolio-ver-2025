@@ -46,7 +46,7 @@ const BlogTab = () => {
         className="w-full"
         onValueChange={(e) => nav(`/blog?category=${e}`)}
       >
-        <TabsList className="flex gap-2 bg-transparent!  rounded-none mb-3 ">
+        <TabsList className="flex gap-4 bg-transparent!  rounded-none mb-3 ">
           {data &&
             ["all", ...Object.keys(data?.category)].map((e) => {
               const item = data.category[e];
@@ -55,68 +55,14 @@ const BlogTab = () => {
                 <TabsTrigger
                   key={`category-value-${e}`}
                   value={e}
-                  className="border-0 bg-transparent! pb-4 shadow-none! rounded-none border-b-4  data-[state=active]:border-b-4! data-[state=active]:border-foreground!"
+                  className="border-0 px-0 bg-transparent! pb-4 shadow-none! text-sm rounded-none border-b-2  data-[state=active]:border-b-2! data-[state=active]:text-indigo-200! data-[state=active]:border-indigo-200! "
                 >
                   {e === "all" ? "전체보기" : e} (
                   {e === "all" ? data.count : item.postCnt})
                 </TabsTrigger>
               );
-            })}{" "}
-        </TabsList>{" "}
-        {data &&
-          !isLoading &&
-          ["all", ...Object.keys(data?.category)].map((category, idx) => {
-            const item = data.category[category];
-
-            const faltData =
-              idx === 0
-                ? Object.keys(data?.category).flatMap(
-                    (e) => data.category[e].subGroups
-                  )
-                : [];
-
-            if (idx === 0) {
-              return (
-                <React.Fragment key={`blog-tab-${idx}`}>
-                  <TabsContent value={category}>
-                    <div className="flex flex-wrap gap-2">
-                      {faltData.map((item, idx) => {
-                        return (
-                          <BlogTabDetail
-                            category={category}
-                            item={item.subGroupName}
-                            post_count={item.postCount}
-                            post_new={false}
-                            key={`${item}-${idx}`}
-                          />
-                        );
-                      })}
-                    </div>
-                  </TabsContent>
-                </React.Fragment>
-              );
-            }
-
-            return (
-              <React.Fragment key={`blog-tab-${idx}`}>
-                <TabsContent value={category}>
-                  <div className="flex flex-wrap gap-2">
-                    {item.subGroups.map((item, idx) => {
-                      return (
-                        <BlogTabDetail
-                          category={category}
-                          item={item.subGroupName}
-                          post_count={item.postCount}
-                          post_new={false}
-                          key={`${item}-${idx}`}
-                        />
-                      );
-                    })}
-                  </div>
-                </TabsContent>
-              </React.Fragment>
-            );
-          })}
+            })}
+        </TabsList>
       </Tabs>
     </>
   );

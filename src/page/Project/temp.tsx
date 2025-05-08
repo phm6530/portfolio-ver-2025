@@ -19,17 +19,19 @@ const ProjectRoutes = (): JSX.Element => {
 
   return (
     <>
-      <Routes location={location} key={location.pathname}>
-        {PATHS.map((path) => {
-          return (
-            <Route
-              path={path.path}
-              key={path.path}
-              element={<Motion.FadeInOut>{path.Component}</Motion.FadeInOut>}
-            />
-          );
-        })}
-      </Routes>
+      <div className="max-w-[1300px] mx-auto w-[calc(100%-20px)] pt-10">
+        <Routes location={location} key={location.pathname}>
+          {PATHS.map((path) => {
+            return (
+              <Route
+                path={path.path}
+                key={path.path}
+                element={<Motion.FadeInOut>{path.Component}</Motion.FadeInOut>}
+              />
+            );
+          })}
+        </Routes>
+      </div>
     </>
   );
 };

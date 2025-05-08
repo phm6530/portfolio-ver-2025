@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import ProjectDetail from "./ProjectDetail";
 import { Button } from "@/components/ui/button";
 import { Link, X } from "lucide-react";
-import { useGSAP } from "@gsap/react";
+import StacBadge from "@/components/ui/stack-badge";
 
 const ProjectListItem: React.FC<{ project: ProjectPostProps }> = ({
   project,
@@ -82,27 +82,17 @@ const ProjectListItem: React.FC<{ project: ProjectPostProps }> = ({
 
       <div
         onClick={() => setViewDetail(true)}
-        className="group flex flex-col overflow-hidden rounded-lg  border border-zinc-800 hover:border-indigo-500/40 hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] transition-all duration-300 cursor-pointer transform hover:translate-y-[-4px]"
+        className="group bg-black/5  flex flex-col p-5 rounded-lg  backdrop-blur-sm  article-hover transform hover:-translate-y-1 h-full"
       >
-        {/* 썸네일 이미지 영역 */}
-        <div className="overflow-hidden relative">
-          <div
-            className="h-48 w-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-            style={{
-              backgroundImage: `url(${IMG_URL}/${project.thumbnail})`,
-            }}
-          />
-        </div>
-
         {/* 콘텐츠 영역 */}
-        <div className="flex flex-col flex-1 p-5 bg-[#1a1a1a]">
+        <div className="flex flex-col flex-1 p-5 ">
           {/* 타이틀 */}
           <h3 className="text-lg font-bold text-white group-hover:text-indigo-300 transition-colors mb-2">
             {project.title}
           </h3>
 
           {/* 설명 */}
-          <p className="text-sm text-gray-400 line-clamp-2 leading-relaxed mb-4 flex-grow">
+          <p className="text-sm text-gray-400 line-clamp-3 leading-relaxed mb-4 flex-grow">
             {project.description}
           </p>
 
@@ -112,7 +102,7 @@ const ProjectListItem: React.FC<{ project: ProjectPostProps }> = ({
               e.type === "framework" ? (
                 <span
                   key={idx}
-                  className="text-xs px-2.5 py-1 rounded-md bg-indigo-900/30 border border-indigo-500/40 text-indigo-300"
+                  className="text-xs px-2.5 py-1 rounded-full  border border-indigo-500/30 text-indigo-200"
                 >
                   {e.stack}
                 </span>
@@ -121,9 +111,9 @@ const ProjectListItem: React.FC<{ project: ProjectPostProps }> = ({
           </div>
 
           {/* 액션 영역 */}
-          <div className="flex items-center justify-between pt-3 border-t border-zinc-800 mt-auto">
-            <span className="text-xs text-indigo-300 flex items-center gap-1">
-              자세히 보기
+          <div className="flex items-center justify-between pt-3 border-t border-zinc-700/50 mt-auto">
+            <span className="text-xs text-indigo-300 flex items-center gap-1 font-medium">
+              view
               <svg
                 className="w-3.5 h-3.5 transform transition-transform duration-300 group-hover:translate-x-1"
                 fill="none"
@@ -139,20 +129,12 @@ const ProjectListItem: React.FC<{ project: ProjectPostProps }> = ({
               </svg>
             </span>
 
-            <div className="h-7 w-7 flex items-center justify-center rounded-full bg-zinc-800 text-indigo-300 group-hover:bg-indigo-600/30 transition-all duration-300">
+            <div className="h-8 w-8 flex items-center justify-center rounded-full bg-indigo-500/10 text-indigo-300 group-hover:bg-indigo-500/20 transition-all duration-300">
               <Link className="w-3.5 h-3.5" />
             </div>
           </div>
         </div>
       </div>
-
-      {/* <div className="cursor-pointer mb-10 ">
-        <ViewIconAnimation className="aniTarget">
-          <FaMagnifyingGlass />
-        </ViewIconAnimation>
-
-        <ProjectItemWrap></ProjectItemWrap>
-      </div> */}
     </>
   );
 };

@@ -24,21 +24,6 @@ function App(): JSX.Element {
     }
   }, []);
 
-  // useEffect(() => {
-  //   const checkConnection = async () => {
-  //     const pool = SupabasePool.getInstance();
-  //     const { data, error } = await pool.from("project_meta").select("*");
-
-  //     if (error) {
-  //       console.error("❌ 연결 실패:", error.message);
-  //     } else {
-  //       console.log("✅ 연결 성공:", data);
-  //     }
-  //   };
-
-  //   checkConnection();
-  // }, []);
-
   return (
     <>
       {/* redux */}

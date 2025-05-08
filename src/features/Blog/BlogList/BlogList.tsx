@@ -31,16 +31,6 @@ export type PostItemModel = {
   comment_count: number;
 };
 
-const Contents = styled.div`
-  flex-direction: column;
-  border-radius: 1em;
-  flex-grow: 1;
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  flex-wrap: wrap;
-`;
-
 const BlogList = (): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -118,13 +108,11 @@ const BlogList = (): JSX.Element => {
         <SpinnerLoading />
       ) : flatData && flatData.length > 0 ? (
         <AnimatePresence mode="wait">
-          <Motion.FadeInOut key={location.search}>
-            <Contents>
-              {flatData.map((item, idx) => {
-                return <BlogContentsItem key={`item-${idx}`} {...item} />;
-              })}
-            </Contents>
-          </Motion.FadeInOut>
+          <div className="mt-10  grid grid-cols-2 gap-3">
+            {flatData.map((item, idx) => {
+              return <BlogContentsItem key={`item-${idx}`} {...item} />;
+            })}
+          </div>
         </AnimatePresence>
       ) : (
         <div>

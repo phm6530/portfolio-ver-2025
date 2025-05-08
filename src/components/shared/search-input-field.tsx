@@ -24,10 +24,10 @@ export default function SearchField({
   };
 
   return (
-    <form onSubmit={submitHandler} className=" w-full max-w-[400px]">
+    <form onSubmit={submitHandler} className=" w-full ">
       <div
         className={cn(
-          `bg-black/2 border border-transparent rounded-full dark:bg-custom-input overflow-hidden dark:bg-[#2c2c2c]
+          `bg-white/3  border border-transparent rounded-full dark:bg-custom-input overflow-hidden 
   
        flex flex-1 focus-within:border-indigo-300`,
           className
