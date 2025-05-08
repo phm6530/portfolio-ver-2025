@@ -123,7 +123,19 @@ const BlogList = (): JSX.Element => {
           )}
         </div>
       )}
-      {isFetching && <SpinnerLoading />}
+      {isFetching &&
+        Array.from({ length: 6 }).map((_, idx) => {
+          return (
+            <div key={`skeleton-${idx}`}>
+              <div className="bg-foreground/10  aspect-[16/9] animate-pulse " />
+              <div className="flex flex-col gap-3 mt-4">
+                <div className="bg-foreground/10 animate-wiggle w-[100px] h-3 rounded-full"></div>
+                <div className="bg-foreground/10 animate-wiggle w-2xs h-3 rounded-full"></div>
+                <div className="bg-foreground/10 animate-wiggle w-2xs h-3 rounded-full"></div>
+              </div>
+            </div>
+          );
+        })}
       {hasNextPage && <div ref={ref} />}
     </>
   );

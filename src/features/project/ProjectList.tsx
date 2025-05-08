@@ -79,23 +79,36 @@ const ProjectList = () => {
           </div> */}
           <div className="mb-2 animate-topIn ani-delay-0.2 opacity-0">
             <div className="my-4 pt-3 flex gap-5">
-              <button className="text-sm text-indigo-200 border-b-2 pb-2">
+              <button className="text-sm text-indigo-200 border-b-2 pb-2 flex items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 4h18M3 8h18M3 12h18M3 16h18M3 20h18"
+                  />
+                </svg>
                 전체보기
               </button>
-              <button className="text-sm  border-b-2 border-transparent pb-2">
+              <button className="text-sm border-b-2 border-transparent pb-2 flex items-center gap-2 hover:text-indigo-200 transition-all duration-300">
                 Next.js
               </button>
-              <button className="text-sm  border-b-2 border-transparent pb-2">
+              <button className="text-sm border-b-2 border-transparent pb-2 flex items-center gap-2 hover:text-indigo-200 transition-all duration-300">
                 React
               </button>
-              <button className="text-sm  border-b-2 border-transparent pb-2">
+              <button className="text-sm border-b-2 border-transparent pb-2 flex items-center gap-2 hover:text-indigo-200 transition-all duration-300">
                 Full Stack
               </button>
-
-              <button className="text-sm  border-b-2 border-transparent pb-2">
+              <button className="text-sm border-b-2 border-transparent pb-2 flex items-center gap-2 hover:text-indigo-200 transition-all duration-300">
                 Single
               </button>
-              <button className="text-sm  border-b-2 border-transparent pb-2">
+              <button className="text-sm border-b-2 border-transparent pb-2 flex items-center gap-2 hover:text-indigo-200 transition-all duration-300">
                 Team
               </button>
             </div>

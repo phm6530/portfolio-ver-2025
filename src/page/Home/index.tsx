@@ -54,97 +54,66 @@ const Home = () => {
               기술을 학습하며, 익숙해지는 것에 전념하고 있습니다. <br></br>
               경험을 통해 지속적으로 발전하는 개발자가 되겠습니다.
             </p>
-
-            <div className="flex gap-2 animate-leftIn ani-delay-0.9 opacity-0  ">
+            <div className="flex gap-2 animate-leftIn ani-delay-0.9 opacity-0">
               <Button
-                className="rounded-lg size-10 bg-transparent! border border-border"
+                className="rounded-lg size-10 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-indigo-300/30 transition-all duration-300 group"
                 variant={"outline"}
                 onClick={() => window.open("https://open.kakao.com/o/sq4skkTf")}
               >
-                <Kakao className=" fill-foreground opacity-50" />
+                <Kakao className="fill-foreground opacity-50 group-hover:opacity-100 group-hover:fill-indigo-200 transition-all" />
               </Button>
               <Button
-                className="rounded-lg size-10 bg-transparent!  border border-border"
+                className="rounded-lg size-10 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-indigo-300/30 transition-all duration-300 group"
                 variant={"outline"}
                 onClick={() => window.open("https://github.com/phm6530/")}
               >
-                <GitSvg className=" fill-foreground opacity-50" />
+                <GitSvg className="fill-foreground opacity-50 group-hover:opacity-100 group-hover:fill-indigo-200 transition-all" />
               </Button>
               <Button
-                className="rounded-lg size-10 bg-transparent!  border border-border"
+                className="rounded-lg size-10 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-indigo-300/30 transition-all duration-300 group"
                 variant={"outline"}
                 onClick={() => window.open("https://blog.h-creations.com/")}
               >
-                <BlogSvg className=" fill-foreground opacity-50" />
+                <BlogSvg className="fill-foreground opacity-50 group-hover:opacity-100 group-hover:fill-indigo-200 transition-all" />
               </Button>
             </div>
           </div>
 
           <div className="w-1/2  flex flex-col gap-10">
-            {/* 블로그 포스트 섹션 */}
-            <div className="space-y-6 animate-leftIn ani-delay-1.1 opacity-0">
+            <div className="space-y-2 animate-leftIn ani-delay-1.1 opacity-0">
               <h3 className="text-sm font-medium tracking-wider mb-3 flex items-center gap-2 group cursor-pointer">
-                <span className="text-[11px] text-indigo-200">
-                  RECENT POSTS
+                <span className="text-[11px] text-indigo-200 text-shadow-[0_5px_30px_rgba(99,102,241,0.25)]">
+                  RECENT PROJECT
                 </span>
-                <ChevronRight
-                  size={15}
-                  className="opacity-50 group-hover:opacity-100 transition-all text-indigo-200"
-                />
               </h3>
 
-              {/* 블로그 포스트 1 */}
-              <div className="flex gap-4 group cursor-pointer">
-                <div className="flex-shrink-0 w-16 h-16 bg-zinc-800/50 rounded-md overflow-hidden flex items-center justify-center">
-                  <span className="text-white/20 text-xs">Image</span>
-                </div>
-                <div>
-                  <h4 className="text-white text-sm font-medium mb-1 group-hover:text-indigo-400 transition-colors">
-                    Next.js - CMS BLOG (1)
-                  </h4>
-                  <p className="text-xs text-white/50 mb-2 line-clamp-2">
-                    기술적 성장과 커리어 발전을 위한 프론트엔드 개발자의 학습
-                    로드맵
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <span className="text-[10px] text-white/40">
-                      May 5, 2025
-                    </span>
-                    <span className="text-[10px] py-0.5 px-2 bg-white/10 text-white/60 rounded-full">
-                      Frontend
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* 블로그 포스트 2 */}
-              <div className="flex gap-4 group cursor-pointer">
-                <div className="flex-shrink-0 w-16 h-16 bg-zinc-800/50 rounded-md overflow-hidden flex items-center justify-center">
-                  <span className="text-white/20 text-xs">Image</span>
-                </div>
-                <div>
-                  <h4 className="text-white text-sm font-medium mb-1 group-hover:text-indigo-400 transition-colors">
-                    AWS 클라우드 서비스 활용 가이드
-                  </h4>
-                  <p className="text-xs text-white/50 mb-2 line-clamp-2">
-                    웹 개발자를 위한 AWS 서비스 선택 및 비용 최적화 전략
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <span className="text-[10px] text-white/40">
-                      Apr 28, 2025
-                    </span>
-                    <span className="text-[10px] py-0.5 px-2 bg-white/10 text-white/60 rounded-full">
-                      AWS
-                    </span>
+              <div className="flex gap-3">
+                <div className="flex gap-4 group cursor-pointer article-hover border-indigo-200 shadow-[0_5px_30px_rgba(99,102,241,0.25)]  p-5  bg-white/3 w-full rounded-lg">
+                  <div>
+                    <h4 className="text-white text-sm font-medium mb-1 group-hover:text-indigo-200 transition-colors">
+                      Next.js - CMS BLOG (1)
+                    </h4>
+                    <p className="text-xs text-white/50 mb-2 line-clamp-2">
+                      기술적 성장과 커리어 발전을 위한 프론트엔드 개발자의 학습
+                      로드맵
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <span className="text-[10px] text-white/40">
+                        May 5, 2025
+                      </span>
+                      <span className="text-[10px] py-0.5 px-2 bg-white/10 text-white/60 rounded-full">
+                        Frontend
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* 블로그 포스트 섹션 */}
-            <div className="space-y-6 animate-leftIn ani-delay-1.1 opacity-0">
+            <div className="space-y-2 animate-leftIn ani-delay-1.1 opacity-0">
               <h3 className="text-sm font-medium tracking-wider mb-3 flex items-center gap-2 group cursor-pointer">
-                <span className="text-[11px] text-indigo-200">
+                <span className="text-[11px] text-indigo-200 text-shadow-[0_5px_30px_rgba(99,102,241,0.25)]">
                   RECENT POSTS
                 </span>
                 <ChevronRight
@@ -153,49 +122,44 @@ const Home = () => {
                 />
               </h3>
 
-              {/* 블로그 포스트 1 */}
-              <div className="flex gap-4 group cursor-pointer">
-                <div className="flex-shrink-0 w-16 h-16 bg-zinc-800/50 rounded-md overflow-hidden flex items-center justify-center">
-                  <span className="text-white/20 text-xs">Image</span>
-                </div>
-                <div>
-                  <h4 className="text-white text-sm font-medium mb-1 group-hover:text-indigo-400 transition-colors">
-                    Next.js - CMS BLOG (1)
-                  </h4>
-                  <p className="text-xs text-white/50 mb-2 line-clamp-2">
-                    기술적 성장과 커리어 발전을 위한 프론트엔드 개발자의 학습
-                    로드맵
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <span className="text-[10px] text-white/40">
-                      May 5, 2025
-                    </span>
-                    <span className="text-[10px] py-0.5 px-2 bg-white/10 text-white/60 rounded-full">
-                      Frontend
-                    </span>
+              <div className="flex gap-3">
+                <div className="flex gap-4 group cursor-pointer article-hover  p-5  bg-white/3 rounded-lg">
+                  <div>
+                    <h4 className="text-white text-sm font-medium mb-1 group-hover:text-indigo-200 transition-colors">
+                      Next.js - CMS BLOG (1)
+                    </h4>
+                    <p className="text-xs text-white/50 mb-2 line-clamp-2">
+                      기술적 성장과 커리어 발전을 위한 프론트엔드 개발자의 학습
+                      로드맵
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <span className="text-[10px] text-white/40">
+                        May 5, 2025
+                      </span>
+                      <span className="text-[10px] py-0.5 px-2 bg-white/10 text-white/60 rounded-full">
+                        Frontend
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* 블로그 포스트 2 */}
-              <div className="flex gap-4 group cursor-pointer">
-                <div className="flex-shrink-0 w-16 h-16 bg-zinc-800/50 rounded-md overflow-hidden flex items-center justify-center">
-                  <span className="text-white/20 text-xs">Image</span>
-                </div>
-                <div>
-                  <h4 className="text-white text-sm font-medium mb-1 group-hover:text-indigo-400 transition-colors">
-                    AWS 클라우드 서비스 활용 가이드
-                  </h4>
-                  <p className="text-xs text-white/50 mb-2 line-clamp-2">
-                    웹 개발자를 위한 AWS 서비스 선택 및 비용 최적화 전략
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <span className="text-[10px] text-white/40">
-                      Apr 28, 2025
-                    </span>
-                    <span className="text-[10px] py-0.5 px-2 bg-white/10 text-white/60 rounded-full">
-                      AWS
-                    </span>
+                {/* 블로그 포스트 2 */}
+                <div className="flex gap-4 group cursor-pointer  article-hover  p-5">
+                  <div>
+                    <h4 className="text-white text-sm font-medium mb-1 group-hover:text-indigo-200 transition-colors">
+                      AWS 클라우드 서비스 활용 가이드
+                    </h4>
+                    <p className="text-xs text-white/50 mb-2 line-clamp-2">
+                      웹 개발자를 위한 AWS 서비스 선택 및 비용 최적화 전략
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <span className="text-[10px] text-white/40">
+                        Apr 28, 2025
+                      </span>
+                      <span className="text-[10px] py-0.5 px-2 bg-white/10 text-white/60 rounded-full">
+                        AWS
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
