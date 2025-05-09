@@ -1,12 +1,8 @@
 import Motion from "@/component/animations/Motion";
-import UserProfile from "@/component/profile/UserProfile";
-import DashBoard from "@/component/ui/DashBoard/DashBoard";
 import BoardCommentForm from "@/features/Board/BoardCommentForm/BoardCommentForm";
 import BoardCommentList from "@/features/Board/BoardCommentList/BoardCommentList";
 import { AnimatedBackgroundGlows } from "../about/tttt";
 import SubNav from "@/components/shared/sub-nav";
-import BackgroundImgCover from "@/component/ui/BackgroundImgCover";
-import ShootingStar from "@/component/animations/ShootingStar";
 
 export default function Board(): JSX.Element {
   return (

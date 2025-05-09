@@ -24,7 +24,7 @@ export class DateUtils {
   private static today = dayjs();
 
   private static parseKoreanDate(date: string | Date) {
-    return dayjs(date).tz("Asia/Seoul");
+    return dayjs(date).tz("Asia/Seoul").locale("en");
   }
 
   static dateFormatKR(date: string | Date, format: DateFormat) {
@@ -33,6 +33,10 @@ export class DateUtils {
 
   static isAfter(date: string): boolean {
     return this.today.isAfter(this.parseKoreanDate(date), "day");
+  }
+
+  static formatStyledShort(date: string | Date) {
+    return this.parseKoreanDate(date).format("MMM D, YYYY");
   }
 
   static isBefore(date: string) {
@@ -50,5 +54,36 @@ export class DateUtils {
 
   static fromNow(date: string) {
     return this.parseKoreanDate(date).fromNow();
+  }
+
+  /**
+   * 두 날짜 사이의 일수 차이를 계산합니다. (종료일 - 시작일)
+   * @param startDate 시작 날짜
+   * @param endDate 종료 날짜
+   * @returns 두 날짜 사이의 일수 (종료일 포함)
+   */
+  static getDurationDays(
+    startDate: string | Date,
+    endDate: string | Date
+  ): number {
+    const start = this.parseKoreanDate(startDate);
+    const end = this.parseKoreanDate(endDate);
+
+    // 종료일도 포함하는 경우 +1 (예: 5월 1일부터 5월 3일까지는 3일)
+    return end.diff(start, "day") + 1;
+  }
+
+  /**
+   * 두 날짜 사이의 기간을 '00일' 형식의 문자열로 반환합니다.
+   * @param startDate 시작 날짜
+   * @param endDate 종료 날짜
+   * @returns '00일' 형식의 문자열
+   */
+  static getFormattedDuration(
+    startDate: string | Date,
+    endDate: string | Date
+  ): string {
+    const days = this.getDurationDays(startDate, endDate);
+    return `${days}일`;
   }
 }

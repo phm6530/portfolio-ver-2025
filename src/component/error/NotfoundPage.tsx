@@ -46,7 +46,7 @@ interface NotFoundPageProps {
 }
 
 const NotfoundPage: React.FC<NotFoundPageProps> = ({ redirectPath }) => {
-  const navigate = ate();
+  const navigate = useNavigate();
   return (
     <Page>
       <h1>권한이 없거나 존재하지 않는 페이지입니다.</h1>

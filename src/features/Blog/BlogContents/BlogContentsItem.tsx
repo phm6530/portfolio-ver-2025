@@ -1,19 +1,10 @@
 import { useNavigate } from "react-router-dom";
-
-import styled from "styled-components";
-import FadeInAnimation from "@/component/animations/FadeInAnimation";
-import Thumbnail from "@/component/ui/Thumbnail";
 import { IMG_URL } from "@/constants/apiUrl";
-import { device } from "@/config/DeviceConfig";
 import PostNewIcon from "@/component/ui/PostNewIcon";
 import { DateUtils } from "@/utils/dateUtil";
 import { PostItemModel } from "../BlogList/BlogList";
 import { useCallback } from "react";
-
-const CustomThumNail = styled(Thumbnail)`
-  width: 25%;
-  padding-bottom: 16%;
-`;
+import StackBadge from "@/components/ui/stack-badge";
 
 const BlogContentsItem: React.FC<PostItemModel> = ({
   post_id,
@@ -33,38 +24,37 @@ const BlogContentsItem: React.FC<PostItemModel> = ({
 
   return (
     <div
-      className="flex article-hover p-5 flex-col"
+      className="flex article-hover p-5 flex-col transform hover:-translate-y-1"
       onClick={() => navigate(`${post_id}`)}
     >
-      <div
-        className="w-full aspect-[16/5]"
-        style={{
-          backgroundImage: `url(${thumbnail_url ? unsplashS3Mapping(thumbnail_url) : null})`,
-          backgroundPosition: "center center",
-          backgroundSize: "cover",
-        }}
-      />
+      {thumbnail_url && (
+        <div
+          className="w-full aspect-[16/6] rounded-lg"
+          style={{
+            backgroundImage: `url(${thumbnail_url ? unsplashS3Mapping(thumbnail_url) : null})`,
+            backgroundPosition: "center center",
+            backgroundSize: "cover",
+          }}
+        />
+      )}
 
-      {/* 썸네일  */}
-      {/* <CustomThumNail
-        img={thumbnail_url ? unsplashS3Mapping(thumbnail_url) : null}
-        badge={sub_group_name}
-      /> */}
-      <div className="flex flex-col gap-2 pt-4">
+      <div className="flex flex-col gap-2 pt-4 items-start">
         {/* Header */}
 
-        <div className="">
+        <StackBadge> {sub_group_name}</StackBadge>
+
+        <div className="flex items-center">
           {post_title}
           {DateUtils.isNew(created_at) && <PostNewIcon />}
         </div>
 
         {/* Company */}
-        <p className="text-xs line-clamp-2 leading-relaxed">
+        <p className="text-xs line-clamp-2 leading-relaxed text-secondary-foreground">
           {post_description}
         </p>
         {/* <HashTag>{subcategory}</HashTag> */}
-        <p className="text-sm opacity-60">
-          {DateUtils.dateFormatKR(created_at, "YYYY. MM. DD")}
+        <p className="text-xs opacity-50 mt-4">
+          {DateUtils.formatStyledShort(created_at)}
         </p>
       </div>
     </div>

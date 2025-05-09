@@ -10,6 +10,7 @@ import { requestHandler } from "@/utils/apiUtils";
 import styled from "styled-components";
 import BlogContentsItem from "../BlogContents/BlogContentsItem";
 import SearchField from "@/components/shared/search-input-field";
+import LoadingSpiner from "@/components/ui/loading-spiner";
 
 export enum POST_STATUS {
   DRAFT = "draft",
@@ -105,11 +106,14 @@ const BlogList = (): JSX.Element => {
   return (
     <>
       {isPending ? (
-        <SpinnerLoading />
+        <div className="relative w-full min-h-[250px]  ">
+          <LoadingSpiner />
+        </div>
       ) : flatData && flatData.length > 0 ? (
         <AnimatePresence mode="wait">
-          <div className="mt-10  grid grid-cols-2 gap-3">
+          <div className="mt-5  grid grid-cols-2 gap-3 animate-topIn ani-delay-0.5 opacity-0">
             {flatData.map((item, idx) => {
+              // item
               return <BlogContentsItem key={`item-${idx}`} {...item} />;
             })}
           </div>
@@ -117,25 +121,13 @@ const BlogList = (): JSX.Element => {
       ) : (
         <div>
           {search && search.trim() === "" ? (
-            <NonData message={"등록된 데이터가 없습니다."} />
+            <NonData message={"등록된 데이터가 없습니다"} />
           ) : (
-            <NonData message={`"${search}" 검색 데이터가 없습니다.`} />
+            <NonData message={`작성된 포스팅이 없습니다`} />
           )}
         </div>
       )}
-      {isFetching &&
-        Array.from({ length: 6 }).map((_, idx) => {
-          return (
-            <div key={`skeleton-${idx}`}>
-              <div className="bg-foreground/10  aspect-[16/9] animate-pulse " />
-              <div className="flex flex-col gap-3 mt-4">
-                <div className="bg-foreground/10 animate-wiggle w-[100px] h-3 rounded-full"></div>
-                <div className="bg-foreground/10 animate-wiggle w-2xs h-3 rounded-full"></div>
-                <div className="bg-foreground/10 animate-wiggle w-2xs h-3 rounded-full"></div>
-              </div>
-            </div>
-          );
-        })}
+
       {hasNextPage && <div ref={ref} />}
     </>
   );

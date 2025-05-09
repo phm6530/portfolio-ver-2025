@@ -14,7 +14,7 @@ export const AnimatedBackgroundGlows = () => {
 
   useGSAP(
     () => {
-      // 첫 번째 글로우 - 기본 애니메이션 (호흡 효과)
+      if (!containerRef.current) return;
       gsap.to(".glow-1", {
         opacity: 0.7,
         scale: 1.2,
@@ -24,7 +24,6 @@ export const AnimatedBackgroundGlows = () => {
         ease: "sine.inOut",
       });
 
-      // 두 번째 글로우 - 기본 애니메이션
       gsap.to(".glow-2", {
         opacity: 0.6,
         scale: 1.1,
@@ -35,7 +34,6 @@ export const AnimatedBackgroundGlows = () => {
         delay: 0.5,
       });
 
-      // 세 번째 글로우 - 기본 애니메이션
       gsap.to(".glow-3", {
         opacity: 0.8,
         scale: 1.15,
@@ -51,7 +49,6 @@ export const AnimatedBackgroundGlows = () => {
       gsap.to(".glow-1", {
         y: "-20%", // 스크롤 방향과 반대로 느리게 이동
         scrollTrigger: {
-          trigger: "body",
           start: "top top",
           end: "bottom bottom",
           scrub: 0.5, // 스크롤에 부드럽게 반응 (숫자가 클수록 지연 효과)
@@ -64,7 +61,6 @@ export const AnimatedBackgroundGlows = () => {
         y: "40%", // 스크롤 방향과 같은 방향으로 더 빠르게 이동
         x: "-10%",
         scrollTrigger: {
-          trigger: "body",
           start: "top top",
           end: "bottom bottom",
           scrub: 0.7,
@@ -77,7 +73,6 @@ export const AnimatedBackgroundGlows = () => {
         y: "60%", // 스크롤 방향과 같은 방향으로 가장 빠르게 이동
         x: "15%",
         scrollTrigger: {
-          trigger: "body",
           start: "top top",
           end: "bottom bottom",
           scrub: 0.2, // 빠르게 반응

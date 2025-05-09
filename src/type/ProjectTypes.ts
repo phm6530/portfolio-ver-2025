@@ -1,15 +1,11 @@
 export type ProjectKey = string;
 export type HashTagType = string[];
 export type skillType = string[];
-export type startDate = Date | null;
-export type endDate = Date | null;
+export type startDate = Date | string | null;
+export type endDate = Date | string | null;
 
-export interface projectRoles {
-  role: number;
-  roleName: string;
-  rolePercent: number;
-  role_id?: number;
-}
+export type STACK_TYPES = "framework" | "lib" | "style";
+
 export interface ProjectDetailProps {
   id: string;
   title: string;
@@ -17,15 +13,14 @@ export interface ProjectDetailProps {
   company: string;
   hashtag: HashTagType;
   projectUrl: string;
-  startDate: startDate;
-  endDate: endDate;
+  start_date: startDate;
+  end_date: endDate;
   thumbnail: string;
   description: string;
   projectDescription: string;
-  projectRoles: projectRoles[];
   project_meta_stack: Array<{
     project_stack: {
-      type: "framework";
+      type: STACK_TYPES;
       stack: string;
     };
   }>;

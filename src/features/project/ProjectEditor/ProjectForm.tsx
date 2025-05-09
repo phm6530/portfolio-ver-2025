@@ -31,7 +31,6 @@ import { toast } from "react-toastify";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import ProjectThumbnailUploader from "./ProjectThumbnailUploader";
-import { getPlainText } from "@/utils/plain-text";
 import { DateUtils } from "@/utils/dateUtil";
 import { requestHandler } from "@/utils/apiUtils";
 import { DetailProps } from "../ProjectDetail";
@@ -101,24 +100,25 @@ export default function ProjectForm() {
         const pool = SupabasePool.getInstance();
         const isEdit = !!projectNum;
 
+        //Meta Data
+        const metadataValues = {
+          title: body.title,
+          company: body.company,
+          project_member: body.members,
+          description: body.description,
+          start_date: DateUtils.dateFormatKR(
+            body.workRange.start!,
+            "YYYY. MM. DD"
+          ),
+          end_date: DateUtils.dateFormatKR(body.workRange.end!, "YYYY. MM. DD"),
+          project_url: body.url,
+          thumbnail: body.thumbnail,
+        };
+
         if (isEdit) {
           const { error: updateError } = await pool
             .from("project_meta")
-            .update({
-              title: body.title,
-              company: body.company,
-              description: body.description,
-              start_date: DateUtils.dateFormatKR(
-                body.workRange.start!,
-                "YYYY. MM. DD"
-              ),
-              end_date: DateUtils.dateFormatKR(
-                body.workRange.end!,
-                "YYYY. MM. DD"
-              ),
-              project_url: body.url,
-              thumbnail: body.thumbnail,
-            })
+            .update(metadataValues)
             .eq("id", projectNum);
 
           if (updateError) throw updateError;
@@ -144,6 +144,7 @@ export default function ProjectForm() {
             title: item.title,
             contents: item.contents,
           }));
+
           const { error: summaryError } = await pool
             .from("project_surmmry")
             .insert(summaryValues);
@@ -170,19 +171,7 @@ export default function ProjectForm() {
             .from("project_meta")
             .insert([
               {
-                title: body.title,
-                company: body.company,
-                description: body.description,
-                start_date: DateUtils.dateFormatKR(
-                  body.workRange.start!,
-                  "YYYY. MM. DD"
-                ),
-                end_date: DateUtils.dateFormatKR(
-                  body.workRange.end!,
-                  "YYYY. MM. DD"
-                ),
-                project_url: body.url,
-                thumbnail: body.thumbnail,
+                ...metadataValues,
                 img_key: imgKey,
               },
             ])
@@ -254,9 +243,12 @@ export default function ProjectForm() {
       toast.success("프로젝트가 등록 되었습니다.");
       nav("/project");
       form.reset();
-      await queryclient.invalidateQueries({
-        queryKey: ["project-list"],
-      });
+      await Promise.all([
+        queryclient.invalidateQueries({ queryKey: ["project-list"] }),
+        queryclient.invalidateQueries({
+          queryKey: [`PROJECT_DETAIL:${projectNum}`],
+        }),
+      ]);
     },
   });
 
@@ -301,6 +293,7 @@ export default function ProjectForm() {
       form.reset({
         title: result.title,
         company: result.company,
+        members: result.project_member,
         thumbnail: result.thumbnail,
         url: result.project_url,
         useStack: stacks,
@@ -338,7 +331,7 @@ export default function ProjectForm() {
           onSubmit={form.handleSubmit(onSubmitHandler)}
         >
           {/* Title */}
-          <div className="grid w-full gap-2 grid-cols-2">
+          <div className="grid w-full gap-10 grid-cols-2">
             <InputField
               name="title"
               className="p-2 "
@@ -353,6 +346,14 @@ export default function ProjectForm() {
               className="p-2 "
               placeholder="프로젝트 제목을 입력해주세요"
               label="프로젝트 기관"
+              errorField
+            />
+
+            <InputField
+              name="members"
+              className="p-2 "
+              placeholder="참여 구성원을 기재해주세요"
+              label="참여자 구성원"
               errorField
             />
           </div>

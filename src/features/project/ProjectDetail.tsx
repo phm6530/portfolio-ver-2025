@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { requestHandler } from "@/utils/apiUtils";
 import SupabasePool from "@/lib/supabaseClient";
 import NotfoundPage from "@/component/error/NotfoundPage";
-
+import ProjectSvg from "@/asset/project/project-detail.svg?react";
 import {
   EditorProvider,
   SimpleEditorContents,
@@ -18,14 +18,30 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Calendar, Info, Link, Link2Icon } from "lucide-react";
+import {
+  Calendar,
+  Calendar1,
+  Code,
+  Code2,
+  ExternalLink,
+  Info,
+  Link,
+  Link2Icon,
+  List,
+  Users,
+} from "lucide-react";
 import ProjectDetailSkeleton from "./project-detail-skeleton";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import useStore from "@/store/zustandStore";
+import { cn } from "@/lib/utils";
+import { STACK_TYPES } from "@/type/ProjectTypes";
+import { DateUtils } from "@/utils/dateUtil";
 
 export type DetailProps = {
   company: string;
   description: string;
+  project_member: string;
   end_date: string;
   id: number;
   img_key: string;
@@ -38,20 +54,17 @@ export type DetailProps = {
     contents: string;
   }>;
   project_meta_stack: Array<{
-    project_stack: { id: number; type: string; stack: string };
+    project_stack: { id: number; type: STACK_TYPES; stack: string };
   }>;
   project_surmmry: Array<{ id: number; title: string; contents: string }>;
 };
 
-const ProjectDetail = ({
-  id,
-  closeModal,
-}: {
-  id: number;
-  closeModal: () => void;
-}) => {
+const ProjectDetail = () => {
   const nav = useNavigate();
   const queryclient = useQueryClient();
+  const { id } = useParams();
+
+  const login = useStore((state) => state.userAuth.login);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: [`PROJECT_DETAIL:${id}`],
@@ -106,22 +119,21 @@ const ProjectDetail = ({
       await queryclient.invalidateQueries({
         queryKey: ["project-list"],
       });
-      closeModal();
     },
   });
-
-  const deleteConfirm = () => {
-    if (!confirm("삭제하시겠습니까?")) return;
-    mutate(id);
-  };
 
   if (isLoading) {
     return <ProjectDetailSkeleton />;
   }
 
-  if (isError || !data) {
+  if (isError || !data || !id) {
     return <NotfoundPage redirectPath={"/project"} />;
   }
+
+  const deleteConfirm = () => {
+    if (!confirm("삭제하시겠습니까?")) return;
+    mutate(+id);
+  };
 
   const {
     title,
@@ -129,6 +141,7 @@ const ProjectDetail = ({
     description,
     start_date,
     end_date,
+    project_member,
     project_contents,
     project_meta_stack,
     project_surmmry,
@@ -136,131 +149,186 @@ const ProjectDetail = ({
 
   return (
     <>
-      <section className="shadow-2xl rounded-2xl overflow-hidden transition-all duration-500 dark:bg-gradient-to-b dark:from-gray-900 dark:to-black bg-gradient-to-b from-gray-50 to-white border dark:border-white/10 border-gray-200">
-        {/* 상단 관리자 컨트롤 바 */}
-        <div className="flex items-center bg-zinc-900 justify-center py-2">
-          <div className="max-w-[calc(100%-112px)] w-full items-center flex">
-            <div className="text-xs flex items-center gap-2">
-              <Info size={14} className="text-white" />
-              <span className="text-indigo-100">
-                ESC를 누르면 팝업창이 닫힙니다.
-              </span>
-            </div>
-            <div className="w-full text-right flex justify-end flex-1 divide-x divide-zinc-700">
-              <span
-                className="text-xs cursor-pointer px-3 py-1 text-white hover:text-indigo-300 transition-colors"
+      <section className="break-keep flex flex-col gap-8 items-start mb-10">
+        {/* 제목 및 설명 */}
+        <div className="flex flex-col gap-4 pl-5 border-l-3 border-indigo-300">
+          <div className="flex  flex-col  gap-4 ">
+            <ProjectSvg className="[&>g]:fill-white size-12" />
+            <h1 className="text-3xl leading-tight text-zinc-900 dark:text-white">
+              {title}
+            </h1>
+          </div>
+          <p className="text-sm leading-7 text-zinc-600 dark:text-zinc-300 max-w-[500px]">
+            {description}
+          </p>
+        </div>
+
+        <div className="border-y py-1 w-full [&>button]:text-xs [&>button]:px-4 flex  border-border divide-x divide-border animate-topIn opacity-0 ani-delay-0.3">
+          <button
+            className="flex gap-2 items-center opacity-70 hover:opacity-100"
+            onClick={() => nav("/blog")}
+          >
+            <List size={13} />
+            목록으로
+          </button>
+          <button
+            className="flex gap-2 items-center opacity-70 hover:opacity-100"
+            onClick={() =>
+              window.open(`https://blog.h-creations.com/post/${id}`, "_blank")
+            }
+          >
+            <Link2Icon size={13} /> Project 바로가기
+          </button>
+          {login && (
+            <>
+              <Button
+                size={"sm"}
+                variant={"ghost"}
+                className="ml-auto py-0!"
                 onClick={() => nav(`/project/write?edit=${id}`)}
               >
                 수정
-              </span>
-              <span
-                className="text-xs cursor-pointer px-3 py-1 text-white hover:text-red-300 transition-colors"
+              </Button>
+              <Button
                 onClick={deleteConfirm}
+                size={"sm"}
+                variant={"ghost"}
+                className=" py-0!"
               >
                 삭제
+              </Button>
+            </>
+          )}
+        </div>
+
+        <div className="grid gap-5 mt-5 items-start justify-start">
+          <div
+            className="flex flex-col gap-2 "
+            style={{
+              backdropFilter: "blur(5px)",
+            }}
+          >
+            <h3 className="text-base tracking-wider flex gap-3 items-center text-white ">
+              <Calendar1 size={18} className="text-indigo-200" />
+
+              <span className="bg-gradient-to-r tracking-tighter  font-SUIT-Regular from-white to-indigo-200 bg-clip-text text-transparent">
+                작업기간 / 유지보수 기간
+              </span>
+            </h3>
+            <div className="flex text-xs items-center gap-2 text-zinc-600 dark:text-zinc-400">
+              <span className="text-xs px-2.5 py-1 flex gap-2 items-centers rounded-full border border-indigo-500/30 text-indigo-200">
+                {DateUtils.getDurationDays(start_date, end_date)} 일
+              </span>
+              <span>
+                {start_date} - {end_date}
               </span>
             </div>
           </div>
-        </div>
-
-        {/* 메인 콘텐츠 그리드 */}
-        <div className="grid grid-cols-[300px_auto] divide-x divide-zinc-200 dark:divide-zinc-700 p-8 bg-zinc-50 dark:bg-zinc-900">
-          {/* 왼쪽 사이드바 정보 */}
-          <div className="break-keep flex flex-col gap-8 items-start pr-8">
-            {/* 제목 및 설명 */}
-            <div className="flex flex-col gap-4">
-              <h1 className="text-2xl leading-tight font-Montserrat font-bold text-zinc-900 dark:text-white">
-                {title}
-              </h1>
-              <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-                {description}
-              </p>
+          <div className="flex flex-col gap-2 ">
+            <h3 className="text-base tracking-wider flex gap-3 items-center text-white ">
+              <Users size={18} className="text-indigo-200" />
+              <span className="bg-gradient-to-r from-white to-indigo-200 bg-clip-text text-transparent  tracking-tighter  font-SUIT-Regular">
+                참여인원
+              </span>
+            </h3>
+            <div className="flex text-xs items-center gap-2 text-zinc-600 dark:text-zinc-400">
+              <span className="text-xs px-2.5 py-1 flex gap-2 items-centers rounded-full border border-indigo-500/30 text-indigo-200">
+                {project_member}
+              </span>
             </div>
-
-            {/* 작업 기간 */}
-            <div className="flex flex-col gap-2">
-              <h1 className="text-lg font-Montserrat font-bold text-indigo-600 dark:text-indigo-400">
-                WORK RANGE
-              </h1>
-              <div className="flex text-xs items-center gap-2 text-zinc-600 dark:text-zinc-400">
-                <Calendar size={15} /> {start_date} - {end_date}
+          </div>{" "}
+          <article className="col-span-2 mt-7">
+            <div className="   border-white/10">
+              <h3 className="text-lg tracking-wider mb-2 flex gap-3 items-center text-white ">
+                <Code2 size={18} className="text-indigo-200" />
+                <span className="bg-gradient-to-r from-white to-indigo-200 bg-clip-text text-transparent  tracking-tighter  font-SUIT-Regular">
+                  사용스택
+                </span>
+              </h3>
+              <div className="flex gap-4 mb-6">
+                <div className="flex items-center gap-2">
+                  <span className="size-1.5 rounded-full inline-block bg-indigo-200"></span>{" "}
+                  <span className="text-xs opacity-60">Framework & langes</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="size-1.5 rounded-full  inline-block bg-indigo-400"></span>{" "}
+                  <span className="text-xs opacity-60">lib</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="size-1.5 rounded-full inline-block bg-indigo-600"></span>{" "}
+                  <span className="text-xs opacity-60">style</span>
+                </div>
               </div>
             </div>
 
-            {/* 기술 스택 */}
-            <article>
-              <h1 className="text-lg font-semibold font-Montserrat mb-3 text-indigo-600 dark:text-indigo-400">
-                Stack
-              </h1>
-              <div className="flex flex-wrap gap-2">
-                {project_meta_stack.map((e, idx) => (
+            <div className="flex flex-wrap gap-2 mt-4">
+              {project_meta_stack.map((e, idx) => {
+                return (
                   <div
                     key={`stack:${idx}`}
-                    className="text-xs px-3 py-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-800"
+                    className={cn(
+                      "text-xs p-2 px-3 rounded-full bg-zinc-50/3 border  text-indigo-300 border-indigo-200/50"
+                      // e.project_stack.type === "framework" && "text-red-300",
+                      // e.project_stack.type === "lib" && "text-orange-300",
+                      // e.project_stack.type === "style" && "text-teal-400"
+                    )}
                   >
                     {e.project_stack.stack}
                   </div>
-                ))}
-              </div>
-            </article>
-
-            {/* 보기 버튼 */}
-            <Button
-              variant="outline"
-              className="w-full flex items-center justify-center gap-2 py-2.5 mt-4 text-sm rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition-colors border-none"
-            >
-              View <Link2Icon size={16} />
-            </Button>
-          </div>
-
-          {/* 오른쪽 콘텐츠 영역 */}
-          <div className="flex-1 pl-8">
-            {/* 썸네일 이미지 */}
-            <div className="overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-700">
-              <img
-                src={`${IMG_URL}/${thumbnail}`}
-                alt={title}
-                className="w-full h-auto object-cover transition-transform duration-700 hover:scale-105"
-              />
-            </div>
-
-            {/* 아코디언 요약 정보 */}
-            <Accordion
-              type="single"
-              collapsible
-              className="w-full my-6 flex flex-col gap-3"
-            >
-              {project_surmmry.map((item, idx) => {
-                return (
-                  <AccordionItem
-                    value={`${idx}`}
-                    key={`${idx}-acodian`}
-                    className="border border-zinc-200 dark:border-zinc-700 rounded-lg overflow-hidden"
-                  >
-                    <AccordionTrigger className="px-4 py-3 bg-white dark:bg-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-700/50 transition-colors">
-                      {item.title}
-                    </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-white/50 dark:bg-zinc-800/50 text-sm text-zinc-600 dark:text-zinc-300">
-                      {item.contents}
-                    </AccordionContent>
-                  </AccordionItem>
                 );
               })}
-            </Accordion>
-
-            {/* 프로젝트 상세 내용 */}
-            <div className="mt-6 prose dark:prose-invert prose-sm max-w-none">
-              {project_contents.length > 0 && (
-                <EditorProvider editor={editor}>
-                  <SimpleEditorContents
-                    value={HtmlContentNormalizer.setImgUrl(
-                      project_contents[0].contents
-                    )}
-                  />
-                </EditorProvider>
-              )}
             </div>
-          </div>
+          </article>
+        </div>
+        {/* 기술 스택 */}
+
+        {/* 보기 버튼 */}
+        <button className="text-xs flex rounded-lg w-1/2 items-center py-3 gap-2 justify-center article-hover p-2">
+          웹 사이트 바로가기{" "}
+          <Link2Icon size={14} className="opacity-50 rotate-45" />
+        </button>
+      </section>
+      <section className="flex-1">
+        {/* 썸네일 이미지 */}
+        <div className="overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-700">
+          <img
+            src={`${IMG_URL}/${thumbnail}`}
+            alt={title}
+            className="w-full h-auto "
+          />
+        </div>
+
+        {/* 아코디언 요약 정보 */}
+        <Accordion
+          type="single"
+          collapsible
+          className="w-full my-6 flex flex-col gap-3"
+        >
+          {project_surmmry.map((item, idx) => {
+            return (
+              <AccordionItem
+                value={`${idx}`}
+                key={`${idx}-acodian`}
+                className="outline px-4 overflow-hidden rounded-sm outline-border"
+              >
+                <AccordionTrigger>{item.title}</AccordionTrigger>
+                <AccordionContent>{item.contents}</AccordionContent>
+              </AccordionItem>
+            );
+          })}
+        </Accordion>
+
+        {/* 프로젝트 상세 내용 */}
+        <div className="mt-6 prose dark:prose-invert prose-sm max-w-none">
+          {project_contents.length > 0 && (
+            <EditorProvider editor={editor}>
+              <SimpleEditorContents
+                value={HtmlContentNormalizer.setImgUrl(
+                  project_contents[0].contents
+                )}
+              />
+            </EditorProvider>
+          )}
         </div>
       </section>
     </>

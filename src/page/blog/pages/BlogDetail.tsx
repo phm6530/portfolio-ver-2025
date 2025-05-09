@@ -1,8 +1,7 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { SpinnerLoading } from "@/component/loading/SpinnerLoading";
 import NotfoundPage from "@/component/error/NotfoundPage";
 
-import * as S from "./BlogDetailStyle";
 import { queryKey } from "@/services/queryKey";
 import { requestHandler } from "@/utils/apiUtils";
 import { axiosApi } from "@/config/axios.config";
@@ -14,6 +13,10 @@ import {
   useSimpleEditor,
 } from "@squirrel309/my-testcounter";
 import { HtmlContentNormalizer } from "@/utils/HtmlContentNormalizer";
+import { Badge } from "@/components/ui/badge";
+import { ExternalLink, List } from "lucide-react";
+import imgUrlMapper from "@/utils/imgUrl-mapping";
+import BlogDetailSkeleton from "./blogdetail-skeleton";
 
 export enum POST_STATUS {
   DRAFT = "draft",
@@ -71,6 +74,8 @@ const BlogDetail = (): JSX.Element => {
   const { id } = useParams();
   const { editor } = useSimpleEditor({ editable: false });
 
+  const nav = useNavigate();
+
   const { data, isLoading, isError } = useQuery<BlogDetailResponse>({
     queryKey: [queryKey.blogDetail, id],
     queryFn: async () => {
@@ -85,7 +90,7 @@ const BlogDetail = (): JSX.Element => {
   if (isLoading) {
     return (
       <>
-        <SpinnerLoading />
+        <BlogDetailSkeleton />
       </>
     );
   }
@@ -104,69 +109,76 @@ const BlogDetail = (): JSX.Element => {
   const { sub_group_name } = blog_sub_group;
 
   return (
-    <>
-      <div>
-        {/* Editor View header */}
-        <S.PostDetailHeader>
-          <S.CateGroy>{sub_group_name}</S.CateGroy>
+    <section>
+      {/* Editor View header */}
+      <div className=" pb-5 border-b border-border animate-topIn opacity-0 ani-delay-0.2">
+        <Badge
+          className="rounded-full border border-border bg-white/5"
+          variant={"outline"}
+        >
+          {sub_group_name}
+        </Badge>
 
-          <S.PostTitle>{post_title}</S.PostTitle>
+        <h1 className="text-3xl py-5"> {post_title}</h1>
+
+        <span className="text-xs opacity-50">
           {DateUtils.dateFormatKR(created_at, "YYYY. MM. DD")}
-          <p></p>
-          {/* 
-                    <S.PostInfo>
-                        <div
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <S.UserPictrue>
-                                <img src="/img/me.jpg" alt="me" />
-                            </S.UserPictrue>
-                            {data.user}
-
-                            <S.SummaryDataAlign date={data.create_date} />
-                        </div>
-                    </S.PostInfo> */}
-        </S.PostDetailHeader>
-
-        {/* Quill View */}
-        <S.QuillViewWrapper>
-          <EditorProvider editor={editor}>
-            <SimpleEditorContents
-              value={HtmlContentNormalizer.setImgUrl(contents)}
-            />
-          </EditorProvider>
-          {/* <QuillView contents={contents} /> */}
-
-          {/* {data?.update_date && (
-                        <PostTimestamp
-                            style={{
-                                marginTop: '5rem',
-                                display: 'block',
-                            }}
-                            message={'게시물 최근 수정 일'}
-                            date={data.update_date}
-                        />
-                    )} */}
-
-          <div
-            className="border border-amber-200 p-5 cursor-pointer"
-            onClick={() =>
-              window.open(
-                `https://blog.h-creations.com/post/${post_id}`,
-                "_blank"
-              )
-            }
-          >
-            Me 블로그 바로가기
-          </div>
-        </S.QuillViewWrapper>
-
-        {/* <BlogPostRelatedList category={data.category} /> */}
+        </span>
       </div>
-    </>
+      <div className="border-y py-3 [&>button]:text-xs [&>button]:px-4 flex  border-border divide-x divide-border animate-topIn opacity-0 ani-delay-0.3">
+        <button
+          className="flex gap-2 items-center opacity-70 hover:opacity-100"
+          onClick={() => nav("/blog")}
+        >
+          <List size={13} />
+          목록으로
+        </button>
+        <button
+          className="flex gap-2 items-center opacity-70 hover:opacity-100"
+          onClick={() =>
+            window.open(`https://blog.h-creations.com/post/${id}`, "_blank")
+          }
+        >
+          <ExternalLink size={13} />내 블로그에서 보기
+        </button>
+      </div>
+
+      {!!blog_metadata.thumbnail_url && (
+        <div
+          className="  bg-red-100 mt-10 rounded-2xl aspect-[16/5] bg-cover bg-center animate-topIn opacity-0 ani-delay-0.4"
+          style={{
+            backgroundImage: `url(${imgUrlMapper({ thumbnail: blog_metadata.thumbnail_url })})`,
+          }}
+        />
+      )}
+      <div className="border-b border-border animate-topIn opacity-0 ani-delay-0.5">
+        <EditorProvider editor={editor}>
+          <SimpleEditorContents
+            value={HtmlContentNormalizer.setImgUrl(contents)}
+          />
+        </EditorProvider>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 mt-5">
+        <button
+          className="article-hover p-5 cursor-pointer text-sm rounded-lg"
+          onClick={() => window.open(`https://blog.h-creations.com`, "_blank")}
+        >
+          Blog "퍼블리셔와 개발자 그 사이 어딘가"
+        </button>
+        <button
+          className="article-hover p-5 cursor-pointer text-sm rounded-lg"
+          onClick={() =>
+            window.open(
+              `https://blog.h-creations.com/post/${post_id}`,
+              "_blank"
+            )
+          }
+        >
+          방명록 한줄 남기기
+        </button>
+      </div>
+    </section>
   );
 };
 

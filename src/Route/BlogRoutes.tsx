@@ -1,7 +1,7 @@
 import { useLocation, Route, Routes } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Motion from "@/component/animations/Motion";
-import BlogPage from "@/page/blog/pages/BlogPage";
+import BlogPage from "@/page/blog/pages/blog-page";
 import BlogDetail from "@/page/blog/pages/BlogDetail";
 
 const BlogRoutes = (): JSX.Element => {

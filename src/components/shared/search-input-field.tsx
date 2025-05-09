@@ -27,7 +27,7 @@ export default function SearchField({
     <form onSubmit={submitHandler} className=" w-full ">
       <div
         className={cn(
-          `bg-white/3  border border-transparent rounded-full dark:bg-custom-input overflow-hidden 
+          `bg-black/10  border border-transparent rounded-full dark:bg-custom-input overflow-hidden 
   
        flex flex-1 focus-within:border-indigo-300`,
           className

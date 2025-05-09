@@ -52,7 +52,7 @@ const PostItem: React.FC<PostItemProps> = ({
       {mainPage && firstIdx && <p className="mt-1">{post_description}</p>}
 
       <div className="text-xs opacity-50 mt-1">
-        {DateUtils.dateFormatKR(create_at, "YYYY. MM. DD")}
+        {DateUtils.formatStyledShort(create_at)}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import StarAnimation from "@/component/animations/StarAnimation";
 import SubNav from "@/components/shared/sub-nav";
 import { Button } from "@/components/ui/button";
-import StacBadge from "@/components/ui/stack-badge";
+import StackBadge from "@/components/ui/stack-badge";
 import { cn } from "@/lib/utils";
 import {
   Briefcase,

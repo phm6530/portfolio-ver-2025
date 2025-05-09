@@ -2,11 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKey } from "@/services/queryKey";
 import { requestHandler } from "@/utils/apiUtils";
 import { axiosApi } from "@/config/axios.config";
-import React from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import BlogTabDetail from "./BlogTabDetail";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNavigate } from "react-router-dom";
-import SearchField from "@/components/shared/search-input-field";
 
 export type CategoryModel = {
   id: number;
@@ -22,7 +19,7 @@ export type CategoryModel = {
 
 const BlogTab = () => {
   const nav = useNavigate();
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: [queryKey.blogCategory],
     queryFn: async () => {
       const { result } = await requestHandler<{
@@ -43,7 +40,7 @@ const BlogTab = () => {
     <>
       <Tabs
         defaultValue="all"
-        className="w-full"
+        className="w-full "
         onValueChange={(e) => nav(`/blog?category=${e}`)}
       >
         <TabsList className="flex gap-4 bg-transparent!  rounded-none mb-3 ">
@@ -57,8 +54,10 @@ const BlogTab = () => {
                   value={e}
                   className="border-0 px-0 bg-transparent! pb-4 shadow-none! text-sm rounded-none border-b-2  data-[state=active]:border-b-2! data-[state=active]:text-indigo-200! data-[state=active]:border-indigo-200! "
                 >
-                  {e === "all" ? "전체보기" : e} (
-                  {e === "all" ? data.count : item.postCnt})
+                  {e === "all" ? "전체보기" : e}
+                  <span className="text-xs text-indigo-300">
+                    ({e === "all" ? data.count : item.postCnt})
+                  </span>
                 </TabsTrigger>
               );
             })}

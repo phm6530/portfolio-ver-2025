@@ -360,6 +360,7 @@
   --animate-popup-out: popup-out 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   --animate-wiggle: wiggle 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   --animate-opacity: opacity 1.4s ease;
+  --animate-opacity-infinity: opacity 1.2s ease infinite;
 
   --ani-delay-0.1: 0.1s;
   --ani-delay-0.2: 0.2s;
