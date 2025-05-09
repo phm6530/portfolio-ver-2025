@@ -315,6 +315,18 @@
     }
   }
 
+  @keyframes spinBackground {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
   @media screen and (max-width: 768px) {
     .menu-item {
       opacity: 0;
@@ -361,6 +373,8 @@
   --animate-wiggle: wiggle 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   --animate-opacity: opacity 1.4s ease;
   --animate-opacity-infinity: opacity 1.2s ease infinite;
+
+  --animate-spin-infitniy: spinBackground 3s ease infinite;
 
   --ani-delay-0.1: 0.1s;
   --ani-delay-0.2: 0.2s;

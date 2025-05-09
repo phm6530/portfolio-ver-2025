@@ -24,6 +24,7 @@ import {
   Code,
   Code2,
   ExternalLink,
+  Image,
   Info,
   Link,
   Link2Icon,
@@ -148,15 +149,23 @@ const ProjectDetail = () => {
   } = data[0] as DetailProps;
 
   return (
-    <>
+    <div
+      className="pl-10"
+      style={{
+        boxShadow: "-45px 35px 53px rgba(0, 0, 0, 0.1)",
+      }}
+    >
       <section className="break-keep flex flex-col gap-8 items-start mb-10">
         {/* 제목 및 설명 */}
-        <div className="flex flex-col gap-4 pl-5 border-l-3 border-indigo-300">
+        <div className="flex flex-col gap-4">
           <div className="flex  flex-col  gap-4 ">
             <ProjectSvg className="[&>g]:fill-white size-12" />
-            <h1 className="text-3xl leading-tight text-zinc-900 dark:text-white">
-              {title}
-            </h1>
+            <div className="flex items-center gap-5">
+              <h1 className="text-3xl leading-tight text-zinc-900 dark:text-white">
+                {title}
+              </h1>
+              <Image size={18} className="opacity-50" />
+            </div>
           </div>
           <p className="text-sm leading-7 text-zinc-600 dark:text-zinc-300 max-w-[500px]">
             {description}
@@ -171,6 +180,13 @@ const ProjectDetail = () => {
             <List size={13} />
             목록으로
           </button>
+          {/* <div className="relative p-0.5 overflow-hidden rounded-lg bg-transparent ">
+            <div className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] size-[250px] inset-0 rounded-lg bg-gradient-to-r from-indigo-50 animate-spin    via-purple-300 to-indigo-300 animate-spin-slow"></div>
+            <div className="relative bg-white dark:bg-gray-800 rounded-lg h-full w-full">
+              <span ㅅ>project 바로가기</span>
+            </div>
+          </div> */}
+
           <button
             className="flex gap-2 items-center opacity-70 hover:opacity-100"
             onClick={() =>
@@ -211,16 +227,16 @@ const ProjectDetail = () => {
             <h3 className="text-base tracking-wider flex gap-3 items-center text-white ">
               <Calendar1 size={18} className="text-indigo-200" />
 
-              <span className="bg-gradient-to-r tracking-tighter  font-SUIT-Regular from-white to-indigo-200 bg-clip-text text-transparent">
+              <span className="text-sm bg-gradient-to-r tracking-tighter  font-SUIT-Regular from-white to-indigo-200 bg-clip-text text-transparent">
                 작업기간 / 유지보수 기간
               </span>
             </h3>
-            <div className="flex text-xs items-center gap-2 text-zinc-600 dark:text-zinc-400">
-              <span className="text-xs px-2.5 py-1 flex gap-2 items-centers rounded-full border border-indigo-500/30 text-indigo-200">
-                {DateUtils.getDurationDays(start_date, end_date)} 일
+            <div className="ml-7 flex text-base items-center gap-2 text-zinc-600 dark:text-zinc-400">
+              <span className=" flex gap-2 items-centers rounded-full   text-indigo-100">
+                {DateUtils.getDurationDays(start_date, end_date)} 일 /
               </span>
-              <span>
-                {start_date} - {end_date}
+              <span className="text-white text-xs">
+                {start_date} ~ {end_date}
               </span>
             </div>
           </div>
@@ -231,8 +247,8 @@ const ProjectDetail = () => {
                 참여인원
               </span>
             </h3>
-            <div className="flex text-xs items-center gap-2 text-zinc-600 dark:text-zinc-400">
-              <span className="text-xs px-2.5 py-1 flex gap-2 items-centers rounded-full border border-indigo-500/30 text-indigo-200">
+            <div className="flex text-base pl-8 items-center gap-2 text-zinc-600 dark:text-zinc-400">
+              <span className=" flex gap-2 items-centers rounded-full   text-indigo-100">
                 {project_member}
               </span>
             </div>
@@ -331,7 +347,7 @@ const ProjectDetail = () => {
           )}
         </div>
       </section>
-    </>
+    </div>
   );
 };
 
