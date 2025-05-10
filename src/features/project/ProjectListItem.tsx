@@ -61,7 +61,7 @@ const ProjectListItem: React.FC<{
                     className={cn(
                       "text-xs px-2.5 py-1 flex gap-2 items-centers rounded-full border border-indigo-500/30 text-indigo-200",
                       e.stack.toLocaleLowerCase().includes(curFilter) &&
-                        "bg-red-200!"
+                        "border-indigo-200"
                     )}
                   >
                     {e.stack}

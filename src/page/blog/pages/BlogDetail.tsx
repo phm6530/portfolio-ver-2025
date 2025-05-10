@@ -17,6 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { ExternalLink, List } from "lucide-react";
 import imgUrlMapper from "@/utils/imgUrl-mapping";
 import BlogDetailSkeleton from "./blogdetail-skeleton";
+import LoadingSpiner from "@/components/ui/loading-spiner";
 
 export enum POST_STATUS {
   DRAFT = "draft",
@@ -89,9 +90,9 @@ const BlogDetail = (): JSX.Element => {
 
   if (isLoading) {
     return (
-      <>
-        <BlogDetailSkeleton />
-      </>
+      <div className="relative min-h-[400px]">
+        <LoadingSpiner />
+      </div>
     );
   }
 

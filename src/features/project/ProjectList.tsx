@@ -110,7 +110,7 @@ const ProjectList = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2  gap-3 animate-topIn " key={curFilter}>
+      <div className="grid grid-cols-2  gap-3 animate-wiggle" key={curFilter}>
         <div className="col-span-full">
           {login && (
             <div className="col-span- flex items-center">

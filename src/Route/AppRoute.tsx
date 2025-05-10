@@ -11,8 +11,6 @@ const AppRoute = (): JSX.Element => {
   const location = useLocation();
   const pageKey = location.pathname.split("/")[1];
 
-  console.log(pageKey);
-
   return (
     <>
       <RootNav />

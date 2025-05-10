@@ -5,23 +5,42 @@ import BlogSvg from "@/asset/blog.svg?react";
 import GitSvg from "@/asset/git.svg?react";
 import Kakao from "@/asset/kakao.svg?react";
 import { ChevronRight } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { requestHandler } from "@/utils/apiUtils";
+import SupabasePool from "@/lib/supabaseClient";
+import { axiosApi } from "@/config/axios.config";
 
-const PATHS = [
-  {
-    label: "About",
-    to: "/about",
-  },
-  {
-    label: "Project",
-    to: "/about",
-  },
-  {
-    label: "Blog",
-    to: "/about",
-  },
-];
+export type PostItemModel = {
+  post_id: number;
+  post_title: string;
+  post_description: string;
+  created_at: string;
+  update_at: string;
+  author_id: number;
+  thumbnail_url: string;
+  sub_group_name: string;
+  like_cnt: number;
+  comment_count: number;
+};
 
 const Home = () => {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["MAIN_CONTENTS"],
+    queryFn: async () => {
+      // 10개 가져오기
+      const { result: blogList } = await requestHandler<{
+        result: {
+          list: PostItemModel[];
+        };
+      }>(async () => axiosApi.get(`post?category=all&group=all`));
+
+      return {
+        bloglist: blogList,
+      };
+    },
+    staleTime: Infinity,
+  });
+
   return (
     <main className="h-screen text-white overflow-hidden relative">
       <BackgroundImgCover imgSrc="/vanner/vanner_3.jpg">

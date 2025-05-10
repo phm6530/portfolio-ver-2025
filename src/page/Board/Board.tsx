@@ -36,22 +36,21 @@ export default function Board(): JSX.Element {
             <div className=" text-white/90 text-sm leading-relaxed  animate-topIn ani-delay-0.3 opacity-0">
               <p>한줄의 응원의 메세지는 저에게 큰 힘이 됩니다.</p>
             </div>
-            <Motion.FadeInOut>
-              <section className="z-1 mt-10">
-                <div className="flex flex-col gap-3 mb-5">
-                  <p className="z-2 text-zinc-700 dark:text-zinc-400 text-sm max-w-[400px] leading-6 border-zinc-400 border-l pl-5">
-                    bcrypt를 이용하여 HMAC으로 저장하고 있으며 <br />
-                    해싱된 비밀번호 이외 어떠한 정보도 수집하지 않습니다.
-                  </p>
-                </div>
 
-                {/* addForm  */}
-                <BoardCommentForm />
+            <section className="z-1 mt-10 animate-topIn ani-delay-0.4 opacity-0">
+              <div className="flex flex-col gap-3 mb-5">
+                <p className="z-2 text-zinc-700 dark:text-zinc-400 text-sm max-w-[400px] leading-6 border-zinc-400 border-l pl-5">
+                  bcrypt를 이용하여 HMAC으로 저장하고 있으며 <br />
+                  해싱된 비밀번호 이외 어떠한 정보도 수집하지 않습니다.
+                </p>
+              </div>
 
-                {/* BoardComment */}
-                <BoardCommentList />
-              </section>
-            </Motion.FadeInOut>
+              {/* addForm  */}
+              <BoardCommentForm />
+
+              {/* BoardComment */}
+              <BoardCommentList />
+            </section>
           </div>
         </div>
       </main>
