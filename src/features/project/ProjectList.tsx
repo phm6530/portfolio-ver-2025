@@ -9,6 +9,8 @@ import ProjectListItem from "./ProjectListItem";
 import { AnimatedBackgroundGlows } from "@/page/about/tttt";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { ProjectPostProps } from "@/type/ProjectTypes";
+import Motion from "@/component/animations/Motion";
 
 const FILTER_LABEL = [
   { label: "전체보기", keyword: "all" },
@@ -48,6 +50,31 @@ const ProjectList = () => {
       });
     },
     staleTime: Infinity,
+    select: (data) => {
+      if (curFilter === "all") {
+        return data;
+      }
+
+      return data.filter((project: ProjectPostProps) => {
+        return project.project_meta_stack.some((stackItem) => {
+          const stackName = stackItem.project_stack.stack.toLowerCase();
+
+          // Match based on filter keywords
+          switch (curFilter) {
+            case "next":
+              return stackName.includes("next");
+            case "react":
+              return stackName.includes("react") || stackName.includes("next");
+            case "typescript":
+              return stackName.includes("typescript");
+            case "design":
+              return stackItem.project_stack.type === "style";
+            default:
+              return false;
+          }
+        });
+      });
+    },
   });
 
   const nav = useNavigate();
@@ -83,7 +110,7 @@ const ProjectList = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2  gap-3  ">
+      <div className="grid grid-cols-2  gap-3 animate-topIn " key={curFilter}>
         <div className="col-span-full">
           {login && (
             <div className="col-span- flex items-center">
@@ -96,15 +123,19 @@ const ProjectList = () => {
         {!isLoading ? (
           <>
             {data && data.length === 0 && "등록된 프로젝트가 없습니다.."}
-            {data &&
-              data.map((project, idx) => {
-                return (
-                  <ProjectListItem
-                    project={project}
-                    key={`projectList:${idx}`}
-                  />
-                );
-              })}
+            {data && (
+              <>
+                {data.map((project, idx) => {
+                  return (
+                    <ProjectListItem
+                      curFilter={curFilter}
+                      project={project}
+                      key={`projectList:${idx}`}
+                    />
+                  );
+                })}
+              </>
+            )}
           </>
         ) : (
           <>

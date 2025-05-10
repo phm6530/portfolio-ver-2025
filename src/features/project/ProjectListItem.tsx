@@ -1,17 +1,13 @@
+import { cn } from "@/lib/utils";
 import { ProjectPostProps } from "@/type/ProjectTypes";
-import { useEffect, useRef, useState } from "react";
-import ProjectDetail from "./ProjectDetail";
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
 import imgUrlMapper from "@/utils/imgUrl-mapping";
-import TypeScript from "@/asset/stack/ts.svg?react";
-import Next from "@/asset/stack/next.svg?react";
-import { DateUtils } from "@/utils/dateUtil";
+
 import { useNavigate } from "react-router-dom";
 
-const ProjectListItem: React.FC<{ project: ProjectPostProps }> = ({
-  project,
-}) => {
+const ProjectListItem: React.FC<{
+  curFilter: string;
+  project: ProjectPostProps;
+}> = ({ curFilter, project }) => {
   const nav = useNavigate();
   const {
     title,
@@ -58,19 +54,23 @@ const ProjectListItem: React.FC<{ project: ProjectPostProps }> = ({
           <div className="flex flex-col gap-3 mt-auto">
             <div className="flex flex-wrap gap-1.5 mt-auto pt-3  border-zinc-700/50 items-center">
               <p className="text-xs w-full text-foreground">주 사용스택</p>
-              {stack.map((e, idx) =>
-                e.type === "framework" ? (
+              {stack.map((e, idx) => {
+                return e.type === "framework" ? (
                   <span
                     key={idx}
-                    className="text-xs px-2.5 py-1 flex gap-2 items-centers rounded-full border border-indigo-500/30 text-indigo-200"
+                    className={cn(
+                      "text-xs px-2.5 py-1 flex gap-2 items-centers rounded-full border border-indigo-500/30 text-indigo-200",
+                      e.stack.toLocaleLowerCase().includes(curFilter) &&
+                        "bg-red-200!"
+                    )}
                   >
                     {e.stack}
                   </span>
-                ) : null
-              )}
+                ) : null;
+              })}
             </div>
 
-            <div className="flex flex-wrap gap-1.5 mt-auto pt-3  border-zinc-700/40 items-center">
+            {/* <div className="flex flex-wrap gap-1.5 mt-auto pt-3  border-zinc-700/40 items-center">
               <p className="text-xs w-full  text-foreground">
                 작업기간 / 유지보수 기간
               </p>
@@ -81,7 +81,7 @@ const ProjectListItem: React.FC<{ project: ProjectPostProps }> = ({
                 )}
                 일
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
