@@ -121,13 +121,17 @@ const Home = () => {
                 </span>
               </h3>
 
-              {projectOne?.map((project) => {
+              {projectOne?.map((project, idx) => {
                 return (
-                  <div className="flex flex-col gap-2 group cursor-pointer article-hover border-indigo-200 shadow-[0_5px_30px_rgba(99,102,241,0.25)]  p-5  bg-white/3 w-full rounded-lg">
-                    <h4 className="text-white text-sm font-medium mb-1 group-hover:text-indigo-200 transition-colors">
+                  <div
+                    onClick={() => nav(`/project/${project.id}`)}
+                    key={`POST:${project.id}:${idx}`}
+                    className="flex flex-col gap-2 group cursor-pointer article-hover border-indigo-200 shadow-[0_5px_30px_rgba(99,102,241,0.25)]  p-5  bg-white/3 w-full rounded-lg"
+                  >
+                    <h4 className="text-white text-base font-medium mb-1 group-hover:text-indigo-200 transition-colors">
                       {project.title}
                     </h4>
-                    <p className="text-xs text-white/50  line-clamp-3 mb-5 leading-relaxed">
+                    <p className="text-sm text-white/70  line-clamp-3 mb-5 leading-relaxed">
                       {project.description}
                     </p>
                     <div className="flex items-center gap-3">

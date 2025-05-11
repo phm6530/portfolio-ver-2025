@@ -289,10 +289,8 @@ const ProjectDetail = () => {
 
         <div className="py-10 border-y border-border w-full grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* 작업기간 */}
-          <article className="space-y-2">
-            <div className="flex items-center gap-2">
-              <h3 className="text-xs  text-white">작업기간 / 유지보수 기간</h3>
-            </div>
+          <article className="space-y-3">
+            <h3 className="text-xs  text-white">작업기간 / 유지보수 기간</h3>
             <div className="text-lg text-zinc-300 flex items-center gap-3">
               <Calendar size={16} className="text-indigo-300" />
               <span className="text-indigo-200 font-medium">
@@ -306,10 +304,8 @@ const ProjectDetail = () => {
           </article>
 
           {/* 참여인원 */}
-          <article className="space-y-2">
-            <div className="flex items-center gap-2">
-              <h3 className="text-xs  text-white">참여인원</h3>
-            </div>
+          <article className="space-y-3">
+            <h3 className="text-xs  text-white">참여인원</h3>
             <div className="text-lg text-zinc-300 flex items-center gap-3">
               <Users size={16} className="text-indigo-300" />
               <span className="text-indigo-200 font-medium">

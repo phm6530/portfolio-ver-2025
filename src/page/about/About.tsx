@@ -122,7 +122,7 @@ const AboutPage = () => {
             </div>
             <div className="w-16 h-0.5 bg-white/20 mt-6"></div>
           </div>
-          <div className="space-y-8 text-white/90 text-sm leading-relaxed  animate-topIn ani-delay-0.3 opacity-0">
+          <div className="space-y-8 text-white/90 text-base leading-relaxed  animate-topIn ani-delay-0.3 opacity-0">
             <p>
               퍼블리셔로서의 경험을 바탕으로 프론트엔드 개발자로의 전환을
               모색하고 있으며, <br></br>
@@ -148,25 +148,54 @@ const AboutPage = () => {
 
             {/* Skills Section - Simplified */}
             <div className="pt-8 mt-8 border-t border-white/10">
-              <h3 className="text-lg tracking-wider mb-6 flex gap-3 items-center text-white ">
-                <div className="size-7 text-indigo-200/60 flex items-center justify-center rounded-xl border  shadow-lg shadow-black/10">
-                  <Code size={15} className="text-indigo-200" />
+              <h3 className="text-lg  tracking-wider mb-5 flex gap-4  items-center text-indigo-200">
+                <div className="size-7 border bg-indigo-200/10 flex items-center justify-center rounded-xl">
+                  <Code size={15} className="text-white/80" />
                 </div>
-                <span className="bg-gradient-to-r from-white to-indigo-200 bg-clip-text text-transparent font-medium">
-                  Stack
-                </span>
+                <span className="bg-gradient-to-r">Stack</span>
               </h3>
 
-              <div className="grid grid-cols-2 gap-x-12 gap-y-8">
-                <div>
-                  <div className="text-base text-white/90 font-medium mb-3">
-                    Backend
+              <div className="flex flex-col gap-6">
+                <div className=" border-b pb-5">
+                  <div className="text-lg text-white/90 font-medium mb-5">
+                    Next.js ( v14 , v15 )
                   </div>
-                  <div className="space-y-2">
-                    <div className="pl-3 relative border-l border-white/20">
-                      <div className="text-white/80">Node.js, Express, AWS</div>
-                      <div className="text-white/50 text-xs mt-1">
-                        서버 구축 및 API 개발, 클라우드 인프라 관리
+                  <div className="flex flex-col gap-7 mt-4">
+                    <div className="space-y-2">
+                      <div className="pl-3 relative border-l border-white/20">
+                        <div className="text-white/80">Next-Cache 활용</div>
+                        <div className="text-white/50 text-sm mt-1">
+                          서버 구축 및 API 개발, 클라우드 인프라 관리
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="pl-3 relative border-l border-white/20">
+                        <div className="text-white/80">
+                          Node.js, Express, AWS
+                        </div>
+                        <div className="text-white/50 text-xs mt-1">
+                          서버 구축 및 API 개발, 클라우드 인프라 관리
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="pl-3 relative border-l border-white/20">
+                        <div className="text-white/80">Next-Cache 활용</div>
+                        <div className="text-white/50 text-sm mt-1">
+                          서버 구축 및 API 개발, 클라우드 인프라 관리
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="pl-3 relative border-l border-white/20">
+                        <div className="text-white/80">Next-Cache 활용</div>
+                        <div className="text-white/50 text-sm mt-1">
+                          서버 구축 및 API 개발, 클라우드 인프라 관리
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -174,7 +203,7 @@ const AboutPage = () => {
 
                 <div>
                   <div className="text-base text-white/90 font-medium mb-3">
-                    Backend
+                    React
                   </div>
                   <div className="space-y-2">
                     <div className="pl-3 relative border-l border-white/20">
@@ -213,14 +242,43 @@ const AboutPage = () => {
                     </div>
                   </div>
                 </div>
+
+                <div>
+                  <div className="text-base text-white/90 font-medium mb-3">
+                    DevOps
+                  </div>
+                  <div className="space-y-2">
+                    <div className="pl-3 relative border-l border-white/20">
+                      <div className="text-white/80">Docker, CI/CD</div>
+                      <div className="text-white/50 text-xs mt-1">
+                        컨테이너화 및 자동화된 배포 파이프라인 구축
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="text-base text-white/90 font-medium mb-3">
+                    DevOps
+                  </div>
+                  <div className="space-y-2">
+                    <div className="pl-3 relative border-l border-white/20">
+                      <div className="text-white/80">Docker, CI/CD</div>
+                      <div className="text-white/50 text-xs mt-1">
+                        컨테이너화 및 자동화된 배포 파이프라인 구축
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Skills Section - Simplified */}
             <div className="pt-8 mt-8 border-t border-white/10">
-              <h3 className="text-base uppercase tracking-wider mb-8 flex gap-3 items-center text-indigo-200">
-                <GraduationCap size={20} />
-
+              <h3 className="text-lg  tracking-wider mb-5 flex gap-4  items-center text-indigo-200">
+                <div className="size-7 bg-indigo-200/10 flex items-center justify-center rounded-xl">
+                  <GraduationCap size={15} className="text-white/80" />
+                </div>
                 <span className="bg-gradient-to-r">EDUCATION</span>
               </h3>
 
@@ -298,7 +356,7 @@ const AboutPage = () => {
             </div>
 
             <div className="pt-8 mt-8 border-t border-white/10">
-              <h3 className="text-lg  tracking-wider mb-5 flex gap-2  items-center text-indigo-200">
+              <h3 className="text-lg  tracking-wider mb-5 flex gap-4  items-center text-indigo-200">
                 <div className="size-7 bg-indigo-200/10 flex items-center justify-center rounded-xl">
                   <Briefcase size={15} className="text-white/80" />
                 </div>
@@ -413,7 +471,6 @@ const AboutPage = () => {
                     </div>
                   </div>
                 </div>
-
                 <div>
                   <div className="text-base text-white/90 font-medium mb-3">
                     Backend
@@ -427,7 +484,6 @@ const AboutPage = () => {
                     </div>
                   </div>
                 </div>
-
                 <div>
                   <div className="text-base text-white/90 font-medium mb-3">
                     Database
@@ -441,7 +497,7 @@ const AboutPage = () => {
                     </div>
                   </div>
                 </div>
-
+                Next.js
                 <div>
                   <div className="text-base text-white/90 font-medium mb-3">
                     DevOps
