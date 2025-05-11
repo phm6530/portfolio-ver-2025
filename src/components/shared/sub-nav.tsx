@@ -103,7 +103,7 @@ export default function SubNav() {
         <div className="flex gap-2">
           {MY_LINKS.map((btn) => {
             return (
-              <TooltipProvider key={`links:${btn.label}`}>
+              <TooltipProvider key={`:links${btn.label}`}>
                 <Tooltip>
                   <TooltipTrigger>
                     <div

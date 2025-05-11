@@ -27,7 +27,7 @@ const ProjectListItem: React.FC<{
     <>
       <div
         onClick={() => nav(`${id}`)}
-        className="group bg-muted/80 rounded-xl! flex flex-col overflow-hidden h-full transform hover:-translate-y-1 transition-all duration-300 article-hover"
+        className="group bg-muted/80 rounded-xl!  flex flex-col overflow-hidden h-full hover:-translate-y-1 transition-all duration-300 article-hover"
       >
         {thumbnail && (
           <div
@@ -41,11 +41,12 @@ const ProjectListItem: React.FC<{
         )}
 
         {/* 콘텐츠 영역 */}
-        <div className="flex flex-col flex-1  p-5 ">
+        <div className="flex flex-col flex-1  p-7 ">
           {/* 타이틀 */}
           <h3 className="text-xl  group-hover:text-indigo-200 transition-colors mb-3">
             {title}
           </h3>
+
           {/* 설명 */}
           <p className="text-[13px] break-keep line-clamp-3  leading-relaxed mb-5 opacity-80">
             {description}

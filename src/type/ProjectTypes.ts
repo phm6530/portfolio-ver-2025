@@ -4,7 +4,7 @@ export type skillType = string[];
 export type startDate = Date | string | null;
 export type endDate = Date | string | null;
 
-export type STACK_TYPES = "framework" | "lib" | "style";
+export type STACK_TYPES = "framework" | "lib" | "style" | "database";
 
 export interface ProjectDetailProps {
   id: string;

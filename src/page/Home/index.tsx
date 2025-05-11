@@ -7,8 +7,11 @@ import Kakao from "@/asset/kakao.svg?react";
 import { ChevronRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { requestHandler } from "@/utils/apiUtils";
-import SupabasePool from "@/lib/supabaseClient";
 import { axiosApi } from "@/config/axios.config";
+import { useNavigate } from "react-router-dom";
+import { DateUtils } from "@/utils/dateUtil";
+import SupabasePool from "@/lib/supabaseClient";
+import { ProjectPostProps } from "@/type/ProjectTypes";
 
 export type PostItemModel = {
   post_id: number;
@@ -24,22 +27,34 @@ export type PostItemModel = {
 };
 
 const Home = () => {
-  const { data, isLoading, isError } = useQuery({
+  const { data } = useQuery({
     queryKey: ["MAIN_CONTENTS"],
     queryFn: async () => {
       // 10개 가져오기
       const { result: blogList } = await requestHandler<{
-        result: {
-          list: PostItemModel[];
-        };
-      }>(async () => axiosApi.get(`post?category=all&group=all`));
-
-      return {
-        bloglist: blogList,
-      };
+        result: PostItemModel[];
+      }>(async () => axiosApi.get(`pinned`));
+      console.log(blogList);
+      return blogList;
     },
     staleTime: Infinity,
   });
+
+  const { data: projectOne } = useQuery<ProjectPostProps[]>({
+    queryKey: ["RECENT_PROJECT"],
+    queryFn: async () => {
+      const pool = SupabasePool.getInstance();
+      const { data } = await pool
+        .from("project_meta")
+        .select("*")
+        .order("id", { ascending: false })
+        .limit(1);
+      return data as ProjectPostProps[];
+    },
+    staleTime: Infinity,
+  });
+
+  const nav = useNavigate();
 
   return (
     <main className="h-screen text-white overflow-hidden relative">
@@ -106,15 +121,14 @@ const Home = () => {
                 </span>
               </h3>
 
-              <div className="flex gap-3">
-                <div className="flex gap-4 group cursor-pointer article-hover border-indigo-200 shadow-[0_5px_30px_rgba(99,102,241,0.25)]  p-5  bg-white/3 w-full rounded-lg">
-                  <div>
+              {projectOne?.map((project) => {
+                return (
+                  <div className="flex flex-col gap-2 group cursor-pointer article-hover border-indigo-200 shadow-[0_5px_30px_rgba(99,102,241,0.25)]  p-5  bg-white/3 w-full rounded-lg">
                     <h4 className="text-white text-sm font-medium mb-1 group-hover:text-indigo-200 transition-colors">
-                      Next.js - CMS BLOG (1)
+                      {project.title}
                     </h4>
-                    <p className="text-xs text-white/50 mb-2 line-clamp-2">
-                      기술적 성장과 커리어 발전을 위한 프론트엔드 개발자의 학습
-                      로드맵
+                    <p className="text-xs text-white/50  line-clamp-3 mb-5 leading-relaxed">
+                      {project.description}
                     </p>
                     <div className="flex items-center gap-3">
                       <span className="text-[10px] text-white/40">
@@ -125,8 +139,8 @@ const Home = () => {
                       </span>
                     </div>
                   </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
 
             {/* 블로그 포스트 섹션 */}
@@ -141,54 +155,36 @@ const Home = () => {
                 />
               </h3>
 
-              <div className="flex gap-3">
-                <div className="flex gap-4 group cursor-pointer article-hover  p-5  bg-white/3 rounded-lg">
-                  <div>
-                    <h4 className="text-white text-sm font-medium mb-1 group-hover:text-indigo-200 transition-colors">
-                      Next.js - CMS BLOG (1)
-                    </h4>
-                    <p className="text-xs text-white/50 mb-2 line-clamp-2">
-                      기술적 성장과 커리어 발전을 위한 프론트엔드 개발자의 학습
-                      로드맵
-                    </p>
-                    <div className="flex items-center gap-3">
-                      <span className="text-[10px] text-white/40">
-                        May 5, 2025
-                      </span>
-                      <span className="text-[10px] py-0.5 px-2 bg-white/10 text-white/60 rounded-full">
-                        Frontend
-                      </span>
+              <div className="grid grid-cols-2 gap-3">
+                {data?.slice(0, 2).map((blogMeta, idx) => {
+                  return (
+                    <div
+                      key={`post:${blogMeta.post_id}:${idx}`}
+                      className="flex flex-col gap-2 group cursor-pointer article-hover  p-5  bg-white/3 rounded-lg"
+                      onClick={() => nav(`/blog/${blogMeta.post_id}`)}
+                    >
+                      <h4 className="text-white text-sm font-medium mb-1 group-hover:text-indigo-200 transition-colors">
+                        {blogMeta.post_title}
+                      </h4>
+                      <p className="text-xs text-white/50 mb-2 line-clamp-2">
+                        {blogMeta.post_description}
+                      </p>
+                      <div className="flex items-center gap-3 mt-auto">
+                        <span className="text-[10px] text-white/40">
+                          {DateUtils.formatStyledShort(blogMeta.created_at)}
+                        </span>
+                        <span className="text-[10px] py-0.5 px-2 bg-white/10 text-white/60 rounded-full">
+                          {blogMeta.sub_group_name}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </div>
-
-                {/* 블로그 포스트 2 */}
-                <div className="flex gap-4 group cursor-pointer  article-hover  p-5">
-                  <div>
-                    <h4 className="text-white text-sm font-medium mb-1 group-hover:text-indigo-200 transition-colors">
-                      AWS 클라우드 서비스 활용 가이드
-                    </h4>
-                    <p className="text-xs text-white/50 mb-2 line-clamp-2">
-                      웹 개발자를 위한 AWS 서비스 선택 및 비용 최적화 전략
-                    </p>
-                    <div className="flex items-center gap-3">
-                      <span className="text-[10px] text-white/40">
-                        Apr 28, 2025
-                      </span>
-                      <span className="text-[10px] py-0.5 px-2 bg-white/10 text-white/60 rounded-full">
-                        AWS
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                  );
+                })}
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* 소셜 미디어 아이콘 */}
-      {/* 소셜 미디어 아이콘 - VIEW PORTFOLIO 버튼 대체 */}
     </main>
   );
 };

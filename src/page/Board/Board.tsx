@@ -3,6 +3,7 @@ import BoardCommentForm from "@/features/Board/BoardCommentForm/BoardCommentForm
 import BoardCommentList from "@/features/Board/BoardCommentList/BoardCommentList";
 import { AnimatedBackgroundGlows } from "../about/tttt";
 import SubNav from "@/components/shared/sub-nav";
+import MessageSvg from "@/asset/chat.svg?react";
 
 export default function Board(): JSX.Element {
   return (
@@ -26,9 +27,10 @@ export default function Board(): JSX.Element {
 
           <div className="flex-1 max-w-3xl border-b border-white/20">
             <div className="mb-5 animate-topIn ani-delay-0.2 opacity-0">
-              <div className="text-xs uppercase tracking-wider text-white/60">
+              <MessageSvg className="size-13 mb-10 text-red-50 fill-red-50 [&>path]:fill-white" />
+              {/* <div className="text-xs uppercase tracking-wider text-white/60">
                 DEV & Publisher
-              </div>
+              </div> */}
               <div className="text-6xl font-light mt-4 bg-clip-text  bg-gradient-to-l from-white via-indigo-300 to-white text-transparent">
                 Guest book
               </div>

@@ -1,8 +1,20 @@
+import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 
-export default function StackBadge({ children }: { children: ReactNode }) {
+export default function StackBadge({
+  className,
+  children,
+}: {
+  className?: string;
+  children: ReactNode;
+}) {
   return (
-    <span className="text-[10px] py-0.5 px-2 bg-white/10 text-white/60 rounded-full">
+    <span
+      className={cn(
+        "text-[10px] py-0.5 px-2 bg-white/10 text-white/60 rounded-full",
+        className
+      )}
+    >
       {children}
     </span>
   );

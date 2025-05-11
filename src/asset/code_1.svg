@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg1737"
+   xml:space="preserve"
+   width="682.66669"
+   height="682.66669"
+   viewBox="0 0 682.66669 682.66669"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs1741"><clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1751"><path
+         d="M 0,512 H 512 V 0 H 0 Z"
+         id="path1749" /></clipPath></defs><g
+     id="g1743"
+     transform="matrix(1.3333333,0,0,-1.3333333,0,682.66667)"><g
+       id="g1745"><g
+         id="g1747"
+         clip-path="url(#clipPath1751)"><path
+           d="M 76,15 H 436 V 497 H 76 Z"
+           style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.926;stroke-dasharray:none;stroke-opacity:1"
+           id="path1753" /><g
+           id="g1755"
+           transform="translate(346,497)"><path
+             d="M 0,0 V -90 H 90 Z"
+             style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.926;stroke-dasharray:none;stroke-opacity:1"
+             id="path1757" /></g></g></g><g
+       id="g1759"
+       transform="translate(285.041,293.1177)"><path
+         d="M 0,0 -54.162,-167.618"
+         style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.926;stroke-dasharray:none;stroke-opacity:1"
+         id="path1761" /></g><g
+       id="g1763"
+       transform="translate(190.041,251)"><path
+         d="M 0,0 -54,-45.36 0,-90.72"
+         style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.926;stroke-dasharray:none;stroke-opacity:1"
+         id="path1765" /></g><g
+       id="g1767"
+       transform="translate(322.041,251)"><path
+         d="M 0,0 54,-45.36 0,-90.72"
+         style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.926;stroke-dasharray:none;stroke-opacity:1"
+         id="path1769" /></g></g></svg>

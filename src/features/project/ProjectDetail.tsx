@@ -3,15 +3,13 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { requestHandler } from "@/utils/apiUtils";
 import SupabasePool from "@/lib/supabaseClient";
 import NotfoundPage from "@/component/error/NotfoundPage";
-import ProjectSvg from "@/asset/project/project-detail.svg?react";
+import DevSvg from "@/asset/cube.svg?react";
 import {
   EditorProvider,
   SimpleEditorContents,
   useSimpleEditor,
 } from "@squirrel309/my-testcounter";
 import { HtmlContentNormalizer } from "@/utils/HtmlContentNormalizer";
-import { Button } from "@/components/ui/button";
-
 import {
   Accordion,
   AccordionContent,
@@ -21,24 +19,42 @@ import {
 import {
   Calendar,
   Calendar1,
+  ChevronLeft,
   Code,
   Code2,
+  CodeSquare,
+  CodeXml,
+  Database,
   ExternalLink,
-  Image,
-  Info,
+  FileCode2,
+  FrameIcon,
+  Github,
+  Home,
+  Library,
   Link,
   Link2Icon,
   List,
+  MessageCircle,
   Users,
 } from "lucide-react";
-import ProjectDetailSkeleton from "./project-detail-skeleton";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import useStore from "@/store/zustandStore";
-import { cn } from "@/lib/utils";
 import { STACK_TYPES } from "@/type/ProjectTypes";
 import { DateUtils } from "@/utils/dateUtil";
-
+import LoadingSpiner from "@/components/ui/loading-spiner";
+import ProjectImgWrapper from "./components/projectimg-wrapper";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import BlogSvg from "@/asset/blog.svg?react";
+import GitSvg from "@/asset/git.svg?react";
+import Kakao from "@/asset/kakao.svg?react";
+import React from "react";
+import { Button } from "@/components/ui/button";
 export type DetailProps = {
   company: string;
   description: string;
@@ -124,7 +140,11 @@ const ProjectDetail = () => {
   });
 
   if (isLoading) {
-    return <ProjectDetailSkeleton />;
+    return (
+      <div className="relative min-h-[400px]">
+        <LoadingSpiner />
+      </div>
+    );
   }
 
   if (isError || !data || !id) {
@@ -148,187 +168,219 @@ const ProjectDetail = () => {
     project_surmmry,
   } = data[0] as DetailProps;
 
+  // Links
+  const MY_LINKS = [
+    {
+      to: "https://open.kakao.com/o/sq4skkTf",
+      svg: ExternalLink,
+      label: "Site - 바로가기",
+    },
+    {
+      to: "https://github.com/phm6530/",
+      svg: GitSvg,
+      label: "git",
+    },
+  ];
+
+  const iconMapper = (k: string) => {
+    switch (k.toLowerCase()) {
+      case "database":
+        return <Database className="size-4" />;
+      case "lib":
+        return <Library className="size-4" />;
+      case "framework":
+        return <FrameIcon className="size-4" />;
+    }
+  };
+
+  const groupingStack = (stackArr: DetailProps["project_meta_stack"]) => {
+    const hashMap: Record<string, string[]> = {};
+    for (const item of stackArr) {
+      const type = item.project_stack.type;
+      if (!hashMap[type]) {
+        hashMap[type] = [item.project_stack.stack];
+      } else {
+        hashMap[type].push(item.project_stack.stack);
+      }
+    }
+
+    return hashMap;
+  };
+
   return (
-    <div
-      className="pl-10"
-      style={{
-        boxShadow: "-45px 35px 53px rgba(0, 0, 0, 0.1)",
-      }}
-    >
-      <section className="break-keep flex flex-col gap-8 items-start mb-10">
-        {/* 제목 및 설명 */}
-        <div className="flex flex-col gap-4">
-          <div className="flex  flex-col  gap-4 ">
-            <ProjectSvg className="[&>g]:fill-white size-12" />
-            <div className="flex items-center gap-5">
-              <h1 className="text-3xl leading-tight text-zinc-900 dark:text-white">
-                {title}
-              </h1>
-              <Image size={18} className="opacity-50" />
-            </div>
-          </div>
-          <p className="text-sm leading-7 text-zinc-600 dark:text-zinc-300 max-w-[500px]">
-            {description}
-          </p>
-        </div>
-
-        <div className="border-y py-1 w-full [&>button]:text-xs [&>button]:px-4 flex  border-border divide-x divide-border animate-topIn opacity-0 ani-delay-0.3">
-          <button
-            className="flex gap-2 items-center opacity-70 hover:opacity-100"
-            onClick={() => nav("/blog")}
-          >
-            <List size={13} />
-            목록으로
-          </button>
-          {/* <div className="relative p-0.5 overflow-hidden rounded-lg bg-transparent ">
-            <div className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] size-[250px] inset-0 rounded-lg bg-gradient-to-r from-indigo-50 animate-spin    via-purple-300 to-indigo-300 animate-spin-slow"></div>
-            <div className="relative bg-white dark:bg-gray-800 rounded-lg h-full w-full">
-              <span ㅅ>project 바로가기</span>
-            </div>
-          </div> */}
-
-          <button
-            className="flex gap-2 items-center opacity-70 hover:opacity-100"
-            onClick={() =>
-              window.open(`https://blog.h-creations.com/post/${id}`, "_blank")
-            }
-          >
-            <Link2Icon size={13} /> Project 바로가기
-          </button>
-          {login && (
-            <>
-              <Button
-                size={"sm"}
-                variant={"ghost"}
-                className="ml-auto py-0!"
-                onClick={() => nav(`/project/write?edit=${id}`)}
-              >
-                수정
-              </Button>
-              <Button
-                onClick={deleteConfirm}
-                size={"sm"}
-                variant={"ghost"}
-                className=" py-0!"
-              >
-                삭제
-              </Button>
-            </>
-          )}
-        </div>
-
-        <div className="grid gap-5 mt-5 items-start justify-start">
+    <>
+      <section className="flex flex-col gap-10 max-w-4xl mx-auto">
+        {/* 헤더 및 네비게이션 */}
+        <div className="flex items-center gap-8 border-b pb-3 border-border">
           <div
-            className="flex flex-col gap-2 "
-            style={{
-              backdropFilter: "blur(5px)",
-            }}
+            className="flex items-center gap-2 text-sm"
+            onClick={() => nav(-1)}
           >
-            <h3 className="text-base tracking-wider flex gap-3 items-center text-white ">
-              <Calendar1 size={18} className="text-indigo-200" />
+            <ChevronLeft size={15} />
+            <span className="text-xs cursor-pointer">뒤로가기</span>
+          </div>
+          <span className="opacity-30">|</span>
+          <div className="text-[11px] tracking-wider text-white/60 flex items-center gap-2">
+            <span
+              className="cursor-pointer hover:text-indigo-200 hover:underline flex items-center"
+              onClick={() => nav("/")}
+            >
+              HOME
+            </span>
+            <span>/</span>
+            <span
+              className="cursor-pointer hover:text-indigo-200 hover:underline"
+              onClick={() => nav("/project")}
+            >
+              PROJECT
+            </span>
+            <span>/</span> {title}
+          </div>
+        </div>
 
-              <span className="text-sm bg-gradient-to-r tracking-tighter  font-SUIT-Regular from-white to-indigo-200 bg-clip-text text-transparent">
-                작업기간 / 유지보수 기간
+        <div className="grid grid-cols-[auto_1fr] items-center gap-10 ">
+          <DevSvg className="size-30  [&>path]:fill-indigo-50 rounded-full ml-auto" />
+          <div className="grid grid-cols-[auto_1fr]  gap-8 mt-5 justify-between">
+            {/* <img src="/public/img/gear.png" className="w-22" /> */}
+
+            <div className="flex flex-col gap-6">
+              <h1 className="relative inline-flex gap-4 items-end hover:text-indigo-100 text-3xl md:text-3xl leading-tight text-white  transition-all cursor-pointer tracking-tight">
+                {/* <DevSvg className="size-10" /> */}
+                {title}
+                {/* <ExternalLink className="opacity-50" size={20} /> */}
+              </h1>
+              {/* 프로젝트 설명 */}
+              <p className="text-sm leading-6 text-zinc-300  break-keep">
+                {description}
+              </p>
+              <div className="">
+                <Button
+                  onClick={() => nav("/board")}
+                  className="bg-indigo-300/10! article-hover  text-white  rounded-md text-sm p-5 px-7! "
+                >
+                  Web site 바로가기
+                  <ExternalLink className="opacity-70" />
+                </Button>
+              </div>
+
+              {login && (
+                <div className="flex gap-2">
+                  <button
+                    className="text-xs bg-zinc-700 px-3 py-1 rounded hover:bg-zinc-600 transition-colors"
+                    onClick={() => nav(`/project/write?edit=${id}`)}
+                  >
+                    수정
+                  </button>
+                  <button
+                    onClick={deleteConfirm}
+                    className="text-xs bg-zinc-700 px-3 py-1 rounded hover:bg-zinc-600 transition-colors"
+                  >
+                    삭제
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>{" "}
+        </div>
+
+        <div className=" w-full">
+          <ProjectImgWrapper url={thumbnail} alt={title} />
+        </div>
+
+        <div className="py-10 border-y border-border w-full grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* 작업기간 */}
+          <article className="space-y-2">
+            <div className="flex items-center gap-2">
+              <h3 className="text-xs  text-white">작업기간 / 유지보수 기간</h3>
+            </div>
+            <div className="text-lg text-zinc-300 flex items-center gap-3">
+              <Calendar size={16} className="text-indigo-300" />
+              <span className="text-indigo-200 font-medium">
+                {DateUtils.getDurationDays(start_date, end_date)}일
               </span>
-            </h3>
-            <div className="ml-7 flex text-base items-center gap-2 text-zinc-600 dark:text-zinc-400">
-              <span className=" flex gap-2 items-centers rounded-full   text-indigo-100">
-                {DateUtils.getDurationDays(start_date, end_date)} 일 /
-              </span>
-              <span className="text-white text-xs">
+              <span className="mx-2 text-zinc-500">|</span>
+              <span className="text-xs">
                 {start_date} ~ {end_date}
               </span>
             </div>
-          </div>
-          <div className="flex flex-col gap-2 ">
-            <h3 className="text-base tracking-wider flex gap-3 items-center text-white ">
-              <Users size={18} className="text-indigo-200" />
-              <span className="bg-gradient-to-r from-white to-indigo-200 bg-clip-text text-transparent  tracking-tighter  font-SUIT-Regular">
-                참여인원
-              </span>
-            </h3>
-            <div className="flex text-base pl-8 items-center gap-2 text-zinc-600 dark:text-zinc-400">
-              <span className=" flex gap-2 items-centers rounded-full   text-indigo-100">
+          </article>
+
+          {/* 참여인원 */}
+          <article className="space-y-2">
+            <div className="flex items-center gap-2">
+              <h3 className="text-xs  text-white">참여인원</h3>
+            </div>
+            <div className="text-lg text-zinc-300 flex items-center gap-3">
+              <Users size={16} className="text-indigo-300" />
+              <span className="text-indigo-200 font-medium">
                 {project_member}
               </span>
             </div>
-          </div>{" "}
-          <article className="col-span-2 mt-7">
-            <div className="   border-white/10">
-              <h3 className="text-lg tracking-wider mb-2 flex gap-3 items-center text-white ">
-                <Code2 size={18} className="text-indigo-200" />
-                <span className="bg-gradient-to-r from-white to-indigo-200 bg-clip-text text-transparent  tracking-tighter  font-SUIT-Regular">
-                  사용스택
-                </span>
-              </h3>
-              <div className="flex gap-4 mb-6">
-                <div className="flex items-center gap-2">
-                  <span className="size-1.5 rounded-full inline-block bg-indigo-200"></span>{" "}
-                  <span className="text-xs opacity-60">Framework & langes</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="size-1.5 rounded-full  inline-block bg-indigo-400"></span>{" "}
-                  <span className="text-xs opacity-60">lib</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="size-1.5 rounded-full inline-block bg-indigo-600"></span>{" "}
-                  <span className="text-xs opacity-60">style</span>
-                </div>
-              </div>
-            </div>
+          </article>
 
-            <div className="flex flex-wrap gap-2 mt-4">
-              {project_meta_stack.map((e, idx) => {
-                return (
-                  <div
-                    key={`stack:${idx}`}
-                    className={cn(
-                      "text-xs p-2 px-3 rounded-full bg-zinc-50/3 border  text-indigo-300 border-indigo-200/50"
-                      // e.project_stack.type === "framework" && "text-red-300",
-                      // e.project_stack.type === "lib" && "text-orange-300",
-                      // e.project_stack.type === "style" && "text-teal-400"
-                    )}
-                  >
-                    {e.project_stack.stack}
-                  </div>
-                );
-              })}
+          <article className="space-y-2 mt-5 col-span-2 ">
+            <div className="flex items-center gap-2">
+              <h3 className="text-xs  text-white">사용스킬</h3>
+            </div>
+            <div className="grid rounded-xl  grid-cols-[minmax(200px,_auto)_1fr] border divide-y divide-x divide-indigo-200/10 border-indigo-200/20 [&>div]:p-2">
+              <div className="text-xs bg-zinc-950/30">CATEGORY</div>
+              <div className="text-xs bg-zinc-950/30">STACK</div>
+
+              {(() => {
+                const stackObj = groupingStack(project_meta_stack);
+                const keys = Object.keys(stackObj);
+                return keys.map((k, idx) => {
+                  const stacks = stackObj[k];
+                  return (
+                    <React.Fragment key={`${k}:${idx}`}>
+                      <div className="text-lg text-zinc-300 flex items-center gap-3">
+                        <span className="text-indigo-100 pl-2 font-medium text-sm flex gap-2 items-center">
+                          {/* {iconMapper(k)} */}
+
+                          {k}
+                        </span>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {stacks.map((st, idx) => {
+                          return (
+                            <span
+                              key={`${st}:${idx}`}
+                              className="text-sm px-2.5 py-1.5 bg-white/5 rounded-lg"
+                            >
+                              {st}
+                            </span>
+                          );
+                        })}
+                      </div>
+                    </React.Fragment>
+                  );
+                });
+              })()}
             </div>
           </article>
         </div>
-        {/* 기술 스택 */}
-
-        {/* 보기 버튼 */}
-        <button className="text-xs flex rounded-lg w-1/2 items-center py-3 gap-2 justify-center article-hover p-2">
-          웹 사이트 바로가기{" "}
-          <Link2Icon size={14} className="opacity-50 rotate-45" />
-        </button>
       </section>
-      <section className="flex-1">
-        {/* 썸네일 이미지 */}
-        <div className="overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-700">
-          <img
-            src={`${IMG_URL}/${thumbnail}`}
-            alt={title}
-            className="w-full h-auto "
-          />
-        </div>
 
-        {/* 아코디언 요약 정보 */}
-        <Accordion
-          type="single"
-          collapsible
-          className="w-full my-6 flex flex-col gap-3"
-        >
+      <section className="flex-1 mt-6">
+        <h3 className="text-lg tracking-wider flex gap-3 items-center text-white ">
+          <span className="text-base bg-gradient-to-r tracking-tighter  font-SUIT-Regular from-white to-indigo-200 bg-clip-text text-transparent">
+            주요기능 *
+          </span>
+        </h3>
+        <Accordion type="multiple" className="w-full my-3 flex flex-col gap-3">
           {project_surmmry.map((item, idx) => {
             return (
               <AccordionItem
                 value={`${idx}`}
                 key={`${idx}-acodian`}
-                className="outline px-4 overflow-hidden rounded-sm outline-border"
+                className="outline overflow-hidden rounded-sm outline-border"
               >
-                <AccordionTrigger>{item.title}</AccordionTrigger>
-                <AccordionContent>{item.contents}</AccordionContent>
+                <AccordionTrigger className="bg-indigo-300/10! article-hover  text-white  rounded-md text-sm p-5">
+                  {item.title}
+                </AccordionTrigger>
+                <AccordionContent className="p-5">
+                  {item.contents}
+                </AccordionContent>
               </AccordionItem>
             );
           })}
@@ -347,7 +399,7 @@ const ProjectDetail = () => {
           )}
         </div>
       </section>
-    </div>
+    </>
   );
 };
 

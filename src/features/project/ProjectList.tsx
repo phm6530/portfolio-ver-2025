@@ -6,11 +6,9 @@ import { useQuery } from "@tanstack/react-query";
 import { requestHandler } from "@/utils/apiUtils";
 import SupabasePool from "@/lib/supabaseClient";
 import ProjectListItem from "./ProjectListItem";
-import { AnimatedBackgroundGlows } from "@/page/about/tttt";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { ProjectPostProps } from "@/type/ProjectTypes";
-import Motion from "@/component/animations/Motion";
 
 const FILTER_LABEL = [
   { label: "전체보기", keyword: "all" },
@@ -23,7 +21,6 @@ const FILTER_LABEL = [
 type FilterKeyword = (typeof FILTER_LABEL)[number]["keyword"];
 
 const ProjectList = () => {
-  const login = useStore((state) => state.userAuth.login);
   const [curFilter, setCurFilter] = useState<FilterKeyword>("all");
 
   const { data, isLoading, isError } = useQuery({
@@ -77,8 +74,6 @@ const ProjectList = () => {
     },
   });
 
-  const nav = useNavigate();
-
   return (
     <div className="flex-1 max-w-3xl">
       <div className="mb-12 animate-topIn ani-delay-0.2 opacity-0">
@@ -110,14 +105,17 @@ const ProjectList = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2  gap-3 animate-wiggle" key={curFilter}>
-        <div className="col-span-full">
+      <div
+        className="grid grid-cols-2 mt-5  gap-3 animate-wiggle"
+        key={curFilter}
+      >
+        {/* <div className="col-span-full">
           {login && (
             <div className="col-span- flex items-center">
               <Button onClick={() => nav("write")}>+ Add</Button>
             </div>
           )}
-        </div>
+        </div> */}
 
         {!isLoading && isError && "error"}
         {!isLoading ? (
