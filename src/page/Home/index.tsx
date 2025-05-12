@@ -11,9 +11,9 @@ import RecentPosts from "./components/recent-post";
 const Home = () => {
   return (
     <main className="md:h-screen text-white overflow-hidden relative">
-      <BackgroundImgCover imgSrc="/vanner/vanner_3.jpg">
+      {/* <BackgroundImgCover imgSrc="/vanner/vanner_3.jpg">
         <ShootingStar />
-      </BackgroundImgCover>
+      </BackgroundImgCover> */}
 
       {/* 메인 콘텐츠 영역 */}
       <div className="flex flex-col h-full layout-center md:justify-center md:py-0 py-40">
