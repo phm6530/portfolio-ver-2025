@@ -1,37 +1,17 @@
-import styled from "styled-components";
 import * as Yup from "yup";
-
 import { forwardRef } from "react";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-// icon
-import { TiDelete } from "react-icons/ti";
-import { FaCircleCheck } from "react-icons/fa6";
-
-import CommentDelete from "@/features/Board/BoardCommentControl/CommentDelete";
-import useCommentDelete from "@/features/Board/hooks/useCommentDelete";
-import usePopupHook from "@/hooks/usePopupHook";
-
-import { type BoardCommentItemProps } from "@/type/BoardTypes";
 import { userRole } from "@/type/CommonTypes";
 import useStore from "@/store/zustandStore";
 import { cn } from "@/lib/utils";
-import {
-  ArrowBigDown,
-  BadgeCheck,
-  Check,
-  CheckCircle2,
-  CornerDownRight,
-  Shield,
-} from "lucide-react";
+import { BadgeCheck, CornerDownRight, Delete } from "lucide-react";
 import { CommentItemModel } from "../BoardCommentList/BoardCommentList";
 import BoardCommentForm from "../BoardCommentForm/BoardCommentForm";
 import { DateUtils } from "@/utils/dateUtil";
 import { useMutation } from "@tanstack/react-query";
 import { requestHandler } from "@/utils/apiUtils";
-import axios from "axios";
-import { axiosApi } from "@/config/axios.config";
 import { toast } from "react-toastify";
 import SupabasePool from "@/lib/supabaseClient";
 
@@ -72,7 +52,7 @@ const BoardComment = forwardRef<HTMLDivElement, BoardCommentProps>(
             .from("guest_board")
             .delete()
             .eq("id", id)
-            .select(); // 💡 count 받아오기 위해 select 사용
+            .select();
 
           if (error) {
             throw new Error(`삭제 실패: ${error.message}`);
@@ -139,7 +119,7 @@ const BoardComment = forwardRef<HTMLDivElement, BoardCommentProps>(
 
               {!!login && (
                 <div className="replyDelete" onClick={onDeleteHnadler}>
-                  <TiDelete size={15} className="ml-auto opacity-50" />
+                  <Delete size={15} className="ml-auto opacity-50" />
                 </div>
               )}
             </div>

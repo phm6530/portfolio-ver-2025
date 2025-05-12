@@ -1,9 +1,7 @@
-import { IoMoon } from "react-icons/io5";
-
 import useStore from "@/store/zustandStore";
 import { useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { MdLightMode } from "react-icons/md";
+import { Moon, Sun } from "lucide-react";
 
 export default function DarkModeBtn({ scrollOver }: { scrollOver: boolean }) {
   const darkMode = useStore((state) => state.darkMode);
@@ -36,7 +34,7 @@ export default function DarkModeBtn({ scrollOver }: { scrollOver: boolean }) {
           scrollOver && ""
         )}
       >
-        {darkMode ? <IoMoon size={"15"} /> : <MdLightMode size={"20"} />}
+        {darkMode ? <Moon size={"15"} /> : <Sun size={"20"} />}
       </span>
     </div>
   );

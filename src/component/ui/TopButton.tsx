@@ -1,6 +1,6 @@
-import { GoMoveToTop } from "react-icons/go";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { ArrowUpToLine } from "lucide-react";
 
 const TopButton = (): JSX.Element => {
   const [show, setShow] = useState(false);
@@ -34,7 +34,7 @@ const TopButton = (): JSX.Element => {
         )}
         onClick={() => TopButtonHadnler()}
       >
-        <GoMoveToTop />
+        <ArrowUpToLine />
       </span>
     </>
   );

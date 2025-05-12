@@ -1,7 +1,3 @@
-import { FaGit } from "react-icons/fa6";
-import { TfiEmail } from "react-icons/tfi";
-import { TbPhoneCall } from "react-icons/tb";
-import { SiTistory } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import {
   Building2Icon,
@@ -10,7 +6,9 @@ import {
   GitCompareIcon,
   GitGraph,
   Github,
+  Mail,
   NotebookText,
+  Phone,
 } from "lucide-react";
 
 const Link = (url: string) => {
@@ -38,11 +36,11 @@ export default function Footer() {
       </div>
 
       <div className="grid grid-cols-[30px_1fr]">
-        <TfiEmail size={"14"} /> <span> squirrel309@naver.com</span>
+        <Mail size={"14"} /> <span> squirrel309@naver.com</span>
       </div>
 
       <div className="grid grid-cols-[30px_1fr]">
-        <TbPhoneCall size={"14"} /> <span> 010-0000-0000</span>
+        <Phone size={"14"} /> <span> 010-0000-0000</span>
       </div>
 
       <p className="max-w-[500px] leading-6 my-3 opacity-75">

@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { projectRoles } from "@/type/ProjectTypes";
 import {
   EditorProvider,
   SimpleEditorContents,
@@ -50,7 +49,6 @@ export interface ProjectDetailProps {
   surmmry: Array<{ id?: number; title: string; contents: string }>;
   thumbnail: string;
   contents: string;
-  projectRoles: projectRoles[];
   img_key: string;
 }
 
