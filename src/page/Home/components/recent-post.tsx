@@ -38,7 +38,7 @@ export default function RecentPosts() {
         return (
           <div
             key={`post:${blogMeta.post_id}:${idx}`}
-            className="flex flex-col gap-2 group cursor-pointer article-hover  p-5  bg-white/3 rounded-lg"
+            className="flex flex-col gap-2 group cursor-pointer   pt-5  border-t border-indigo-200/60"
             onClick={() => nav(`/blog/${blogMeta.post_id}`)}
           >
             <h4 className="text-white text-sm font-medium mb-1 group-hover:text-indigo-200 transition-colors">

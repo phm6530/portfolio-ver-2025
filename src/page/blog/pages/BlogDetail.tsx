@@ -146,7 +146,7 @@ const BlogDetail = (): JSX.Element => {
 
       {!!blog_metadata.thumbnail_url && (
         <div
-          className="  bg-red-100 mt-10 rounded-2xl aspect-[16/5] bg-cover bg-center animate-topIn opacity-0 ani-delay-0.4"
+          className="  bg-red-100 mt-10 rounded-2xl aspect-[16/9] md:aspect-[16/5] bg-cover bg-center animate-topIn opacity-0 ani-delay-0.4"
           style={{
             backgroundImage: `url(${imgUrlMapper({ thumbnail: blog_metadata.thumbnail_url })})`,
           }}

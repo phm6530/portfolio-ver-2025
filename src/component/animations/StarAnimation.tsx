@@ -91,7 +91,7 @@ const StarAnimation = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   // 반짝이 갯수 배열
-  const starCntArr = [...Array(5)].map((_, idx) => idx + 1);
+  const starCntArr = [...Array(10)].map((_, idx) => idx + 1);
 
   useLayoutEffect(() => {
     if (ref.current && !offset) {

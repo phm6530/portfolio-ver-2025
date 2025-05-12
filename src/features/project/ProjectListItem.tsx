@@ -31,7 +31,7 @@ const ProjectListItem: React.FC<{
     <>
       <div
         onClick={() => nav(`${id}`)}
-        className="group relative rounded-xl p-5 grid md:grid-cols-[minmax(auto,250px)_1fr] overflow-hidden h-full hover:-translate-y-1 transition-all duration-300 article-hover bg-zinc-900/20 hover:bg-zinc-800/30"
+        className="group relative  p-5   grid md:grid-cols-[minmax(auto,250px)_1fr] overflow-hidden h-full hover:-translate-y-1 transition-all duration-300 article-hover  rounded-xl"
       >
         {thumbnail && (
           <div
@@ -49,16 +49,9 @@ const ProjectListItem: React.FC<{
           <h3 className="text-xl  group-hover:text-indigo-200 transition-colors mb-3">
             {title}
           </h3>
-
-          {/* 설명 */}
-          <p className="text-[13px] break-keep line-clamp-3 leading-relaxed mb-5 text-muted-foreground">
-            {description}
-          </p>
-
-          <div className="mt-auto  pt-3 border-t border-zinc-700/40 flex flex-col sm:flex-row gap-4 sm:justify-between">
+          <div className="mt-auto  pt-3 border-t border-zinc-700/40 flex flex-col sm:flex-row gap-4 sm:justify-between mb-4">
             {/* 주요스킬 섹션 */}
             <div>
-              <p className="text-xs font-medium text-zinc-400 mb-2">주요스킬</p>
               <div className="flex flex-wrap gap-2">
                 {stack.map((e, idx) => {
                   return e.type === "framework" ? (
@@ -84,8 +77,8 @@ const ProjectListItem: React.FC<{
             </div>
 
             {/* 작업기간 섹션 */}
-            <div className="mt-2 sm:mt-0">
-              <p className="text-xs font-medium text-zinc-400 mb-2">작업기간</p>
+            <div className="flex sm:mt-0 flex items-center gap-4">
+              <p className="text-xs font-medium text-zinc-400 ">작업기간</p>
               <div className="flex items-center text-sm text-indigo-200">
                 {DateUtils.getDurationDays(
                   start_date as string,
@@ -95,6 +88,11 @@ const ProjectListItem: React.FC<{
               </div>
             </div>
           </div>
+
+          {/* 설명 */}
+          <p className="text-[13px] break-keep line-clamp-3 leading-relaxed mb-5 text-muted-foreground">
+            {description}
+          </p>
         </div>
       </div>
     </>

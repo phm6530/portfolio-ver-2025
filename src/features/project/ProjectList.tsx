@@ -100,7 +100,7 @@ const ProjectList = () => {
               <button
                 key={`key:${e.keyword}`}
                 className={cn(
-                  "bg-transparent! text-muted-foreground flex gap-1 text-xs rounded-full border p-2 px-3 border-muted-foreground/30 cursor-pointer hover:border-indigo-200",
+                  "bg-transparent! text-muted-foreground flex gap-1 text-xs rounded-lg border p-2 px-3 border-muted-foreground/30 cursor-pointer hover:border-indigo-200",
                   e.keyword === curFilter && "border-indigo-200 text-indigo-200"
                 )}
                 onClick={() => setCurFilter(e.keyword)}
