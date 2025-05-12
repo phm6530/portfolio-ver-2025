@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKey } from "@/services/queryKey";
 import { requestHandler } from "@/utils/apiUtils";
 import { axiosApi } from "@/config/axios.config";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 export type CategoryModel = {
   id: number;
@@ -19,6 +19,7 @@ export type CategoryModel = {
 
 const BlogTab = () => {
   const nav = useNavigate();
+  const [qs] = useSearchParams();
   const { data } = useQuery({
     queryKey: [queryKey.blogCategory],
     queryFn: async () => {
@@ -38,31 +39,29 @@ const BlogTab = () => {
 
   return (
     <>
-      <Tabs
-        defaultValue="all"
-        className="w-full "
-        onValueChange={(e) => nav(`/blog?category=${e}`)}
-      >
-        <TabsList className="flex gap-4 bg-transparent!  rounded-none mb-3 ">
-          {data &&
-            ["all", ...Object.keys(data?.category)].map((e) => {
-              const item = data.category[e];
-
-              return (
-                <TabsTrigger
-                  key={`category-value-${e}`}
-                  value={e}
-                  className="border-0 px-0 bg-transparent! pb-4 shadow-none! text-sm rounded-none border-b-2  data-[state=active]:border-b-2! data-[state=active]:text-indigo-200! data-[state=active]:border-indigo-200! "
-                >
-                  {e === "all" ? "전체보기" : e}
-                  <span className="text-xs text-indigo-300">
-                    ({e === "all" ? data.count : item.postCnt})
-                  </span>
-                </TabsTrigger>
-              );
-            })}
-        </TabsList>
-      </Tabs>
+      <div className="flex  flex-wrap gap-2 bg-transparent!  rounded-none mb-3 ">
+        {data &&
+          ["all", ...Object.keys(data?.category)].map((e) => {
+            const item = data.category[e];
+            return (
+              <span
+                key={`category-value-${e}`}
+                onClick={() => nav(`/blog?category=${e}`)}
+                className={cn(
+                  "bg-transparent! text-muted-foreground flex gap-1 text-xs rounded-full border p-2 px-3 border-muted-foreground/30 cursor-pointer hover:border-indigo-200",
+                  (qs.get("category") === e ||
+                    (qs.get("category") === null && e === "all")) &&
+                    "border-indigo-200 text-indigo-200"
+                )}
+              >
+                {e === "all" ? "전체보기" : e}
+                <span className="text-xs text-indigo-300">
+                  ({e === "all" ? data.count : item.postCnt})
+                </span>
+              </span>
+            );
+          })}
+      </div>
     </>
   );
 };

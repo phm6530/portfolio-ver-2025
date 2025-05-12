@@ -127,7 +127,11 @@ const BlogList = (): JSX.Element => {
           )}
         </div>
       )}
-
+      {isFetching && (
+        <div className="relative min-h-[200px] w-full">
+          <LoadingSpiner />
+        </div>
+      )}
       {hasNextPage && <div ref={ref} />}
     </>
   );

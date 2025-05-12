@@ -168,17 +168,6 @@ const ProjectDetail = () => {
     project_surmmry,
   } = data[0] as DetailProps;
 
-  const iconMapper = (k: string) => {
-    switch (k.toLowerCase()) {
-      case "database":
-        return <Database className="size-4" />;
-      case "lib":
-        return <Library className="size-4" />;
-      case "framework":
-        return <FrameIcon className="size-4" />;
-    }
-  };
-
   const groupingStack = (stackArr: DetailProps["project_meta_stack"]) => {
     const hashMap: Record<string, string[]> = {};
     for (const item of stackArr) {
@@ -195,7 +184,7 @@ const ProjectDetail = () => {
 
   return (
     <>
-      <section className="flex flex-col gap-12 max-w-4xl mx-auto">
+      <section className="flex flex-col gap-12 max-w-4xl mx-auto -mt-[70px] md:mt-auto">
         {/* 헤더 및 네비게이션 */}
         <div className="flex items-center gap-8 border-b pb-3 border-border animate-topIn ani-delay-0.1 opacity-0">
           <div
@@ -230,19 +219,19 @@ const ProjectDetail = () => {
             {/* <img src="/public/img/gear.png" className="w-22" /> */}
 
             <div className="flex flex-col gap-6">
-              <h1 className="relative inline-flex gap-4 items-end hover:text-indigo-100 text-3xl md:text-3xl leading-tight text-white  transition-all cursor-pointer tracking-tight">
+              <h1 className="relative inline-flex gap-4 items-end hover:text-indigo-100 text-2xl md:text-3xl leading-tight text-white  transition-all cursor-pointer tracking-tight">
                 {/* <DevSvg className="size-10" /> */}
                 {title}
                 {/* <ExternalLink className="opacity-50" size={20} /> */}
               </h1>
               {/* 프로젝트 설명 */}
-              <p className="text-sm leading-6 text-zinc-300  break-keep">
+              <p className="text-xs md:text-sm leading-6 text-zinc-300  break-keep">
                 {description}
               </p>
               <div className="">
                 <Button
                   onClick={() => nav("/board")}
-                  className="bg-indigo-300/10! article-hover  text-white  rounded-md text-sm p-5 px-7! "
+                  className="bg-indigo-300/10! article-hover  text-white  rounded-md md:text-sm p-2 md:p-5 !px-5 md:px-7! text-xs "
                 >
                   Web site 바로가기
                   <ExternalLink className="opacity-70" />
@@ -273,13 +262,13 @@ const ProjectDetail = () => {
           <ProjectImgWrapper url={thumbnail} alt={title} />
         </div>
 
-        <div className="py-10 border-y border-border w-full grid  md:grid-cols-2 gap-10 animate-topIn ani-delay-0.5 opacity-0">
+        <div className="py-10 border-y border-border w-full grid  md:grid-cols-2 gap-4 md:gap-10 animate-topIn ani-delay-0.5 opacity-0">
           {/* 작업기간 */}
-          <article className="space-y-3">
+          <article className="space-y-2 md:space-y-3">
             <h3 className="text-xs  text-white">작업기간 / 유지보수 기간</h3>
             <div className="text-lg text-zinc-300 flex items-center gap-3">
               <Calendar size={16} className="text-indigo-300" />
-              <span className="text-indigo-200 font-medium">
+              <span className="text-indigo-200 text-sm md:font-medium">
                 {DateUtils.getDurationDays(start_date, end_date)}일
               </span>
               <span className="mx-2 text-zinc-500">|</span>
@@ -290,11 +279,11 @@ const ProjectDetail = () => {
           </article>
 
           {/* 참여인원 */}
-          <article className="space-y-3">
+          <article className="space-y-2 md:space-y-3">
             <h3 className="text-xs  text-white">참여인원</h3>
             <div className="text-lg text-zinc-300 flex items-center gap-3">
               <Users size={16} className="text-indigo-300" />
-              <span className="text-indigo-200 font-medium">
+              <span className="text-indigo-200 text-sm md:font-medium">
                 {project_member}
               </span>
             </div>
@@ -305,8 +294,8 @@ const ProjectDetail = () => {
               <h3 className="text-xs  text-white">사용스킬</h3>
             </div>
             <div className="grid rounded-xl  grid-cols-[auto_1fr] md:grid-cols-[minmax(200px,_auto)_1fr] border divide-y divide-x divide-indigo-200/10 border-indigo-200/20 [&>div]:p-2">
-              <div className="text-xs bg-zinc-950/30">CATEGORY</div>
-              <div className="text-xs bg-zinc-950/30">STACK</div>
+              <div className="text-xs bg-zinc-950/30">카테고리</div>
+              <div className="text-xs bg-zinc-950/30">스킬</div>
 
               {(() => {
                 const stackObj = groupingStack(project_meta_stack);
@@ -327,7 +316,7 @@ const ProjectDetail = () => {
                           return (
                             <span
                               key={`${st}:${idx}`}
-                              className="text-xs md:text-sm px-2.5 py-1.5 bg-white/5 rounded-lg"
+                              className="text-xs md:text-sm p-1 md:px-2.5 md:py-1.5 bg-white/5 rounded-lg"
                             >
                               {st}
                             </span>
@@ -345,7 +334,7 @@ const ProjectDetail = () => {
 
       <section className="flex-1 mt-6">
         <h3 className="text-lg tracking-wider flex gap-3 items-center text-white ">
-          <span className="text-base bg-gradient-to-r tracking-tighter  font-SUIT-Regular from-white to-indigo-200 bg-clip-text text-transparent">
+          <span className="text-sm md:text-base bg-gradient-to-r tracking-tighter  font-SUIT-Regular from-white to-indigo-200 bg-clip-text text-transparent">
             주요기능 *
           </span>
         </h3>
@@ -357,10 +346,10 @@ const ProjectDetail = () => {
                 key={`${idx}-acodian`}
                 className="outline overflow-hidden rounded-sm outline-border"
               >
-                <AccordionTrigger className="bg-indigo-300/10! article-hover  text-white  rounded-md text-sm p-5">
+                <AccordionTrigger className="bg-indigo-300/10! article-hover  text-white  rounded-md text-xs md:text-sm p-3 md:p-5">
                   {item.title}
                 </AccordionTrigger>
-                <AccordionContent className="p-5">
+                <AccordionContent className="p-3 md:p-5 text-xs md:text-sm">
                   {item.contents}
                 </AccordionContent>
               </AccordionItem>

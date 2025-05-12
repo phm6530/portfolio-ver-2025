@@ -32,7 +32,7 @@ export default function ProjectImgWrapper({
       ref={ref}
       className={cn(
         "overflow-hidden relative transition-all rounded-xl border border-zinc-200 dark:border-zinc-700 ",
-        longImg && "aspect-[16/6]",
+        longImg && "aspect-[16/10] md:aspect-[16/6]",
         longImg && more && "aspect-auto"
       )}
     >
