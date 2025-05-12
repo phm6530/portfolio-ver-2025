@@ -233,7 +233,7 @@ const ProjectDetail = () => {
                   onClick={() => nav("/board")}
                   className="bg-indigo-300/10! article-hover  text-white  rounded-md md:text-sm p-2 md:p-5 !px-5 md:px-7! text-xs "
                 >
-                  Web site 바로가기
+                  Web site
                   <ExternalLink className="opacity-70" />
                 </Button>
               </div>

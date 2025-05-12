@@ -9,8 +9,8 @@ const BlogPage = (): JSX.Element => {
         <div className="text-xs uppercase tracking-widest text-white/50">
           DEV & Publisher
         </div>
-        <h1 className="text-6xl font-light mt-2 bg-gradient-to-l from-white to-indigo-200  text-transparent bg-clip-text pb-3">
-          Dev Blog<span className="text-red-300 font-semibold">'</span>
+        <h1 className="text-6xl font-semibold mt-2 bg-gradient-to-l from-white to-indigo-200  text-transparent bg-clip-text pb-3">
+          Dev Blog
         </h1>
       </div>
 

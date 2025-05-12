@@ -31,11 +31,11 @@ const ProjectListItem: React.FC<{
     <>
       <div
         onClick={() => nav(`${id}`)}
-        className="group relative rounded-xl p-6 grid md:grid-cols-[minmax(auto,250px)_1fr] overflow-hidden h-full hover:-translate-y-1 transition-all duration-300 article-hover bg-zinc-900/20 hover:bg-zinc-800/30"
+        className="group relative rounded-xl p-5 grid md:grid-cols-[minmax(auto,250px)_1fr] overflow-hidden h-full hover:-translate-y-1 transition-all duration-300 article-hover bg-zinc-900/20 hover:bg-zinc-800/30"
       >
         {thumbnail && (
           <div
-            className="md:w-full   rounded-xl relative bg-no-repeat md:block hidden"
+            className="md:w-full   rounded-xl relative bg-no-repeat md:block aspect-[16/8] md:aspect-auto"
             style={{
               backgroundImage: `url(${thumbnail ? imgUrlMapper({ thumbnail }) : null})`,
               backgroundPosition: "top",

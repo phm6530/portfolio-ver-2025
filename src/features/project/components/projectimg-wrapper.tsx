@@ -13,7 +13,7 @@ export default function ProjectImgWrapper({
   const [more, setMore] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [longImg, setLongImg] = useState<boolean>(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLImageElement>(null);
 
   const imgOnload: React.ReactEventHandler<HTMLImageElement> = (e) => {
     setIsLoading(false);
@@ -29,11 +29,10 @@ export default function ProjectImgWrapper({
 
   return (
     <div
-      ref={ref}
       className={cn(
         "overflow-hidden relative transition-all rounded-xl border border-zinc-200 dark:border-zinc-700 ",
-        longImg && "aspect-[16/10] md:aspect-[16/6]",
-        longImg && more && "aspect-auto"
+        longImg && "aspect-[16/10] md:aspect-[16/10]",
+        longImg && more && "aspect-auto!"
       )}
     >
       {isLoading && (
@@ -43,6 +42,7 @@ export default function ProjectImgWrapper({
       )}
       <img
         src={`${IMG_URL}/${url}`}
+        ref={ref}
         alt={alt}
         className="w-full h-auto"
         onLoad={imgOnload}

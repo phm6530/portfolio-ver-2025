@@ -5,6 +5,9 @@ import ProjectListItem from "./ProjectListItem";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { ProjectPostProps } from "@/type/ProjectTypes";
+import useStore from "@/store/zustandStore";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const FILTER_LABEL = [
   { label: "전체보기", keyword: "all" },
@@ -18,7 +21,8 @@ type FilterKeyword = (typeof FILTER_LABEL)[number]["keyword"];
 
 const ProjectList = () => {
   const [curFilter, setCurFilter] = useState<FilterKeyword>("all");
-
+  const login = useStore((state) => state.userAuth.login);
+  const nav = useNavigate();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["project-list"],
     queryFn: async () => {
@@ -73,20 +77,23 @@ const ProjectList = () => {
   return (
     <div className="flex-1 max-w-3xl">
       <div className="mb-6 animate-topIn ani-delay-0.2 opacity-0">
-        <div className="text-xs uppercase tracking-widest text-white/50">
+        <div className="text-xs uppercase tracking-widest text-white/50 mb-3">
           Work Archive
         </div>
         <h1 className="font-extrabold text-6xl inline-block t-light mt-2 bg-gradient-to-l from-white to-indigo-200  text-transparent bg-clip-text pb-3">
-          Project<span className="text-red-300 ">'</span>
+          PROJECT<span className="text-red-300 ">'</span>
         </h1>
       </div>
 
-      <div className="text-white/80 text-sm  animate-topIn ani-delay-0.3 opacity-0 mb-12 leading-6">
-        <p>외주, 토이 프로젝트 및 작업하였던 프로젝트 아카이브 입니다.</p>
-        <p>외부로 공개된 참여한 프로젝트만 게시합니다</p>
+      <div className="text-white/80 text-sm  animate-topIn ani-delay-0.3 opacity-0 mb-12 leading-6 break-keep">
+        <p>외주, 토이 프로젝트, 직장에서 및 작업하였던 프로젝트 기록 입니다.</p>
+        <p>
+          외부로 공개된 참여한 프로젝트만 게시하며, 공개 불가한 프로젝트는
+          기재하지 않습니다.
+        </p>
       </div>
 
-      <div className="mb-2 animate-topIn ani-delay-0.2 opacity-0">
+      <div className="mb-10 animate-topIn ani-delay-0.2 opacity-0">
         <div className=" flex gap-2 flex-wrap">
           {FILTER_LABEL.map((e) => {
             return (
@@ -106,16 +113,16 @@ const ProjectList = () => {
       </div>
 
       <div
-        className="grid md:grid-cols-1 grid-cols-1 mt-5 gap-6 md:gap-3 animate-wiggle"
+        className="grid md:grid-cols-1 grid-cols-1 mt-5 gap-6 md:gap-3 animate-topIn ani-delay-0.3 opacity-0"
         key={curFilter}
       >
-        {/* <div className="col-span-full">
+        <div className="col-span-full">
           {login && (
             <div className="col-span- flex items-center">
               <Button onClick={() => nav("write")}>+ Add</Button>
             </div>
           )}
-        </div> */}
+        </div>
 
         {!isLoading && isError && "error"}
         {!isLoading ? (
@@ -140,12 +147,15 @@ const ProjectList = () => {
             {/* 스켈레톤 */}
             {Array.from({ length: 6 }).map((_, idx) => {
               return (
-                <div key={`skeleton-${idx}`}>
+                <div
+                  key={`skeleton-${idx}`}
+                  className="grid grid-cols-[300px_1fr] gap-5"
+                >
                   <div className="bg-foreground/10  aspect-[16/9] animate-pulse " />
                   <div className="flex flex-col gap-3 mt-4">
-                    <div className="bg-foreground/10 animate-wiggle w-[100px] h-3 rounded-full"></div>
-                    <div className="bg-foreground/10 animate-wiggle w-2xs h-3 rounded-full"></div>
-                    <div className="bg-foreground/10 animate-wiggle w-2xs h-3 rounded-full"></div>
+                    <div className="bg-foreground/10 animate-wiggle  h-3 rounded-full"></div>
+                    <div className="bg-foreground/10 animate-wiggle w-2/3 h-3 rounded-full"></div>
+                    <div className="bg-foreground/10 animate-wiggle w-1/2 h-3 rounded-full"></div>
                   </div>
                 </div>
               );
