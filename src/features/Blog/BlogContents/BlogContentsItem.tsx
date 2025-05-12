@@ -5,6 +5,7 @@ import { DateUtils } from "@/utils/dateUtil";
 import { PostItemModel } from "../BlogList/BlogList";
 import { useCallback } from "react";
 import StackBadge from "@/components/ui/stack-badge";
+import { cn } from "@/lib/utils";
 
 const BlogContentsItem: React.FC<PostItemModel> = ({
   post_id,
@@ -24,12 +25,15 @@ const BlogContentsItem: React.FC<PostItemModel> = ({
 
   return (
     <div
-      className=" grid grid-cols-[1fr_auto] md:grid-cols-1 border-x-0 md:border-x-1 py-4 gap-5 article-hover md:p-5 md:flex-col  hover:-translate-y-1"
+      className={cn(
+        "grid  gap-5 items-center  md:grid-cols-1 border-x-0 md:border-x-1 py-4 md:gap-0 article-hover md:p-5 md:flex-col  hover:-translate-y-1",
+        thumbnail_url && "grid-cols-[minmax(0,5fr)_minmax(100px,2fr)]"
+      )}
       onClick={() => navigate(`${post_id}`)}
     >
       {thumbnail_url && (
         <div
-          className="w-full md:aspect-[16/6] aspect-[1/1] rounded-lg order-1 md:order-none"
+          className="md:aspect-[16/6] aspect-[1/1] w-full  rounded-lg order-1 md:order-none"
           style={{
             backgroundImage: `url(${thumbnail_url ? unsplashS3Mapping(thumbnail_url) : null})`,
             backgroundPosition: "center center",
@@ -38,10 +42,10 @@ const BlogContentsItem: React.FC<PostItemModel> = ({
         />
       )}
 
-      <div className="flex flex-col gap-2 pt-0 md:pt-4 items-start">
+      <div className="flex flex-col flex-1 gap-2 pt-0 md:pt-4 items-start">
         {/* Header */}
 
-        <StackBadge> {sub_group_name}</StackBadge>
+        <StackBadge className="mb-2"> {sub_group_name}</StackBadge>
 
         <div className="flex items-center">
           {post_title}
@@ -49,7 +53,7 @@ const BlogContentsItem: React.FC<PostItemModel> = ({
         </div>
 
         {/* Company */}
-        <p className="text-xs line-clamp-2 leading-relaxed text-secondary-foreground">
+        <p className="text-xs line-clamp-2 leading-relaxed text-muted-foreground">
           {post_description}
         </p>
         {/* <HashTag>{subcategory}</HashTag> */}

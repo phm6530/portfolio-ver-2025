@@ -12,8 +12,7 @@ const Home = () => {
   return (
     <main className="md:h-screen text-white overflow-hidden relative">
       <BackgroundImgCover imgSrc="/vanner/vanner_3.jpg">
-        <ShootingStar />
-        {/* <StarAnimation /> */}
+        {/* <ShootingStar /> */}
       </BackgroundImgCover>
 
       {/* 메인 콘텐츠 영역 */}

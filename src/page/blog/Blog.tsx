@@ -4,7 +4,6 @@ import BlogPage from "./pages/blog-page";
 import BlogDetail from "./pages/BlogDetail";
 import { AnimatePresence } from "framer-motion";
 import Motion from "@/component/animations/Motion";
-import SubNav from "@/components/shared/sub-nav";
 import SidebarWrapper from "@/components/ui/sidebar-wrapper";
 
 const Blog = (): JSX.Element => {

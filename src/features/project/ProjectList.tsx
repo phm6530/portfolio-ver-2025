@@ -87,13 +87,13 @@ const ProjectList = () => {
       </div>
 
       <div className="mb-2 animate-topIn ani-delay-0.2 opacity-0">
-        <div className=" flex gap-2">
+        <div className=" flex gap-2 flex-wrap">
           {FILTER_LABEL.map((e) => {
             return (
               <button
                 key={`key:${e.keyword}`}
                 className={cn(
-                  "text-white/50  border-border border  items-center gap-2 rounded-full p-3 text-xs px-4 flex",
+                  "text-white/50  border-border border  items-center gap-2 rounded-full py-2 md:p-3 text-xs px-2 md:px-4 flex",
                   e.keyword === curFilter && "border-indigo-200 text-indigo-200"
                 )}
                 onClick={() => setCurFilter(e.keyword)}
