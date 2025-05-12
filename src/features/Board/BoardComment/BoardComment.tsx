@@ -10,7 +10,7 @@ import { BadgeCheck, CornerDownRight, Delete } from "lucide-react";
 import { CommentItemModel } from "../BoardCommentList/BoardCommentList";
 import BoardCommentForm from "../BoardCommentForm/BoardCommentForm";
 import { DateUtils } from "@/utils/dateUtil";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { requestHandler } from "@/utils/apiUtils";
 import { toast } from "react-toastify";
 import SupabasePool from "@/lib/supabaseClient";
@@ -26,6 +26,8 @@ const BoardComment = forwardRef<HTMLDivElement, BoardCommentProps>(
     const login = useStore((state) => state.userAuth.login);
     const { commentsViewId, toggleFormView } = useStore(); // Zustand로 공유
     const pool = SupabasePool.getInstance();
+
+    const queryClient = useQueryClient();
 
     const { id, comment, author, children, created_at } = item;
 
@@ -64,9 +66,12 @@ const BoardComment = forwardRef<HTMLDivElement, BoardCommentProps>(
           return { data: true }; // requestHandler 맞춤
         });
       },
-      onSuccess: () => {
+      onSuccess: async () => {
         toast.success("삭제 되었습니다");
         reset();
+        await queryClient.invalidateQueries({
+          queryKey: ["GUESTBOARD"],
+        });
       },
     });
 
@@ -77,7 +82,6 @@ const BoardComment = forwardRef<HTMLDivElement, BoardCommentProps>(
 
     return (
       <>
-        {/* <PopupComponent type="confirm" event={() => deleteConfirm()} /> */}
         <div
           ref={ref}
           className={cn(
@@ -164,7 +168,7 @@ const BoardComment = forwardRef<HTMLDivElement, BoardCommentProps>(
           )}
         </div>{" "}
         {children?.map((e) => (
-          <div className="ml-4 flex gap-3">
+          <div className="ml-4 flex gap-3" key={`${e.parent_id}:${e.id}`}>
             <CornerDownRight className="opacity-40 mt-5" size={16} />
             <BoardComment item={e} deps={deps + 1} rootId={id} />
           </div>

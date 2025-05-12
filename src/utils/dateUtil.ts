@@ -23,8 +23,8 @@ type DateFormat =
 export class DateUtils {
   private static today = dayjs();
 
-  private static parseKoreanDate(date: string | Date) {
-    return dayjs(date).tz("Asia/Seoul").locale("en");
+  private static parseKoreanDate(date: string | Date, locale = "en") {
+    return dayjs(date).tz("Asia/Seoul").locale(locale);
   }
 
   static dateFormatKR(date: string | Date, format: DateFormat) {
@@ -52,8 +52,13 @@ export class DateUtils {
     return diffDays >= 0 && diffDays < 7;
   }
 
+  static isToday(date: string | Date) {
+    const diffDays = this.today.diff(this.parseKoreanDate(date), "day");
+    return diffDays === 0;
+  }
+
   static fromNow(date: string) {
-    return this.parseKoreanDate(date).fromNow();
+    return this.parseKoreanDate(date, "kr").fromNow();
   }
 
   /**

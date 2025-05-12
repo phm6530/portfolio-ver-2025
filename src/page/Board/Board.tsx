@@ -1,11 +1,7 @@
-import Motion from "@/component/animations/Motion";
 import BoardCommentForm from "@/features/Board/BoardCommentForm/BoardCommentForm";
 import BoardCommentList from "@/features/Board/BoardCommentList/BoardCommentList";
 import { AnimatedBackgroundGlows } from "../about/tttt";
-import SubNav from "@/components/shared/sub-nav";
-import MessageSvg from "@/asset/chat.svg?react";
 import SidebarWrapper from "@/components/ui/sidebar-wrapper";
-import DesignSvg from "@/asset/3d/brush.svg?react";
 export default function Board(): JSX.Element {
   return (
     <>

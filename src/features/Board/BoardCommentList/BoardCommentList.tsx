@@ -40,8 +40,6 @@ export type CommentItemModel = {
 };
 
 const BoardCommentList = (): JSX.Element => {
-  const { data: infinityData, isLoading, isError } = useCommentInfinity();
-
   const { data } = useQuery<{ result: CommentItemModel[] }>({
     queryKey: ["GUESTBOARD"],
     queryFn: async () => {
@@ -51,60 +49,26 @@ const BoardCommentList = (): JSX.Element => {
     },
   });
 
-  const [selectIdx, setSelectIdx] = useState<string | null>(null);
-  const ref = useRef<HTMLDivElement>(null);
-
-  // 중복제거
-  const dateSet = new Set();
-
-  const isFirstDate = (date: string) => {
-    if (!dateSet.has(date)) {
-      dateSet.add(date);
-      return true;
-    }
-    return false;
-  };
-
-  // useEffect(() => {
-  //   const targetItem = ref.current;
-  //   if (!hasNextPage || !targetItem) return;
-
-  //   const callback = async (entry: IntersectionObserverEntry[]) => {
-  //     if (entry[0].isIntersecting) {
-  //       fetchNextPage();
-  //     }
-  //   };
-
-  //   const io = new IntersectionObserver(callback, {
-  //     threshold: 0.5,
-  //   });
-  //   if (targetItem) {
-  //     io.observe(targetItem);
-  //   }
-  //   return () => io.unobserve(targetItem);
-  // }, [ref, fetchNextPage, infinityData, hasNextPage]);
-
-  if (isLoading) {
-    return (
-      <>
-        <SpinnerLoading />
-      </>
-    );
-  }
-
-  if (isError) {
-    return <>Error</>;
-  }
-
   let prevMonth = "";
+  const todayCOmment = (data: CommentItemModel[]) => {
+    let cnt = 0;
+    for (const item of data) {
+      if (DateUtils.isToday(item.created_at)) {
+        cnt++;
+      } else {
+        break;
+      }
+    }
+    return cnt;
+  };
 
   return (
     <>
       {/* 오늘 댓글 + 전체댓글  */}
-      {infinityData && (
+      {data && (
         <BoardCommentStatus
-          todayReply={infinityData.pages[0].todayReply}
-          total={infinityData.pages[0].counter}
+          todayReply={todayCOmment(data?.result)}
+          total={data.result.length}
         />
       )}
       <section className="flex flex-col gap-5 ">
