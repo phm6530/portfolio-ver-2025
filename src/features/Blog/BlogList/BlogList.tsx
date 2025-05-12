@@ -111,7 +111,7 @@ const BlogList = (): JSX.Element => {
         </div>
       ) : flatData && flatData.length > 0 ? (
         <AnimatePresence mode="wait">
-          <div className="mt-5  grid grid-cols-2 gap-3 animate-topIn ani-delay-0.5 opacity-0">
+          <div className="mt-5  grid md:grid-cols-2 md:gap-3 animate-topIn ani-delay-0.5 opacity-0">
             {flatData.map((item, idx) => {
               // item
               return <BlogContentsItem key={`item-${idx}`} {...item} />;

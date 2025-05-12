@@ -4,7 +4,8 @@ import BoardCommentList from "@/features/Board/BoardCommentList/BoardCommentList
 import { AnimatedBackgroundGlows } from "../about/tttt";
 import SubNav from "@/components/shared/sub-nav";
 import MessageSvg from "@/asset/chat.svg?react";
-
+import SidebarWrapper from "@/components/ui/sidebar-wrapper";
+import DesignSvg from "@/asset/3d/brush.svg?react";
 export default function Board(): JSX.Element {
   return (
     <>
@@ -19,15 +20,10 @@ export default function Board(): JSX.Element {
       >
         {" "}
         <AnimatedBackgroundGlows />
-        <div className="grid grid-cols-[auto_1fr] gap-40 z-1 layout-center py-40 ">
-          <div>
-            {/* SUbpage - Nav */}
-            <SubNav />
-          </div>
-
+        <SidebarWrapper>
           <div className="flex-1 max-w-3xl border-b border-white/20">
             <div className="mb-5 animate-topIn ani-delay-0.2 opacity-0">
-              <MessageSvg className="size-13 mb-10 text-red-50 fill-red-50 [&>path]:fill-white" />
+              {/* <MessageSvg className="size-13 mb-10 text-red-50 fill-red-50 [&>path]:fill-white" /> */}
               {/* <div className="text-xs uppercase tracking-wider text-white/60">
                 DEV & Publisher
               </div> */}
@@ -54,9 +50,8 @@ export default function Board(): JSX.Element {
               <BoardCommentList />
             </section>
           </div>
-        </div>
+        </SidebarWrapper>
       </main>
-      {/* Body */}{" "}
     </>
   );
 }

@@ -3,6 +3,7 @@ import SubNav from "@/components/shared/sub-nav";
 import { Button } from "@/components/ui/button";
 import StackBadge from "@/components/ui/stack-badge";
 import { cn } from "@/lib/utils";
+
 import {
   Briefcase,
   Code,
@@ -19,6 +20,7 @@ import {
   useParams,
 } from "react-router-dom";
 import { AnimatedBackgroundGlows } from "./tttt";
+import SidebarWrapper from "@/components/ui/sidebar-wrapper";
 
 // Constants
 const CERTS = [
@@ -104,12 +106,7 @@ const AboutPage = () => {
     >
       <AnimatedBackgroundGlows />
       {/* Main Content */}
-      <div className="grid grid-cols-[auto_1fr] gap-40 z-1 layout-center py-40 ">
-        <div>
-          {/* SUbpage - Nav */}
-          <SubNav />
-        </div>
-
+      <SidebarWrapper>
         <div className="flex-1 max-w-3xl ">
           {" "}
           <div className="mb-12 animate-topIn ani-delay-0.2 opacity-0 relative">
@@ -515,7 +512,7 @@ const AboutPage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </SidebarWrapper>
     </main>
   );
 };

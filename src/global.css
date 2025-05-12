@@ -130,7 +130,7 @@
   }
 
   .layout-center {
-    @apply max-w-[1100px] w-full px-[25px] mx-auto;
+    @apply max-w-[1100px] w-full md:px-[25px] px-[30px] mx-auto;
   }
 
   .subtext-gradient {

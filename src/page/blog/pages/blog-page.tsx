@@ -30,7 +30,7 @@ const BlogPage = (): JSX.Element => {
         </p>
       </div>
 
-      <div className=" animate-topIn ani-delay-0.4 opacity-0 ">
+      <div className=" animate-topIn ani-delay-0.4 opacity-0 w-full md:w-auto">
         <BlogTab />
         <SearchField name="keyword" />
       </div>

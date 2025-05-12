@@ -28,7 +28,7 @@ export default function SearchField({
       <div
         className={cn(
           `bg-black/10  border border-transparent rounded-full dark:bg-custom-input overflow-hidden 
-  
+            
        flex flex-1 focus-within:border-indigo-300`,
           className
         )}

@@ -1,7 +1,3 @@
-import SubNav from "@/components/shared/sub-nav";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
-import useStore from "@/store/zustandStore";
 import { useQuery } from "@tanstack/react-query";
 import { requestHandler } from "@/utils/apiUtils";
 import SupabasePool from "@/lib/supabaseClient";
@@ -76,15 +72,19 @@ const ProjectList = () => {
 
   return (
     <div className="flex-1 max-w-3xl">
-      <div className="mb-12 animate-topIn ani-delay-0.2 opacity-0">
-        <div className="text-xs tracking-wider text-white/60">Work archive</div>
-        <div className="text-6xl font-light mt-4 bg-clip-text pb-4 bg-gradient-to-l from-white via-indigo-300 to-white text-transparent">
-          Project<span className="text-red-300 font-semibold">'</span>
+      <div className="mb-6 animate-topIn ani-delay-0.2 opacity-0">
+        <div className="text-xs uppercase tracking-widest text-white/50">
+          Work Archive
         </div>
+        <h1 className="font-extrabold text-6xl inline-block t-light mt-2 bg-gradient-to-l from-white to-indigo-200  text-transparent bg-clip-text pb-3">
+          Project<span className="text-red-300 ">'</span>
+        </h1>
       </div>
-      {/* <div className="space-y-8 mb-10 text-white/90 text-sm leading-relaxed  animate-topIn ani-delay-0.3 opacity-0">
-      <p>제 작업물을 공유합니다.</p>
-    </div> */}
+
+      <div className="text-white/80 text-sm  animate-topIn ani-delay-0.3 opacity-0 mb-12 leading-6">
+        <p>외주, 토이 프로젝트 및 작업하였던 프로젝트 아카이브 입니다.</p>
+        <p>외부로 공개된 참여한 프로젝트만 게시합니다</p>
+      </div>
 
       <div className="mb-2 animate-topIn ani-delay-0.2 opacity-0">
         <div className=" flex gap-2">
@@ -93,7 +93,7 @@ const ProjectList = () => {
               <button
                 key={`key:${e.keyword}`}
                 className={cn(
-                  "text-white/50  border-border border  items-center gap-2 rounded-full p-2 text-xs px-4",
+                  "text-white/50  border-border border  items-center gap-2 rounded-full p-3 text-xs px-4 flex",
                   e.keyword === curFilter && "border-indigo-200 text-indigo-200"
                 )}
                 onClick={() => setCurFilter(e.keyword)}
@@ -106,7 +106,7 @@ const ProjectList = () => {
       </div>
 
       <div
-        className="grid grid-cols-2 mt-5  gap-3 animate-wiggle"
+        className="grid md:grid-cols-1 grid-cols-1 mt-5 gap-6 md:gap-3 animate-wiggle"
         key={curFilter}
       >
         {/* <div className="col-span-full">

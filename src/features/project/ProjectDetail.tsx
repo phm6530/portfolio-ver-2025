@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { requestHandler } from "@/utils/apiUtils";
 import SupabasePool from "@/lib/supabaseClient";
 import NotfoundPage from "@/component/error/NotfoundPage";
-import DevSvg from "@/asset/cube.svg?react";
+import DevSvg from "@/asset/3d/code_2.svg?react";
 import {
   EditorProvider,
   SimpleEditorContents,
@@ -168,20 +168,6 @@ const ProjectDetail = () => {
     project_surmmry,
   } = data[0] as DetailProps;
 
-  // Links
-  const MY_LINKS = [
-    {
-      to: "https://open.kakao.com/o/sq4skkTf",
-      svg: ExternalLink,
-      label: "Site - 바로가기",
-    },
-    {
-      to: "https://github.com/phm6530/",
-      svg: GitSvg,
-      label: "git",
-    },
-  ];
-
   const iconMapper = (k: string) => {
     switch (k.toLowerCase()) {
       case "database":
@@ -209,9 +195,9 @@ const ProjectDetail = () => {
 
   return (
     <>
-      <section className="flex flex-col gap-10 max-w-4xl mx-auto">
+      <section className="flex flex-col gap-12 max-w-4xl mx-auto">
         {/* 헤더 및 네비게이션 */}
-        <div className="flex items-center gap-8 border-b pb-3 border-border">
+        <div className="flex items-center gap-8 border-b pb-3 border-border animate-topIn ani-delay-0.1 opacity-0">
           <div
             className="flex items-center gap-2 text-sm"
             onClick={() => nav(-1)}
@@ -238,9 +224,9 @@ const ProjectDetail = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-[auto_1fr] items-center gap-10 ">
-          <DevSvg className="size-30  [&>path]:fill-indigo-50 rounded-full ml-auto" />
-          <div className="grid grid-cols-[auto_1fr]  gap-8 mt-5 justify-between">
+        <div className="grid md:grid-cols-[auto_1fr]  gap-7 items-start ">
+          <DevSvg className="size-12 md:size-22  [&>path]:fill-indigo-50 rounded-full animate-topIn ani-delay-0.2 opacity-0" />
+          <div className="grid grid-cols-[auto_1fr]  gap-8 md:mt-5 justify-between animate-topIn ani-delay-0.3 opacity-0">
             {/* <img src="/public/img/gear.png" className="w-22" /> */}
 
             <div className="flex flex-col gap-6">
@@ -283,11 +269,11 @@ const ProjectDetail = () => {
           </div>{" "}
         </div>
 
-        <div className=" w-full">
+        <div className=" w-full animate-topIn ani-delay-0.4 opacity-0">
           <ProjectImgWrapper url={thumbnail} alt={title} />
         </div>
 
-        <div className="py-10 border-y border-border w-full grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="py-10 border-y border-border w-full grid  md:grid-cols-2 gap-10 animate-topIn ani-delay-0.5 opacity-0">
           {/* 작업기간 */}
           <article className="space-y-3">
             <h3 className="text-xs  text-white">작업기간 / 유지보수 기간</h3>
@@ -314,11 +300,11 @@ const ProjectDetail = () => {
             </div>
           </article>
 
-          <article className="space-y-2 mt-5 col-span-2 ">
+          <article className="space-y-2 mt-5 md:col-span-2 ">
             <div className="flex items-center gap-2">
               <h3 className="text-xs  text-white">사용스킬</h3>
             </div>
-            <div className="grid rounded-xl  grid-cols-[minmax(200px,_auto)_1fr] border divide-y divide-x divide-indigo-200/10 border-indigo-200/20 [&>div]:p-2">
+            <div className="grid rounded-xl  grid-cols-[auto_1fr] md:grid-cols-[minmax(200px,_auto)_1fr] border divide-y divide-x divide-indigo-200/10 border-indigo-200/20 [&>div]:p-2">
               <div className="text-xs bg-zinc-950/30">CATEGORY</div>
               <div className="text-xs bg-zinc-950/30">STACK</div>
 
@@ -329,8 +315,8 @@ const ProjectDetail = () => {
                   const stacks = stackObj[k];
                   return (
                     <React.Fragment key={`${k}:${idx}`}>
-                      <div className="text-lg text-zinc-300 flex items-center gap-3">
-                        <span className="text-indigo-100 pl-2 font-medium text-sm flex gap-2 items-center">
+                      <div className=" md:text-lg text-zinc-300 flex items-center gap-3">
+                        <span className="text-indigo-100 pl-2 pr-3 font-medium text-xs md:text-sm flex gap-2 items-center">
                           {/* {iconMapper(k)} */}
 
                           {k}
@@ -341,7 +327,7 @@ const ProjectDetail = () => {
                           return (
                             <span
                               key={`${st}:${idx}`}
-                              className="text-sm px-2.5 py-1.5 bg-white/5 rounded-lg"
+                              className="text-xs md:text-sm px-2.5 py-1.5 bg-white/5 rounded-lg"
                             >
                               {st}
                             </span>

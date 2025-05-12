@@ -5,6 +5,7 @@ import BlogDetail from "./pages/BlogDetail";
 import { AnimatePresence } from "framer-motion";
 import Motion from "@/component/animations/Motion";
 import SubNav from "@/components/shared/sub-nav";
+import SidebarWrapper from "@/components/ui/sidebar-wrapper";
 
 const Blog = (): JSX.Element => {
   const location = useLocation();
@@ -25,11 +26,7 @@ const Blog = (): JSX.Element => {
       >
         <AnimatedBackgroundGlows />
         {/* <StarAnimation /> */}
-        <div className="grid grid-cols-[auto_1fr] gap-40 z-1 layout-center py-40 ">
-          <div>
-            {/* SUbpage - Nav */}
-            <SubNav />
-          </div>
+        <SidebarWrapper>
           <AnimatePresence
             mode="wait"
             initial={false}
@@ -51,7 +48,7 @@ const Blog = (): JSX.Element => {
               })}
             </Routes>
           </AnimatePresence>{" "}
-        </div>
+        </SidebarWrapper>
       </main>
     </>
   );

@@ -14,7 +14,7 @@ import {
 } from "@squirrel309/my-testcounter";
 import { HtmlContentNormalizer } from "@/utils/HtmlContentNormalizer";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, List } from "lucide-react";
+import { ExternalLink, List, NotebookPen } from "lucide-react";
 import imgUrlMapper from "@/utils/imgUrl-mapping";
 import BlogDetailSkeleton from "./blogdetail-skeleton";
 import LoadingSpiner from "@/components/ui/loading-spiner";
@@ -160,21 +160,17 @@ const BlogDetail = (): JSX.Element => {
         </EditorProvider>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mt-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
         <button
-          className="article-hover p-5 cursor-pointer text-sm rounded-lg"
+          className="article-hover justify-center p-5 cursor-pointer text-sm rounded-lg flex gap-2 items-center"
           onClick={() => window.open(`https://blog.h-creations.com`, "_blank")}
         >
-          Blog "퍼블리셔와 개발자 그 사이 어딘가"
+          Blog 바로가기
+          <ExternalLink />
         </button>
         <button
           className="article-hover p-5 cursor-pointer text-sm rounded-lg"
-          onClick={() =>
-            window.open(
-              `https://blog.h-creations.com/post/${post_id}`,
-              "_blank"
-            )
-          }
+          onClick={() => nav("/board")}
         >
           방명록 한줄 남기기
         </button>

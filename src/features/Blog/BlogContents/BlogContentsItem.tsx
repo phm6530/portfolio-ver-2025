@@ -24,12 +24,12 @@ const BlogContentsItem: React.FC<PostItemModel> = ({
 
   return (
     <div
-      className="flex article-hover p-5 flex-col transform hover:-translate-y-1"
+      className=" grid grid-cols-[1fr_auto] md:grid-cols-1 border-x-0 md:border-x-1 py-4 gap-5 article-hover md:p-5 md:flex-col  hover:-translate-y-1"
       onClick={() => navigate(`${post_id}`)}
     >
       {thumbnail_url && (
         <div
-          className="w-full aspect-[16/6] rounded-lg"
+          className="w-full md:aspect-[16/6] aspect-[1/1] rounded-lg order-1 md:order-none"
           style={{
             backgroundImage: `url(${thumbnail_url ? unsplashS3Mapping(thumbnail_url) : null})`,
             backgroundPosition: "center center",
@@ -38,7 +38,7 @@ const BlogContentsItem: React.FC<PostItemModel> = ({
         />
       )}
 
-      <div className="flex flex-col gap-2 pt-4 items-start">
+      <div className="flex flex-col gap-2 pt-0 md:pt-4 items-start">
         {/* Header */}
 
         <StackBadge> {sub_group_name}</StackBadge>

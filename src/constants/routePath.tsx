@@ -1,10 +1,8 @@
-import NotfoundPage from "@/component/error/NotfoundPage";
 import withAuth from "@/hoc/WithAuth";
 import About from "@/page/about/About";
 import AdminPage from "@/page/Admin/Admin";
 import Blog from "@/page/blog/Blog";
 import Board from "@/page/Board/Board";
-import Contact from "@/page/contact/Contact";
 import Home from "@/page/Home";
 import Project from "@/page/Project";
 

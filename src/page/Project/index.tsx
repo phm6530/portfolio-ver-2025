@@ -4,13 +4,12 @@ import ProjectForm from "@/features/project/ProjectEditor/ProjectForm";
 import ProjectList from "@/features/project/ProjectList";
 import withAuth from "@/hoc/WithAuth";
 import { AnimatePresence } from "framer-motion";
-import { Route, Routes, useLocation, useParams } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { AnimatedBackgroundGlows } from "../about/tttt";
-import SubNav from "@/components/shared/sub-nav";
+import SidebarWrapper from "@/components/ui/sidebar-wrapper";
 
 export default function Project() {
   const location = useLocation();
-
   const AthencatedProjectEditor = withAuth(ProjectForm, "/project");
 
   const PATHS = [
@@ -35,10 +34,7 @@ export default function Project() {
       >
         <AnimatedBackgroundGlows />
 
-        <div className="grid grid-cols-[auto_1fr] gap-40 z-1 layout-center py-40 ">
-          <div>
-            <SubNav />
-          </div>
+        <SidebarWrapper>
           <AnimatePresence
             mode="wait"
             initial={false}
@@ -60,7 +56,7 @@ export default function Project() {
               })}
             </Routes>
           </AnimatePresence>
-        </div>
+        </SidebarWrapper>
       </main>
     </>
   );
