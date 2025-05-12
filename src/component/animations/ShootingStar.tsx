@@ -89,7 +89,7 @@ const ShootingStar = (): JSX.Element => {
   }, []);
 
   return (
-    <div className="w-2/3 h-screen relative">
+    <div className="w-2/3 h-screen absolute -left-[10%] top-0">
       <AnimationSection>
         <span className="span-1"></span>
         <span className="span-2"></span>
