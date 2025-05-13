@@ -6,7 +6,6 @@ import RecentPosts from "./components/recent-post";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import StackIconMapper from "@/components/shared/stack-iconmapper";
 
 const Home = () => {
   const ref = useRef<HTMLDivElement>(null);

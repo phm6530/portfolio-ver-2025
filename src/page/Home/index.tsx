@@ -20,15 +20,17 @@ import RecentPosts from "./components/recent-post";
 import { cn } from "@/lib/utils";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const ref = useRef<HTMLDivElement>(null);
+  const nav = useNavigate();
   useGSAP(() => {}, { scope: "" });
 
   return (
     <main
       ref={ref}
-      className={`md:min-h-screen animate-opacity text-white overflow-hidden relative flex justify-center bg-zinc-900`}
+      className={`md:min-h-screen animate-opacity text-white overflow-hidden relative flex justify-center dark:bg-zinc-900 bg-zinc-50`}
       // style={{
       //   backgroundImage: "url(/vanner/vanner_3.jpg)",
       //   backgroundPosition: "center bottom",
@@ -50,9 +52,9 @@ const Home = () => {
       />
       <div className="layout-center py-[150px] md:py-[200px] flex flex-col   gap-30">
         <div className="text-center">
-          <CodeXml size={40} className="text-teal-300 mb-3 mx-auto " />
+          <CodeXml size={40} className="text-teal-300 mb-8 mx-auto " />
 
-          <h1 className="text-3xl md:text-5xl leading-17  animate-topIn ani-delay-0.2 opacity-0 font-semibold">
+          <h1 className="text-3xl md:text-5xl text-foreground leading-17  animate-topIn ani-delay-0.2 opacity-0 font-semibold">
             <span className="text-6xl">
               PHM, <span className="text-teal-300">FRONT</span>
             </span>
@@ -64,7 +66,10 @@ const Home = () => {
             <br></br>
           </p>
 
-          <Button className="bg-white text-black animate-topIn ani-delay-0.4 opacity-0 p-5 px-7!">
+          <Button
+            className="bg-white text-black animate-topIn ani-delay-0.4 opacity-0 p-5 px-7!"
+            onClick={() => nav("/about")}
+          >
             ABOUT ME <ArrowRightFromLine />
           </Button>
 
