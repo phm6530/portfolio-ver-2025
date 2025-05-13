@@ -9,6 +9,7 @@ import PhpSvg from "@/asset/stack/php.svg?react";
 import ReactSvg from "@/asset/stack/react.svg?react";
 import TailwindSvg from "@/asset/stack/tailwindcss.svg?react";
 import jquerySvg from "@/asset/stack/jquery.svg?react";
+import { cn } from "@/lib/utils";
 
 // SVG 컴포넌트의 타입 정의
 type SVGComponent = FC<SVGProps<SVGSVGElement>>;
@@ -47,28 +48,18 @@ interface StackIconMapperProps {
 
 export default function StackIconMapper({
   stackName,
-  className = "size-5 [&>*]:fill-indigo-200",
+  className,
 }: StackIconMapperProps) {
   const normalizedName = stackName.toLowerCase() as StackName;
 
   if (normalizedName in STACK_ICONS) {
     const IconComponent = STACK_ICONS[normalizedName];
-    return <IconComponent className={className} />;
+    return (
+      <IconComponent
+        className={cn("size-5 [&>*]:fill-indigo-200", className)}
+      />
+    );
   }
 
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-    >
-      <path d="M15 4H5a2 2 0 00-2 2v12a2 2 0 002 2h14a2 2 0 002-2V8l-6-4z"></path>
-      <path d="M15 4v4h4"></path>
-      <path d="M10 12v4"></path>
-      <path d="M14 12v4"></path>
-    </svg>
-  );
+  return <svg className={cn("size-5 [&>*]:fill-indigo-200", className)}></svg>;
 }

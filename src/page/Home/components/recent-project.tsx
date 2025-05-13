@@ -2,6 +2,7 @@ import SupabasePool from "@/lib/supabaseClient";
 import { cn } from "@/lib/utils";
 import { ProjectPostProps } from "@/type/ProjectTypes";
 import { useQuery } from "@tanstack/react-query";
+import { Box, CurlyBraces, LucideCurlyBraces } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function RecentProject() {
@@ -26,11 +27,10 @@ export default function RecentProject() {
           <div
             onClick={() => nav(`/project/${project.id}`)}
             key={`POST:${project.id}:${idx}`}
-            className={cn(
-              "flex flex-col gap-2 group cursor-pointer   pt-5  border-t border-indigo-200/60 w-full "
-            )}
+            className={cn("flex flex-col gap-2 group cursor-pointer   w-full ")}
           >
-            <h4 className="text-white text-xl font-medium mb-1 group-hover:text-indigo-200 transition-colors">
+            <h4 className="text-white flex text-xl items-center gap-3 font-medium my-3 group-hover:text-indigo-200 transition-colors">
+              <Box size={20} className="text-teal-400" />
               {project.title}
             </h4>
             <p className="text-xs md:text-xs text-white/70  line-clamp-3 mb-5 leading-relaxed max-w-[350px] break-keep">

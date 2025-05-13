@@ -14,15 +14,7 @@ const Blog = (): JSX.Element => {
   ];
   return (
     <>
-      <main
-        style={{
-          backgroundSize: "cover",
-          backgroundPosition: "center center",
-          backgroundImage:
-            "radial-gradient(circle at 80% 10%, rgba(145, 126, 210, 0.15) 0%, transparent 60%), radial-gradient(circle at 15% 85%, rgba(143, 147, 247, 0.15) 0%, transparent 55%)",
-        }}
-        className="min-h-screen bg-gradient-to-l from-[#332d38] to-[#95fff4] relative bg-fixed text-white flex flex-col"
-      >
+      <main className="bg-zinc-900 ">
         <AnimatedBackgroundGlows />
         {/* <StarAnimation /> */}
         <SidebarWrapper>

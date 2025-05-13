@@ -1,25 +1,23 @@
 import SearchField from "@/components/shared/search-input-field";
 import BlogList from "@/features/Blog/BlogList/BlogList";
 import BlogTab from "@/features/Blog/BlogTab.js/BlogTab";
+import { NotebookPen } from "lucide-react";
 
 const BlogPage = (): JSX.Element => {
   return (
-    <div className="flex flex-col items-start max-w-3xl border-b border-white/10">
-      <div className="mb-6 animate-topIn ani-delay-0.2 opacity-0">
-        <div className="text-xs uppercase tracking-widest text-white/50">
-          DEV & Publisher
-        </div>
-        <h1 className="text-6xl font-semibold mt-2 bg-gradient-to-l from-white to-indigo-200  text-transparent bg-clip-text pb-3">
-          Dev Blog
-        </h1>
-      </div>
+    <div className="flex flex-col items-start max-w-3xl border-b border-white/10 ">
+      <NotebookPen size={40} className="text-teal-300 mb-3" />
 
-      <div className="text-white/80 text-sm  animate-topIn ani-delay-0.3 opacity-0 mb-12 leading-6">
+      <h1 className="text-3xl md:text-4xl leading-13 mb-6 animate-topIn ani-delay-0.2 opacity-0">
+        Dev Blog,<br></br>
+      </h1>
+
+      <div className="mb-10 text-white/90 text-sm leading-relaxed  animate-topIn ani-delay-0.3 opacity-0 max-w-[600px] break-keep">
         <p>Tech Archive" code, 개발, 그리고 기술에 관한 기록 공간 입니다</p>
         <p>
           해당 페이지는{" "}
           <span
-            className="text-red-300 underline hover:text-red-200 cursor-pointer"
+            className="text-teal-300 hover:text-teal-400 underline  cursor-pointer"
             onClick={() =>
               window.open("https://blog.h-creations.com", "_blank")
             }

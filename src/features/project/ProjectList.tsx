@@ -8,6 +8,7 @@ import { ProjectPostProps } from "@/type/ProjectTypes";
 import useStore from "@/store/zustandStore";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { Box, Puzzle, UserCheck2 } from "lucide-react";
 
 const FILTER_LABEL = [
   { label: "전체보기", keyword: "all" },
@@ -77,11 +78,11 @@ const ProjectList = () => {
   return (
     <div className="flex-1 max-w-3xl">
       <div className="mb-6 animate-topIn ani-delay-0.2 opacity-0">
-        <div className="text-xs uppercase tracking-widest text-white/50 mb-3">
-          Work Archive
-        </div>
-        <h1 className="font-extrabold text-6xl inline-block t-light mt-2 bg-gradient-to-l from-white to-indigo-200  text-transparent bg-clip-text pb-3">
-          PROJECT<span className="text-red-300 ">'</span>
+        <Box size={40} className="text-teal-300 mb-3" />
+
+        <h1 className="text-3xl md:text-4xl leading-13 mb-6 animate-topIn ani-delay-0.2 opacity-0">
+          WORK,<br></br>
+          ARCHIVE
         </h1>
       </div>
 
@@ -93,14 +94,14 @@ const ProjectList = () => {
         </p>
       </div>
 
-      <div className="mb-10 animate-topIn ani-delay-0.2 opacity-0">
+      <div className="mb-5 animate-topIn ani-delay-0.2 opacity-0">
         <div className=" flex gap-2 flex-wrap">
           {FILTER_LABEL.map((e) => {
             return (
               <button
                 key={`key:${e.keyword}`}
                 className={cn(
-                  "bg-transparent! text-muted-foreground flex gap-1 text-xs rounded-lg border p-2 px-3 border-muted-foreground/30 cursor-pointer hover:border-indigo-200",
+                  "bg-transparent! text-muted-foreground flex gap-1 text-xs rounded-full border p-2 px-3 border-muted-foreground/30 cursor-pointer hover:border-indigo-200",
                   e.keyword === curFilter && "border-indigo-200 text-indigo-200"
                 )}
                 onClick={() => setCurFilter(e.keyword)}
@@ -113,7 +114,7 @@ const ProjectList = () => {
       </div>
 
       <div
-        className="grid md:grid-cols-1 grid-cols-1 mt-5 gap-6 md:gap-3 animate-topIn ani-delay-0.3 opacity-0"
+        className="grid md:grid-cols-1 grid-cols-1 mt-5 animate-topIn ani-delay-0.3 opacity-0"
         key={curFilter}
       >
         <div className="col-span-full">

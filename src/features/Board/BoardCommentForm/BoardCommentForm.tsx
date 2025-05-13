@@ -89,7 +89,7 @@ export default function BoardCommentForm({
         onSubmit={form.handleSubmit(onSubmitHandlr)}
       >
         {errors.length > 0 && <ErrorBubble>{errors[0]}</ErrorBubble>}
-        <div className="flex flex-wrap gap-3 w-full mt-5">
+        <div className="flex flex-col md:flex-row md:lex-wrap gap-3 w-full mt-5">
           {!login && (
             <>
               <Controller

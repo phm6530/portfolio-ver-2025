@@ -30,6 +30,7 @@ import {
   FrameIcon,
   Github,
   Home,
+  HomeIcon,
   Library,
   Link,
   Link2Icon,
@@ -186,21 +187,20 @@ const ProjectDetail = () => {
     <>
       <section className="flex flex-col gap-12 max-w-4xl mx-auto -mt-[70px] md:mt-auto">
         {/* 헤더 및 네비게이션 */}
-        <div className="flex items-center gap-8 border-b pb-3 border-border animate-topIn ani-delay-0.1 opacity-0">
+        <div className="flex items-center gap-4 border-b pb-3 border-border animate-topIn ani-delay-0.1 opacity-0">
           <div
-            className="flex items-center gap-2 text-sm"
+            className="items-center gap-2 text-sm hidden md:flex border p-2 rounded-xl border-border cursor-pointer"
             onClick={() => nav(-1)}
           >
             <ChevronLeft size={15} />
-            <span className="text-xs cursor-pointer">뒤로가기</span>
           </div>
-          <span className="opacity-30">|</span>
+          <span className="opacity-30 md:block hidden">|</span>
           <div className="text-[11px] tracking-wider text-white/60 flex items-center gap-2">
             <span
               className="cursor-pointer hover:text-indigo-200 hover:underline flex items-center"
               onClick={() => nav("/")}
             >
-              HOME
+              <HomeIcon size={15} />
             </span>
             <span>/</span>
             <span

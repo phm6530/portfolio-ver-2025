@@ -26,7 +26,6 @@ function App(): JSX.Element {
 
   return (
     <>
-      {/* redux */}
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <AppRoute />

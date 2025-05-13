@@ -2,6 +2,7 @@ import { axiosApi } from "@/config/axios.config";
 import { requestHandler } from "@/utils/apiUtils";
 import { DateUtils } from "@/utils/dateUtil";
 import { useQuery } from "@tanstack/react-query";
+import { LucideCurlyBraces, Milestone } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export type PostItemModel = {
@@ -33,15 +34,16 @@ export default function RecentPosts() {
   });
 
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid md:grid-cols-2 gap-5">
       {data?.slice(0, 2).map((blogMeta, idx) => {
         return (
           <div
             key={`post:${blogMeta.post_id}:${idx}`}
-            className="flex flex-col gap-2 group cursor-pointer   pt-5  border-t border-indigo-200/60"
+            className="flex flex-col gap-2 group cursor-pointer "
             onClick={() => nav(`/blog/${blogMeta.post_id}`)}
           >
-            <h4 className="text-white text-sm font-medium mb-1 group-hover:text-indigo-200 transition-colors">
+            <h4 className="text-white flex text-lg items-center gap-3 font-medium my-3 group-hover:text-indigo-200 transition-colors">
+              <Milestone size={20} className="text-teal-300" />
               {blogMeta.post_title}
             </h4>
             <p className="text-xs text-white/50 mb-2 line-clamp-2">
