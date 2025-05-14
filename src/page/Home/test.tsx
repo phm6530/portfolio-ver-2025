@@ -1,21 +1,63 @@
+import BackgroundImgCover from "@/component/ui/BackgroundImgCover";
+import ShootingStar from "@/component/animations/ShootingStar";
 import { Button } from "@/components/ui/button";
-
-import { ArrowRight, ChevronRight } from "lucide-react";
+import BlogSvg from "@/asset/blog.svg?react";
+import GitSvg from "@/asset/git.svg?react";
+import Kakao from "@/asset/kakao.svg?react";
+import Cubes from "@/asset/shape.svg?react";
+import {
+  LucideCurlyBraces,
+  Milestone,
+  Box,
+  BoxSelect,
+  CurlyBraces,
+  ClipboardSignature,
+  Boxes,
+  Figma,
+  FormInput,
+  CuboidIcon,
+  PenBox,
+  MessageCircleDashed,
+} from "lucide-react";
+import {
+  ArrowRight,
+  ArrowRightCircle,
+  ArrowRightFromLine,
+  ChevronRight,
+  Code2,
+  CodeXml,
+  CurlyBracesIcon,
+  TestTube,
+  UserCheck2,
+} from "lucide-react";
 import RecentProject from "./components/recent-project";
 import RecentPosts from "./components/recent-post";
+import { cn } from "@/lib/utils";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import StarAnimation from "@/component/animations/StarAnimation";
+import StackEffect from "./components/stack-effect";
+import TextGradentAnimation from "@/component/animations/text-gradient";
+import SidebarWrapper from "@/components/ui/sidebar-wrapper";
+import LinksWiget from "@/components/shared/link-wiget";
 
 const Home = () => {
   const ref = useRef<HTMLDivElement>(null);
+  const nav = useNavigate();
   useGSAP(() => {}, { scope: "" });
 
   return (
     <main
       ref={ref}
-      className={`min-h-screen bg-zinc-900 text-white p-6 md:p-10`}
+      className={`md:min-h-screen animate-opacity text-white overflow-hidden relative flex justify-center dark:bg-zinc-900 bg-zinc-50`}
+      // style={{
+      //   backgroundImage: "url(/vanner/vanner_3.jpg)",
+      //   backgroundPosition: "center bottom",
+      //   backgroundAttachment: "fixed",
+      // }}
     >
+      {/* <StarAnimation /> */}
       {/* <ShootingStar /> */}
       {/* 메인 콘텐츠 영역 */}
       {/* <div
@@ -26,76 +68,123 @@ const Home = () => {
       after:pointer-events-none after:animate-opacity 
 `)}
       /> */}
-      <div className="glow-5  absolute -bottom-80 left-0 size-150 bg-violet-400/20 blur-[100px] rounded-full"></div>
-      <div className="glow-5 absolute -top-3/5 right-1 size-200 bg-gradient-to-b to-indigo-800/20 from-violet-50/100 blur-[100px] rounded-full"></div>
+      {/* <div className=" w-full absolute h-[400px] top-[200px]">
+        <StackEffect />
+      </div> */}{" "}
+      {/* <div
+          className={`glow-5 z-0! absolute top-[50%] left-[50%] -translate-y-[70%]  size-1/3 bg-gradient-to-l to-red-500/30 via-indigo-500/50 from-red-500/60 blur-[100px] rounded-full transition-colors duration-700`}
+        /> */}
+      <div className="layout-center grid grid-cols-[auto_1fr]  pt-30 gap-20">
+        {/* <div
+            className="border p-5 min-h-[250px] border-border bg-cover bg-bottom rounded-xl"
+            style={{
+              backgroundImage: "url(/vanner/vanner_4.jpg)",
+            }}
+          ></div> */}
 
-      <div className="layout-center grid grid-cols-[400px_1fr] py-[150px] md:py-[150px] flex-col md:flex-row md:gap-30 min-h-[100vh]">
-        <div>
-          <div className="   md:sticky md:top-[100px] ">
-            <h1 className="text-3xl md:text-5xl font-light mb-4 leading-13">
-              <span className="font-normal">Phm .</span>
-              <br />
-              <span className="font-semibold bg-clip-text bg-gradient-to-l from-white to-indigo-300 text-transparent">
-                Frontend
-              </span>
-              <span className="size-2  inline-block ml-2 bg-red-300 rounded-full relative">
-                <span className="size-3 absolute  inline-block  bg-red-200 rounded-full inset-0 animate-ping"></span>
-              </span>
-              <br /> Developer <br />{" "}
-            </h1>
+        <div className="flex flex-col items-start gap-3 animate-leftIn ani-delay-0.1 opacity-0 sticky top-30 transition-all textContainer">
+          {/* <UserCheck2 className="size-9 text-teal-300" /> */}
+          <h1 className="text-4xl leading-12">
+            PHM, <br></br>
+            <span className="text-teal-300">FRONTEND</span>
+            <br></br>
+            DEVELOPER
+          </h1>
 
-            <p className="text-gray-400 text-xl leading-relaxed mt-6 mb-6 max-w-[400px] break-keep">
-              전문성 있는 프론트엔드 개발자로 성장하고자 합니다. 트랜디 한
-              기술을 파악하고, 익숙해지는 것에 전념하고 있습니다.
-            </p>
-            <div className="text-gray-500 text-xs mt-8 mb-10">
-              <a
-                href="mailto:example@email.com"
-                className="block mb-1 hover:text-indigo-200 transition-colors"
-              >
-                example@email.com
-              </a>
-              <Link
-                to="https://github.com/phm6530"
-                className="block mb-1 hover:text-indigo-200 transition-colors"
-              >
-                github.com/phm6530
-              </Link>
-            </div>
-            <Button className="rounded-full text-xs p-4 px-6!">
-              About me <ArrowRight />
-            </Button>
-            {/* <SubNav /> */}
-          </div>
+          <p className="md:max-w-[300px] mt-5 text-foreground/70 text-sm   leading-relaxed  animate-topIn ani-delay-0.3">
+            전문성 있는 프론트엔드 개발자로 성장하고자 합니다. <br></br>
+            트랜디 한 기술을 파악하고, 익숙해지는 것에 전념하고 있습니다.{" "}
+            <br></br>
+          </p>
+
+          <button className="border p-3 mt-4 w-full justify-between gap-2 flex items-center text-xs border-border">
+            ABOUT ME <ChevronRight size={12} />
+          </button>
+
+          <LinksWiget />
         </div>
 
-        {/* 오른쪽 컨텐츠 영역 - 충분한 높이 부여 */}
-        <div className="flex-1 flex flex-col gap-20 ">
-          <div className="space-y-2 animate-leftIn ani-delay-1.1 opacity-0">
-            <h3 className="text-sm font-medium tracking-wider mb-3 flex items-center gap-2 group cursor-pointer">
-              <span className="text-[11px] text-orange-300 text-shadow-[0_5px_30px_rgba(99,102,241,0.25)]">
-                RECENT PROJECT
-              </span>{" "}
+        <div className="grid  gap-10 pb-20">
+          <div className="grid grid-cols-4 gap-2">
+            <div className="border flex flex-col article-hover p-5 rounded-xl">
+              <div className="size-10  flex items-center justify-center ">
+                <UserCheck2 className="size-16 text-teal-300" />
+              </div>
+              <span className="text-2xl mt-5 ml-auto inline-block">About</span>
+              <span className="text-xs ml-auto text-muted-foreground">
+                저를 소개합니다
+              </span>
+            </div>
+            <div className="border flex flex-col article-hover p-5 rounded-xl">
+              <div className="size-10  flex items-center justify-center ">
+                <Box className="size-16 text-teal-300" />
+              </div>
+              <span className="text-2xl mt-5 ml-auto inline-block">
+                Project
+              </span>
+              <span className="text-xs ml-auto text-muted-foreground">
+                Work archive
+              </span>
+            </div>
+            <div className="border flex flex-col article-hover p-5 rounded-xl">
+              <div className="size-10  flex items-center justify-center ">
+                <PenBox className="size-16 text-teal-300" />
+              </div>
+              <span className="text-2xl mt-5 ml-auto inline-block">Blog</span>
+              <span className="text-xs ml-auto text-muted-foreground">
+                기술 블로그
+              </span>
+            </div>
+            <div className="border flex flex-col article-hover p-5 rounded-xl">
+              <div className="size-10  flex items-center justify-center ">
+                <MessageCircleDashed className="size-16 text-teal-300" />
+              </div>
+              <span className="text-2xl mt-5 ml-auto inline-block">Board</span>
+              <span className="text-xs ml-auto text-muted-foreground">
+                방명록
+              </span>
+            </div>
+          </div>
+          {/* <div>
+            <h3 className="text-sm font-medium tracking-wider mb-3 flex items-center gap-2 group cursor-pointer   pb-2  ">
+              <Milestone size={20} />
+              <span className="flex gap-2 text-[11px] text text-shadow-[0_5px_30px_rgba(99,102,241,0.25)]  text-foreground/80">
+                Pinned
+              </span>
               <ChevronRight
                 size={15}
-                className="opacity-50 group-hover:opacity-100 transition-all text-indigo-200"
+                className="opacity-50 ml-auto group-hover:opacity-100 transition-all text-foreground/30"
               />
             </h3>
-            {/* PROJECT - 최근 1개 */}
+            <div className="border min-h-[200px] rounded-2xl"></div>
+          </div> */}
+          <div className=" animate-topIn ani-delay-0.5 opacity-0">
+            <h3 className=" text-sm font-medium tracking-wider  flex items-center gap-2 group cursor-pointer  pb-2 ">
+              <Box size={20} />
+              <span className="flex gap-2 text-[11px] text-shadow-[0_5px_30px_rgba(99,102,241,0.25)] text-foreground/80">
+                최근 프로젝트
+              </span>
+              <ChevronRight
+                size={15}
+                className="opacity-50 ml-auto group-hover:opacity-100 transition-all text-foreground/30"
+              />
+            </h3>
+
             <RecentProject />
           </div>
 
-          <div className="space-y-2 animate-leftIn ani-delay-1.1 opacity-0">
-            <h3 className="text-sm font-medium tracking-wider mb-3 flex items-center gap-2 group cursor-pointer">
-              <span className="text-[11px]  text-orange-300 text-shadow-[0_5px_30px_rgba(99,102,241,0.25)]">
-                RECENT POSTS
+          <div className="space-y-2  animate-topIn ani-delay-0.6 opacity-0">
+            <h3 className="text-sm font-medium tracking-wider mb-3 flex items-center gap-2 group cursor-pointer   pb-2  ">
+              <Milestone size={20} />
+              <span className="flex gap-2 text-[11px] text text-shadow-[0_5px_30px_rgba(99,102,241,0.25)]  text-foreground/80">
+                최근 포스팅
               </span>
               <ChevronRight
                 size={15}
-                className="opacity-50 group-hover:opacity-100 transition-all text-indigo-200"
+                className="opacity-50 ml-auto group-hover:opacity-100 transition-all text-foreground/30"
               />
             </h3>
-            {/* PINNED POST - BLOG API 사용 */}
+
             <RecentPosts />
           </div>
         </div>

@@ -5,7 +5,6 @@ import ProjectList from "@/features/project/ProjectList";
 import withAuth from "@/hoc/WithAuth";
 import { AnimatePresence } from "framer-motion";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { AnimatedBackgroundGlows } from "../about/tttt";
 import SidebarWrapper from "@/components/ui/sidebar-wrapper";
 
 export default function Project() {

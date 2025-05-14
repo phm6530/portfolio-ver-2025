@@ -27,6 +27,20 @@ type StackName =
   | "tailwindcss"
   | "jquery";
 
+// 각 스택의 브랜드 색상 정의
+const STACK_COLORS: Record<StackName, string> = {
+  "next.js": "fill-gray-800 fill-white",
+  "nest.js": "fill-[#E0234E]",
+  javascript: "fill-[#F7DF1E] bg-white",
+  typescript: "fill-[#3178C6] bg-white",
+  sass: "fill-[#CC6699]",
+  git: "fill-[#F05032]",
+  php: "fill-[#777BB4]",
+  react: "fill-[#61DAFB]",
+  tailwindcss: "fill-[#06B6D4]",
+  jquery: "fill-[#0769AD]",
+};
+
 // 스택 매핑 객체 생성 - 타입 명시
 export const STACK_ICONS: Record<StackName, SVGComponent> = {
   "next.js": NextSvg,
@@ -54,12 +68,10 @@ export default function StackIconMapper({
 
   if (normalizedName in STACK_ICONS) {
     const IconComponent = STACK_ICONS[normalizedName];
-    return (
-      <IconComponent
-        className={cn("size-5 [&>*]:fill-indigo-200", className)}
-      />
-    );
+    const colorClass = STACK_COLORS[normalizedName];
+
+    return <IconComponent className={cn("size-3", colorClass, className)} />;
   }
 
-  return <svg className={cn("size-5 [&>*]:fill-indigo-200", className)}></svg>;
+  return <svg className={cn("size-5", className)}></svg>;
 }

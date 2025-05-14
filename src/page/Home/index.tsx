@@ -5,6 +5,9 @@ import BlogSvg from "@/asset/blog.svg?react";
 import GitSvg from "@/asset/git.svg?react";
 import Kakao from "@/asset/kakao.svg?react";
 import Cubes from "@/asset/shape.svg?react";
+
+import DevSvg from "@/asset/3d/code_2.svg?react";
+
 import {
   LucideCurlyBraces,
   Milestone,
@@ -16,7 +19,10 @@ import {
   Figma,
   FormInput,
   CuboidIcon,
+  PenBox,
+  MessageCircleDashed,
   NotebookPen,
+  MessageSquareQuote,
 } from "lucide-react";
 import {
   ArrowRight,
@@ -38,6 +44,8 @@ import { useNavigate } from "react-router-dom";
 import StarAnimation from "@/component/animations/StarAnimation";
 import StackEffect from "./components/stack-effect";
 import TextGradentAnimation from "@/component/animations/text-gradient";
+import SidebarWrapper from "@/components/ui/sidebar-wrapper";
+import LinksWiget from "@/components/shared/link-wiget";
 
 const Home = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -49,7 +57,7 @@ const Home = () => {
       ref={ref}
       className={`md:min-h-screen animate-opacity text-white overflow-hidden relative flex justify-center dark:bg-zinc-900 bg-zinc-50`}
       // style={{
-      //   backgroundImage: "url(/img/f1.jpg)",
+      //   backgroundImage: "url(/vanner/vanner_3.jpg)",
       //   backgroundPosition: "center bottom",
       //   backgroundAttachment: "fixed",
       // }}
@@ -65,90 +73,129 @@ const Home = () => {
       after:pointer-events-none after:animate-opacity 
 `)}
       /> */}
-
       {/* <div className=" w-full absolute h-[400px] top-[200px]">
         <StackEffect />
-      </div> */}
+      </div> */}{" "}
       <div
-        className={`glow-5 pointer-events-none absolute top-[50%] left-[50%] z-10 -translate-y-[70%]  size-1/3 bg-gradient-to-l to-red-500/30 via-indigo-500/50 from-red-500/60 blur-[100px] rounded-full transition-colors duration-700`}
+        className={`glow-5 z-0! pointer-events-none absolute top-[50%] left-[50%] -translate-y-[70%]  size-1/3 bg-gradient-to-l to-red-500/30 via-indigo-500/50 from-red-500/30 blur-[100px] rounded-full transition-colors duration-700`}
       />
-      <div className="layout-center py-[150px] md:pt-[200px] flex flex-col   gap-30">
-        <div className="text-center items-center relative flex flex-col gap-5 justify-center">
-          <h1 className=" text-3xl md:text-7xl text-foreground leading-21 font-Montserrat animate-topIn ani-delay-0.2 opacity-0 font-semibold">
-            {/* <Cubes className="fill-teal-300 mb-11 mx-auto size-8 path-teal" /> */}
-            <span className="text-7xl">
-              PHM <span className="text-teal-300">FRONT</span>
-            </span>
-            ,<br></br> DEVELOPER
+      <div className="layout-center grid md:grid-cols-[auto_1fr]  pt-30 gap-20">
+        {/* <div
+            className="border p-5 min-h-[250px] border-border bg-cover bg-bottom rounded-xl"
+            style={{
+              backgroundImage: "url(/vanner/vanner_4.jpg)",
+            }}
+          ></div> */}
+
+        <div className="flex flex-col items-start gap-3 animate-leftIn ani-delay-0.1 opacity-0 sticky top-30 transition-all textContainer">
+          {/* <UserCheck2 className="size-9 text-teal-300" /> */}
+          <h1 className="text-4xl leading-12">
+            PHM, <br></br>
+            <span className="text-teal-300">FRONTEND</span>
+            <br></br>
+            DEVELOPER
           </h1>
-          <p className="text-foreground/70 text-sm   leading-relaxed py-7 animate-topIn ani-delay-0.3 opacity-0 mx-auto md:mx-0">
+
+          <p className="md:max-w-[300px] mt-5 text-foreground/70 text-sm   leading-relaxed  animate-topIn ani-delay-0.3">
+            전문성 있는 프론트엔드 개발자로 성장하고자 합니다. <br></br>
             트랜디 한 기술을 파악하고, 익숙해지는 것에 전념하고 있습니다.{" "}
-            <br></br>전문성 있는 프론트엔드 개발자로 성장하고자 합니다.{" "}
             <br></br>
           </p>
 
-          <Button
-            className="p-5 px-6! cursor-pointer text-xs bg-transparent! rounded-full  article-hover article-hover animate-topIn ani-delay-0.3 opacity-0 "
-            onClick={() => nav("/about")}
-          >
-            ABOUT ME <ChevronRight />
-          </Button>
-          {/* <Button variant={"ghost"} className="border rounded-full">
-            About me <ArrowRight />
-          </Button> */}
-          {/* <div className="flex gap-2   mx-auto justify-center animate-topIn ani-delay-0.4 opacity-0">
-            <Button
-              className="rounded-full  hover:bg-white/10 border border-white/10 bg-white/2 text-xs hover:border-indigo-300/30 transition-all duration-300 group"
-              variant={"ghost"}
-              onClick={() => window.open("https://open.kakao.com/o/sq4skkTf")}
-            >
-              <Kakao className="fill-foreground opacity-50 group-hover:opacity-100  group-hover:fill-indigo-200 transition-all" />{" "}
-              kakao
-            </Button>
-            <Button
-              className="rounded-full   hover:bg-white/10 border border-white/10 bg-white/2 text-xs hover:border-indigo-300/30 transition-all duration-300 group"
-              variant={"ghost"}
-              onClick={() => window.open("https://github.com/phm6530/")}
-            >
-              <GitSvg className="fill-foreground opacity-50 group-hover:opacity-100 group-hover:fill-indigo-200 transition-all" />{" "}
-              git
-            </Button>
-            <Button
-              className="rounded-full  hover:bg-white/10 border border-white/10 bg-white/2 text-xs hover:border-indigo-300/30 transition-all duration-300 group"
-              variant={"ghost"}
-              onClick={() => window.open("https://blog.h-creations.com/")}
-            >
-              <BlogSvg className="fill-foreground opacity-50 group-hover:opacity-100 group-hover:fill-indigo-200 transition-all" />{" "}
-              blog
-            </Button>
-          </div> */}
+          <button className="border p-3 mt-4  justify-between gap-2 flex items-center text-xs article-hover rounded-xl">
+            ABOUT ME <ChevronRight size={12} />
+          </button>
+
+          <LinksWiget />
         </div>
 
-        <div className="grid md:grid-cols-[1fr_2fr] gap-10">
-          <div className="space-y-2  animate-topIn ani-delay-0.5 opacity-0">
-            <h3 className="text-sm font-medium tracking-wider mb-1 flex items-center gap-2 group cursor-pointer   pb-2">
-              <Box size={20} />
+        <div className="grid  gap-10 pb-20">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-2">
+            <div
+              className="border flex flex-col article-hover p-5 rounded-xl group"
+              onClick={() => nav("/about")}
+            >
+              <div className="size-10  flex items-center justify-center ">
+                <UserCheck2 className="size-9 group-hover:text-teal-300" />
+              </div>
+              <span className="text-xl mt-5 ml-auto inline-block">About</span>
+              <span className="text-xs ml-auto text-muted-foreground">
+                저를 소개합니다
+              </span>
+            </div>
+            <div
+              className="border flex flex-col article-hover p-5 rounded-xl group"
+              onClick={() => nav("/project")}
+            >
+              <div className="size-10  flex items-center justify-center ">
+                <Box className="size-9 group-hover:text-teal-300" />
+              </div>
+              <span className="text-xl mt-5 ml-auto inline-block">Project</span>
+              <span className="text-xs ml-auto text-muted-foreground">
+                Work archive
+              </span>
+            </div>
+            <div
+              className="border flex flex-col article-hover p-5 rounded-xl group"
+              onClick={() => nav("/blog")}
+            >
+              <div className="size-10  flex items-center justify-center ">
+                <NotebookPen className="size-9 group-hover:text-teal-300" />
+              </div>
+              <span className="text-xl mt-5 ml-auto inline-block">Blog</span>
+              <span className="text-xs ml-auto text-muted-foreground">
+                기술 블로그
+              </span>
+            </div>
+            <div
+              className="border flex flex-col article-hover p-5 rounded-xl group"
+              onClick={() => nav("/board")}
+            >
+              <div className="size-10  flex items-center justify-center ">
+                <MessageSquareQuote className="size-9 group-hover:text-teal-300" />
+              </div>
+              <span className="text-xl mt-5 ml-auto inline-block">Board</span>
+              <span className="text-xs ml-auto text-muted-foreground">
+                방명록
+              </span>
+            </div>
+          </div>
+          {/* <div>
+            <h3 className="text-sm font-medium tracking-wider mb-3 flex items-center gap-2 group cursor-pointer   pb-2  ">
+              <Milestone size={20} />
               <span className="flex gap-2 text-[11px] text text-shadow-[0_5px_30px_rgba(99,102,241,0.25)]  text-foreground/80">
+                Pinned
+              </span>
+              <ChevronRight
+                size={15}
+                className="opacity-50 ml-auto group-hover:opacity-100 transition-all text-foreground/30"
+              />
+            </h3>
+            <div className="border min-h-[200px] rounded-2xl"></div>
+          </div> */}
+          <div className=" animate-topIn ani-delay-0.5 opacity-0">
+            <h3 className=" text-sm font-medium tracking-wider  flex items-center gap-2 group cursor-pointer  pb-2 ">
+              <span className="flex gap-2 text-[11px] text-shadow-[0_5px_30px_rgba(99,102,241,0.25)] text-foreground/80">
                 최근 프로젝트
               </span>
               <ChevronRight
                 size={15}
-                className="opacity-100  group-hover:opacity-100 transition-all text-foreground/30"
+                className="opacity-50 ml-auto group-hover:opacity-100 transition-all text-foreground/30"
               />
             </h3>
 
             <RecentProject />
           </div>
 
-          <div className="space-y-2  animate-topIn ani-delay-0.6 opacity-0">
-            <h3 className="text-sm font-medium tracking-wider mb-1 flex items-center gap-2 group cursor-pointer   pb-2">
-              <NotebookPen size={20} />
+          <div className="space-y-2 mt-5  animate-topIn ani-delay-0.6 opacity-0">
+            <h3 className="text-sm font-medium tracking-wider mb-3 flex items-center gap-2 group cursor-pointer   pb-2  ">
+              <Milestone size={20} />
               <span className="flex gap-2 text-[11px] text text-shadow-[0_5px_30px_rgba(99,102,241,0.25)]  text-foreground/80">
                 최근 포스팅
               </span>
               <ChevronRight
                 size={15}
-                className="opacity-100  group-hover:opacity-100 transition-all text-foreground/30"
+                className="opacity-50 ml-auto group-hover:opacity-100 transition-all text-foreground/30"
               />
             </h3>
 
