@@ -35,8 +35,8 @@ export default function RecentPosts() {
   });
 
   return (
-    <div className="grid md:grid-cols-2 gap-5">
-      {data?.slice(0, 2).map((blogMeta, idx) => {
+    <div className="grid md:grid-cols-3 gap-5">
+      {data?.slice(0, 3).map((blogMeta, idx) => {
         return (
           <div
             key={`post:${blogMeta.post_id}:${idx}`}

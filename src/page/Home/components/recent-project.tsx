@@ -22,7 +22,7 @@ export default function RecentProject() {
                 `
         )
         .order("id", { ascending: false })
-        .limit(3);
+        .limit(2);
       return data as ProjectPostProps[];
     },
     staleTime: Infinity,
@@ -30,7 +30,7 @@ export default function RecentProject() {
   const nav = useNavigate();
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="md:flex  gap-8">
       {projectOne?.map((project, idx) => {
         return (
           <div

@@ -55,12 +55,12 @@ const Home = () => {
   return (
     <main
       ref={ref}
-      className={`md:min-h-screen animate-opacity text-white overflow-hidden relative flex justify-center dark:bg-zinc-900 bg-zinc-50`}
-      // style={{
-      //   backgroundImage: "url(/vanner/vanner_3.jpg)",
-      //   backgroundPosition: "center bottom",
-      //   backgroundAttachment: "fixed",
-      // }}
+      className={`md:min-h-screen animate-topIn text-white overflow-hidden relative flex justify-center dark:bg-zinc-900 bg-zinc-50 bg-cover  opacity-0`}
+      style={{
+        backgroundImage: "url(/img/v1.jpg)",
+        backgroundPosition: "top",
+        backgroundAttachment: "fixed",
+      }}
     >
       {/* <StarAnimation /> */}
       {/* <ShootingStar /> */}
@@ -76,10 +76,10 @@ const Home = () => {
       {/* <div className=" w-full absolute h-[400px] top-[200px]">
         <StackEffect />
       </div> */}{" "}
-      <div
+      {/* <div
         className={`glow-5 z-0! pointer-events-none absolute top-[50%] left-[50%] -translate-y-[70%]  size-1/3 bg-gradient-to-l to-red-500/30 via-indigo-500/50 from-red-500/30 blur-[100px] rounded-full transition-colors duration-700`}
-      />
-      <div className="layout-center grid md:grid-cols-[auto_1fr]  pt-30 gap-20">
+      /> */}
+      <div className="layout-center grid  pt-30 gap-20">
         {/* <div
             className="border p-5 min-h-[250px] border-border bg-cover bg-bottom rounded-xl"
             style={{
@@ -87,30 +87,29 @@ const Home = () => {
             }}
           ></div> */}
 
-        <div className="flex flex-col items-start gap-3 animate-leftIn ani-delay-0.1 opacity-0 sticky top-30 transition-all textContainer">
-          {/* <UserCheck2 className="size-9 text-teal-300" /> */}
-          <h1 className="text-4xl leading-12">
-            PHM, <br></br>
-            <span className="text-teal-300">FRONTEND</span>
+        <div className="flex flex-col items-start gap-3 animate-topIn ani-delay-0.1 opacity-0  mt-40 transition-all textContainer">
+          <UserCheck2 className="size-9 text-teal-300" />
+          <h1 className="text-5xl md:text-6xl md:leading-19">
+            PHM, <span className="text-teal-200">FRONTEND</span>
             <br></br>
             DEVELOPER
           </h1>
 
-          <p className="md:max-w-[300px] mt-5 text-foreground/70 text-sm   leading-relaxed  animate-topIn ani-delay-0.3">
+          <p className="mt-5 text-foreground/70 text-sm   leading-relaxed  animate-topIn ani-delay-0.2 opacity-0">
             전문성 있는 프론트엔드 개발자로 성장하고자 합니다. <br></br>
             트랜디 한 기술을 파악하고, 익숙해지는 것에 전념하고 있습니다.{" "}
             <br></br>
           </p>
 
-          <button className="border p-3 mt-4  justify-between gap-2 flex items-center text-xs article-hover rounded-xl">
+          {/* <button className="border p-3 mt-4  justify-between gap-2 flex items-center text-xs article-hover rounded-xl">
             ABOUT ME <ChevronRight size={12} />
-          </button>
+          </button> */}
 
-          <LinksWiget />
+          {/* <LinksWiget /> */}
         </div>
 
-        <div className="grid  gap-10 pb-20">
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-2">
+        <div className="flex flex-col gap-10 pb-20">
+          {/* <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-2">
             <div
               className="border flex flex-col article-hover p-5 rounded-xl group"
               onClick={() => nav("/about")}
@@ -159,7 +158,7 @@ const Home = () => {
                 방명록
               </span>
             </div>
-          </div>
+          </div> */}
           {/* <div>
             <h3 className="text-sm font-medium tracking-wider mb-3 flex items-center gap-2 group cursor-pointer   pb-2  ">
               <Milestone size={20} />
