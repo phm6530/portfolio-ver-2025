@@ -16,6 +16,7 @@ import {
   Figma,
   FormInput,
   CuboidIcon,
+  NotebookPen,
 } from "lucide-react";
 import {
   ArrowRight,
@@ -48,7 +49,7 @@ const Home = () => {
       ref={ref}
       className={`md:min-h-screen animate-opacity text-white overflow-hidden relative flex justify-center dark:bg-zinc-900 bg-zinc-50`}
       // style={{
-      //   backgroundImage: "url(/vanner/vanner_3.jpg)",
+      //   backgroundImage: "url(/img/f1.jpg)",
       //   backgroundPosition: "center bottom",
       //   backgroundAttachment: "fixed",
       // }}
@@ -69,16 +70,16 @@ const Home = () => {
         <StackEffect />
       </div> */}
       <div
-        className={`glow-5  absolute top-[50%] left-[50%] z-10 -translate-y-[70%]  size-1/3 bg-gradient-to-l to-red-500/30 via-indigo-500/50 from-red-500/60 blur-[100px] rounded-full transition-colors duration-700`}
+        className={`glow-5 pointer-events-none absolute top-[50%] left-[50%] z-10 -translate-y-[70%]  size-1/3 bg-gradient-to-l to-red-500/30 via-indigo-500/50 from-red-500/60 blur-[100px] rounded-full transition-colors duration-700`}
       />
       <div className="layout-center py-[150px] md:pt-[200px] flex flex-col   gap-30">
         <div className="text-center items-center relative flex flex-col gap-5 justify-center">
-          <h1 className=" text-3xl md:text-7xl text-foreground leading-17 font-Montserrat animate-topIn ani-delay-0.2 opacity-0 font-semibold">
-            <Cubes className="fill-teal-300 mb-11 mx-auto size-8 path-teal" />
+          <h1 className=" text-3xl md:text-7xl text-foreground leading-21 font-Montserrat animate-topIn ani-delay-0.2 opacity-0 font-semibold">
+            {/* <Cubes className="fill-teal-300 mb-11 mx-auto size-8 path-teal" /> */}
             <span className="text-7xl">
-              PHM, <span className="text-teal-300">FRONT</span>
+              PHM <span className="text-teal-300">FRONT</span>
             </span>
-            ,<br></br> WEB DEVELOPER
+            ,<br></br> DEVELOPER
           </h1>
           <p className="text-foreground/70 text-sm   leading-relaxed py-7 animate-topIn ani-delay-0.3 opacity-0 mx-auto md:mx-0">
             트랜디 한 기술을 파악하고, 익숙해지는 것에 전념하고 있습니다.{" "}
@@ -87,7 +88,7 @@ const Home = () => {
           </p>
 
           <Button
-            className="p-5 px-6! cursor-pointer bg-transparent! rounded-full border-indigo-200 hover:border-indigo-400 article-hover animate-topIn ani-delay-0.3 opacity-0 "
+            className="p-5 px-6! cursor-pointer text-xs bg-transparent! rounded-full  article-hover article-hover animate-topIn ani-delay-0.3 opacity-0 "
             onClick={() => nav("/about")}
           >
             ABOUT ME <ChevronRight />
@@ -126,9 +127,9 @@ const Home = () => {
         <div className="grid md:grid-cols-[1fr_2fr] gap-10">
           <div className="space-y-2  animate-topIn ani-delay-0.5 opacity-0">
             <h3 className="text-sm font-medium tracking-wider mb-1 flex items-center gap-2 group cursor-pointer   pb-2">
-              <Milestone size={20} className="text-teal-300" />
+              <Box size={20} />
               <span className="flex gap-2 text-[11px] text text-shadow-[0_5px_30px_rgba(99,102,241,0.25)]  text-foreground/80">
-                RECENT PROJECT
+                최근 프로젝트
               </span>
               <ChevronRight
                 size={15}
@@ -141,9 +142,9 @@ const Home = () => {
 
           <div className="space-y-2  animate-topIn ani-delay-0.6 opacity-0">
             <h3 className="text-sm font-medium tracking-wider mb-1 flex items-center gap-2 group cursor-pointer   pb-2">
-              <Milestone size={20} className="text-teal-300" />
+              <NotebookPen size={20} />
               <span className="flex gap-2 text-[11px] text text-shadow-[0_5px_30px_rgba(99,102,241,0.25)]  text-foreground/80">
-                RECENT POSTS
+                최근 포스팅
               </span>
               <ChevronRight
                 size={15}
