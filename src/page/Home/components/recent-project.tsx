@@ -27,7 +27,7 @@ export default function RecentProject() {
             onClick={() => nav(`/project/${project.id}`)}
             key={`POST:${project.id}:${idx}`}
             className={cn(
-              "flex flex-col gap-2 group cursor-pointer   w-full p-5 border border-border rounded-lg"
+              "flex flex-col gap-2 group cursor-pointer   w-full p-5 border border-border rounded-lg bg-white/2 article-hover"
             )}
           >
             <h4 className="text-foreground flex text-base items-center gap-3 font-medium my-3 group-hover:text-indigo-200 transition-colors">

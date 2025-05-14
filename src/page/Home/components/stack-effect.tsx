@@ -89,7 +89,7 @@ export default function StackEffect() {
         >
           <StackIconMapper
             stackName={stack}
-            className="stack-icon opacity-20 [&>*]:fill-white size-5"
+            className="stack-icon opacity-50 [&>*]:fill-white size-5"
           />
         </div>
       ))}

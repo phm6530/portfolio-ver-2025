@@ -69,12 +69,12 @@ const Home = () => {
         <StackEffect />
       </div> */}
       <div
-        className={`glow-5 z-0! absolute top-[50%] left-[50%] -translate-y-[70%]  size-1/3 bg-gradient-to-l to-indigo-300-500/30 via-indigo-500/20 from-red-500/60 blur-[100px] rounded-full transition-colors duration-700`}
+        className={`glow-5  absolute top-[50%] left-[50%] z-10 -translate-y-[70%]  size-1/3 bg-gradient-to-l to-red-500/30 via-indigo-500/50 from-red-500/60 blur-[100px] rounded-full transition-colors duration-700`}
       />
       <div className="layout-center py-[150px] md:pt-[200px] flex flex-col   gap-30">
         <div className="text-center items-center relative flex flex-col gap-5 justify-center">
-          <h1 className=" text-3xl md:text-5xl text-foreground leading-17 font-SUIT-Regular animate-topIn ani-delay-0.2 opacity-0 font-semibold">
-            <Cubes className="fill-white mb-11 mx-auto size-8 path-teal" />
+          <h1 className=" text-3xl md:text-7xl text-foreground leading-17 font-Montserrat animate-topIn ani-delay-0.2 opacity-0 font-semibold">
+            <Cubes className="fill-teal-300 mb-11 mx-auto size-8 path-teal" />
             <span className="text-7xl">
               PHM, <span className="text-teal-300">FRONT</span>
             </span>
@@ -86,37 +86,41 @@ const Home = () => {
             <br></br>
           </p>
 
+          <Button
+            className="p-5 px-6! cursor-pointer bg-transparent! rounded-full border-indigo-200 hover:border-indigo-400 article-hover animate-topIn ani-delay-0.3 opacity-0 "
+            onClick={() => nav("/about")}
+          >
+            ABOUT ME <ChevronRight />
+          </Button>
           {/* <Button variant={"ghost"} className="border rounded-full">
             About me <ArrowRight />
           </Button> */}
-          <div className="flex gap-2   mx-auto justify-center animate-topIn ani-delay-0.4 opacity-0 items-center">
-            <button className="flex items-center text-sm gap-10 border-r pr-5 mr-5 border-border border p-3 px-5">
-              ABOUT ME <ChevronRight size={13} />
-            </button>
-            <div className="flex gap-0">
-              <Button
-                className="rounded-full  hover:bg-white/10 border-white/10 text-xs hover:border-indigo-300/30 transition-all duration-300 group"
-                variant={"ghost"}
-                onClick={() => window.open("https://open.kakao.com/o/sq4skkTf")}
-              >
-                <Kakao className="fill-foreground opacity-50 group-hover:opacity-100  group-hover:fill-indigo-200 transition-all" />{" "}
-              </Button>
-              <Button
-                className="rounded-full   hover:bg-white/10  border-white/10  text-xs hover:border-indigo-300/30 transition-all duration-300 group"
-                variant={"ghost"}
-                onClick={() => window.open("https://github.com/phm6530/")}
-              >
-                <GitSvg className="fill-foreground opacity-50 group-hover:opacity-100 group-hover:fill-indigo-200 transition-all" />{" "}
-              </Button>
-              <Button
-                className="rounded-full  hover:bg-white/10  border-white/10 text-xs hover:border-indigo-300/30 transition-all duration-300 group"
-                variant={"ghost"}
-                onClick={() => window.open("https://blog.h-creations.com/")}
-              >
-                <BlogSvg className="fill-foreground opacity-50 group-hover:opacity-100 group-hover:fill-indigo-200 transition-all" />{" "}
-              </Button>
-            </div>
-          </div>
+          {/* <div className="flex gap-2   mx-auto justify-center animate-topIn ani-delay-0.4 opacity-0">
+            <Button
+              className="rounded-full  hover:bg-white/10 border border-white/10 bg-white/2 text-xs hover:border-indigo-300/30 transition-all duration-300 group"
+              variant={"ghost"}
+              onClick={() => window.open("https://open.kakao.com/o/sq4skkTf")}
+            >
+              <Kakao className="fill-foreground opacity-50 group-hover:opacity-100  group-hover:fill-indigo-200 transition-all" />{" "}
+              kakao
+            </Button>
+            <Button
+              className="rounded-full   hover:bg-white/10 border border-white/10 bg-white/2 text-xs hover:border-indigo-300/30 transition-all duration-300 group"
+              variant={"ghost"}
+              onClick={() => window.open("https://github.com/phm6530/")}
+            >
+              <GitSvg className="fill-foreground opacity-50 group-hover:opacity-100 group-hover:fill-indigo-200 transition-all" />{" "}
+              git
+            </Button>
+            <Button
+              className="rounded-full  hover:bg-white/10 border border-white/10 bg-white/2 text-xs hover:border-indigo-300/30 transition-all duration-300 group"
+              variant={"ghost"}
+              onClick={() => window.open("https://blog.h-creations.com/")}
+            >
+              <BlogSvg className="fill-foreground opacity-50 group-hover:opacity-100 group-hover:fill-indigo-200 transition-all" />{" "}
+              blog
+            </Button>
+          </div> */}
         </div>
 
         <div className="grid md:grid-cols-[1fr_2fr] gap-10">
