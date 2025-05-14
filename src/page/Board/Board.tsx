@@ -20,8 +20,8 @@ export default function Board(): JSX.Element {
 
             <div className="mb-10 text-white/90 text-sm leading-relaxed  animate-topIn ani-delay-0.3 opacity-0 max-w-[600px] break-keep">
               <p>
-                <span className="text-teal-300"> "한줄의 응원의 메세지"</span>는
-                저에게 큰 힘이 됩니다.
+                <span className="text-indigo-200"> "한줄의 응원의 메세지"</span>
+                는 저에게 큰 힘이 됩니다.
               </p>
               <p>
                 {" "}

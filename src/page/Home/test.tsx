@@ -44,7 +44,7 @@ const Home = () => {
               <br /> Developer <br />{" "}
             </h1>
 
-            <p className="text-gray-400 text-sm leading-relaxed mt-6 mb-6 max-w-[400px] break-keep">
+            <p className="text-gray-400 text-xl leading-relaxed mt-6 mb-6 max-w-[400px] break-keep">
               전문성 있는 프론트엔드 개발자로 성장하고자 합니다. 트랜디 한
               기술을 파악하고, 익숙해지는 것에 전념하고 있습니다.
             </p>

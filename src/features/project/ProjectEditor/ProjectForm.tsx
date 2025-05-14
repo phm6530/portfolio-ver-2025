@@ -34,6 +34,9 @@ import { DateUtils } from "@/utils/dateUtil";
 import { requestHandler } from "@/utils/apiUtils";
 import { DetailProps } from "../ProjectDetail";
 import TextareaFormField from "@/components/shared/textareaField";
+import useUploader from "@/hooks/useUploader";
+import imgUrlMapper from "@/utils/imgUrl-mapping";
+import { HtmlContentNormalizer } from "@/utils/HtmlContentNormalizer";
 
 export interface ProjectDetailProps {
   id: string;
@@ -58,6 +61,7 @@ export default function ProjectForm() {
   const nav = useNavigate();
   const [imgKey, setImgkey] = useState<string>(useMemo(() => uuidv4(), []));
   const queryclient = useQueryClient();
+  const { handler } = useUploader(imgKey);
 
   // Get
   const { data } = useQuery({
@@ -125,7 +129,7 @@ export default function ProjectForm() {
           const { error: contentError } = await pool
             .from("project_contents")
             .update({
-              contents: body.contents,
+              contents: HtmlContentNormalizer.getPost(body.contents),
             })
             .eq("project_id", projectNum);
 
@@ -301,7 +305,9 @@ export default function ProjectForm() {
           start: new Date(result.start_date),
           end: new Date(result.end_date),
         },
-        contents: result.project_contents[0].contents,
+        contents: HtmlContentNormalizer.setImgUrl(
+          result.project_contents[0].contents
+        ),
       });
 
       // Imgkey
@@ -309,9 +315,14 @@ export default function ProjectForm() {
     }
   }, [data]);
 
+  //???
   const { editor } = useSimpleEditor({
     placeholder: "프로젝트 내용을 입력해주세요 .",
     editable: true,
+    uploadCallback: async (e) => {
+      const url = await handler(e);
+      return imgUrlMapper({ thumbnail: url });
+    },
   });
 
   const onSubmitHandler = (e: z.infer<typeof projectSchema>) => {

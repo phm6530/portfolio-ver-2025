@@ -12,6 +12,7 @@ import { IMG_URL } from "@/constants/apiUrl";
 import { Button } from "@/components/ui/button";
 import { Delete, ReceiptEuroIcon, Recycle, Upload } from "lucide-react";
 import { FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import useUploader from "@/hooks/useUploader";
 
 const UPloadFileName = styled.div`
   font-size: 12px;
@@ -46,46 +47,11 @@ const ProjectThumbnailUploader: React.FC<ProjectThumbnailUploaderProps> = ({
     useFormContext<z.infer<typeof projectSchema>>();
 
   const ref = useRef<HTMLInputElement>(null);
-
-  const { mutateAsync } = useMutation({
-    mutationFn: async (formData: FormData) => {
-      return await requestHandler(async () => {
-        const response = await axiosApi.post(`/upload`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-
-        return response;
-      });
-    },
-  });
+  const { handler } = useUploader(projectKey);
 
   const fileFiler = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const ImgFile = e.target.files![0];
-
-    if (!ImgFile) return; //없으면 리턴 해버림
-    const imgSize = ImgFile.size / 1024 / 1024;
-
-    if (parseInt(imgSize.toFixed(2)) > 5) {
-      alert(`${imgSize} 는 너무 크네요.. 5mb이하만 가능합니다. `);
-      return;
-    }
-    if (!ImgFile.type.startsWith("image/")) {
-      alert("이미지 파일만 업로드 가능합니다.");
-      return;
-    }
-
-    const formData = new FormData();
-    const newFileName = ImgFile.name.replace(/[^\w.-]/g, "_");
-
-    formData.append("file", ImgFile, newFileName); // 'img' 필드에 파일 추가
-    formData.append("imgKey", projectKey);
-
-    //서버요청
-    const test = await mutateAsync(formData);
-
-    setValue("thumbnail", test.result.url, { shouldValidate: true });
+    const url = await handler(e);
+    setValue("thumbnail", url, { shouldValidate: true });
   };
 
   return (

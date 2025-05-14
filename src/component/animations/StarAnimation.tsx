@@ -1,3 +1,4 @@
+import { STACK_ICONS } from "@/components/shared/stack-iconmapper";
 import { useLayoutEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
 
@@ -91,7 +92,8 @@ const StarAnimation = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   // 반짝이 갯수 배열
-  const starCntArr = [...Array(10)].map((_, idx) => idx + 1);
+
+  const starCntArr = Object.keys(STACK_ICONS);
 
   useLayoutEffect(() => {
     if (ref.current && !offset) {
@@ -111,7 +113,7 @@ const StarAnimation = () => {
   };
 
   return (
-    <div className="w-full h-screen fixed z-100" ref={ref}>
+    <div className="w-full h-screen fixed z-100 pointer-events-none" ref={ref}>
       {offset &&
         starCntArr.map((_, idx) => {
           const [left, top] = offsetCalculator(offset);

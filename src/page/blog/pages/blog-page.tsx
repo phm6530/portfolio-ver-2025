@@ -17,7 +17,7 @@ const BlogPage = (): JSX.Element => {
         <p>
           해당 페이지는{" "}
           <span
-            className="text-teal-300 hover:text-teal-400 underline  cursor-pointer"
+            className="text-indigo-200 hover:text-teal-400 underline  cursor-pointer"
             onClick={() =>
               window.open("https://blog.h-creations.com", "_blank")
             }

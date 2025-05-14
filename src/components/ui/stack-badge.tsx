@@ -11,7 +11,7 @@ export default function StackBadge({
   return (
     <span
       className={cn(
-        "text-[10px] py-0.5 px-2 bg-white/10 text-white/60 rounded-full",
+        "text-[10px] py-0.5 px-2 bg-white/10 text-white/70 rounded-full",
         className
       )}
     >

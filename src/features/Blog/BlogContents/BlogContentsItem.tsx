@@ -44,13 +44,11 @@ const BlogContentsItem: React.FC<PostItemModel> = ({
 
       <div className="flex flex-col flex-1 gap-2 pt-0 md:pt-4 items-start">
         {/* Header */}
-
-        <StackBadge className="mb-2"> {sub_group_name}</StackBadge>
-
-        <div className="flex items-center">
-          {post_title}
+        <div className="flex gap-2 items-center mb-2">
+          <StackBadge> {sub_group_name}</StackBadge>
           {DateUtils.isNew(created_at) && <PostNewIcon />}
         </div>
+        <div className="flex items-center">{post_title}</div>
 
         {/* Company */}
         <p className="text-xs line-clamp-2 leading-relaxed text-muted-foreground">

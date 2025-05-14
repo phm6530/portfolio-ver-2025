@@ -1,8 +1,9 @@
+import PostNewIcon from "@/component/ui/PostNewIcon";
 import { axiosApi } from "@/config/axios.config";
 import { requestHandler } from "@/utils/apiUtils";
 import { DateUtils } from "@/utils/dateUtil";
 import { useQuery } from "@tanstack/react-query";
-import { LucideCurlyBraces, Milestone } from "lucide-react";
+
 import { useNavigate } from "react-router-dom";
 
 export type PostItemModel = {
@@ -39,23 +40,23 @@ export default function RecentPosts() {
         return (
           <div
             key={`post:${blogMeta.post_id}:${idx}`}
-            className="flex flex-col gap-2 group cursor-pointer "
+            className="flex flex-col gap-2 group cursor-pointer border p-5 border-border rounded-lg"
             onClick={() => nav(`/blog/${blogMeta.post_id}`)}
           >
-            <h4 className="text-white flex text-lg items-center gap-3 font-medium my-3 group-hover:text-indigo-200 transition-colors">
-              <Milestone size={20} className="text-teal-300" />
+            <h4 className="text-foreground flex text-base items-center gap-3 font-medium my-3 group-hover:text-indigo-200 transition-colors">
               {blogMeta.post_title}
             </h4>
-            <p className="text-xs text-white/50 mb-2 line-clamp-2">
+            <p className="text-xs text-foreground/50 mb-2 line-clamp-2">
               {blogMeta.post_description}
             </p>
             <div className="flex items-center gap-3 mt-auto">
-              <span className="text-[10px] text-white/40">
+              <span className="text-[10px] text-foreground/40">
                 {DateUtils.formatStyledShort(blogMeta.created_at)}
               </span>
-              <span className="text-[10px] py-0.5 px-2 bg-white/10 text-white/60 rounded-full">
+              <span className="text-[10px] py-0.5 px-2 bg-white/10 text-foreground/60 rounded-full">
                 {blogMeta.sub_group_name}
               </span>
+              {DateUtils.isNew(blogMeta.created_at) && <PostNewIcon />}
             </div>
           </div>
         );

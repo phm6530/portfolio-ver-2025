@@ -56,6 +56,7 @@ import GitSvg from "@/asset/git.svg?react";
 import Kakao from "@/asset/kakao.svg?react";
 import React from "react";
 import { Button } from "@/components/ui/button";
+import useUploader from "@/hooks/useUploader";
 export type DetailProps = {
   company: string;
   description: string;
@@ -114,7 +115,11 @@ const ProjectDetail = () => {
     staleTime: Infinity,
   });
 
-  const { editor } = useSimpleEditor({ editable: false });
+  // const { handler } = useUploader();
+  const { editor } = useSimpleEditor({
+    editable: false,
+    // uploadCallback: () => {},
+  });
 
   const { mutate } = useMutation({
     mutationFn: async (id: number) => {

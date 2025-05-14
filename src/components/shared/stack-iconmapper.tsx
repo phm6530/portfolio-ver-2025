@@ -28,7 +28,7 @@ type StackName =
   | "jquery";
 
 // 스택 매핑 객체 생성 - 타입 명시
-const STACK_ICONS: Record<StackName, SVGComponent> = {
+export const STACK_ICONS: Record<StackName, SVGComponent> = {
   "next.js": NextSvg,
   "nest.js": NestSvg,
   javascript: JsSvg,

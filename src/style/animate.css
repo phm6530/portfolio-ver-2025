@@ -1,0 +1,73 @@
+.my {
+  position: absolute;
+}
+
+.my:nth-child(1) {
+  left: -40px;
+  top: -20px;
+}
+
+.my:nth-child(2) {
+  top: 20px;
+  right: -40px;
+}
+
+.my:nth-child(3) {
+  right: -60px;
+  bottom: 0;
+}
+
+.my:nth-child(4) {
+  right: -30px;
+  bottom: -60px;
+}
+
+.my:nth-child(5) {
+  right: -30px;
+  top: -60px;
+}
+
+.my:nth-child(6) {
+  left: 60%;
+  top: -70px;
+}
+
+.my:nth-child(7) {
+  left: 20%;
+  top: -60px;
+}
+
+.my:nth-child(8) {
+  left: -70px;
+  bottom: -20px;
+}
+
+.my:nth-child(9) {
+  left: -30px;
+  bottom: -50px;
+}
+
+@keyframes textShine {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.text-gradient-ani {
+  background: linear-gradient(
+    to right,
+    #46edd5 20%,
+    #00affa 30%,
+    #56d27f 70%,
+    #46edd5 80%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  background-size: 500% auto;
+  animation: textShine 4s linear infinite;
+}

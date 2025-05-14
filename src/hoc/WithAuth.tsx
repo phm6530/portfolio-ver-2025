@@ -27,7 +27,7 @@ const withAuth = <P extends object>(
       };
 
       checkAuth();
-    }, [logout, navigate, redirectPath]);
+    }, [logout, navigate, redirectPath, isAuth]);
 
     return <Component {...props} />;
   };
