@@ -58,6 +58,7 @@ import Kakao from "@/asset/kakao.svg?react";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import useUploader from "@/hooks/useUploader";
+import StackIconMapper from "@/components/shared/stack-iconmapper";
 export type DetailProps = {
   company: string;
   description: string;
@@ -219,29 +220,83 @@ const ProjectDetail = () => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-[auto_1fr]  gap-7 items-start ">
-          <DevSvg className="size-12 md:size-22  [&>path]:fill-indigo-50 rounded-full animate-topIn ani-delay-0.2 opacity-0" />
-          <div className="grid grid-cols-[auto_1fr]  gap-8 md:mt-5 justify-between animate-topIn ani-delay-0.3 opacity-0">
+        <div className="grid   gap-7 items-start ">
+          <div className=" md:mt-5 justify-between animate-topIn ani-delay-0.3 opacity-0 ">
             {/* <img src="/public/img/gear.png" className="w-22" /> */}
 
-            <div className="flex flex-col gap-6">
-              <h1 className="relative inline-flex gap-4 items-end hover:text-indigo-100 text-2xl md:text-3xl leading-tight text-white  transition-all cursor-pointer tracking-tight">
-                {/* <DevSvg className="size-10" /> */}
+            <div className="flex flex-col gap-8 ">
+              <h1 className="border-border relative inline-flex gap-4 items-end hover:text-indigo-100 text-3xl md:text-4xl leading-tight text-white  transition-all cursor-pointer tracking-tight">
+                <DevSvg className="size-10" />
                 {title}
                 {/* <ExternalLink className="opacity-50" size={20} /> */}
               </h1>
               {/* 프로젝트 설명 */}
-              <p className="text-xs md:text-sm leading-6 text-zinc-300  break-keep">
+              <p className="text-xs md:text-base leading-relaxed leading-6 text-zinc-300  break-keep max-w-[600px]  ">
                 {description}
               </p>
-              <div className="">
-                <Button
-                  onClick={() => nav("/board")}
-                  className="bg-indigo-300/10! article-hover  text-white  rounded-md md:text-sm p-2 md:p-5 !px-5 md:px-7! text-xs "
-                >
-                  Web site
-                  <ExternalLink className="opacity-70" />
-                </Button>
+
+              {/* 작업기간 */}
+              <div className="flex flex-col gap-4 border p-5 border-border rounded-lg">
+                <article className="space-y-2 md:space-y-3 flex items-center">
+                  {/* <h3 className="text-sm  text-white">기간</h3> */}
+                  <div className="text-lg text-zinc-300 flex items-center gap-3">
+                    <span className="text-sm opacity-60  mr-3">작업기간</span>
+                    <span className="text-indigo-200 text-sm md:text-base md:font-medium">
+                      {DateUtils.getDurationDays(start_date, end_date)}일
+                    </span>
+                    <span className="mx-2 text-zinc-500">|</span>
+                    <span className="text-xs">
+                      {start_date} ~ {end_date}
+                    </span>
+                  </div>
+                </article>
+
+                {/* 참여인원 */}
+                <article className="space-y-2 md:space-y-3">
+                  <div className="text-lg text-zinc-300 flex items-center gap-3">
+                    <span className="text-sm opacity-60 mr-3">투입인원</span>
+                    <span className="text-indigo-200 text-sm md:text-base md:font-medium">
+                      {project_member}
+                    </span>
+                  </div>
+                </article>
+
+                <article className="space-y-2  md:col-span-2 mt-1">
+                  <div className="grid   grid-cols-[auto_1fr] md:grid-cols-[auto_1fr] divide-y  divide-indigo-200/10  [&>div]:p-2">
+                    <div className="text-xs bg-zinc-950/30">카테고리</div>
+                    <div className="text-xs bg-zinc-950/30">스킬</div>
+
+                    {(() => {
+                      const stackObj = groupingStack(project_meta_stack);
+                      const keys = Object.keys(stackObj);
+                      return keys.map((k, idx) => {
+                        const stacks = stackObj[k];
+                        return (
+                          <React.Fragment key={`${k}:${idx}`}>
+                            <div className=" md:text-lg text-zinc-300 flex items-center gap-3 border-r">
+                              <span className="text-indigo-100  font-medium text-xs md:text-xs flex  items-center">
+                                {k}
+                              </span>
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                              {stacks.map((st, idx) => {
+                                return (
+                                  <span
+                                    key={`${st}:${idx}`}
+                                    className="text-xs md:text-xs p-1 md:px-2.5 md:py-1.5 bg-white/5 rounded-lg flex items-center gap-2"
+                                  >
+                                    {StackIconMapper({ stackName: st })}
+                                    {st}
+                                  </span>
+                                );
+                              })}
+                            </div>
+                          </React.Fragment>
+                        );
+                      });
+                    })()}
+                  </div>
+                </article>
               </div>
 
               {login && (
@@ -261,86 +316,17 @@ const ProjectDetail = () => {
                 </div>
               )}
             </div>
-          </div>{" "}
+          </div>
         </div>
 
         <div className=" w-full animate-topIn ani-delay-0.4 opacity-0">
           <ProjectImgWrapper url={thumbnail} alt={title} />
         </div>
-
-        <div className="py-10 border-y border-border w-full grid  md:grid-cols-2 gap-4 md:gap-10 animate-topIn ani-delay-0.5 opacity-0">
-          {/* 작업기간 */}
-          <article className="space-y-2 md:space-y-3">
-            <h3 className="text-xs  text-white">작업기간 / 유지보수 기간</h3>
-            <div className="text-lg text-zinc-300 flex items-center gap-3">
-              <Calendar size={16} className="text-indigo-300" />
-              <span className="text-indigo-200 text-sm md:font-medium">
-                {DateUtils.getDurationDays(start_date, end_date)}일
-              </span>
-              <span className="mx-2 text-zinc-500">|</span>
-              <span className="text-xs">
-                {start_date} ~ {end_date}
-              </span>
-            </div>
-          </article>
-
-          {/* 참여인원 */}
-          <article className="space-y-2 md:space-y-3">
-            <h3 className="text-xs  text-white">참여인원</h3>
-            <div className="text-lg text-zinc-300 flex items-center gap-3">
-              <Users size={16} className="text-indigo-300" />
-              <span className="text-indigo-200 text-sm md:font-medium">
-                {project_member}
-              </span>
-            </div>
-          </article>
-
-          <article className="space-y-2 mt-5 md:col-span-2 ">
-            <div className="flex items-center gap-2">
-              <h3 className="text-xs  text-white">사용스킬</h3>
-            </div>
-            <div className="grid rounded-xl  grid-cols-[auto_1fr] md:grid-cols-[minmax(200px,_auto)_1fr] border divide-y divide-x divide-indigo-200/10 border-indigo-200/20 [&>div]:p-2">
-              <div className="text-xs bg-zinc-950/30">카테고리</div>
-              <div className="text-xs bg-zinc-950/30">스킬</div>
-
-              {(() => {
-                const stackObj = groupingStack(project_meta_stack);
-                const keys = Object.keys(stackObj);
-                return keys.map((k, idx) => {
-                  const stacks = stackObj[k];
-                  return (
-                    <React.Fragment key={`${k}:${idx}`}>
-                      <div className=" md:text-lg text-zinc-300 flex items-center gap-3">
-                        <span className="text-indigo-100 pl-2 pr-3 font-medium text-xs md:text-sm flex gap-2 items-center">
-                          {/* {iconMapper(k)} */}
-
-                          {k}
-                        </span>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {stacks.map((st, idx) => {
-                          return (
-                            <span
-                              key={`${st}:${idx}`}
-                              className="text-xs md:text-sm p-1 md:px-2.5 md:py-1.5 bg-white/5 rounded-lg"
-                            >
-                              {st}
-                            </span>
-                          );
-                        })}
-                      </div>
-                    </React.Fragment>
-                  );
-                });
-              })()}
-            </div>
-          </article>
-        </div>
       </section>
 
       <section className="flex-1 mt-6">
         <h3 className="text-lg tracking-wider flex gap-3 items-center text-white ">
-          <span className="text-sm md:text-base bg-gradient-to-r tracking-tighter  font-SUIT-Regular from-white to-indigo-200 bg-clip-text text-transparent">
+          <span className="text-sm md:text-sm bg-gradient-to-r tracking-tighter  font-SUIT-Regular from-white to-indigo-200 bg-clip-text text-transparent">
             주요기능 *
           </span>
         </h3>
