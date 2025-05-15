@@ -16,8 +16,8 @@ const ROUTE_COLORS = {
     secondary: "bg-gradient-to-t to-indigo-900/30 from-violet-50/20",
   }, // 홈
   about: {
-    primary: "bg-gradient-to-b to-red-500/15 from-violet-50/60",
-    secondary: "bg-gradient-to-t to-indigo-900/30 from-violet-50/20",
+    primary: "bg-gradient-to-b to-red-500/80 from-violet-50/60",
+    secondary: "bg-gradient-to-t to-rose-900/30 from-blue-500/30",
   }, // About 페이지
   project: {
     primary: "bg-gradient-to-b to-indigo-900/50 from-teal-400/100",
@@ -52,12 +52,11 @@ const AppRoute = (): JSX.Element => {
       <div
         className={`glow-5 z-5 absolute pointer-events-none -top-4/5 right-1 size-1/2 md:size-200 ${currentColors.primary} blur-[100px] rounded-full transition-colors duration-700`}
       ></div>
-      {/* <div
+      <div
         className={`glow-5 z-1 absolute pointer-events-none md:-bottom-130 left-0 size-1/2 md:size-150 ${currentColors.secondary} blur-[100px] rounded-full transition-colors duration-700`}
-      ></div> */}
-      {/* <div className="glow-5 z-5 absolute -top-4/5 right-1 size-1/2  md:size-200 bg-gradient-to-b to-indigo-900/50 from-violet-50/100 blur-[100px] rounded-full"></div>
-      <div className="glow-5 z-5 absolute md:-bottom-80 left-0 size-1/2 md:size-150 bg-violet-400/20 blur-[100px] rounded-full"></div>
- */}
+      ></div>
+      {/* <div className="glow-5 z-5 absolute -top-4/5 right-1 size-1/2  md:size-200 bg-gradient-to-b to-indigo-900/50 from-violet-50/100 blur-[100px] rounded-full"></div> */}
+      {/* <div className="glow-5 z-5 absolute md:-bottom-80 left-0 size-1/2 md:size-150 bg-violet-400/20 blur-[100px] rounded-full"></div> */}
 
       <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
         <Routes location={location} key={`path_${pageKey}`}>

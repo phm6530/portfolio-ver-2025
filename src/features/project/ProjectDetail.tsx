@@ -355,7 +355,9 @@ const ProjectDetail = () => {
                 <AccordionTrigger className="bg-indigo-300/10! article-hover  text-white  rounded-md text-xs md:text-sm p-3 md:p-5">
                   {item.title}
                 </AccordionTrigger>
-                <AccordionContent className="p-3 md:p-5 text-xs md:text-sm">
+                <AccordionContent className="p-3 md:p-5 text-xs md:text-sm whitespace-pre-line leading-relaxed">
+                  <div>-</div>
+
                   {item.contents}
                 </AccordionContent>
               </AccordionItem>

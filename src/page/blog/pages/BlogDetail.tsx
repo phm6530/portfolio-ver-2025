@@ -16,7 +16,7 @@ import { HtmlContentNormalizer } from "@/utils/HtmlContentNormalizer";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, List, NotebookPen } from "lucide-react";
 import imgUrlMapper from "@/utils/imgUrl-mapping";
-import BlogDetailSkeleton from "./blogdetail-skeleton";
+
 import LoadingSpiner from "@/components/ui/loading-spiner";
 
 export enum POST_STATUS {

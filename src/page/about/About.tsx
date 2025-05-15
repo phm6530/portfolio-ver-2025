@@ -21,7 +21,7 @@ const AboutPage = () => {
         backgroundSize: "cover",
         backgroundPosition: "center center",
       }}
-      className="bg-zinc-900 "
+      className="bg-gradient-to-tl to-black via-rose-500/10 from-sky-800/20"
     >
       {/* <AnimatedBackgroundGlows /> */}
       {/* Main Content */}

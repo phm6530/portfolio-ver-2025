@@ -22,7 +22,7 @@ export default function DarkModeBtn({ scrollOver }: { scrollOver: boolean }) {
   return (
     <div
       className={cn(
-        "border dark:border-zinc-50/20 border-zinc-500 md:border-zinc-50/20 mx-3 relative p-1 rounded-full w-[70px] cursor-pointer ",
+        "border dark:border-zinc-50/20 hidden border-zinc-500 md:border-zinc-50/20 mx-3 relative p-1 rounded-full w-[70px] cursor-pointer ",
         scrollOver && "md:border-zinc-300"
       )}
       onClick={() => modeHandler()}

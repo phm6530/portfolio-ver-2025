@@ -22,7 +22,7 @@ export default function Project() {
 
   return (
     <>
-      <main className="bg-zinc-900 ">
+      <main className="bg-gradient-to-tl to-black via-indigo-500/20 from-sky-800/20">
         <SidebarWrapper>
           <AnimatePresence
             mode="wait"

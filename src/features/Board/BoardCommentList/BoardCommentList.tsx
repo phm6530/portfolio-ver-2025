@@ -40,7 +40,7 @@ export type CommentItemModel = {
 };
 
 const BoardCommentList = (): JSX.Element => {
-  const { data } = useQuery<{ result: CommentItemModel[] }>({
+  const { data, isLoading } = useQuery<{ result: CommentItemModel[] }>({
     queryKey: ["GUESTBOARD"],
     queryFn: async () => {
       return requestHandler(async () => {
@@ -65,11 +65,29 @@ const BoardCommentList = (): JSX.Element => {
   return (
     <>
       {/* 오늘 댓글 + 전체댓글  */}
-      {data && (
-        <BoardCommentStatus
-          todayReply={todayCOmment(data?.result)}
-          total={data.result.length}
-        />
+      {isLoading ? (
+        <section className="flex flex-col gap-5">
+          {[1, 2, 3, 4].map((e) => (
+            <div>
+              <div className="mt-5 flex flex-col gap-3">
+                <div className="flex gap-5 items-center">
+                  <div className="size-10 bg-foreground/10 rounded-full animate-pulse" />
+                  <div className="h-4 bg-foreground/10 w-[100px] rounded-full animate-pulse" />{" "}
+                  <div className="h-4 bg-foreground/10 w-[50px] rounded-full animate-pulse" />
+                </div>
+                <div className="h-4 bg-foreground/10 w-2/3 rounded-full animate-pulse" />
+                <div className="h-4 bg-foreground/10 w-full rounded-full animate-pulse" />
+              </div>
+            </div>
+          ))}
+        </section>
+      ) : (
+        data && (
+          <BoardCommentStatus
+            todayReply={todayCOmment(data?.result)}
+            total={data.result.length}
+          />
+        )
       )}
       <section className="flex flex-col gap-5 ">
         {/* 뿌리기 */}
