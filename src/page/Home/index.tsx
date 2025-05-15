@@ -63,7 +63,7 @@ const Home = () => {
       {/* <div
         className={`glow-5 z-0! pointer-events-none absolute top-[50%] left-[50%] -translate-y-[70%]  size-1/3 bg-gradient-to-l to-red-500/30 via-indigo-500/50 from-red-500/30 blur-[100px] rounded-full transition-colors duration-700`}
       /> */}
-      <div className="layout-center grid  pt-30 gap-20">
+      <div className="layout-center   pt-30 gap-20">
         {/* <div
             className="border p-5 min-h-[250px] border-border bg-cover bg-bottom rounded-xl"
             style={{
@@ -71,11 +71,11 @@ const Home = () => {
             }}
           ></div> */}
 
-        <div className="flex flex-col items-start gap-3  mt-30 transition-all textContainer">
+        <div className="flex flex-col items-start gap-3  mt-30 mb-10 transition-all textContainer w-full">
           <UserCheck2 className="size-9 text-teal-300" />
-          <h1 className="text-5xl md:text-6xl leading-15 md:leading-17 font-semibold  animate-leftIn ani-delay-0.1 opacity-0">
+          <h1 className="text-5xl md:text-6xl leading-15 md:leading-17 font-semibold  animate-leftIn ani-delay-0.1 opacity-0 break-keep  w-full">
             PHM,
-            <span className="text-teal-200 relative">
+            <span className="text-teal-200 relative inline-block">
               FRONTEND
               {/* <span
                 ref={lineRef}
@@ -86,7 +86,7 @@ const Home = () => {
             DEVELOPER
           </h1>
 
-          <p className="mt-5 text-foreground/70 text-base   leading-relaxed  animate-leftIn ani-delay-0.2 opacity-0 ">
+          <p className="mt-5 text-foreground/70 text-sm md:text-base   leading-relaxed  animate-leftIn ani-delay-0.2 opacity-0 ">
             전문성 있는 프론트엔드 개발자로 성장하고자 합니다. <br></br>
             트랜디 한 기술을 파악하고, 익숙해지는 것에 전념하고 있습니다.{" "}
             <br></br>

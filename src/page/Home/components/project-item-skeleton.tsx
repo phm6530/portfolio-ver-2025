@@ -1,6 +1,6 @@
 export default function ProjectItemSkeleton() {
   return (
-    <div className="w-1/2">
+    <div className="">
       <div>
         {/* <div className="aspect-[16/2] bg-foreground/10 w-full rounded-full animate-pulse" /> */}
         <div className="mt-5 flex flex-col gap-3">
