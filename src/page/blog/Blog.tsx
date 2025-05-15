@@ -14,7 +14,7 @@ const Blog = (): JSX.Element => {
   ];
   return (
     <>
-      <main className="bg-gradient-to-tl to-black via-rose-500/20 from-sky-800/20">
+      <main className="bg-gradient-to-t to-black via-rose-800/5 ">
         <AnimatedBackgroundGlows />
         {/* <StarAnimation /> */}
         <SidebarWrapper>

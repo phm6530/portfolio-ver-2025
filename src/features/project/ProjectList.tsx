@@ -144,15 +144,14 @@ const ProjectList = () => {
             )}
           </>
         ) : (
-          <>
-            {/* 스켈레톤 */}
+          <div className="flex flex-col gap-10">
             {Array.from({ length: 6 }).map((_, idx) => {
               return (
                 <div
                   key={`skeleton-${idx}`}
-                  className="grid grid-cols-[300px_1fr] gap-5"
+                  className="grid  md:grid-cols-[1fr_3fr] gap-5"
                 >
-                  <div className="bg-foreground/10  aspect-[16/9] animate-pulse " />
+                  <div className="bg-foreground/10  aspect-[16/9] animate-pulse rounded-xl" />
                   <div className="flex flex-col gap-3 mt-4">
                     <div className="bg-foreground/10 animate-wiggle  h-3 rounded-full"></div>
                     <div className="bg-foreground/10 animate-wiggle w-2/3 h-3 rounded-full"></div>
@@ -161,7 +160,7 @@ const ProjectList = () => {
                 </div>
               );
             })}
-          </>
+          </div>
         )}
       </div>
     </div>
