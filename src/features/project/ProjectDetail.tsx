@@ -34,6 +34,7 @@ import {
   HomeIcon,
   Library,
   Link,
+  Link2,
   Link2Icon,
   List,
   MessageCircle,
@@ -117,6 +118,8 @@ const ProjectDetail = () => {
     staleTime: Infinity,
   });
 
+  console.log(data);
+
   // const { handler } = useUploader();
   const { editor } = useSimpleEditor({
     editable: false,
@@ -174,6 +177,7 @@ const ProjectDetail = () => {
     project_contents,
     project_meta_stack,
     project_surmmry,
+    project_url,
   } = data[0] as DetailProps;
 
   const groupingStack = (stackArr: DetailProps["project_meta_stack"]) => {
@@ -318,7 +322,12 @@ const ProjectDetail = () => {
             </div>
           </div>
         </div>
-
+        <Button
+          className="p-6 text-xs"
+          onClick={() => window.open(project_url, "_blank")}
+        >
+          프로젝트 보러가기 <Link2 className="rotate-135" />
+        </Button>
         <div className=" w-full animate-topIn ani-delay-0.4 opacity-0">
           <ProjectImgWrapper url={thumbnail} alt={title} />
         </div>
