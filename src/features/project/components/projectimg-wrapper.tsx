@@ -30,7 +30,7 @@ export default function ProjectImgWrapper({
   return (
     <div
       className={cn(
-        "overflow-hidden relative transition-all rounded-xl border border-zinc-200 dark:border-zinc-700 ",
+        "overflow-hidden relative transition-all rounded-xl  ",
         longImg && "aspect-[16/10] md:aspect-[16/10]",
         longImg && more && "aspect-auto!"
       )}
@@ -50,9 +50,9 @@ export default function ProjectImgWrapper({
       />
       {longImg && !more && (
         <div
-          className="absolute bottom-0 flex z-5 w-full gap-2 justify-center text-center py-4 text-xs cursor-pointer bg-white/4"
+          className="absolute bottom-0 flex z-5 w-full gap-2 justify-center text-center py-5 text-xs cursor-pointer bg-gradient-to-t from-black/85 to-black/0"
           style={{
-            backdropFilter: "blur(3px)",
+            backdropFilter: "blur(5px)",
           }}
           onClick={() => setMore((prev) => !prev)}
         >

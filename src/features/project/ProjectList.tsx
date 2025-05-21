@@ -94,7 +94,7 @@ const ProjectList = () => {
         </p>
       </div>
 
-      <div className="mb-5 animate-topIn ani-delay-0.2 opacity-0">
+      <div className="mb-5 animate-topIn ani-delay-0.2 opacity-0 flex justify-between">
         <div className=" flex gap-2 flex-wrap">
           {FILTER_LABEL.map((e) => {
             return (
@@ -111,20 +111,25 @@ const ProjectList = () => {
             );
           })}
         </div>
+        <div className="col-span-full">
+          {login && (
+            <div className="col-span- flex items-center ">
+              <Button
+                className="text-xs"
+                size={"sm"}
+                onClick={() => nav("write")}
+              >
+                프로젝트 등록
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
 
       <div
         className="grid md:grid-cols-1 grid-cols-1 mt-5 animate-topIn ani-delay-0.3 opacity-0"
         key={curFilter}
       >
-        <div className="col-span-full">
-          {login && (
-            <div className="col-span- flex items-center">
-              <Button onClick={() => nav("write")}>+ Add</Button>
-            </div>
-          )}
-        </div>
-
         {!isLoading && isError && "error"}
         {!isLoading ? (
           <>

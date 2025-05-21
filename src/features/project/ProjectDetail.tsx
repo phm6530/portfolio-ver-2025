@@ -16,7 +16,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ChevronLeft, HomeIcon } from "lucide-react";
+import { ChevronLeft, HomeIcon, Link2 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import useStore from "@/store/zustandStore";
@@ -26,6 +26,7 @@ import LoadingSpiner from "@/components/ui/loading-spiner";
 import ProjectImgWrapper from "./components/projectimg-wrapper";
 import React from "react";
 import StackIconMapper from "@/components/shared/stack-iconmapper";
+import { Button } from "@/components/ui/button";
 export type DetailProps = {
   company: string;
   description: string;
@@ -139,6 +140,7 @@ const ProjectDetail = () => {
     project_contents,
     project_meta_stack,
     project_surmmry,
+    project_url,
   } = data[0] as DetailProps;
 
   const groupingStack = (stackArr: DetailProps["project_meta_stack"]) => {
@@ -199,6 +201,17 @@ const ProjectDetail = () => {
               <p className="text-xs md:text-base leading-relaxed leading-6 text-zinc-300  break-keep max-w-[600px]  ">
                 {description}
               </p>
+              <div>
+                <button
+                  className="text-xs items-center gap-3 p-3 px-5 rounded-full bg-transparent! article-hover flex"
+                  onClick={() => window.open(project_url, "_blank")}
+                >
+                  웹사이트 바로가기{" "}
+                  <span className="rotate-135">
+                    <Link2 size={16} />
+                  </span>{" "}
+                </button>
+              </div>
 
               {/* 작업기간 */}
               <div className="flex flex-col gap-4 border p-5 border-border rounded-lg">
@@ -285,6 +298,11 @@ const ProjectDetail = () => {
         </div>
 
         <div className=" w-full animate-topIn ani-delay-0.4 opacity-0">
+          <h3 className="text-lg tracking-wider flex gap-3 items-center text-white mb-3">
+            <span className="text-sm md:text-sm bg-gradient-to-r tracking-tighter  font-SUIT-Regular from-white to-indigo-200 bg-clip-text text-transparent">
+              미리보기 *
+            </span>
+          </h3>
           <ProjectImgWrapper url={thumbnail} alt={title} />
         </div>
       </section>

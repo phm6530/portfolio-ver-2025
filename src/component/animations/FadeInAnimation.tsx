@@ -26,7 +26,10 @@ const FadeInAnimation: React.FC<{ children: ReactNode }> = ({ children }) => {
   }, []);
 
   return (
-    <div ref={ref} className={cn("opacity-0", visible && "animate-bottom-in")}>
+    <div
+      ref={ref}
+      className={cn("opacity-0 w-full", visible && "animate-bottom-in")}
+    >
       {children}
     </div>
   );

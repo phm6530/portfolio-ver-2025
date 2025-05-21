@@ -119,13 +119,13 @@ const BlogList = (): JSX.Element => {
           </div>
         </AnimatePresence>
       ) : (
-        <div>
+        <>
           {search && search.trim() === "" ? (
             <NonData message={"등록된 데이터가 없습니다"} />
           ) : (
             <NonData message={`작성된 포스팅이 없습니다`} />
           )}
-        </div>
+        </>
       )}
       {isFetching && (
         <div className="relative min-h-[200px] w-full">

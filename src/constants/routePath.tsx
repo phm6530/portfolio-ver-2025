@@ -1,7 +1,5 @@
 import NotfoundPage from "@/component/error/NotfoundPage";
-import withAuth from "@/hoc/WithAuth";
 import About from "@/page/about/About";
-import AdminPage from "@/page/Admin/Admin";
 import Blog from "@/page/blog/Blog";
 import Board from "@/page/Board/Board";
 import Home from "@/page/Home";
@@ -18,8 +16,6 @@ interface NavPage {
   AuthPage: boolean;
 }
 
-const AuthCheck = withAuth(AdminPage, "/");
-
 export const ROUTE_PATH: RoutePath[] = [
   { path: "/", Component: <Home /> },
   { path: "/about", Component: <About /> },
@@ -28,7 +24,7 @@ export const ROUTE_PATH: RoutePath[] = [
   { path: "/board", Component: <Board /> },
   // { path: "/contact", Component: <Contact /> },
   { path: "/blog/*", Component: <Blog /> },
-  { path: "/Admin", Component: <AuthCheck /> },
+  // { path: "/Admin", Component: <AuthCheck /> },
   { path: "/*", Component: <NotfoundPage redirectPath={"/"} /> },
 ];
 
@@ -40,5 +36,5 @@ export const NAVPAGE_OBJECT: NavPage[] = [
   { path: "/blog", pathName: "BLOG", AuthPage: false },
   { path: "/board", pathName: "BOARD", AuthPage: false },
   // { path: "/contact", pathName: "Contact", AuthPage: false },
-  { path: "/Admin", pathName: "Admin", AuthPage: true },
+  // { path: "/Admin", pathName: "Admin", AuthPage: true },
 ];
