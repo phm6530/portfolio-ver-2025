@@ -204,7 +204,7 @@ const ProjectDetail = () => {
 
             <div className="flex flex-col gap-8 ">
               <h1 className="border-border relative  inline-flex gap-4 items-center hover:text-indigo-100 text-3xl md:text-4xl leading-tight text-white  transition-all cursor-pointer tracking-tight">
-                <Boxes size={30} className="text-teal-300 " />
+                <DevSvg className="size-10" />
                 {title}
               </h1>
               {/* 프로젝트 설명 */}

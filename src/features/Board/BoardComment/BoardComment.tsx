@@ -85,7 +85,7 @@ const BoardComment = forwardRef<HTMLDivElement, BoardCommentProps>(
         <div
           ref={ref}
           className={cn(
-            "  relative justify-start cursor-pointer w-full",
+            "  relative justify-start  w-full",
             author.role === userRole.Admin ? "" : "",
             deps > 1 && "mt-2"
           )}
@@ -153,7 +153,10 @@ const BoardComment = forwardRef<HTMLDivElement, BoardCommentProps>(
                 {comment}
               </div>
             </div>
-            <div className="text-xs mt-3" onClick={() => toggleFormView(id)}>
+            <div
+              className="text-xs mt-3 cursor-pointer hover:text-indigo-200"
+              onClick={() => toggleFormView(id)}
+            >
               댓글쓰기
               {deps === 1 && children.length > 0 && (
                 <span className="text-indigo-300">( {children.length} )</span>
