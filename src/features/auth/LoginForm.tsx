@@ -1,21 +1,22 @@
 import { useForm } from "react-hook-form";
 
 // 인증로직
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "./schema/login-schema";
-import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
-import InputField from "@/components/shared/inputField";
-import PasswordInputField from "@/components/shared/inputPasswordField";
-import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+
 import { Info } from "lucide-react";
 import { AlertDescription } from "@/components/ui/alert";
 import useStore from "@/store/zustandStore";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { z } from "zod";
-import SupabasePool from "@/lib/supabaseClient";
+import SupabasePool from "../../lib/supabaseClient";
+import PasswordInputField from "../../components/shared/inputPasswordField";
+import InputField from "../../components/shared/inputField";
+import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
+import { CardDescription, CardTitle } from "@/components/ui/card";
 
 export interface LoginSchemaProps {
   message?: string;
@@ -98,13 +99,13 @@ export default function LoginForm() {
             name="user_id"
             placeholder="Admin Id"
             label="User"
-            className="py-3 px-3!  px-0 border-0 border-b  focus-visible:ring-0 transition-all"
+            className="py-3 px-3!  border-0 border-b  focus-visible:ring-0 transition-all"
           />
 
           <PasswordInputField
             name="user_password"
             placeholder="password"
-            className="py-3  px-3!  px-0 border-0 border-b   focus-visible:ring-0 transition-all"
+            className="py-3  px-3!  border-0 border-b   focus-visible:ring-0 transition-all"
           />
 
           <Button disabled={lock} className="w-full  p-6">

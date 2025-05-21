@@ -1,7 +1,7 @@
 import StackBadge from "@/components/ui/stack-badge";
 import SupabasePool from "@/lib/supabaseClient";
 import { cn } from "@/lib/utils";
-import { ProjectPostProps } from "@/type/ProjectTypes";
+import { type ProjectPostProps } from "@/type/ProjectTypes";
 import { useQuery } from "@tanstack/react-query";
 import { Box } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -34,8 +34,8 @@ export default function RecentProject() {
     <div className="md:flex-row flex-col flex  gap-8">
       {isLoading ? (
         <>
-          {[1, 2].map((_) => (
-            <ProjectItemSkeleton />
+          {[1, 2].map((_, idx) => (
+            <ProjectItemSkeleton key={`skeleton:${idx}`} />
           ))}
         </>
       ) : (
@@ -51,11 +51,15 @@ export default function RecentProject() {
               <h4 className="text-foreground flex text-lg items-center gap-3 group-hover:underline font-medium my-3 group-hover:text-indigo-200 transition-colors">
                 <Box />
                 {project.title}
-              </h4>{" "}
+              </h4>
               <div className="flex items-center gap-2 mb-3">
-                {project.project_meta_stack.map((e) => {
+                {project.project_meta_stack.map((e, idx) => {
                   if (e.project_stack.type === "framework") {
-                    return <StackBadge>{e.project_stack.stack}</StackBadge>;
+                    return (
+                      <StackBadge key={`stack:${idx}`}>
+                        {e.project_stack.stack}
+                      </StackBadge>
+                    );
                   }
                 })}
               </div>

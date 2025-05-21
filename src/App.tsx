@@ -3,7 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import AppRoute from "./Route/AppRoute";
 
 // layOut
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 import { queryClient } from "./react-query/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";

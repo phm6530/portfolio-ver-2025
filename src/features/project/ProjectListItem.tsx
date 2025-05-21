@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ProjectPostProps } from "@/type/ProjectTypes";
+import { type ProjectPostProps } from "@/type/ProjectTypes";
 import { DateUtils } from "@/utils/dateUtil";
 
 import { useNavigate } from "react-router-dom";

@@ -17,25 +17,17 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import {
-  Box,
-  Boxes,
-  BoxSelect,
-  ChevronLeft,
-  HomeIcon,
-  Link2,
-} from "lucide-react";
+import { ChevronLeft, HomeIcon, Link2 } from "lucide-react";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import useStore from "@/store/zustandStore";
-import { STACK_TYPES } from "@/type/ProjectTypes";
+import { type STACK_TYPES } from "@/type/ProjectTypes";
 import { DateUtils } from "@/utils/dateUtil";
 import LoadingSpiner from "@/components/ui/loading-spiner";
 import ProjectImgWrapper from "./components/projectimg-wrapper";
 import React from "react";
 import StackIconMapper from "@/components/shared/stack-iconmapper";
-import { Button } from "@/components/ui/button";
 export type DetailProps = {
   company: string;
   description: string;

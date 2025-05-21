@@ -7,7 +7,7 @@ import { userRole } from "@/type/CommonTypes";
 import useStore from "@/store/zustandStore";
 import { cn } from "@/lib/utils";
 import { BadgeCheck, CornerDownRight, Delete } from "lucide-react";
-import { CommentItemModel } from "../BoardCommentList/BoardCommentList";
+import { type CommentItemModel } from "../BoardCommentList/BoardCommentList";
 import BoardCommentForm from "../BoardCommentForm/BoardCommentForm";
 import { DateUtils } from "@/utils/dateUtil";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

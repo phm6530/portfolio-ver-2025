@@ -4,7 +4,6 @@ import * as React from "react";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";
-import { DateRange } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -14,7 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useFormContext, Controller } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { z } from "zod";
 import { projectSchema } from "../schema/project-schema";
 import { FormField, FormItem, FormMessage } from "@/components/ui/form";

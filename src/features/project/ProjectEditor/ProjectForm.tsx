@@ -32,7 +32,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import ProjectThumbnailUploader from "./ProjectThumbnailUploader";
 import { DateUtils } from "@/utils/dateUtil";
 import { requestHandler } from "@/utils/apiUtils";
-import { DetailProps } from "../ProjectDetail";
+import { type DetailProps } from "../ProjectDetail";
 import TextareaFormField from "@/components/shared/textareaField";
 import useUploader from "@/hooks/useUploader";
 import imgUrlMapper from "@/utils/imgUrl-mapping";

@@ -7,7 +7,7 @@ import { useCallback, useEffect } from "react";
 import useStore from "@/store/zustandStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { CommentFormSchema, dynamicSchema } from "../schema";
+import { type CommentFormSchema, dynamicSchema } from "../schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { requestHandler } from "@/utils/apiUtils";
@@ -16,7 +16,6 @@ import useThrottling from "@/hooks/useThrottling";
 import { cn } from "@/lib/utils";
 import { PenBoxIcon } from "lucide-react";
 import ErrorBubble from "@/components/error/ErrorBubble";
-import { queryClient } from "@/react-query/queryClient";
 
 type CommentFormValues = z.infer<ReturnType<typeof dynamicSchema>>;
 

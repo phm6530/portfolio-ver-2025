@@ -4,7 +4,7 @@ import SupabasePool from "@/lib/supabaseClient";
 import ProjectListItem from "./ProjectListItem";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { ProjectPostProps } from "@/type/ProjectTypes";
+import { type ProjectPostProps } from "@/type/ProjectTypes";
 import useStore from "@/store/zustandStore";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";

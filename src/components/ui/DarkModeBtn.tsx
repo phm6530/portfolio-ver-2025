@@ -1,7 +1,8 @@
-import useStore from "@/store/zustandStore";
 import { useEffect } from "react";
-import { cn } from "@/lib/utils";
+
 import { Moon, Sun } from "lucide-react";
+import { cn } from "../../lib/utils";
+import useStore from "../../store/zustandStore";
 
 export default function DarkModeBtn({ scrollOver }: { scrollOver: boolean }) {
   const darkMode = useStore((state) => state.darkMode);
