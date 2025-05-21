@@ -101,7 +101,7 @@ const BoardComment = forwardRef<HTMLDivElement, BoardCommentProps>(
                 <img
                   src={
                     author.role === userRole.SUPER
-                      ? "/img/me.jpg"
+                      ? "/img/my-dog.webp"
                       : `/img/board/${author.profile_img}`
                   }
                   alt="user_icon"
