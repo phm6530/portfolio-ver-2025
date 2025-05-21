@@ -1,6 +1,6 @@
 import DashBoard from "@/component/ui/DashBoard/DashBoard";
 import BlogRoutes from "@/Route/BlogRoutes";
-import Motion from "@/component/animations/Motion";
+import Motion from "@/components/animations/Motion";
 
 import { Link } from "lucide-react";
 import { Button } from "@/components/ui/button";

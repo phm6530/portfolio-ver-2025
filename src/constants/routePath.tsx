@@ -1,4 +1,4 @@
-import NotfoundPage from "@/component/error/NotfoundPage";
+import NotfoundPage from "@/components/error/NotfoundPage";
 import About from "@/page/about/About";
 import Blog from "@/page/blog/Blog";
 import Board from "@/page/Board/Board";

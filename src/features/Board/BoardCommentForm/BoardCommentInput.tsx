@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import ErrorBubble from "@/component/error/ErrorBubble";
+import ErrorBubble from "@/components/error/ErrorBubble";
 import { FieldError } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";

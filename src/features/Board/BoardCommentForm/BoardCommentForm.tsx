@@ -15,7 +15,7 @@ import { axiosApi } from "@/config/axios.config";
 import useThrottling from "@/hooks/useThrottling";
 import { cn } from "@/lib/utils";
 import { PenBoxIcon } from "lucide-react";
-import ErrorBubble from "@/component/error/ErrorBubble";
+import ErrorBubble from "@/components/error/ErrorBubble";
 import { queryClient } from "@/react-query/queryClient";
 
 type CommentFormValues = z.infer<ReturnType<typeof dynamicSchema>>;

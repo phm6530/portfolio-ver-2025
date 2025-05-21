@@ -1,4 +1,4 @@
-import FadeInAnimation from "@/component/animations/FadeInAnimation";
+import FadeInAnimation from "@/components/animations/FadeInAnimation";
 
 const NonData = ({ message }: { message: React.ReactNode }) => {
   return (

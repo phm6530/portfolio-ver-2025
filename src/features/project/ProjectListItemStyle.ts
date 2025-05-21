@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import FadeInAnimation from "@/component/animations/FadeInAnimation";
+import FadeInAnimation from "@/components/animations/FadeInAnimation";
 import { device } from "@/config/DeviceConfig";
 
 export const ProjectFadeinStyle = styled(FadeInAnimation)`

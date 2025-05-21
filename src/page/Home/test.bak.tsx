@@ -1,5 +1,5 @@
 import BackgroundImgCover from "@/component/ui/BackgroundImgCover";
-import ShootingStar from "@/component/animations/ShootingStar";
+import ShootingStar from "@/components/animations/ShootingStar";
 import { Button } from "@/components/ui/button";
 import BlogSvg from "@/asset/blog.svg?react";
 import GitSvg from "@/asset/git.svg?react";
@@ -36,9 +36,9 @@ import { cn } from "@/lib/utils";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import StarAnimation from "@/component/animations/StarAnimation";
+import StarAnimation from "@/components/animations/StarAnimation";
 import StackEffect from "./components/stack-effect";
-import TextGradentAnimation from "@/component/animations/text-gradient";
+import TextGradentAnimation from "@/components/animations/text-gradient";
 import SidebarWrapper from "@/components/ui/sidebar-wrapper";
 import LinksWiget from "@/components/shared/link-wiget";
 

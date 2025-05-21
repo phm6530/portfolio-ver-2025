@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { requestHandler } from "@/utils/apiUtils";
 import SupabasePool from "@/lib/supabaseClient";
-import NotfoundPage from "@/component/error/NotfoundPage";
+import NotfoundPage from "@/components/error/NotfoundPage";
 import DevSvg from "@/asset/3d/code_2.svg?react";
 
 import {

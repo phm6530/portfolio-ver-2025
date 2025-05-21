@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import styled, { keyframes } from "styled-components";
 
 interface DashBoardProps {
   className?: string;

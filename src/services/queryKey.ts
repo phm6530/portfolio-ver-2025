@@ -1,18 +1,18 @@
 export const queryKey = {
-    board: 'board',
+  board: "board",
 
-    // another
-    timer: 'ScheduleTimer',
-    auth: 'auth',
+  // another
+  timer: "ScheduleTimer",
+  auth: "auth",
 
-    // project
-    projectAdd: 'projectAdd',
+  // project
+  projectAdd: "projectAdd",
 
-    // blog
-    blog: 'blog',
-    blogCategory: 'blogCategory',
-    blogImageUpload: 'blogImageUpload',
-    blogDetail: 'blogDetail',
-    blogNewPostLIst: 'blogNewPostLIst',
-    blogRelated: 'blogRelated',
+  // blog
+  blog: "blog",
+  blogCategory: "blogCategory",
+  blogImageUpload: "blogImageUpload",
+  blogDetail: "blogDetail",
+  blogNewPostLIst: "blogNewPostLIst",
+  blogRelated: "blogRelated",
 };

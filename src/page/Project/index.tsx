@@ -1,4 +1,4 @@
-import Motion from "@/component/animations/Motion";
+import Motion from "@/components/animations/Motion";
 import ProjectDetail from "@/features/project/ProjectDetail";
 import ProjectForm from "@/features/project/ProjectEditor/ProjectForm";
 import ProjectList from "@/features/project/ProjectList";

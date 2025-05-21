@@ -1,11 +1,11 @@
 import PopupBackDrop from "@/component/popup/PopupBackDrop";
-import { PopupStyle, PopupWrap } from "@/component/popup/PopupStyle";
 import Confirm from "@/component/ui/Confirm";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import useStore from "@/store/zustandStore";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import BackDrop from "@/components/ui/Backdrop";
 
 interface ConfirmProps {
   event: () => Promise<void>;
@@ -67,11 +67,11 @@ const usePopupHook = () => {
         {popupView && (
           <>
             {ReactDOM.createPortal(
-              <PopupBackDrop />,
+              <BackDrop />,
               document.getElementById("backdrop-root")!
             )}
             {ReactDOM.createPortal(
-              <div className="popup-layout  ">
+              <div className="popup-layout z-250">
                 <div
                   className={cn(
                     "p-5 bg-background shadow-2xl rounded-xl border border-border ",

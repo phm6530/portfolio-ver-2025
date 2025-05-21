@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { SpinnerLoading } from "@/component/loading/SpinnerLoading";
-import NotfoundPage from "@/component/error/NotfoundPage";
+import { SpinnerLoading } from "@/components/loading/SpinnerLoading";
+import NotfoundPage from "@/components/error/NotfoundPage";
 
 import { queryKey } from "@/services/queryKey";
 import { requestHandler } from "@/utils/apiUtils";

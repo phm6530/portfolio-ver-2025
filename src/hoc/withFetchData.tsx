@@ -1,5 +1,5 @@
-import NotfoundPage from "@/component/error/NotfoundPage";
-import { SpinnerLoading } from "@/component/loading/SpinnerLoading";
+import NotfoundPage from "@/components/error/NotfoundPage";
+import { SpinnerLoading } from "@/components/loading/SpinnerLoading";
 import { ReactQuery, ReactRouteDom } from "@/lib/lib";
 import { ComponentType } from "react";
 

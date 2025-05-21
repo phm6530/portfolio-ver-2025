@@ -3,7 +3,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import BlogPage from "./pages/blog-page";
 import BlogDetail from "./pages/BlogDetail";
 import { AnimatePresence } from "framer-motion";
-import Motion from "@/component/animations/Motion";
+import Motion from "@/components/animations/Motion";
 import SidebarWrapper from "@/components/ui/sidebar-wrapper";
 
 const Blog = (): JSX.Element => {

@@ -1,7 +1,7 @@
 import { AnimatePresence } from "framer-motion";
 import { useLocation, Route, Routes } from "react-router-dom";
 
-import Motion from "@/component/animations/Motion";
+import Motion from "@/components/animations/Motion";
 
 import RootNav from "@/layout/RootNav";
 import { ROUTE_PATH } from "@/constants/routePath";

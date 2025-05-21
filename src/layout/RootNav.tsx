@@ -1,5 +1,5 @@
-import BackDrop from "@/component/popup/Backdrop";
-import TopButton from "@/component/ui/TopButton";
+import BackDrop from "@/components/ui/Backdrop";
+import TopButton from "@/components/shared/TopButton";
 import useScrollY from "@/hooks/useScrollY";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -49,7 +49,7 @@ export default function RootNav() {
           backdropFilter: "blur(20px)",
         }}
         className={cn(
-          "fixed  z-100 w-full border-b border-border/10 bg-background/0 ",
+          "fixed  z-200 w-full border-b border-border/10 bg-background/0 ",
           scrollOver && "border-border bg-background/70"
         )}
       >

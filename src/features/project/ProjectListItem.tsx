@@ -7,6 +7,7 @@ import DevSvg from "@/asset/project/code_2.svg?react";
 import DesignSvg from "@/asset/3d/brush.svg?react";
 import StackIconMapper from "@/components/shared/stack-iconmapper";
 import imgUrlMapper from "@/utils/imgUrl-mapping";
+import FadeInAnimation from "@/components/animations/FadeInAnimation";
 
 const ProjectListItem: React.FC<{
   curFilter: string;
@@ -28,7 +29,7 @@ const ProjectListItem: React.FC<{
   const stack = project_meta_stack.flatMap((e) => e.project_stack);
 
   return (
-    <>
+    <FadeInAnimation>
       <div
         onClick={() => nav(`${id}`)}
         className="group relative  py-5   grid md:grid-cols-[minmax(auto,250px)_1fr] overflow-hidden h-full hover:-translate-y-1 transition-all duration-300 article-hover border-x-0  "
@@ -97,7 +98,7 @@ const ProjectListItem: React.FC<{
           </p>
         </div>
       </div>
-    </>
+    </FadeInAnimation>
   );
 };
 

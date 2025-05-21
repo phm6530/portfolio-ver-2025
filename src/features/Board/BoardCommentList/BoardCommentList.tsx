@@ -1,7 +1,7 @@
 import React from "react";
 import BoardComment from "@/features/Board/BoardComment/BoardComment";
 
-import FadeInAnimation from "@/component/animations/FadeInAnimation";
+import FadeInAnimation from "@/components/animations/FadeInAnimation";
 import { format } from "date-fns";
 import { useQuery } from "@tanstack/react-query";
 import { requestHandler } from "@/utils/apiUtils";
