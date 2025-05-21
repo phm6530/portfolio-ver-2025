@@ -1,9 +1,3 @@
-import BackgroundImgCover from "@/components/ui/BackgroundImgCover";
-import ShootingStar from "@/components/animations/ShootingStar";
-import { Button } from "@/components/ui/button";
-import BlogSvg from "@/asset/blog.svg?react";
-import GitSvg from "@/asset/git.svg?react";
-import Kakao from "@/asset/kakao.svg?react";
 import Cubes from "@/asset/shape.svg?react";
 import {
   LucideCurlyBraces,
@@ -36,10 +30,6 @@ import { cn } from "@/lib/utils";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import StarAnimation from "@/components/animations/StarAnimation";
-import StackEffect from "./components/stack-effect";
-import TextGradentAnimation from "@/components/animations/text-gradient";
-import SidebarWrapper from "@/components/ui/sidebar-wrapper";
 import LinksWiget from "@/components/shared/link-wiget";
 
 const Home = () => {

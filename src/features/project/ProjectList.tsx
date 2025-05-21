@@ -9,6 +9,7 @@ import useStore from "@/store/zustandStore";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Box, Puzzle, UserCheck2 } from "lucide-react";
+import { toast } from "react-toastify";
 
 const FILTER_LABEL = [
   { label: "전체보기", keyword: "all" },
@@ -125,7 +126,7 @@ const ProjectList = () => {
           )}
         </div>
       </div>
-
+      <button onClick={() => toast.success("ee")}>프로젝트</button>
       <div
         className="grid md:grid-cols-1 grid-cols-1 mt-5 animate-topIn ani-delay-0.3 opacity-0"
         key={curFilter}

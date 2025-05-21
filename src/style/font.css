@@ -1,26 +1,26 @@
 @font-face {
   font-family: "Montserrat";
-  src: url("../../font/Montserrat-Regular.woff2") format("woff2");
+  src: url("../font/Montserrat-Regular.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "Montserrat";
-  src: url("../../font/Montserrat-Bold.woff2") format("woff2");
+  src: url("../font//Montserrat-Bold.woff2") format("woff2");
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Poppins";
-  src: url("../../font/Poppins-Regular.woff2") format("woff2");
+  src: url("../font//Poppins-Regular.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Poppins";
-  src: url("../../font/Poppins-Bold.woff2") format("woff2");
+  src: url("../font//Poppins-Bold.woff2") format("woff2");
   font-weight: bold;
   font-style: normal;
 }
@@ -79,6 +79,7 @@
 .nanumgothiccoding * {
   font-family: "Nanum Gothic Coding", monospace;
 }
+
 @font-face {
   font-family: "NEXON Lv2 Gothic";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff")

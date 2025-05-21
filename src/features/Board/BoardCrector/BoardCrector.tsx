@@ -1,9 +1,3 @@
-import {
-  Label,
-  RadioWrap,
-  RadioStyle,
-  CrectorDeScription,
-} from "@/features/Board/BoardCrector/BoardCrectorStyle";
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
 

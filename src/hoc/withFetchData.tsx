@@ -1,10 +1,9 @@
 import NotfoundPage from "@/components/error/NotfoundPage";
-import { SpinnerLoading } from "@/components/loading/SpinnerLoading";
-import { ReactQuery, ReactRouteDom } from "@/lib/lib";
-import { ComponentType } from "react";
+import LoadingSpiner from "@/components/ui/loading-spiner";
+import { useQuery } from "@tanstack/react-query";
 
-const { useParams } = ReactRouteDom;
-const { useQuery } = ReactQuery;
+import { ComponentType } from "react";
+import { useParams } from "react-router-dom";
 
 interface WithFetchDataReturnProps {
   redirectPath: string;
@@ -32,7 +31,7 @@ const withFetchData = <P extends object, R extends P>(
     if (data && !isLoading) {
       return <Component {...(data as R)} {...(props as P)} />;
     } else if (isLoading) {
-      return <SpinnerLoading />;
+      return <LoadingSpiner />;
     } else {
       return <NotfoundPage redirectPath={redirectPath} />;
     }

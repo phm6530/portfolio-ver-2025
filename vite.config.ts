@@ -36,6 +36,7 @@ export default defineConfig({
         comments: false, // 모든 주석을 제거
       },
     },
+    sourcemap: true,
   },
   server: {
     port: 3000,

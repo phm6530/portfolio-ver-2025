@@ -9,8 +9,8 @@ import { Form } from "@/components/ui/form";
 import InputField from "@/components/shared/inputField";
 import PasswordInputField from "@/components/shared/inputPasswordField";
 import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Info, LockKeyhole } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Info } from "lucide-react";
+import { AlertDescription } from "@/components/ui/alert";
 import useStore from "@/store/zustandStore";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
@@ -47,7 +47,7 @@ export default function LoginForm() {
 
     onSuccess: ({ token }) => {
       toast.success("로그인 되었습니다.");
-      login(token); // 상태 저장 등
+      login(token);
     },
 
     onError: () => {

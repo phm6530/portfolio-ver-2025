@@ -1,15 +1,10 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import NonData from "@/components/NonData";
-import Motion from "@/components/animations/Motion";
-import { SpinnerLoading } from "@/components/loading/SpinnerLoading";
 import { axiosApi } from "@/config/axios.config";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
-import { requestHandler } from "@/utils/apiUtils";
-import styled from "styled-components";
 import BlogContentsItem from "../BlogContents/BlogContentsItem";
-import SearchField from "@/components/shared/search-input-field";
 import LoadingSpiner from "@/components/ui/loading-spiner";
 
 export enum POST_STATUS {

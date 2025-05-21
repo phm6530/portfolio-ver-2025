@@ -33,7 +33,7 @@ const BlogContentsItem: React.FC<PostItemModel> = ({
     >
       {thumbnail_url && (
         <div
-          className="md:aspect-[16/6] aspect-[1/1] w-full  rounded-lg order-1 md:order-none"
+          className="md:aspect-[16/6] aspect-[1/1] w-full  rounded-lg order-1 md:order-none md:mb-4"
           style={{
             backgroundImage: `url(${thumbnail_url ? unsplashS3Mapping(thumbnail_url) : null})`,
             backgroundPosition: "center center",
@@ -42,7 +42,7 @@ const BlogContentsItem: React.FC<PostItemModel> = ({
         />
       )}
 
-      <div className="flex flex-col flex-1 gap-2 pt-0 md:pt-4 items-start">
+      <div className="flex flex-col flex-1 gap-2 pt-0  items-start">
         {/* Header */}
         <div className="flex gap-2 items-center mb-2">
           <StackBadge> {sub_group_name}</StackBadge>

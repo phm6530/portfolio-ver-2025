@@ -1,6 +1,4 @@
-import { ReactQuery } from "@/lib/lib";
-import { MutationCache } from "@tanstack/react-query";
-const { QueryClient, QueryCache } = ReactQuery;
+import { MutationCache, QueryCache, QueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
 // 에러메세지 커스텀

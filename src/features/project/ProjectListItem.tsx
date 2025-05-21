@@ -3,8 +3,6 @@ import { ProjectPostProps } from "@/type/ProjectTypes";
 import { DateUtils } from "@/utils/dateUtil";
 
 import { useNavigate } from "react-router-dom";
-import DevSvg from "@/asset/project/code_2.svg?react";
-import DesignSvg from "@/asset/3d/brush.svg?react";
 import StackIconMapper from "@/components/shared/stack-iconmapper";
 import imgUrlMapper from "@/utils/imgUrl-mapping";
 import FadeInAnimation from "@/components/animations/FadeInAnimation";

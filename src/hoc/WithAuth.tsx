@@ -18,8 +18,8 @@ const withAuth = <P extends object>(
     useEffect(() => {
       const checkAuth = async () => {
         const { data } = await SupabasePool.getInstance().auth.getSession();
-
-        if (!data.session) {
+        console.log(data.session);
+        if (data.session === null) {
           logout();
           toast.error("권한이 없습니다.!!!");
           navigate(redirectPath);
@@ -29,7 +29,7 @@ const withAuth = <P extends object>(
       checkAuth();
     }, [logout, navigate, redirectPath, isAuth]);
 
-    return <Component {...props} />;
+    return isAuth ? <Component {...props} /> : null;
   };
 
   return WrappedComponent;
