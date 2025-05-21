@@ -16,7 +16,33 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+<<<<<<< HEAD
 import { ChevronLeft, HomeIcon, Link2 } from "lucide-react";
+=======
+import {
+  Calendar,
+  Calendar1,
+  ChevronLeft,
+  Code,
+  Code2,
+  CodeSquare,
+  CodeXml,
+  Database,
+  ExternalLink,
+  FileCode2,
+  FrameIcon,
+  Github,
+  Home,
+  HomeIcon,
+  Library,
+  Link,
+  Link2,
+  Link2Icon,
+  List,
+  MessageCircle,
+  Users,
+} from "lucide-react";
+>>>>>>> ea3e4a742cf2bb132677f4eb571a0dcca77d3d8b
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import useStore from "@/store/zustandStore";
@@ -84,6 +110,8 @@ const ProjectDetail = () => {
     },
     staleTime: Infinity,
   });
+
+  console.log(data);
 
   // const { handler } = useUploader();
   const { editor } = useSimpleEditor({
@@ -296,7 +324,12 @@ const ProjectDetail = () => {
             </div>
           </div>
         </div>
-
+        <Button
+          className="p-6 text-xs"
+          onClick={() => window.open(project_url, "_blank")}
+        >
+          프로젝트 보러가기 <Link2 className="rotate-135" />
+        </Button>
         <div className=" w-full animate-topIn ani-delay-0.4 opacity-0">
           <h3 className="text-lg tracking-wider flex gap-3 items-center text-white mb-3">
             <span className="text-sm md:text-sm bg-gradient-to-r tracking-tighter  font-SUIT-Regular from-white to-indigo-200 bg-clip-text text-transparent">
