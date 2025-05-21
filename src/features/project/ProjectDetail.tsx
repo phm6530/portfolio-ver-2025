@@ -17,7 +17,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import { ChevronLeft, HomeIcon, Link2 } from "lucide-react";
+import {
+  Box,
+  Boxes,
+  BoxSelect,
+  ChevronLeft,
+  HomeIcon,
+  Link2,
+} from "lucide-react";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -196,13 +203,12 @@ const ProjectDetail = () => {
             {/* <img src="/public/img/gear.png" className="w-22" /> */}
 
             <div className="flex flex-col gap-8 ">
-              <h1 className="border-border relative inline-flex gap-4 items-end hover:text-indigo-100 text-3xl md:text-4xl leading-tight text-white  transition-all cursor-pointer tracking-tight">
-                <DevSvg className="size-10" />
+              <h1 className="border-border relative  inline-flex gap-4 items-center hover:text-indigo-100 text-3xl md:text-4xl leading-tight text-white  transition-all cursor-pointer tracking-tight">
+                <Boxes size={30} className="text-teal-300 " />
                 {title}
-                {/* <ExternalLink className="opacity-50" size={20} /> */}
               </h1>
               {/* 프로젝트 설명 */}
-              <p className="text-xs md:text-base leading-relaxed leading-6 text-zinc-300  break-keep max-w-[600px]  ">
+              <p className="text-xs md:text-sm leading-relaxed  text-secondary-foreground break-keep max-w-[600px]  ">
                 {description}
               </p>
               <div>
@@ -218,7 +224,7 @@ const ProjectDetail = () => {
               </div>
 
               {/* 작업기간 */}
-              <div className="flex flex-col gap-4 border p-5 border-border rounded-lg">
+              <div className="flex flex-col gap-4 border p-5 border-border rounded-lg mt-10">
                 <article className="space-y-2 md:space-y-3 flex items-center">
                   {/* <h3 className="text-sm  text-white">기간</h3> */}
                   <div className="text-lg text-zinc-300 flex items-center gap-3">
@@ -300,12 +306,7 @@ const ProjectDetail = () => {
             </div>
           </div>
         </div>
-        <Button
-          className="p-6 text-xs"
-          onClick={() => window.open(project_url, "_blank")}
-        >
-          프로젝트 보러가기 <Link2 className="rotate-135" />
-        </Button>
+
         <div className=" w-full animate-topIn ani-delay-0.4 opacity-0">
           <h3 className="text-lg tracking-wider flex gap-3 items-center text-white mb-3">
             <span className="text-sm md:text-sm bg-gradient-to-r tracking-tighter  font-SUIT-Regular from-white to-indigo-200 bg-clip-text text-transparent">
@@ -316,7 +317,7 @@ const ProjectDetail = () => {
         </div>
       </section>
 
-      <section className="flex-1 mt-6">
+      <section className="flex-1 mt-10">
         <h3 className="text-lg tracking-wider flex gap-3 items-center text-white ">
           <span className="text-sm md:text-sm bg-gradient-to-r tracking-tighter  font-SUIT-Regular from-white to-indigo-200 bg-clip-text text-transparent">
             주요기능 *
