@@ -16,33 +16,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-<<<<<<< HEAD
+
 import { ChevronLeft, HomeIcon, Link2 } from "lucide-react";
-=======
-import {
-  Calendar,
-  Calendar1,
-  ChevronLeft,
-  Code,
-  Code2,
-  CodeSquare,
-  CodeXml,
-  Database,
-  ExternalLink,
-  FileCode2,
-  FrameIcon,
-  Github,
-  Home,
-  HomeIcon,
-  Library,
-  Link,
-  Link2,
-  Link2Icon,
-  List,
-  MessageCircle,
-  Users,
-} from "lucide-react";
->>>>>>> ea3e4a742cf2bb132677f4eb571a0dcca77d3d8b
+
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import useStore from "@/store/zustandStore";
