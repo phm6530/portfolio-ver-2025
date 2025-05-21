@@ -1,3 +1,4 @@
+import NotfoundPage from "@/component/error/NotfoundPage";
 import withAuth from "@/hoc/WithAuth";
 import About from "@/page/about/About";
 import AdminPage from "@/page/Admin/Admin";
@@ -28,7 +29,7 @@ export const ROUTE_PATH: RoutePath[] = [
   // { path: "/contact", Component: <Contact /> },
   { path: "/blog/*", Component: <Blog /> },
   { path: "/Admin", Component: <AuthCheck /> },
-  //   { path: "/*", Component: <NotfoundPage redirectPath={"/"} /> },
+  { path: "/*", Component: <NotfoundPage redirectPath={"/"} /> },
 ];
 
 export const NAVPAGE_OBJECT: NavPage[] = [

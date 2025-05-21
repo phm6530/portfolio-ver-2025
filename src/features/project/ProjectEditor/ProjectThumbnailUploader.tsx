@@ -1,39 +1,13 @@
-import styled from "styled-components";
-import InputErrorMessage from "@/component/error/InputErrorMessage";
 import { useFormContext } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
-import { requestHandler } from "@/utils/apiUtils";
-import { axiosApi } from "@/config/axios.config";
 import { cn } from "@/lib/utils";
 import { useRef } from "react";
 import { z } from "zod";
 import { projectSchema } from "../schema/project-schema";
 import { IMG_URL } from "@/constants/apiUrl";
 import { Button } from "@/components/ui/button";
-import { Delete, ReceiptEuroIcon, Recycle, Upload } from "lucide-react";
+import { Delete } from "lucide-react";
 import { FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import useUploader from "@/hooks/useUploader";
-
-const UPloadFileName = styled.div`
-  font-size: 12px;
-  flex-grow: 1;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  word-break: break-all;
-  overflow: hidden;
-
-  margin-left: 1rem;
-`;
-
-const WrapperFlex = styled.div`
-  display: flex;
-  align-items: center;
-`;
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1.5rem;
-`;
 
 interface ProjectThumbnailUploaderProps {
   value: string;
