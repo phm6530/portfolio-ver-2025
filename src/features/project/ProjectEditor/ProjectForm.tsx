@@ -96,7 +96,7 @@ export default function ProjectForm() {
   });
 
   // 수정 or insert
-  const { mutate } = useMutation({
+  const { mutate, isPending, isSuccess } = useMutation({
     mutationFn: async (body: z.infer<typeof projectSchema>) => {
       try {
         const pool = SupabasePool.getInstance();
@@ -238,7 +238,9 @@ export default function ProjectForm() {
           }
         }
       } catch (err) {
-        throw new Error("등록 실패 하였습니다.");
+        if (err instanceof Error) {
+          throw new Error(`등록 실패 하였습니다  message: ${err.message}`);
+        }
       }
     },
     onSuccess: async () => {
@@ -279,9 +281,11 @@ export default function ProjectForm() {
   useEffect(() => {
     if (!!projectNum && data) {
       const result = data[0] as DetailProps;
-
+      console.log(data[0], projectNum);
       // Stack
-      const stacks = result.project_meta_stack.map((e) => e.project_stack.id);
+      const stacks = result.project_meta_stack.map((e) => {
+        return e.project_stack.id;
+      });
 
       // Summry
       const surmmrys = result.project_surmmry.map((e) => {
@@ -313,7 +317,7 @@ export default function ProjectForm() {
       // Imgkey
       setImgkey(result.img_key);
     }
-  }, [data]);
+  }, [data, projectNum, form]);
 
   //???
   const { editor } = useSimpleEditor({
@@ -433,8 +437,14 @@ export default function ProjectForm() {
             }}
           />
 
-          <Button className="w-full" type="submit">
-            Submit
+          <Button
+            className="w-full py-7"
+            type="submit"
+            disabled={isPending || isSuccess}
+          >
+            {isPending && "작성중.."}
+            {isSuccess && "반영 완료"}
+            {!(isPending || isSuccess) && "프로젝트 등록"}
           </Button>
         </form>
       </Form>

@@ -106,9 +106,9 @@ export default function StackIconMapper({
   className,
 }: StackIconMapperProps) {
   // 입력 스택 이름을 정규화하여 매핑을 쉽게 함
-  let normalizedName = stackName.toLowerCase();
+  const normalizedName = stackName.toLowerCase();
   let noSpaces = normalizedName.replace(/\s+/g, "");
-  console.log(noSpaces);
+
   if (noSpaces === "styled-components" || noSpaces === "styledcomponents") {
     noSpaces = "styled-component";
   } else if (noSpaces === "react-query" || noSpaces === "tanstack@query") {

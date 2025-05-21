@@ -21,10 +21,16 @@ type DateFormat =
   | string;
 
 export class DateUtils {
-  private static today = dayjs();
+  private static today = dayjs().tz("Asia/Seoul");
 
-  private static parseKoreanDate(date: string | Date, locale = "en") {
+  // 시간 + 날짜
+  static parseKoreanDate(date: string | Date, locale = "en") {
     return dayjs(date).tz("Asia/Seoul").locale(locale);
+  }
+
+  // 날짜만 비교
+  static parseKoreanDateDay(date: string | Date) {
+    return this.parseKoreanDate(date).startOf("day");
   }
 
   static dateFormatKR(date: string | Date, format: DateFormat) {
@@ -32,7 +38,7 @@ export class DateUtils {
   }
 
   static isAfter(date: string): boolean {
-    return this.today.isAfter(this.parseKoreanDate(date), "day");
+    return this.today.isAfter(this.parseKoreanDateDay(date), "day");
   }
 
   static formatStyledShort(date: string | Date) {
@@ -40,20 +46,20 @@ export class DateUtils {
   }
 
   static isBefore(date: string) {
-    return this.today.isBefore(this.parseKoreanDate(date), "day");
+    return this.today.isBefore(this.parseKoreanDateDay(date), "day");
   }
 
   static isSame(date: string) {
-    return this.today.isSame(this.parseKoreanDate(date), "day");
+    return this.today.isSame(this.parseKoreanDateDay(date), "day");
   }
 
   static isNew(date: string | Date) {
-    const diffDays = this.today.diff(this.parseKoreanDate(date), "day");
+    const diffDays = this.today.diff(this.parseKoreanDateDay(date), "day");
     return diffDays >= 0 && diffDays < 7;
   }
 
   static isToday(date: string | Date) {
-    const diffDays = this.today.diff(this.parseKoreanDate(date), "day");
+    const diffDays = this.today.diff(this.parseKoreanDateDay(date), "day");
     return diffDays === 0;
   }
 

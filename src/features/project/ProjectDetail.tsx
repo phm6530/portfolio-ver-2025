@@ -1,4 +1,3 @@
-import { IMG_URL } from "@/constants/apiUrl";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { requestHandler } from "@/utils/apiUtils";
 import SupabasePool from "@/lib/supabaseClient";
@@ -17,28 +16,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-  Calendar,
-  Calendar1,
-  ChevronLeft,
-  Code,
-  Code2,
-  CodeSquare,
-  CodeXml,
-  Database,
-  ExternalLink,
-  FileCode2,
-  FrameIcon,
-  Github,
-  Home,
-  HomeIcon,
-  Library,
-  Link,
-  Link2Icon,
-  List,
-  MessageCircle,
-  Users,
-} from "lucide-react";
+import { ChevronLeft, HomeIcon } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import useStore from "@/store/zustandStore";
@@ -46,18 +24,7 @@ import { STACK_TYPES } from "@/type/ProjectTypes";
 import { DateUtils } from "@/utils/dateUtil";
 import LoadingSpiner from "@/components/ui/loading-spiner";
 import ProjectImgWrapper from "./components/projectimg-wrapper";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import BlogSvg from "@/asset/blog.svg?react";
-import GitSvg from "@/asset/git.svg?react";
-import Kakao from "@/asset/kakao.svg?react";
 import React from "react";
-import { Button } from "@/components/ui/button";
-import useUploader from "@/hooks/useUploader";
 import StackIconMapper from "@/components/shared/stack-iconmapper";
 export type DetailProps = {
   company: string;
@@ -98,7 +65,7 @@ const ProjectDetail = () => {
             *,
             project_contents(*),
             project_meta_stack(
-              project_stack(stack, type)
+              project_stack(id,stack, type)
             ),
             project_surmmry(title,contents)
           `
@@ -125,19 +92,17 @@ const ProjectDetail = () => {
 
   const { mutate } = useMutation({
     mutationFn: async (id: number) => {
-      try {
-        const { data } = await SupabasePool.getInstance().auth.getSession();
-        if (!data.session) {
-          throw new Error("권한이 없습니다.");
-        }
+      const { data } = await SupabasePool.getInstance().auth.getSession();
+      if (!data.session) {
+        throw new Error("권한이 없습니다.");
+      }
 
-        const pool = SupabasePool.getInstance();
-        const { error } = await pool.from("project_meta").delete().eq("id", id);
+      const pool = SupabasePool.getInstance();
+      const { error } = await pool.from("project_meta").delete().eq("id", id);
 
-        if (error) {
-          throw new Error(error.message);
-        }
-      } catch (err) {}
+      if (error) {
+        throw new Error(error.message);
+      }
     },
     onSuccess: async () => {
       toast.success("삭제되었습니다.");
