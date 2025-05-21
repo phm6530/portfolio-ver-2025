@@ -9,7 +9,7 @@ import { Form } from "@/components/ui/form";
 import InputField from "@/components/shared/inputField";
 import PasswordInputField from "@/components/shared/inputPasswordField";
 import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { LockKeyhole } from "lucide-react";
+import { Info, LockKeyhole } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import useStore from "@/store/zustandStore";
 import { useMutation } from "@tanstack/react-query";
@@ -79,17 +79,14 @@ export default function LoginForm() {
   return (
     <>
       <div className="mb-4 flex flex-col gap-2  py-5">
-        <CardTitle className="text-4xl text-center">Sign In</CardTitle>
-
-        <Alert className="border-indigo-300/30 mt-3 ">
-          <LockKeyhole className="h-4 w-4 " />
-          <AlertTitle className="text-indigo-300 font-semibold">
-            Admin
-          </AlertTitle>
-          <AlertDescription className="break-keep">
-            해당 PORTFOLIO는 권한이 인가 된 사용자만 사용가능합니다.
+        <CardTitle className="text-3xl text-center">PORTFOLIO</CardTitle>
+        <CardDescription className="text-center">Admin</CardDescription>
+        <div className="border-y py-4 border-border mt-4 ">
+          <AlertDescription className="break-keep text-xs text-indigo-200 flex items-center gap-2 ">
+            <Info className="h-4 w-4 " /> 해당 PORTFOLIO는 권한이 인가 된
+            사용자만 사용가능합니다.
           </AlertDescription>
-        </Alert>
+        </div>
       </div>
       <Form {...form}>
         <form
@@ -101,13 +98,13 @@ export default function LoginForm() {
             name="user_id"
             placeholder="Admin Id"
             label="User"
-            className="py-3  px-0 border-0 border-b  focus-visible:ring-0 transition-all"
+            className="py-3 px-3!  px-0 border-0 border-b  focus-visible:ring-0 transition-all"
           />
 
           <PasswordInputField
             name="user_password"
             placeholder="password"
-            className="py-3  px-0 border-0 border-b   focus-visible:ring-0 transition-all"
+            className="py-3  px-3!  px-0 border-0 border-b   focus-visible:ring-0 transition-all"
           />
 
           <Button disabled={lock} className="w-full  p-6">

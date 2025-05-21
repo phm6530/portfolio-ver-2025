@@ -3,7 +3,7 @@ import TopButton from "@/components/shared/TopButton";
 import useScrollY from "@/hooks/useScrollY";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import DrawerMenu from "@/component/ui/DrawerMenu";
+import DrawerMenu from "@/components/ui/DrawerMenu";
 import RootNavList from "./RootNavList";
 import { cn } from "@/lib/utils";
 

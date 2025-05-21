@@ -1,4 +1,4 @@
-import DarkModeBtn from "@/component/ui/DarkModeBtn";
+import DarkModeBtn from "@/components/ui/DarkModeBtn";
 import { NAVPAGE_OBJECT } from "@/constants/routePath";
 
 import LoginForm from "@/features/auth/LoginForm";
@@ -34,7 +34,7 @@ const RootNavList: React.FC<{ drawerView: boolean; scrollOver: boolean }> = ({
   return (
     <>
       {/* 팝업 커스텀 훅 */}
-      <PopupComponent type="modal" Component={LoginForm} />
+      <PopupComponent Component={LoginForm} />
 
       <nav
         className={cn(

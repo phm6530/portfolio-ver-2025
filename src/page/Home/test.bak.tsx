@@ -1,4 +1,4 @@
-import BackgroundImgCover from "@/component/ui/BackgroundImgCover";
+import BackgroundImgCover from "@/components/ui/BackgroundImgCover";
 import ShootingStar from "@/components/animations/ShootingStar";
 import { Button } from "@/components/ui/button";
 import BlogSvg from "@/asset/blog.svg?react";

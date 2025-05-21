@@ -1,4 +1,4 @@
-import PostNewIcon from "@/component/ui/PostNewIcon";
+import PostNewIcon from "@/components/ui/PostNewIcon";
 import { axiosApi } from "@/config/axios.config";
 import { requestHandler } from "@/utils/apiUtils";
 import { DateUtils } from "@/utils/dateUtil";

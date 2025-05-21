@@ -1,23 +1,9 @@
-import PopupBackDrop from "@/component/popup/PopupBackDrop";
-import Confirm from "@/component/ui/Confirm";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import useStore from "@/store/zustandStore";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import BackDrop from "@/components/ui/Backdrop";
-
-interface ConfirmProps {
-  event: () => Promise<void>;
-}
-
-interface ModalProps {
-  Component: React.ElementType;
-}
-
-type PopupComponentProps = {
-  type: "modal" | "confirm";
-} & (ModalProps | ConfirmProps);
 
 const usePopupHook = () => {
   const [popupView, popupSetView] = useState<boolean>(false);
@@ -46,22 +32,9 @@ const usePopupHook = () => {
     triggerAnimation();
   };
 
-  const PopupComponent: React.FC<PopupComponentProps> = ({
-    type,
-    ...props
-  }) => {
-    // 타입 좁히기
-    const isModal = (props: ModalProps | ConfirmProps): props is ModalProps =>
-      type === "modal";
-
-    const completeClose = () => {
-      if ("event" in props) {
-        props.event().then(() => {
-          triggerAnimation();
-        });
-      }
-    };
-
+  const PopupComponent: React.FC<{
+    Component: React.ComponentType;
+  }> = ({ Component }) => {
     return (
       <>
         {popupView && (
@@ -79,21 +52,14 @@ const usePopupHook = () => {
                     animationState && "animate-popup-out"
                   )}
                 >
-                  {/* 외부 컴포넌트 모달 or Confirm 타입좁히기*/}
-                  {isModal(props) ? (
-                    <>
-                      <props.Component />
-                    </>
-                  ) : (
-                    <Confirm message="제거" confirm={completeClose} />
-                  )}
-
+                  {/* 외부 컴포넌트 받아서 랜더 - login 만써서 나머진 타입들 다 삭제 시킴  */}
+                  <Component />
                   <Button
                     className="close mt-1 rounded-full"
                     variant={"ghost"}
                     onClick={delayClosePopup}
                   >
-                    Close
+                    닫기
                   </Button>
                 </div>
               </div>,

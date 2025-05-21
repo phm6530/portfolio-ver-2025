@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { IMG_URL } from "@/constants/apiUrl";
-import PostNewIcon from "@/component/ui/PostNewIcon";
+import PostNewIcon from "@/components/ui/PostNewIcon";
 import { DateUtils } from "@/utils/dateUtil";
 import { PostItemModel } from "../BlogList/BlogList";
 import { useCallback } from "react";

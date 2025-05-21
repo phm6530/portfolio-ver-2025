@@ -1,4 +1,4 @@
-import DashBoard from "@/component/ui/DashBoard/DashBoard";
+import DashBoard from "@/components/ui/subpage-header";
 import BlogRoutes from "@/Route/BlogRoutes";
 import Motion from "@/components/animations/Motion";
 
