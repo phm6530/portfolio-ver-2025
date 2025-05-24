@@ -5,11 +5,10 @@ import AppRoute from "./Route/AppRoute";
 // layOut
 import { ToastContainer } from "react-toastify";
 
-import { queryClient } from "./react-query/queryClient";
-import { QueryClientProvider } from "@tanstack/react-query";
 import useAddTransition from "./hooks/useAddTransition";
 import { useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
+import QueryProviderClient from "./react-query/query-provider";
 
 function App(): JSX.Element {
   // 초기 다크모드 트랜지션효과 방지
@@ -24,7 +23,7 @@ function App(): JSX.Element {
   return (
     <>
       {/* Query Provideer */}
-      <QueryClientProvider client={queryClient}>
+      <QueryProviderClient>
         <BrowserRouter>
           <AppRoute />
         </BrowserRouter>
@@ -42,7 +41,7 @@ function App(): JSX.Element {
           pauseOnHover
           theme="colored"
         />
-      </QueryClientProvider>
+      </QueryProviderClient>
     </>
   );
 }

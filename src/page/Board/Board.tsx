@@ -1,12 +1,7 @@
 import BoardCommentForm from "@/features/Board/BoardCommentForm/BoardCommentForm";
-import BoardCommentList from "@/features/Board/BoardCommentList/BoardCommentList";
-import { AnimatedBackgroundGlows } from "../about/tttt";
+import BoardCommentList from "@/features/Board/board-commentlist";
 import SidebarWrapper from "@/components/ui/sidebar-wrapper";
-import {
-  MessageSquareMore,
-  MessageSquareQuote,
-  NotebookPen,
-} from "lucide-react";
+import { MessageSquareQuote } from "lucide-react";
 export default function Board(): JSX.Element {
   return (
     <>

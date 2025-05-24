@@ -20,8 +20,8 @@ export default function TextGradientAnimation({
     });
 
     return () => {
-      if (textRef.current) {
-        gsap.killTweensOf(textRef.current);
+      if (textRef) {
+        gsap.killTweensOf(textRef);
       }
     };
   }, []);

@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import viteCompression from "vite-plugin-compression";
 import tailwindcss from "@tailwindcss/vite";
@@ -19,6 +19,15 @@ export default defineConfig({
       ext: ".gz",
     }),
   ],
+  test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: "./src/setupTests.js",
+    // you might want to disable the `css: true` line, since we don't have
+    // tests that rely on CSS -- and parsing CSS is slow.
+    // I'm leaving it in here becasue often people want to parse CSS in tests.
+    css: true,
+  },
   esbuild: {
     loader: "tsx", // TypeScript + JSX를 처리하도록 설정
     include: /src\/.*\.[tj]sx?$/, // .ts, .tsx, .js, .jsx 파일을 모두 포함

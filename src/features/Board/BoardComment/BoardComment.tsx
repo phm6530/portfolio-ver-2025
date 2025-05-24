@@ -7,7 +7,7 @@ import { userRole } from "@/type/CommonTypes";
 import useStore from "@/store/zustandStore";
 import { cn } from "@/lib/utils";
 import { BadgeCheck, CornerDownRight, Delete } from "lucide-react";
-import { type CommentItemModel } from "../BoardCommentList/BoardCommentList";
+import { type CommentItemModel } from "../board-commentlist";
 import BoardCommentForm from "../BoardCommentForm/BoardCommentForm";
 import { DateUtils } from "@/utils/dateUtil";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -50,7 +50,7 @@ const BoardComment = forwardRef<HTMLDivElement, BoardCommentProps>(
           const { data: session } = await pool.auth.getSession();
           if (!session) throw new Error("권한이 없습니다.");
 
-          const { count, error, data } = await pool
+          const { error, data } = await pool
             .from("guest_board")
             .delete()
             .eq("id", id)
@@ -169,9 +169,9 @@ const BoardComment = forwardRef<HTMLDivElement, BoardCommentProps>(
           {formState.errors.password && (
             <p>{formState.errors.password.message}</p>
           )}
-        </div>{" "}
+        </div>
         {children?.map((e) => (
-          <div className="ml-4 flex gap-3" key={`${e.parent_id}:${e.id}`}>
+          <div className="ml-5 flex gap-3 mt-3" key={`${e.parent_id}:${e.id}`}>
             <CornerDownRight className="opacity-40 mt-5" size={16} />
             <BoardComment item={e} deps={deps + 1} rootId={id} />
           </div>

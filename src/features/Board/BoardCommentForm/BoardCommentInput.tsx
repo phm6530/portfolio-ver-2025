@@ -17,7 +17,7 @@ interface BoardCommentInputProps {
 const BoardCommentInput = forwardRef<
   HTMLInputElement | HTMLDivElement,
   BoardCommentInputProps
->(({ label, error, type, isAuth, name, sum, ...rest }, ref) => {
+>(({ error, type, isAuth, sum, ...rest }, ref) => {
   return (
     <>
       <div className={cn("relative", sum && "w-full")}>
@@ -36,7 +36,6 @@ const BoardCommentInput = forwardRef<
             type={type}
           />
         )}
-        {/* {error && <ErrorBubble>{error.message}</ErrorBubble>} */}
       </div>
     </>
   );
