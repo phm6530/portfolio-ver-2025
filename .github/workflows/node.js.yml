@@ -44,5 +44,5 @@ jobs:
         # Upload는 사진이라 제외하고 나머지는 삭제후 변경
 
       - name: Invalidate CloudFront
-        run: aws cloudfront create-invalidation --distribution-id EJOXKXSPZBW4I --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id EJOXKXSPZBW4I --paths "/index.html" "/static/*" "/assets/*"
         # cloudFront 캐싱 삭제
