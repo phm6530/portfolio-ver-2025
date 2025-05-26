@@ -1,0 +1,48 @@
+name: Deploy to S3
+
+on:
+  push:
+    branches:
+      - main  # 또는 master (사용하는 기본 브랜치명)
+    # paths:
+    #   - 'frontEnd/**'  # frontEnd 폴더의 변경사항만 배포 트리거
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # defaults:
+    #   run:
+    #     working-directory: frontEnd  # 작업 디렉토리를 frontEnd로 설정
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'  # 또는 프로젝트에 맞는 Node.js 버전
+          cache: 'npm'  # 또는 yarn
+          # cache-dependency-path: frontEnd/package-lock.json 
+      - name: Install dependencies
+        run: npm ci  # 또는 yarn install --frozen-lockfile
+
+      - name: Build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: npm run build  # Vite 빌드 명령어
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2  # 한국 리전 (필요시 변경)
+
+      - name: Deploy to S3
+        run: aws s3 sync ./dist s3://myportpolio-front/ --delete --exclude "uploads/*"
+        # YOUR-BUCKET-NAME을 실제 S3 버킷 이름으로 변경하세요
+
+      - name: Invalidate CloudFront
+        run: aws cloudfront create-invalidation --distribution-id EJOXKXSPZBW4I --paths "/*"
+        # YOUR-DISTRIBUTION-ID를 실제 CloudFront 배포 ID로 변경하세요
