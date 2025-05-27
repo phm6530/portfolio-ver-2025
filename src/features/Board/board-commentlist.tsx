@@ -5,7 +5,6 @@ import { format } from "date-fns";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { axiosApi } from "@/config/axios.config";
 import BoardCommentStatus from "./BoardCommentStatus/BoardCommentStatus";
-import { DateUtils } from "@/utils/dateUtil";
 import LoadingSpiner from "@/components/ui/loading-spiner";
 
 type Author =
@@ -35,6 +34,12 @@ export type CommentItemModel = {
   author_type: "guest" | "admin";
 };
 
+type InfinityItems<T extends undefined | number> = {
+  result: { list: CommentItemModel[]; isNextPage: boolean };
+} & (T extends undefined
+  ? { status: { total: number; today: number } }
+  : object);
+
 const BoardCommentList = (): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
   const { data, isFetching, isSuccess, isPending, hasNextPage, fetchNextPage } =
@@ -42,17 +47,17 @@ const BoardCommentList = (): JSX.Element => {
       queryKey: ["GUESTBOARD"],
       queryFn: async ({ pageParam }) => {
         let endPoint = "/guestboard";
+
         const curCursor = pageParam === 0 ? undefined : pageParam;
         if (curCursor) {
           endPoint += `?cursor=${curCursor}`;
         }
 
-        const response = await axiosApi.get(endPoint);
-        console.log(response);
+        const response =
+          await axiosApi.get<InfinityItems<typeof curCursor>>(endPoint);
         return response.data.result;
       },
       getNextPageParam: (lastPage) => {
-        console.log(lastPage);
         if (lastPage.isNextPage) {
           return lastPage.list.at(-1)?.id;
         }
@@ -60,20 +65,7 @@ const BoardCommentList = (): JSX.Element => {
       initialPageParam: 0,
     });
 
-  const todayCOmment = (data: CommentItemModel[]) => {
-    let cnt = 0;
-    for (const item of data) {
-      if (DateUtils.isToday(item.created_at)) {
-        console.log(DateUtils.parseKoreanDate(item.created_at));
-
-        cnt++;
-      } else {
-        break;
-      }
-    }
-    return cnt;
-  };
-
+  // List
   const resultList = data?.pages.flatMap((e) => e.list) ?? [];
 
   useLayoutEffect(() => {
@@ -94,6 +86,22 @@ const BoardCommentList = (): JSX.Element => {
   }, [ref, isSuccess, fetchNextPage]);
 
   let prevMonth = "";
+
+  const isFirstPageResult = (page: {
+    list: CommentItemModel[];
+    isNextPage: boolean;
+  }): page is {
+    list: CommentItemModel[];
+    isNextPage: boolean;
+    status: { total: number; today: number };
+  } => {
+    return "status" in page;
+  };
+
+  const firstPage = data?.pages[0];
+
+  const status =
+    firstPage && isFirstPageResult(firstPage) ? firstPage.status : null;
 
   return (
     <>
@@ -117,8 +125,8 @@ const BoardCommentList = (): JSX.Element => {
       ) : (
         data && (
           <BoardCommentStatus
-            todayReply={todayCOmment(resultList)}
-            total={resultList.length}
+            todayReply={status?.today ?? 0}
+            total={status?.total ?? 0}
           />
         )
       )}
