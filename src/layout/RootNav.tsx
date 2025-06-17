@@ -60,7 +60,7 @@ export default function RootNav() {
         >
           <span
             className={cn(
-              "font-Montserrat font-extrabold",
+              "font-Montserrat font-extrabold cursor-pointer",
               scrollOver && "text-zinc-900 dark:text-white"
             )}
             onClick={() => navigate("/")}
