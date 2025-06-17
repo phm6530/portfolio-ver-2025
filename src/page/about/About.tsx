@@ -142,16 +142,16 @@ const AboutPage = () => {
                       key={`${edu.year}:${idx}`}
                       className="flex items-center"
                     >
-                      <span className="text-sm text-gray-500 w-20">
+                      {/* <span className="text-sm text-gray-500 w-20">
                         {edu.year}
-                      </span>
+                      </span> */}
                       <span>{edu.name}</span>
                     </div>
                   ))}
                 </div>
               </section>
 
-              <section className="pt-8 mt-8 border-t border-border">
+              {/* <section className="pt-8 mt-8 border-t border-border">
                 <h3 className="text-lg font-normal tracking-wider mb-8 flex items-center">
                   <Briefcase size={18} className="mr-3 " />
                   Experience
@@ -186,7 +186,7 @@ const AboutPage = () => {
                     </div>
                   ))}
                 </div>
-              </section>
+              </section> */}
             </div>
           </div>
         </div>
