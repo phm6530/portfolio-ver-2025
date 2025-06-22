@@ -3,7 +3,7 @@ import { ChevronRight, UserCheck2 } from "lucide-react";
 import RecentProject from "./components/recent-project";
 import RecentPosts from "./components/recent-post";
 import { useGSAP } from "@gsap/react";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

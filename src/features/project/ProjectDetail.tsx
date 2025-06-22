@@ -86,8 +86,6 @@ const ProjectDetail = () => {
     staleTime: Infinity,
   });
 
-  console.log(data);
-
   // const { handler } = useUploader();
   const { editor } = useSimpleEditor({
     editable: false,
@@ -160,6 +158,8 @@ const ProjectDetail = () => {
     return hashMap;
   };
 
+  console.log(HtmlContentNormalizer.setImgUrl(project_contents[0].contents));
+
   return (
     <>
       <section className="flex flex-col gap-12 max-w-4xl mx-auto -mt-[70px] md:mt-auto">
@@ -200,7 +200,7 @@ const ProjectDetail = () => {
                 {title}
               </h1>
               {/* 프로젝트 설명 */}
-              <p className="text-xs md:text-sm leading-relaxed  text-secondary-foreground break-keep max-w-[600px]  ">
+              <p className="text-xs md:text-sm leading-relaxed  text-secondary-foreground break-keep max-w-[600px] whitespace-pre-line">
                 {description}
               </p>
               <div>
