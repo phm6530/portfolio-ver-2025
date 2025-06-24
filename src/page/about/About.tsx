@@ -12,6 +12,7 @@ import SidebarWrapper from "@/components/ui/sidebar-wrapper";
 import { CERTS, EDUCATION, EXPERIENCE, SKILLS } from "./about-contents";
 import StackIconMapper from "@/components/shared/stack-iconmapper";
 import { cn } from "@/lib/utils";
+import PageMainText from "@/components/ui/page-main-text";
 
 const AboutPage = () => {
   const nav = useNavigate();
@@ -30,10 +31,11 @@ const AboutPage = () => {
         <div className="flex-1 max-w-3xl ">
           <UserCheck2 size={40} className="text-teal-300 mb-3" />
 
-          <h1 className="text-3xl md:text-4xl leading-13 mb-6 animate-topIn ani-delay-0.2 opacity-0">
+          {/* Page-text */}
+          <PageMainText>
             ABOUT,<br></br>
             DEVELOPER
-          </h1>
+          </PageMainText>
 
           <div className="space-y-8 text-white/90 text-sm leading-relaxed  animate-topIn ani-delay-0.3 opacity-0 max-w-[600px] break-keep">
             <p>
@@ -51,14 +53,12 @@ const AboutPage = () => {
             </p>
 
             <div className="mt-10">
-              <Button
+              <button
+                className="article-hover p-5 cursor-pointer text-sm rounded-lg"
                 onClick={() => nav("/board")}
-                variant={"outline"}
-                // className="bg-indigo-300/10! article-hover  text-white  rounded-md text-sm p-5 px-7! "
               >
-                <MessageCircle />
-                방명록 한줄남기기
-              </Button>
+                응원의 한줄평 남기기
+              </button>
             </div>
             <div className="flex flex-col">
               {/* Skills Section - Simplified */}

@@ -2,6 +2,7 @@ import BoardCommentForm from "@/features/Board/BoardCommentForm/BoardCommentForm
 import BoardCommentList from "@/features/Board/board-commentlist";
 import SidebarWrapper from "@/components/ui/sidebar-wrapper";
 import { MessageSquareQuote } from "lucide-react";
+import PageMainText from "@/components/ui/page-main-text";
 export default function Board(): JSX.Element {
   return (
     <>
@@ -9,9 +10,10 @@ export default function Board(): JSX.Element {
         <SidebarWrapper>
           <div className="flex-1 max-w-3xl border-b border-white/20">
             <MessageSquareQuote size={40} className="text-teal-300 mb-3" />
-            <h1 className="text-3xl md:text-4xl leading-13 mb-6 animate-topIn ani-delay-0.2 opacity-0">
+
+            <PageMainText>
               GUEST BOOK<br></br>
-            </h1>
+            </PageMainText>
 
             <div className="mb-10 text-white/90 text-sm leading-relaxed  animate-topIn ani-delay-0.3 opacity-0 max-w-[600px] break-keep">
               <p>

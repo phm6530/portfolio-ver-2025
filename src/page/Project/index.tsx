@@ -6,6 +6,7 @@ import withAuth from "@/hoc/WithAuth";
 import { AnimatePresence } from "framer-motion";
 import { Route, Routes, useLocation } from "react-router-dom";
 import SidebarWrapper from "@/components/ui/sidebar-wrapper";
+import ItemTransition from "@/components/animations/item-transition";
 
 export default function Project() {
   const location = useLocation();
@@ -24,27 +25,19 @@ export default function Project() {
     <>
       <main className="bg-zinc-900 ">
         <SidebarWrapper>
-          <AnimatePresence
-            mode="wait"
-            initial={false}
-            onExitComplete={() => {
-              window.scrollTo(0, 0);
-            }}
-          >
+          <ItemTransition>
             <Routes location={location} key={location.pathname}>
               {PATHS.map((path) => {
                 return (
                   <Route
                     path={path.path}
                     key={path.path}
-                    element={
-                      <Motion.FadeInOut>{path.Component}</Motion.FadeInOut>
-                    }
+                    element={<>{path.Component}</>}
                   />
                 );
               })}
             </Routes>
-          </AnimatePresence>
+          </ItemTransition>
         </SidebarWrapper>
       </main>
     </>

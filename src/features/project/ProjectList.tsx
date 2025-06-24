@@ -8,8 +8,10 @@ import { type ProjectPostProps } from "@/type/ProjectTypes";
 import useStore from "@/store/zustandStore";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Box, Puzzle, UserCheck2 } from "lucide-react";
-import { toast } from "react-toastify";
+import { Box } from "lucide-react";
+import PageMainText from "@/components/ui/page-main-text";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 const FILTER_LABEL = [
   { label: "전체보기", keyword: "all" },
@@ -25,6 +27,7 @@ const ProjectList = () => {
   const [curFilter, setCurFilter] = useState<FilterKeyword>("all");
   const login = useStore((state) => state.userAuth.login);
   const nav = useNavigate();
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ["project-list"],
     queryFn: async () => {
@@ -76,18 +79,31 @@ const ProjectList = () => {
     },
   });
 
+  useGSAP(
+    () => {
+      const ani = document.querySelectorAll(".ani");
+      gsap.from(ani, {
+        y: -50,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.5,
+        ease: "power.out",
+      });
+    },
+    { scope: "", dependencies: [] }
+  );
+
   return (
     <div className="flex-1 max-w-3xl">
-      <div className="mb-6 animate-topIn ani-delay-0.2 opacity-0">
+      <div className="mb-6  ">
         <Box size={40} className="text-teal-300 mb-3" />
-
-        <h1 className="text-3xl md:text-4xl leading-13 mb-6 animate-topIn ani-delay-0.2 opacity-0">
+        <PageMainText>
           WORK,<br></br>
           ARCHIVE
-        </h1>
+        </PageMainText>
       </div>
 
-      <div className="text-white/80 text-sm  animate-topIn ani-delay-0.3 opacity-0 mb-12 leading-6 break-keep">
+      <div className="text-white/80 text-sm   mb-12 leading-6 break-keep ani">
         <p>외주, 토이 프로젝트, 직장에서 및 작업하였던 프로젝트 기록 입니다.</p>
         <p>
           외부로 공개된 참여한 프로젝트만 게시하며, 공개 불가한 프로젝트는
@@ -95,7 +111,7 @@ const ProjectList = () => {
         </p>
       </div>
 
-      <div className="mb-5 animate-topIn ani-delay-0.2 opacity-0 flex justify-between">
+      <div className="mb-5 ani-delay-0.2  flex justify-between ani">
         <div className=" flex gap-2 flex-wrap">
           {FILTER_LABEL.map((e) => {
             return (
@@ -128,7 +144,7 @@ const ProjectList = () => {
       </div>
 
       <div
-        className="grid md:grid-cols-1 grid-cols-1 mt-5 animate-topIn ani-delay-0.3 opacity-0"
+        className="grid md:grid-cols-1 grid-cols-1 mt-5  ani"
         key={curFilter}
       >
         {!isLoading && isError && "error"}

@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { requestHandler } from "@/utils/apiUtils";
 import SupabasePool from "@/lib/supabaseClient";
 import NotfoundPage from "@/components/error/NotfoundPage";
-import DevSvg from "@/asset/3d/code_2.svg?react";
 
 import {
   EditorProvider,
@@ -28,6 +27,7 @@ import LoadingSpiner from "@/components/ui/loading-spiner";
 import ProjectImgWrapper from "./components/projectimg-wrapper";
 import React from "react";
 import StackIconMapper from "@/components/shared/stack-iconmapper";
+import { useGSAP } from "@gsap/react";
 export type DetailProps = {
   company: string;
   description: string;
@@ -114,6 +114,8 @@ const ProjectDetail = () => {
     },
   });
 
+  useGSAP(() => {}, {});
+
   if (isLoading) {
     return (
       <div className="relative min-h-[400px]">
@@ -158,15 +160,13 @@ const ProjectDetail = () => {
     return hashMap;
   };
 
-  console.log(HtmlContentNormalizer.setImgUrl(project_contents[0].contents));
-
   return (
     <>
       <section className="flex flex-col gap-12 max-w-4xl mx-auto -mt-[70px] md:mt-auto">
         {/* 헤더 및 네비게이션 */}
-        <div className="flex items-center gap-4 border-b pb-3 border-border animate-topIn ani-delay-0.1 opacity-0">
+        <div className="flex items-center gap-4 border-b pb-3 border-border  ani-delay-0.1 ">
           <div
-            className="items-center gap-2 text-sm hidden md:flex border p-2 rounded-xl border-border cursor-pointer"
+            className="items-center gap-2 text-sm hidden md:flex border p-2 rounded-xl border-border"
             onClick={() => nav(-1)}
           >
             <ChevronLeft size={15} />
@@ -190,19 +190,52 @@ const ProjectDetail = () => {
           </div>
         </div>
 
-        <div className="grid   gap-7 items-start ">
-          <div className=" md:mt-5 justify-between animate-topIn ani-delay-0.3 opacity-0 ">
+        <div className="grid gap-7 items-start ">
+          <div className=" md:mt-5 justify-between  ani-delay-0.3  ">
             {/* <img src="/public/img/gear.png" className="w-22" /> */}
 
-            <div className="flex flex-col gap-8 ">
-              <h1 className="border-border relative  inline-flex gap-4 items-center hover:text-indigo-100 text-3xl md:text-4xl leading-tight text-white  transition-all cursor-pointer tracking-tight">
-                <DevSvg className="size-10" />
+            <div className="flex flex-col gap-8">
+              <h1 className="font-semibold border-border relative font-Montserrat inline-flex gap-4 items-center hover:text-indigo-100 text-3xl md:text-5xl leading-tight text-white  transition-all cursor-pointer tracking-tight">
                 {title}
               </h1>
+
+              <article className="items-center grid grid-cols-3 gap-10 mb-7 mt-4">
+                <div className="flex flex-col gap-3">
+                  <p className="border-b pb-1 text-sm text-muted-foreground border-white">
+                    작업기간
+                  </p>
+                  <p className="text-indigo-200 text-sm md:text-base md:font-medium">
+                    {DateUtils.getDurationDays(start_date, end_date)}일
+                    <span className="text-xs ml-3">
+                      ({start_date} ~ {end_date})
+                    </span>
+                  </p>
+                </div>
+                <div className="flex flex-col gap-3">
+                  <p className="border-b pb-1 text-sm text-muted-foreground border-white">
+                    투입인원
+                  </p>
+
+                  <span>{project_member}</span>
+                </div>{" "}
+                <div className="flex flex-col gap-3">
+                  <p className="border-b pb-1 text-sm text-muted-foreground border-white">
+                    투입인원
+                  </p>
+
+                  <span>{project_member}</span>
+                </div>
+              </article>
+
+              <div className=" w-full   ">
+                <ProjectImgWrapper url={thumbnail} alt={title} />
+              </div>
+
               {/* 프로젝트 설명 */}
-              <p className="text-xs md:text-sm leading-relaxed  text-secondary-foreground break-keep max-w-[600px] whitespace-pre-line">
+              <p className="text-xs pt-5 md:text-base leading-relaxed  text-secondary-foreground break-keep max-w-[600px] whitespace-pre-line">
                 {description}
               </p>
+
               <div>
                 <button
                   className="text-xs items-center gap-3 p-3 px-5 rounded-full bg-transparent! article-hover flex"
@@ -216,31 +249,7 @@ const ProjectDetail = () => {
               </div>
 
               {/* 작업기간 */}
-              <div className="flex flex-col gap-4 border p-5 border-border rounded-lg mt-10">
-                <article className="space-y-2 md:space-y-3 flex items-center">
-                  {/* <h3 className="text-sm  text-white">기간</h3> */}
-                  <div className="text-lg text-zinc-300 flex items-center gap-3">
-                    <span className="text-sm opacity-60  mr-3">작업기간</span>
-                    <span className="text-indigo-200 text-sm md:text-base md:font-medium">
-                      {DateUtils.getDurationDays(start_date, end_date)}일
-                    </span>
-                    <span className="mx-2 text-zinc-500">|</span>
-                    <span className="text-xs">
-                      {start_date} ~ {end_date}
-                    </span>
-                  </div>
-                </article>
-
-                {/* 참여인원 */}
-                <article className="space-y-2 md:space-y-3">
-                  <div className="text-lg text-zinc-300 flex items-center gap-3">
-                    <span className="text-sm opacity-60 mr-3">투입인원</span>
-                    <span className="text-indigo-200 text-sm md:text-base md:font-medium">
-                      {project_member}
-                    </span>
-                  </div>
-                </article>
-
+              <div className="flex flex-col gap-4  border-border rounded-lg ">
                 <article className="space-y-2  md:col-span-2 mt-1">
                   <div className="grid   grid-cols-[auto_1fr] md:grid-cols-[auto_1fr] divide-y  divide-indigo-200/10  [&>div]:p-2">
                     <div className="text-xs bg-zinc-950/30">카테고리</div>
@@ -297,15 +306,6 @@ const ProjectDetail = () => {
               )}
             </div>
           </div>
-        </div>
-
-        <div className=" w-full animate-topIn ani-delay-0.4 opacity-0">
-          <h3 className="text-lg tracking-wider flex gap-3 items-center text-white mb-3">
-            <span className="text-sm md:text-sm bg-gradient-to-r tracking-tighter  font-SUIT-Regular from-white to-indigo-200 bg-clip-text text-transparent">
-              미리보기 *
-            </span>
-          </h3>
-          <ProjectImgWrapper url={thumbnail} alt={title} />
         </div>
       </section>
 

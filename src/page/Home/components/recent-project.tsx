@@ -16,10 +16,10 @@ export default function RecentProject() {
         .from("project_meta")
         .select(
           `
-                  *,
-                  project_meta_stack(
-                    project_stack(*)
-                  )
+            *,
+            project_meta_stack(
+              project_stack(*)
+            )
                 `
         )
         .order("id", { ascending: false })
@@ -45,10 +45,10 @@ export default function RecentProject() {
               onClick={() => nav(`/project/${project.id}`)}
               key={`POST:${project.id}:${idx}`}
               className={cn(
-                "flex flex-col  group cursor-pointer tr group  w-full  "
+                "flex flex-col  group cursor-pointer tr group  w-full  p-5 article-hover rounded-lg"
               )}
             >
-              <h4 className="text-foreground flex text-lg items-center gap-3 group-hover:underline font-medium my-3 group-hover:text-indigo-200 transition-colors">
+              <h4 className="text-foreground flex text-xl items-center gap-3 group-hover:underline font-medium my-3 group-hover:text-indigo-200 transition-colors">
                 <Box />
                 {project.title}
               </h4>
@@ -63,7 +63,7 @@ export default function RecentProject() {
                   }
                 })}
               </div>
-              <p className="text-xs md:text-xs text-foreground/70  line-clamp-3 mb-2 leading-relaxed max-w-[500px] break-keep">
+              <p className="text-xs md:text-sm text-secondary-foreground  line-clamp-2 my-4 leading-relaxed max-w-[500px] break-keep">
                 {project.description}
               </p>
               <div className="flex items-center gap-3">

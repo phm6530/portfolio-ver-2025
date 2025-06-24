@@ -1,12 +1,10 @@
-import { AnimatePresence } from "framer-motion";
 import { useLocation, Route, Routes } from "react-router-dom";
-
-import Motion from "@/components/animations/Motion";
 
 import RootNav from "@/layout/RootNav";
 import { ROUTE_PATH } from "@/constants/routePath";
 import Footer from "@/layout/Footer";
 import { useMemo } from "react";
+import PageTransition from "@/components/animations/page-transition";
 
 type RouteKey = "" | "about" | "project" | "blog" | "board";
 
@@ -32,11 +30,11 @@ const ROUTE_COLORS = {
     secondary: "bg-gradient-to-t to-indigo-900/30 from-violet-50/10",
   }, // Board 페이지
 };
+
 const AppRoute = (): JSX.Element => {
   const location = useLocation();
   const pageKey = location.pathname.split("/")[1];
 
-  // 현재 라우트에 맞는 색상 가져오기
   const currentColors = useMemo(() => {
     return pageKey in ROUTE_COLORS
       ? ROUTE_COLORS[pageKey as RouteKey]
@@ -55,22 +53,16 @@ const AppRoute = (): JSX.Element => {
       <div
         className={`glow-5 z-1 absolute pointer-events-none md:-bottom-130 left-0 size-1/2 md:size-150 ${currentColors.secondary} blur-[100px] rounded-full transition-colors duration-700`}
       ></div>
-      {/* <div className="glow-5 z-5 absolute -top-4/5 right-1 size-1/2  md:size-200 bg-gradient-to-b to-indigo-900/50 from-violet-50/100 blur-[100px] rounded-full"></div> */}
-      {/* <div className="glow-5 z-5 absolute md:-bottom-80 left-0 size-1/2 md:size-150 bg-violet-400/20 blur-[100px] rounded-full"></div> */}
+      <PageTransition>
+        {/* Page Transition */}
 
-      <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
+        {/* Route-Dom */}
         <Routes location={location} key={`path_${pageKey}`}>
           {ROUTE_PATH.map(({ path, Component }) => {
-            return (
-              <Route
-                key={path}
-                path={path}
-                element={<Motion.Page>{Component}</Motion.Page>}
-              />
-            );
+            return <Route key={path} path={path} element={<>{Component}</>} />;
           })}
         </Routes>
-      </AnimatePresence>
+      </PageTransition>
       <Footer />
     </>
   );
