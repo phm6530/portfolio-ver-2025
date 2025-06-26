@@ -44,6 +44,9 @@ export default function SidebarWrapper({ children }: { children: ReactNode }) {
         nodeRef={nodeRef}
         onEnter={onPageEnter}
         onExit={onPageExit}
+        onEntering={() => {
+          window.scrollTo(0, 0);
+        }}
       >
         <div ref={nodeRef}>
           {isMain ? (

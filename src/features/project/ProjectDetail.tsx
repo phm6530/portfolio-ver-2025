@@ -167,7 +167,7 @@ const ProjectDetail = () => {
         <div className="flex items-center gap-4 border-b pb-3 border-border  ani-delay-0.1 ">
           <div
             className="items-center gap-2 text-sm hidden md:flex border p-2 rounded-xl border-border"
-            onClick={() => nav(-1)}
+            onClick={() => nav("/project")}
           >
             <ChevronLeft size={15} />
           </div>

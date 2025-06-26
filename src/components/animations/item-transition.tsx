@@ -6,6 +6,7 @@ import { CSSTransition, SwitchTransition } from "react-transition-group";
 export default function ItemTransition({ children }: { children: ReactNode }) {
   const ANIMATION_DURATION = 400;
   const nodeRef = useRef<HTMLDivElement>(null);
+
   const onPageEnter = () => {
     gsap.fromTo(
       nodeRef.current,
@@ -39,6 +40,7 @@ export default function ItemTransition({ children }: { children: ReactNode }) {
         nodeRef={nodeRef}
         onEnter={onPageEnter}
         onExit={onPageExit}
+        {...(location.pathname.split("/")[2] !== "" ? {} : {})}
       >
         <div ref={nodeRef}>{children}</div>
       </CSSTransition>

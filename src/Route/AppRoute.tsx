@@ -54,7 +54,7 @@ const AppRoute = (): JSX.Element => {
       <div
         className={`glow-5 z-1 absolute pointer-events-none md:-bottom-130 left-0 size-1/2 md:size-150 ${currentColors.secondary} blur-[100px] rounded-full transition-colors duration-700`}
       />
-      <main className="bg-gradient-to-t to-black via-rose-800/5">
+      <main className="bg-zinc-900">
         {/* Page Transition */}
         <SidebarWrapper>
           <PageTransition>
