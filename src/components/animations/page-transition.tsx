@@ -6,6 +6,7 @@ import { CSSTransition, SwitchTransition } from "react-transition-group";
 export default function PageTransition({ children }: { children: ReactNode }) {
   const ANIMATION_DURATION = 400;
   const nodeRef = useRef<HTMLDivElement>(null);
+
   const onPageEnter = () => {
     gsap.fromTo(
       nodeRef.current,
@@ -22,7 +23,7 @@ export default function PageTransition({ children }: { children: ReactNode }) {
   const onPageExit = () => {
     gsap.to(nodeRef.current, {
       opacity: 0,
-      y: -50,
+      y: 50,
       duration: ANIMATION_DURATION / 1000,
       ease: "power2.in",
     });

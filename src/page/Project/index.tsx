@@ -1,11 +1,8 @@
-import Motion from "@/components/animations/Motion";
 import ProjectDetail from "@/features/project/ProjectDetail";
 import ProjectForm from "@/features/project/ProjectEditor/ProjectForm";
 import ProjectList from "@/features/project/ProjectList";
 import withAuth from "@/hoc/WithAuth";
-import { AnimatePresence } from "framer-motion";
 import { Route, Routes, useLocation } from "react-router-dom";
-import SidebarWrapper from "@/components/ui/sidebar-wrapper";
 import ItemTransition from "@/components/animations/item-transition";
 
 export default function Project() {
@@ -23,23 +20,19 @@ export default function Project() {
 
   return (
     <>
-      <main className="bg-zinc-900 ">
-        <SidebarWrapper>
-          <ItemTransition>
-            <Routes location={location} key={location.pathname}>
-              {PATHS.map((path) => {
-                return (
-                  <Route
-                    path={path.path}
-                    key={path.path}
-                    element={<>{path.Component}</>}
-                  />
-                );
-              })}
-            </Routes>
-          </ItemTransition>
-        </SidebarWrapper>
-      </main>
+      <ItemTransition>
+        <Routes location={location} key={location.pathname}>
+          {PATHS.map((path) => {
+            return (
+              <Route
+                path={path.path}
+                key={path.path}
+                element={<>{path.Component}</>}
+              />
+            );
+          })}
+        </Routes>
+      </ItemTransition>
     </>
   );
 }

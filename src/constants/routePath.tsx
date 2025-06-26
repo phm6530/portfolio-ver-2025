@@ -8,6 +8,7 @@ import Project from "@/page/Project";
 interface RoutePath {
   path: string;
   Component: React.ReactNode;
+  subNav?: boolean; // 사이드바 여부
 }
 
 interface NavPage {
@@ -17,7 +18,7 @@ interface NavPage {
 }
 
 export const ROUTE_PATH: RoutePath[] = [
-  { path: "/", Component: <Home /> },
+  { path: "/", Component: <Home />, subNav: false },
   { path: "/about", Component: <About /> },
   { path: "/project/*", Component: <Project /> },
   { path: "/board", Component: <Board /> },

@@ -5,6 +5,7 @@ import { ROUTE_PATH } from "@/constants/routePath";
 import Footer from "@/layout/Footer";
 import { useMemo } from "react";
 import PageTransition from "@/components/animations/page-transition";
+import SidebarWrapper from "@/components/ui/sidebar-wrapper";
 
 type RouteKey = "" | "about" | "project" | "blog" | "board";
 
@@ -53,16 +54,19 @@ const AppRoute = (): JSX.Element => {
       <div
         className={`glow-5 z-1 absolute pointer-events-none md:-bottom-130 left-0 size-1/2 md:size-150 ${currentColors.secondary} blur-[100px] rounded-full transition-colors duration-700`}
       ></div>
-      <PageTransition>
-        {/* Page Transition */}
-
-        {/* Route-Dom */}
-        <Routes location={location} key={`path_${pageKey}`}>
-          {ROUTE_PATH.map(({ path, Component }) => {
-            return <Route key={path} path={path} element={<>{Component}</>} />;
-          })}
-        </Routes>
-      </PageTransition>
+      <main className="bg-gradient-to-t to-black via-rose-800/5">
+        {/* Page Transition */}{" "}
+        <SidebarWrapper>
+          <PageTransition>
+            {/* Route-Dom */}
+            <Routes location={location} key={`path_${pageKey}`}>
+              {ROUTE_PATH.map(({ path, Component, subNav }) => {
+                return <Route key={path} path={path} element={Component} />;
+              })}
+            </Routes>
+          </PageTransition>
+        </SidebarWrapper>
+      </main>
       <Footer />
     </>
   );
