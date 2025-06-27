@@ -201,7 +201,7 @@ const ProjectDetail = () => {
 
               <article className="items-center grid grid-cols-3 gap-10 mb-7 mt-4">
                 <div className="flex flex-col gap-3">
-                  <p className="border-b pb-1 text-sm text-muted-foreground border-white">
+                  <p className="border-b pb-1 text-sm text-white/70 border-white">
                     작업기간
                   </p>
                   <p className="text-indigo-200 text-sm md:text-base md:font-medium">
