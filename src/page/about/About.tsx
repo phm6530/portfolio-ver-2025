@@ -28,19 +28,20 @@ const AboutPage = () => {
           DEVELOPER
         </PageMainText>
 
-        <div className="space-y-8 text-white/90 text-sm leading-relaxed  animate-topIn ani-delay-0.3 opacity-0 max-w-[600px] break-keep">
+        <div className="space-y-8 text-base text-white/90 leading-relaxed  animate-topIn ani-delay-0.3 opacity-0  break-keep">
           <p>
             퍼블리셔에서 프론트엔드로 전환이 아닌 역량의 확장이라는 생각으로
+            <br></br>
             디자인과 기술을 아우르는 하이브리드 전문가로 성장하고 있습니다.
             <br></br>
             <br></br>
-            사용자 중심의 직관적인 인터페이스 설계부터 최적화 방식으로 개발자와
-            사용자 모두의 경험을 중시합니다.
+            사용자 중심의 직관적인 인터페이스 설계부터 최적화 방식으로<br></br>{" "}
+            개발자와 사용자 모두의 경험을 중시합니다.
           </p>
           <p>
             디자이너와 개발자 사이의 가교 역할을 수행하며, 복잡한 기술적
-            요구사항을 시각적으로 뛰어난 결과물로 구현하는 독보적인 역량을
-            바탕으로 팀과 프로젝트에 기여하겠습니다.
+            요구사항을 <br></br>시각적으로 뛰어난 결과물로 구현하는 독보적인
+            역량을 바탕으로 팀과 프로젝트에 기여하겠습니다.
           </p>
 
           <div className="mt-10">

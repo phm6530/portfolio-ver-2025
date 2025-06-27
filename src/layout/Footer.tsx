@@ -1,15 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  Building2Icon,
-  GitCommitHorizontal,
-  GitCompare,
-  GitCompareIcon,
-  GitGraph,
-  Github,
-  Mail,
-  NotebookText,
-  Phone,
-} from "lucide-react";
+import { GitCompareIcon, Mail, NotebookText, Phone } from "lucide-react";
 
 const Link = (url: string) => {
   window.open(url, "_blank");
