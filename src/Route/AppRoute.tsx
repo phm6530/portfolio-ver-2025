@@ -108,7 +108,7 @@ const AppRoute = (): JSX.Element => {
           playsInline
           className="video-element absolute w-screen"
         >
-          <source src="/main_1.mp4" type="video/mp4" />
+          <source src="/main_2.mp4" type="video/mp4" />
         </video>
       </div>
       <div id="smooth-wrapper">
