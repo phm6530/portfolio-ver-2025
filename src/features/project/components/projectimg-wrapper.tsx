@@ -50,7 +50,7 @@ export default function ProjectImgWrapper({
       />
       {longImg && !more && (
         <div
-          className="absolute bottom-0 flex z-5 w-full gap-2 justify-center text-center py-5 text-xs cursor-pointer bg-gradient-to-t from-black/85 to-black/0"
+          className="absolute bottom-0 flex z-5 w-full gap-2 justify-center text-center py-4 text-xs cursor-pointer bg-gradient-to-t from-black/55 to-transparent"
           style={{
             backdropFilter: "blur(5px)",
           }}

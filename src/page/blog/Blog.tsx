@@ -4,7 +4,6 @@ import BlogPage from "./pages/blog-page";
 import BlogDetail from "./pages/BlogDetail";
 import { AnimatePresence } from "framer-motion";
 import Motion from "@/components/animations/Motion";
-import SidebarWrapper from "@/components/ui/sidebar-wrapper";
 
 const Blog = (): JSX.Element => {
   const location = useLocation();
@@ -14,33 +13,27 @@ const Blog = (): JSX.Element => {
   ];
   return (
     <>
-      <main className="bg-gradient-to-t to-black via-rose-800/5">
-        <AnimatedBackgroundGlows />
-        {/* <StarAnimation /> */}
-        <SidebarWrapper>
-          <AnimatePresence
-            mode="wait"
-            initial={false}
-            onExitComplete={() => {
-              window.scrollTo(0, 0);
-            }}
-          >
-            <Routes location={location} key={location.pathname}>
-              {PATHS.map((path) => {
-                return (
-                  <Route
-                    path={path.path}
-                    key={path.path}
-                    element={
-                      <Motion.FadeInOut>{path.Component}</Motion.FadeInOut>
-                    }
-                  />
-                );
-              })}
-            </Routes>
-          </AnimatePresence>{" "}
-        </SidebarWrapper>
-      </main>
+      {/* Grow 효과 애니메이션 */}
+      {/* <AnimatedBackgroundGlows /> */}
+      <AnimatePresence
+        mode="wait"
+        initial={false}
+        onExitComplete={() => {
+          window.scrollTo(0, 0);
+        }}
+      >
+        <Routes location={location} key={location.pathname}>
+          {PATHS.map((path) => {
+            return (
+              <Route
+                path={path.path}
+                key={path.path}
+                element={<Motion.FadeInOut>{path.Component}</Motion.FadeInOut>}
+              />
+            );
+          })}
+        </Routes>
+      </AnimatePresence>{" "}
     </>
   );
 };

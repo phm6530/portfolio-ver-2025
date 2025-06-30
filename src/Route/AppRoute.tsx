@@ -1,16 +1,20 @@
-import { AnimatePresence } from "framer-motion";
 import { useLocation, Route, Routes } from "react-router-dom";
-
-import Motion from "@/components/animations/Motion";
 
 import RootNav from "@/layout/RootNav";
 import { ROUTE_PATH } from "@/constants/routePath";
 import Footer from "@/layout/Footer";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
+import PageTransition from "@/components/animations/page-transition";
+import SidebarWrapper from "@/components/ui/sidebar-wrapper";
+import { cn } from "@/lib/utils";
+import gsap from "gsap";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
+import { useGSAP } from "@gsap/react";
 
-type RouteKey = "" | "about" | "project" | "blog" | "board";
+type ROUTE_KEY = "" | "about" | "project" | "blog" | "board";
 
-const ROUTE_COLORS = {
+type PATHNAME<T> = Record<ROUTE_KEY, T>;
+const ROUTE_COLORS: PATHNAME<{ primary: string; secondary: string }> = {
   "": {
     primary: "bg-gradient-to-b to-indigo-500/15 from-violet-50/60",
     secondary: "bg-gradient-to-t to-indigo-900/30 from-violet-50/20",
@@ -32,46 +36,107 @@ const ROUTE_COLORS = {
     secondary: "bg-gradient-to-t to-indigo-900/30 from-violet-50/10",
   }, // Board 페이지
 };
+
+const BG_COLOR: PATHNAME<string> = {
+  "": "", // 홈
+  about: "bg-zinc-900 ", // About 페이지
+  project: "bg-zinc-900", // About 페이지
+  blog: "bg-zinc-900", // About 페이지
+  board: "bg-zinc-900", // About 페이지
+};
+gsap.registerPlugin(ScrollSmoother);
 const AppRoute = (): JSX.Element => {
   const location = useLocation();
   const pageKey = location.pathname.split("/")[1];
+  const bgRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLDivElement>(null);
 
-  // 현재 라우트에 맞는 색상 가져오기
   const currentColors = useMemo(() => {
     return pageKey in ROUTE_COLORS
-      ? ROUTE_COLORS[pageKey as RouteKey]
+      ? ROUTE_COLORS[pageKey as ROUTE_KEY]
       : {
           primary: "bg-gradient-to-b to-purple-900/50 from-purple-50/100",
           secondary: "bg-purple-400/20",
         };
   }, [pageKey]);
 
+  useGSAP(() => {
+    ScrollSmoother.create({
+      wrapper: "#smooth-wrapper",
+      content: "#smooth-content",
+      smooth: 1, // how long (in seconds) it takes to "catch up" to the native scroll position
+      effects: true, // looks for data-speed and data-lag attributes on elements
+      smoothTouch: 0.1, // much shorter smoothing time on touch devices (default is NO smoothing on touch devices)
+    });
+  });
+
+  useGSAP(
+    () => {
+      gsap.to(bgRef.current, {
+        // opacity: 0,
+        top: -100,
+        scrollTrigger: {
+          trigger: "html",
+          // markers: true,
+        },
+      });
+    },
+    { scope: "html" }
+  );
+
+  useGSAP(
+    () => {
+      gsap.to(videoRef.current, {
+        opacity: 1,
+        background: "#000",
+        scrollTrigger: {
+          trigger: "html",
+          start: "center center",
+          end: "center center",
+          // markers: true,
+          toggleActions: "restart reverse reverse reverse",
+          scrub: 1,
+        },
+        markers: true,
+        scrub: 1,
+      });
+    },
+    { scope: "html" }
+  );
+
   return (
     <>
       <RootNav />
       <div
         className={`glow-5 z-5 absolute pointer-events-none -top-4/5 right-1 size-1/2 md:size-200 ${currentColors.primary} blur-[100px] rounded-full transition-colors duration-700`}
-      ></div>
+      />
       <div
         className={`glow-5 z-1 absolute pointer-events-none md:-bottom-130 left-0 size-1/2 md:size-150 ${currentColors.secondary} blur-[100px] rounded-full transition-colors duration-700`}
-      ></div>
-      {/* <div className="glow-5 z-5 absolute -top-4/5 right-1 size-1/2  md:size-200 bg-gradient-to-b to-indigo-900/50 from-violet-50/100 blur-[100px] rounded-full"></div> */}
-      {/* <div className="glow-5 z-5 absolute md:-bottom-80 left-0 size-1/2 md:size-150 bg-violet-400/20 blur-[100px] rounded-full"></div> */}
+      />
 
-      <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
-        <Routes location={location} key={`path_${pageKey}`}>
-          {ROUTE_PATH.map(({ path, Component }) => {
-            return (
-              <Route
-                key={path}
-                path={path}
-                element={<Motion.Page>{Component}</Motion.Page>}
-              />
-            );
-          })}
-        </Routes>
-      </AnimatePresence>
-      <Footer />
+      <div id="smooth-wrapper">
+        <div id="smooth-content">
+          <main
+            className={cn(
+              BG_COLOR[pageKey as keyof typeof BG_COLOR],
+              "transition duration-700"
+            )}
+          >
+            {/* Page Transition */}
+            <SidebarWrapper>
+              <PageTransition>
+                {/* Route-Dom */}
+                <Routes location={location} key={`path_${pageKey}`}>
+                  {ROUTE_PATH.map(({ path, Component }) => {
+                    return <Route key={path} path={path} element={Component} />;
+                  })}
+                </Routes>{" "}
+              </PageTransition>{" "}
+            </SidebarWrapper>{" "}
+            <Footer />{" "}
+          </main>
+        </div>
+      </div>
     </>
   );
 };

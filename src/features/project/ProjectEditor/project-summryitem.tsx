@@ -48,14 +48,14 @@ export default function SummryItem({
         <div className="pb-2">
           <input
             type="text"
-            className="w-full placeholder:text-foreground/60"
+            className="w-full placeholder:text-foreground/60 "
             placeholder="항목의 제목을 입력하세요"
             {...register(`surmmry.${idx}.title`)}
           />
         </div>
         <div className="items-center gap-3 pt-3 ">
           <textarea
-            className="w-full placeholder:text-foreground/60 resize-y"
+            className="w-full placeholder:text-foreground/60 resize-y p-4 bg-muted/30 leading-relaxed text-sm"
             placeholder="해당 항목 내용을 입력해주세요"
             rows={rows}
             onChange={(e) => {

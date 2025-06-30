@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { requestHandler } from "@/utils/apiUtils";
 import SupabasePool from "@/lib/supabaseClient";
 import NotfoundPage from "@/components/error/NotfoundPage";
-import DevSvg from "@/asset/3d/code_2.svg?react";
 
 import {
   EditorProvider,
@@ -10,12 +9,6 @@ import {
   useSimpleEditor,
 } from "@squirrel309/my-testcounter";
 import { HtmlContentNormalizer } from "@/utils/HtmlContentNormalizer";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
 import { ChevronLeft, HomeIcon, Link2 } from "lucide-react";
 
@@ -28,6 +21,7 @@ import LoadingSpiner from "@/components/ui/loading-spiner";
 import ProjectImgWrapper from "./components/projectimg-wrapper";
 import React from "react";
 import StackIconMapper from "@/components/shared/stack-iconmapper";
+import { useGSAP } from "@gsap/react";
 export type DetailProps = {
   company: string;
   description: string;
@@ -114,6 +108,8 @@ const ProjectDetail = () => {
     },
   });
 
+  useGSAP(() => {}, {});
+
   if (isLoading) {
     return (
       <div className="relative min-h-[400px]">
@@ -158,16 +154,14 @@ const ProjectDetail = () => {
     return hashMap;
   };
 
-  console.log(HtmlContentNormalizer.setImgUrl(project_contents[0].contents));
-
   return (
     <>
-      <section className="flex flex-col gap-12 max-w-4xl mx-auto -mt-[70px] md:mt-auto">
+      <section className="flex flex-col gap-12 max-w-4xl mx-auto -mt-[70px] md:mt-auto border-b pb-10 border-border">
         {/* 헤더 및 네비게이션 */}
-        <div className="flex items-center gap-4 border-b pb-3 border-border animate-topIn ani-delay-0.1 opacity-0">
+        <div className="flex items-center gap-4 border-b pb-3 border-border  ani-delay-0.1 ">
           <div
-            className="items-center gap-2 text-sm hidden md:flex border p-2 rounded-xl border-border cursor-pointer"
-            onClick={() => nav(-1)}
+            className="items-center gap-2 text-sm hidden md:flex border p-2 rounded-xl border-border"
+            onClick={() => nav("/project")}
           >
             <ChevronLeft size={15} />
           </div>
@@ -187,62 +181,75 @@ const ProjectDetail = () => {
               PROJECT
             </span>
             <span>/</span> {title}
-          </div>
+          </div>{" "}
+          {login && (
+            <div className="flex gap-2 ml-auto">
+              <button
+                className="text-xs bg-zinc-700 px-3 py-1 rounded hover:bg-zinc-600 transition-colors"
+                onClick={() => nav(`/project/write?edit=${id}`)}
+              >
+                수정
+              </button>
+              <button
+                onClick={deleteConfirm}
+                className="text-xs bg-zinc-700 px-3 py-1 rounded hover:bg-zinc-600 transition-colors"
+              >
+                삭제
+              </button>
+            </div>
+          )}
         </div>
 
-        <div className="grid   gap-7 items-start ">
-          <div className=" md:mt-5 justify-between animate-topIn ani-delay-0.3 opacity-0 ">
+        <div className="grid gap-7 items-start ">
+          <div className=" md:mt-5 justify-between  ani-delay-0.3  ">
             {/* <img src="/public/img/gear.png" className="w-22" /> */}
 
-            <div className="flex flex-col gap-8 ">
-              <h1 className="border-border relative  inline-flex gap-4 items-center hover:text-indigo-100 text-3xl md:text-4xl leading-tight text-white  transition-all cursor-pointer tracking-tight">
-                <DevSvg className="size-10" />
+            <div className="flex flex-col gap-10">
+              <h1 className="font-semibold border-border relative font-Montserrat inline-flex gap-4 items-center hover:text-indigo-100 text-3xl md:text-5xl leading-tight text-white  transition-all cursor-pointer tracking-tight">
                 {title}
-              </h1>
-              {/* 프로젝트 설명 */}
-              <p className="text-xs md:text-sm leading-relaxed  text-secondary-foreground break-keep max-w-[600px] whitespace-pre-line">
-                {description}
-              </p>
-              <div>
-                <button
-                  className="text-xs items-center gap-3 p-3 px-5 rounded-full bg-transparent! article-hover flex"
-                  onClick={() => window.open(project_url, "_blank")}
-                >
-                  웹사이트 바로가기{" "}
-                  <span className="rotate-135">
-                    <Link2 size={16} />
-                  </span>{" "}
-                </button>
+              </h1>{" "}
+              <div className="flex flex-col">
+                <p className=" text-sm text-muted-foreground">프로젝트 설명</p>
+
+                <span className="text-sm max-w-[500px] leading-relaxed break-keep">
+                  {description}
+                </span>
               </div>
+              <article className="items-center flex gap-10">
+                <div className="flex flex-col gap-3">
+                  <p className="text-sm text-muted-foreground  ">
+                    작업기간 & 유지보수
+                  </p>
+                  <p className=" text-xs md:text-base md:font-medium">
+                    {DateUtils.getDurationDays(start_date, end_date)}일
+                  </p>
+                </div>
+                <div className="flex flex-col gap-3">
+                  <p className="text-sm text-muted-foreground ">투입인원</p>
+                  <span className="text-sm">{project_member}</span>
+                </div>
 
-              {/* 작업기간 */}
-              <div className="flex flex-col gap-4 border p-5 border-border rounded-lg mt-10">
-                <article className="space-y-2 md:space-y-3 flex items-center">
-                  {/* <h3 className="text-sm  text-white">기간</h3> */}
-                  <div className="text-lg text-zinc-300 flex items-center gap-3">
-                    <span className="text-sm opacity-60  mr-3">작업기간</span>
-                    <span className="text-indigo-200 text-sm md:text-base md:font-medium">
-                      {DateUtils.getDurationDays(start_date, end_date)}일
-                    </span>
-                    <span className="mx-2 text-zinc-500">|</span>
-                    <span className="text-xs">
-                      {start_date} ~ {end_date}
-                    </span>
-                  </div>
-                </article>
+                <div className="flex flex-col gap-3">
+                  <p className="text-sm text-muted-foreground ">Deply URL</p>
 
-                {/* 참여인원 */}
-                <article className="space-y-2 md:space-y-3">
-                  <div className="text-lg text-zinc-300 flex items-center gap-3">
-                    <span className="text-sm opacity-60 mr-3">투입인원</span>
-                    <span className="text-indigo-200 text-sm md:text-base md:font-medium">
-                      {project_member}
+                  <button
+                    className="text-sm w-full items-center justify-center  gap-1 bg-transparent! border-b flex text-indigo-300 hover:text-teal-300"
+                    onClick={() => window.open(project_url, "_blank")}
+                  >
+                    <span className="rotate-135">
+                      <Link2 size={16} />
                     </span>
-                  </div>
-                </article>
-
+                    {project_url}
+                  </button>
+                </div>
+              </article>
+              <div className="flex flex-col gap-4   rounded-lg ">
                 <article className="space-y-2  md:col-span-2 mt-1">
-                  <div className="grid   grid-cols-[auto_1fr] md:grid-cols-[auto_1fr] divide-y  divide-indigo-200/10  [&>div]:p-2">
+                  <div className="flex flex-col gap-3">
+                    <p className="text-sm text-muted-foreground ">사용스택</p>
+                  </div>
+
+                  <div className="grid grid-cols-[auto_1fr]   divide-indigo-200/10  [&>div]:p-2">
                     <div className="text-xs bg-zinc-950/30">카테고리</div>
                     <div className="text-xs bg-zinc-950/30">스킬</div>
 
@@ -253,17 +260,17 @@ const ProjectDetail = () => {
                         const stacks = stackObj[k];
                         return (
                           <React.Fragment key={`${k}:${idx}`}>
-                            <div className=" md:text-lg text-zinc-300 flex items-center gap-3 border-r">
-                              <span className="text-indigo-100  font-medium text-xs md:text-xs flex  items-center">
+                            <div className=" md:text-lg text-zinc-300 flex items-center gap-3 border-r border-b">
+                              <span className=" font-medium text-xs md:text-xs flex  items-center ">
                                 {k}
                               </span>
                             </div>
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-2 border-b border-indigo-200/10">
                               {stacks.map((st, idx) => {
                                 return (
                                   <span
                                     key={`${st}:${idx}`}
-                                    className="text-xs md:text-xs p-1 md:px-2.5 md:py-1.5 bg-white/5 rounded-lg flex items-center gap-2"
+                                    className="text-xs border border-indigo-200/20 md:text-xs p-1 md:px-2.5  bg-white/2 rounded-lg flex items-center gap-2"
                                   >
                                     {StackIconMapper({ stackName: st })}
                                     {st}
@@ -278,66 +285,37 @@ const ProjectDetail = () => {
                   </div>
                 </article>
               </div>
-
-              {login && (
-                <div className="flex gap-2">
-                  <button
-                    className="text-xs bg-zinc-700 px-3 py-1 rounded hover:bg-zinc-600 transition-colors"
-                    onClick={() => nav(`/project/write?edit=${id}`)}
-                  >
-                    수정
-                  </button>
-                  <button
-                    onClick={deleteConfirm}
-                    className="text-xs bg-zinc-700 px-3 py-1 rounded hover:bg-zinc-600 transition-colors"
-                  >
-                    삭제
-                  </button>
-                </div>
-              )}
+              <div className="w-full border border-border">
+                <ProjectImgWrapper url={thumbnail} alt={title} />
+              </div>
             </div>
           </div>
         </div>
-
-        <div className=" w-full animate-topIn ani-delay-0.4 opacity-0">
-          <h3 className="text-lg tracking-wider flex gap-3 items-center text-white mb-3">
-            <span className="text-sm md:text-sm bg-gradient-to-r tracking-tighter  font-SUIT-Regular from-white to-indigo-200 bg-clip-text text-transparent">
-              미리보기 *
-            </span>
-          </h3>
-          <ProjectImgWrapper url={thumbnail} alt={title} />
-        </div>
       </section>
-
-      <section className="flex-1 mt-10">
-        <h3 className="text-lg tracking-wider flex gap-3 items-center text-white ">
-          <span className="text-sm md:text-sm bg-gradient-to-r tracking-tighter  font-SUIT-Regular from-white to-indigo-200 bg-clip-text text-transparent">
-            주요기능 *
-          </span>
-        </h3>
-        <Accordion type="multiple" className="w-full my-3 flex flex-col gap-3">
+      <section className="flex-1 mt-10 mb-20 flex-col gap-5">
+        <h1 className="text-2xl font-semibold ">주요 기능</h1>
+        <div className="flex flex-col gap-8 mt-3">
           {project_surmmry.map((item, idx) => {
             return (
-              <AccordionItem
-                value={`${idx}`}
-                key={`${idx}-acodian`}
-                className="outline overflow-hidden rounded-sm outline-border"
+              <div
+                className="flex flex-col gap-2"
+                key={`${item.id}:${idx}:list`}
               >
-                <AccordionTrigger className="bg-indigo-300/10! article-hover  text-white  rounded-md text-xs md:text-sm p-3 md:p-5">
-                  {item.title}
-                </AccordionTrigger>
-                <AccordionContent className="p-3 md:p-5 text-xs md:text-sm whitespace-pre-line leading-relaxed">
-                  <div>-</div>
-
+                <h3 className="font-semibold leading-relaxed text-indigo-200">
+                  {idx + 1}. {item.title}
+                </h3>
+                <p className="text-sm text-white/90 pl-2 leading-relaxed max-w-[600px] break-keep">
                   {item.contents}
-                </AccordionContent>
-              </AccordionItem>
+                </p>
+              </div>
             );
           })}
-        </Accordion>
-
-        {/* 프로젝트 상세 내용 */}
-        <div className="mt-6 prose dark:prose-invert prose-sm max-w-none">
+        </div>
+      </section>
+      {/* 프로젝트 상세 내용 */}
+      <section>
+        <div className="prose dark:prose-invert prose-sm max-w-none">
+          <h1 className="text-2xl  font-semibold">상세 내용</h1>
           {project_contents.length > 0 && (
             <EditorProvider editor={editor}>
               <SimpleEditorContents
@@ -348,7 +326,7 @@ const ProjectDetail = () => {
             </EditorProvider>
           )}
         </div>
-      </section>
+      </section>{" "}
     </>
   );
 };

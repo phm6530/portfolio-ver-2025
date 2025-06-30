@@ -1,4 +1,5 @@
 import SearchField from "@/components/shared/search-input-field";
+import PageMainText from "@/components/ui/page-main-text";
 import BlogList from "@/features/Blog/BlogList/BlogList";
 import BlogTab from "@/features/Blog/BlogTab.js/BlogTab";
 import { NotebookPen } from "lucide-react";
@@ -8,9 +9,10 @@ const BlogPage = (): JSX.Element => {
     <div className="flex flex-col items-start max-w-3xl border-b border-white/10 ">
       <NotebookPen size={40} className="text-teal-300 mb-3" />
 
-      <h1 className="text-3xl md:text-4xl leading-13 mb-6 animate-topIn ani-delay-0.2 opacity-0">
+      {/* Page-text */}
+      <PageMainText>
         Dev Blog,<br></br>
-      </h1>
+      </PageMainText>
 
       <div className="mb-10 text-white/90 text-sm leading-relaxed  animate-topIn ani-delay-0.3 opacity-0 max-w-[600px] break-keep">
         <p>Tech Archive" code, 개발, 그리고 기술에 관한 기록 공간 입니다</p>
