@@ -93,7 +93,7 @@ const AppRoute = (): JSX.Element => {
           trigger: "html",
           start: "center center",
           end: "center center",
-          markers: true,
+          // markers: true,
           toggleActions: "restart reverse reverse reverse",
           scrub: 1,
         },
@@ -114,31 +114,6 @@ const AppRoute = (): JSX.Element => {
         className={`glow-5 z-1 absolute pointer-events-none md:-bottom-130 left-0 size-1/2 md:size-150 ${currentColors.secondary} blur-[100px] rounded-full transition-colors duration-700`}
       />
 
-      <div
-        className="fixed inset-0 bg-bottom bg-no-repeat pointer-events-none"
-        style={{
-          width: "100vw",
-          height: "100dvh", // 동적 뷰포트 높이
-          minHeight: "100vh",
-        }}
-      >
-        {/* Main Bg */}
-        <div
-          className=" bottom-0 absolute h-screen
-         bg-gradient-to-t from-black/100 via-transparent to-transparent inset-0 z-100"
-        />
-
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="video-element w-full h-full object-cover"
-        >
-          <source src="/main_2.mp4" type="video/mp4" />
-        </video>
-      </div>
-
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <main
@@ -147,7 +122,6 @@ const AppRoute = (): JSX.Element => {
               "transition duration-700"
             )}
           >
-            {" "}
             {/* Page Transition */}
             <SidebarWrapper>
               <PageTransition>

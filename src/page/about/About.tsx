@@ -1,13 +1,6 @@
-import {
-  Briefcase,
-  Check,
-  GraduationCap,
-  MessageCircle,
-  UserCheck,
-  UserCheck2,
-} from "lucide-react";
+import { Check, GraduationCap, UserCheck2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { CERTS, EDUCATION, EXPERIENCE, SKILLS } from "./about-contents";
+import { CERTS, EDUCATION, SKILLS } from "./about-contents";
 import StackIconMapper from "@/components/shared/stack-iconmapper";
 import { cn } from "@/lib/utils";
 import PageMainText from "@/components/ui/page-main-text";
@@ -67,24 +60,22 @@ const AboutPage = () => {
                     >
                       {key}
                     </h4>
-                    <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                       {SKILLS[key].map((skill, sIdx) => (
                         <div
                           key={`${skill.title}:${idx}:${sIdx}`}
-                          className="space-y-3"
+                          className="space-y-3 border border-border p-5"
                         >
                           <div className="flex items-center gap-3 mb-3">
-                            {StackIconMapper({
-                              stackName: skill.title,
-                              className: "[&>*]:fill-white!",
-                            })}
-                            <span className="text-base">{skill.title}</span>
+                            <span className="text-base text-violet-300">
+                              {skill.title}
+                            </span>
                           </div>
-                          <div className="space-y-2 pl-7">
+                          <div className="space-y-2 ">
                             {skill.description.map((desc, dIdx) => (
                               <p
                                 key={`desc-${dIdx}`}
-                                className="text-sm flex items-center gap-2"
+                                className="text-sm grid grid-cols-[auto_1fr] items-start gap-2"
                               >
                                 <Check size={10} className="text-blue-300" />
                                 <span className="text-secondary-foreground/90">

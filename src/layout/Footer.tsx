@@ -7,7 +7,7 @@ const Link = (url: string) => {
 
 export default function Footer() {
   return (
-    <footer className="text-xs  py-10 flex flex-col gap-2 bg-zinc-800">
+    <footer className="text-xs  py-10 flex flex-col gap-2 bg-zinc-900">
       <div className="layout-center">
         <div className="flex gap-2 mb-5 ">
           <Button
