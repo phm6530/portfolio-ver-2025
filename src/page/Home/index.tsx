@@ -76,7 +76,7 @@ const Home = () => {
           </p>
 
           <button
-            className="gsap-contents border p-3 pl-5 mt-4  justify-between gap-15 flex items-center text-xs article-hover rounded-full border-indigo-200"
+            className="gsap-contents border p-4 pl-5 mt-4  justify-between gap-15 flex items-center text-xs article-hover rounded-full "
             onClick={() => nav("/about")}
           >
             ABOUT ME <ChevronRight size={12} />

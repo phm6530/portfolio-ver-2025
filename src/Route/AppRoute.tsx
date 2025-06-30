@@ -49,6 +49,7 @@ const AppRoute = (): JSX.Element => {
   const location = useLocation();
   const pageKey = location.pathname.split("/")[1];
   const bgRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLDivElement>(null);
 
   const currentColors = useMemo(() => {
     return pageKey in ROUTE_COLORS
@@ -79,7 +80,7 @@ const AppRoute = (): JSX.Element => {
           scrollTrigger: {
             trigger: "html",
             scrub: 1,
-            markers: true,
+            // markers: true,
           },
         }
       );
@@ -96,30 +97,36 @@ const AppRoute = (): JSX.Element => {
       <div
         className={`glow-5 z-1 absolute pointer-events-none md:-bottom-130 left-0 size-1/2 md:size-150 ${currentColors.secondary} blur-[100px] rounded-full transition-colors duration-700`}
       />
-      {/* Main Bg */}
+
       <div
         className="fixed top-0   h-full bg-bottom w-screen bg-no-repeat pointer-events-none"
         ref={bgRef}
       >
+        {/* Main Bg */}
+        <div
+          ref={videoRef}
+          className="fixed bg-gradient-to-t from-black/100 via-transparent to-black inset-0 z-100 "
+        ></div>
+
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="video-element absolute w-screen"
+          className="video-element absolute w-screen "
         >
-          <source src="/main_2.mp4" type="video/mp4" />
+          <source src="/main_2.mp4" type="video/mp4" />{" "}
         </video>
       </div>
       <div id="smooth-wrapper">
         <div id="smooth-content">
-          {" "}
           <main
             className={cn(
               BG_COLOR[pageKey as keyof typeof BG_COLOR],
               "transition duration-700"
             )}
           >
+            {" "}
             {/* Page Transition */}
             <SidebarWrapper>
               <PageTransition>
