@@ -5,10 +5,12 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 // import useMediaQuery, { BREAKPOINT } from "@/hooks/useMediaQuery";
 import { useGSAP } from "@gsap/react";
+import { useNavigate } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 const Home = () => {
   const spanRefs = useRef<HTMLSpanElement[]>([]);
+  const navigate = useNavigate();
 
   useGSAP(() => {
     const tl = gsap.timeline();
@@ -43,18 +45,22 @@ const Home = () => {
     {
       name: "About",
       des: "퍼블리셔와 프론트엔드 그 사이 어딘가",
+      path: "/about",
     },
     {
       name: "Work",
       des: "Project, ARCHIVE",
+      path: "/project",
     },
     {
       name: "Blog",
       des: "Tech Archive code, 개발, 그리고 기술에 관한 기록 공간 입니다",
+      path: "/blog",
     },
     {
       name: "Board",
       des: "한줄의 응원은 힘이 됩니다",
+      path: "/board",
     },
   ];
   return (
@@ -88,7 +94,7 @@ const Home = () => {
         />
         <div className="  items-start gap-3   textContainer w-full">
           <div
-            data-speed="0.5"
+            data-speed="0.7"
             className="absolute left-0 inset-0 bg-bottom bg-no-repeat pointer-events-none"
             style={{
               width: "100vw",
@@ -165,7 +171,10 @@ const Home = () => {
           <div className="button   z-10  border-white/20 w-full  space-x-10 grid md:grid-cols-4 grid-cols-2">
             {MAIN_BTN.map((e, idx) => {
               return (
-                <div className=" flex flex-col gap-2 pb-5 group cursor-pointer">
+                <div
+                  onClick={() => navigate(e.path)}
+                  className=" flex flex-col gap-2 pb-5 group cursor-pointer"
+                >
                   <h1 className="text-4xl  font-semibold font-Montserrat opacity-20 border-l pl-3">
                     0{idx + 1}
                   </h1>
@@ -199,12 +208,11 @@ const Home = () => {
             <p className="text-zinc-700">
               저는 프론트엔드 개발자 'PHM'입니다. <br></br>
               'Next.js', 'React'를 주력으로 개발하고 있으며 넓은 협업과 이해를
-              위해 백엔드,
+              위해 새로 배우는 것에 흥미를 느낍니다.
             </p>
             <p className="text-zinc-700">
-              디자이너와 개발자 사이의 가교 역할을 수행하며, 복잡한 기술적
-              요구사항을 시각적으로 뛰어난 결과물로 구현하는 독보적인 역량을
-              바탕으로 팀과 프로젝트에 기여하겠습니다.
+              사용자 중심의 직관적인 인터페이스 설계부터 최적화 방식으로
+              개발자와 사용자 모두의 경험을 중시합니다.
             </p>
           </div>
         </div>

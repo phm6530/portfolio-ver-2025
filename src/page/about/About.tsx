@@ -1,7 +1,6 @@
 import { Check, GraduationCap, UserCheck2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CERTS, EDUCATION, SKILLS } from "./about-contents";
-import StackIconMapper from "@/components/shared/stack-iconmapper";
 import { cn } from "@/lib/utils";
 import PageMainText from "@/components/ui/page-main-text";
 
@@ -31,11 +30,6 @@ const AboutPage = () => {
             사용자 중심의 직관적인 인터페이스 설계부터 최적화 방식으로<br></br>{" "}
             개발자와 사용자 모두의 경험을 중시합니다.
           </p>
-          <p>
-            디자이너와 개발자 사이의 가교 역할을 수행하며, 복잡한 기술적
-            요구사항을 <br></br>시각적으로 뛰어난 결과물로 구현하는 독보적인
-            역량을 바탕으로 팀과 프로젝트에 기여하겠습니다.
-          </p>
 
           <div className="mt-10">
             <button
@@ -46,7 +40,6 @@ const AboutPage = () => {
             </button>
           </div>
           <div className="flex flex-col">
-            {/* Skills Section - Simplified */}
             <div className="pt-12 mt-12 border-t border-white/10">
               {/* Skill-list */}
               <div className="flex flex-col gap-6">
@@ -60,14 +53,14 @@ const AboutPage = () => {
                     >
                       {key}
                     </h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
                       {SKILLS[key].map((skill, sIdx) => (
                         <div
                           key={`${skill.title}:${idx}:${sIdx}`}
-                          className="space-y-3 border border-border p-5"
+                          className="space-y-3 "
                         >
-                          <div className="flex items-center gap-3 mb-3">
-                            <span className="text-base text-violet-300">
+                          <div className="flex  gap-3 mb-3  p-2 ">
+                            <span className="text-base border p-3 bg-white text-black!">
                               {skill.title}
                             </span>
                           </div>
