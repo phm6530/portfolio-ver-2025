@@ -72,18 +72,34 @@ const AppRoute = (): JSX.Element => {
 
   useGSAP(
     () => {
-      gsap.fromTo(
-        bgRef.current,
-        { y: 0 },
-        {
-          y: -100,
-          scrollTrigger: {
-            trigger: "html",
-            scrub: 1,
-            // markers: true,
-          },
-        }
-      );
+      gsap.to(bgRef.current, {
+        // opacity: 0,
+        top: -100,
+        scrollTrigger: {
+          trigger: "html",
+          // markers: true,
+        },
+      });
+    },
+    { scope: "html" }
+  );
+
+  useGSAP(
+    () => {
+      gsap.to(videoRef.current, {
+        opacity: 1,
+        background: "#000",
+        scrollTrigger: {
+          trigger: "html",
+          start: "center center",
+          end: "center center",
+          markers: true,
+          toggleActions: "restart reverse reverse reverse",
+          scrub: 1,
+        },
+        markers: true,
+        scrub: 1,
+      });
     },
     { scope: "html" }
   );
@@ -99,25 +115,30 @@ const AppRoute = (): JSX.Element => {
       />
 
       <div
-        className="fixed top-0   h-full bg-bottom w-screen bg-no-repeat pointer-events-none"
-        ref={bgRef}
+        className="fixed inset-0 bg-bottom bg-no-repeat pointer-events-none"
+        style={{
+          width: "100vw",
+          height: "100dvh", // 동적 뷰포트 높이
+          minHeight: "100vh",
+        }}
       >
         {/* Main Bg */}
         <div
-          ref={videoRef}
-          className="fixed bg-gradient-to-t from-black/100 via-transparent to-black inset-0 z-100 "
-        ></div>
+          className=" bottom-0 absolute h-screen
+         bg-gradient-to-t from-black/100 via-transparent to-transparent inset-0 z-100"
+        />
 
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="video-element absolute w-screen "
+          className="video-element w-full h-full object-cover"
         >
-          <source src="/main_2.mp4" type="video/mp4" />{" "}
+          <source src="/main_2.mp4" type="video/mp4" />
         </video>
       </div>
+
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <main

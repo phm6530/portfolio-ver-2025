@@ -45,11 +45,11 @@ export default function RecentProject() {
               onClick={() => nav(`/project/${project.id}`)}
               key={`POST:${project.id}:${idx}`}
               className={cn(
-                "flex flex-col backdrop-blur-xs bg-white/5  group cursor-pointer tr group  w-full  p-5 article-hover rounded-xl"
+                "flex flex-col    group cursor-pointer tr group  w-full   rounded-xl"
               )}
             >
-              <div className="size-10 border border-white/40 flex items-center justify-center rounded-lg">
-                <Box className="" />
+              <div className="size-10 bg-white/10  flex items-center justify-center rounded-lg">
+                <Box />
               </div>
 
               <h4 className="text-foreground flex text-xl items-center gap-3 group-hover:underline font-medium my-3 group-hover:text-indigo-200 transition-colors">
