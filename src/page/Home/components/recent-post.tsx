@@ -35,10 +35,9 @@ export default function RecentPosts() {
   return (
     <div className="layout-center py-20">
       <h3 className="text-sm font-medium tracking-wider mb-3 flex items-center gap-2 group cursor-pointer   pb-2  ">
-        <Milestone size={20} />
-        <span className="flex gap-2 text-[11px] text text-shadow-[0_5px_30px_rgba(99,102,241,0.25)]  text-foreground/80">
-          PINNED POST
-        </span>
+        <h1 className="text-3xl md:text-5xl font-Montserrat mt-3 mb-5 font-medium tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-2 ">
+          Dev Blog,
+        </h1>
         <ChevronRight
           size={15}
           className="opacity-50 ml-auto group-hover:opacity-100 transition-all text-foreground/30"
