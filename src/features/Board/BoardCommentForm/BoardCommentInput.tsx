@@ -25,13 +25,19 @@ const BoardCommentInput = forwardRef<
           <Textarea
             ref={ref as React.Ref<HTMLTextAreaElement>}
             {...rest}
-            className={cn("  rounded-lg", error && "border-destructive!")}
+            className={cn(
+              "rounded-lg text-xs md:text-sm",
+              error && "border-destructive!"
+            )}
           />
         ) : (
           <Input
             disabled={isAuth}
             autoComplete="off"
-            className={cn(" rounded-lg p-2", error && "border-destructive")}
+            className={cn(
+              "text-xs md:text-sm rounded-lg p-2",
+              error && "border-destructive"
+            )}
             {...rest}
             type={type}
           />

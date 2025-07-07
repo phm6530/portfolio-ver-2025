@@ -3,19 +3,18 @@ import RecentPosts from "./components/recent-post";
 import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-// import useMediaQuery, { BREAKPOINT } from "@/hooks/useMediaQuery";
 import { useGSAP } from "@gsap/react";
 import { useNavigate } from "react-router-dom";
+import BlogSvg from "@/asset/blog.svg?react";
+import GitSvg from "@/asset/git.svg?react";
+import Kakao from "@/asset/kakao.svg?react";
+import { ChevronRight } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import BlogSvg from "@/asset/blog.svg?react";
-import GitSvg from "@/asset/git.svg?react";
-import Kakao from "@/asset/kakao.svg?react";
-import { ChevronRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 const Home = () => {
@@ -116,51 +115,55 @@ const Home = () => {
         </div>
 
         <div className="layout-center  min-h-screen  justify-center flex flex-col items-start">
-          <p className="text-sm z-10 text-teal-300 pt-70 md:pt-40 mb-2 font-Montserrat">
+          <p className="text-sm z-10 text-teal-300 pt-60 md:pt-40 mb-2 font-Montserrat">
             FRONT END - PUBLISHER
           </p>
-          <h1 className="inline-block  text-5xl z-10 md:text-7xl  md:leading-tight  font-Montserrat  break-keep  w-full">
+          <h1 className="inline-block  text-5xl z-10 md:text-6xl  md:leading-tight  font-Montserrat  break-keep  w-full">
             PHM,
-            {"FRONTEND".split("").map((e, i) => (
-              <span
-                ref={(el) => {
-                  if (el) {
-                    spanRefs.current[i] = el;
-                  }
-                }}
-                className="relative inline-block  font-bold  "
-              >
-                {e}
-              </span>
-            ))}
+            <div className="inline-block">
+              {"FRONTEND".split("").map((e, i) => (
+                <span
+                  ref={(el) => {
+                    if (el) {
+                      spanRefs.current[i] = el;
+                    }
+                  }}
+                  className="relative inline-block  font-bold  "
+                >
+                  {e}
+                </span>
+              ))}
+            </div>
             <br></br>
             DEVELOPER
           </h1>
 
-          <p className="z-10 opacity-80 mt-10 mb-25">
-            프론트앤드 개발과 퍼블리싱을 주로 다루빈다<br></br> 해당 사이트는
+          <p className="z-10 text-sm md:text-base opacity-80 mt-10 mb-20 md:mb-25">
+            프론트앤드 개발과 퍼블리싱을 주로 다룹니다<br></br> 해당 사이트는
             'React'와 'Supabase'로 제작되었습니다.
           </p>
 
-          <div className="button   z-10   w-full  space-x-10 grid md:grid-cols-4 grid-cols-2">
+          <div className="button   z-10   w-full  space-x-10 grid md:grid-cols-4 grid-cols-1">
             {MAIN_BTN.map((e, idx) => {
               return (
                 <div
                   onClick={() => navigate(e.path)}
-                  className=" flex flex-col gap-2 pb-5 group cursor-pointer"
+                  className="grid grid-cols-[auto_1fr] md:grid-cols-1  gap-5 md:gap-2 pb-5 group cursor-pointer"
                 >
-                  <h1 className="text-4xl  font-semibold font-Montserrat opacity-20 border-l pl-3">
+                  <h1 className="text-3xl md:text-4xl  font-semibold font-Montserrat opacity-20 md:border-l md:pl-3">
                     0{idx + 1}
                   </h1>
-                  <h1
-                    className="font-Montserrat text-2xl border-l pl-3 group-hover:text-teal-300 group-hover:pl-5 "
-                    style={{ transition: "padding-left .2s ease" }}
-                  >
-                    {e.name}
-                  </h1>
-                  <p className="text-xs text-muted-foreground leading-tight">
-                    {e.des}
-                  </p>
+                  <div className="flex flex-col gap-2">
+                    <h1
+                      className="font-Montserrat text-xl md:text-2xl md:border-l md:pl-3 group-hover:text-teal-300 group-hover:pl-5 "
+                      style={{ transition: "padding-left .2s ease" }}
+                    >
+                      {e.name}
+                    </h1>
+                    <p className="text-xs text-muted-foreground leading-tight md:col-auto col-span-2">
+                      {e.des}
+                    </p>
+                  </div>
                 </div>
               );
             })}
@@ -169,15 +172,13 @@ const Home = () => {
       </div>
 
       <div className="bg-zinc-950 -translate-y-1 pb-2 border-t-2 ">
-        <div className="layout-center pt-30 pb-20 md:pb-40 grid md:grid-cols-[auto_1fr] gap-10 items-start">
+        <div className="layout-center pt-40 pb-40 md:pb-40 md:gap-30 items-start">
           {/* 왼쪽 텍스트 영역 */}
-          <div className="text-foreground font-Montserrat">
-            <h1 className="text-4xl mb-4 flex items-center gap-2">
-              ABOUT ME
-              <span className="text-teal-400 text-xl">👋</span>
-            </h1>
+          <div className="text-foreground font-Montserrat mb-5">
+            {" "}
+            {/* <UserCheck2 size={30} className="text-teal-300" /> */}
+            <h1 className="text-4xl mb-4 flex items-center gap-2">ABOUT ME</h1>
           </div>
-
           {/* 오른쪽 시각 요소 */}
           <div className="flex flex-col gap-6">
             <div className="text-base md:text-lg flex flex-col gap-5 leading-relaxed">
@@ -188,14 +189,39 @@ const Home = () => {
                 있으며, 넓은 협업과 이해를 위해 새로 배우는 것에 흥미를
                 느낍니다.
               </p>
-              <p className="break-keep">
-                퍼블리셔에서 프론트엔드로 전환이 아닌{" "}
-                <strong>역량의 확장</strong>이라는 생각으로 디자인과 기술을
-                아우르는 하이브리드 전문가로 성장하고 있습니다. 사용자 중심의
-                직관적인 인터페이스 설계부터 최적화 방식으로 개발자와 사용자
-                모두의 경험을 중시합니다.
-              </p>
             </div>
+          </div>
+
+          <div className="flex gap-2 items-center mt-15">
+            <button
+              className="border-white/60  p-3 gsap-contents z-10 border flex   justify-between gap-15 items-center text-xs article-hover  "
+              // onClick={() => nav("/about")}
+            >
+              자세히보기 <ChevronRight size={12} />
+            </button>
+
+            {MY_LINKS.map((btn) => {
+              return (
+                <TooltipProvider key={`:links${btn.label}`}>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <div
+                        className="bg-transparent!  transition-all duration-100 p-3  group article-hover"
+                        onClick={() => window.open(btn.to)}
+                      >
+                        <div className="relative">
+                          <btn.svg className="size-3.5 fill-foreground  group-hover:opacity-100 group-hover:fill-indigo-200 transition-all" />
+                          <div className="absolute -inset-1 scale-0 group-hover:scale-100 bg-indigo-400/20 blur-md rounded-full -z-10 transition-all duration-300"></div>
+                        </div>
+                      </div>{" "}
+                    </TooltipTrigger>
+                    <TooltipContent className="bg-indigo-500 before:bg-indigo-500! after:bg-indigo-500!">
+                      <p>{btn.label}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              );
+            })}
           </div>
         </div>
       </div>

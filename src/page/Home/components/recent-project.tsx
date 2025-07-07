@@ -34,10 +34,10 @@ export default function RecentProject() {
   return (
     <div className="layout-center grid md:grid-cols-2  pt-20">
       <div className=" animate-topIn ani-delay-0.5 opacity-0">
+        {/* <p className="text-sm z-10 text-teal-300">프로젝트</p> */}
         <h1 className="text-3xl md:text-5xl font-Montserrat mt-3 mb-5 font-medium tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-2 ">
           WORK, <br></br>ARCHIVE
         </h1>
-
         <button
           className="border-white/60 hidden md:flex mt-10 gsap-contents z-10 border p-4 pl-5   justify-between gap-15 items-center text-xs article-hover  "
           onClick={() => nav("/about")}
