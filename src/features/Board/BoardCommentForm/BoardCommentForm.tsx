@@ -16,6 +16,7 @@ import useThrottling from "@/hooks/useThrottling";
 import { cn } from "@/lib/utils";
 import { PenBoxIcon } from "lucide-react";
 import ErrorBubble from "@/components/error/ErrorBubble";
+import { Button } from "@/components/ui/button";
 
 type CommentFormValues = z.infer<ReturnType<typeof dynamicSchema>>;
 
@@ -56,7 +57,7 @@ export default function BoardCommentForm({
     onSuccess: () => {
       toast.success("등록 되었습니다.");
       form.reset(defaultValues(parent_id));
-      if (!!parent_id) commentsViewOff();
+      if (parent_id) commentsViewOff();
       queryClient.invalidateQueries({
         queryKey: ["GUESTBOARD"],
       });
@@ -81,7 +82,7 @@ export default function BoardCommentForm({
     <>
       <form
         className={cn(
-          "w-full flex flex-col items-start relative",
+          "w-full flex flex-col items-start relative gap-2",
           !!parent_id && "animate-wiggle"
         )}
         method="POST"
@@ -123,7 +124,7 @@ export default function BoardCommentForm({
           )}
         </div>
 
-        <div className="w-full flex mt-2 gap-3 mb-13 items-stretch">
+        <div className="w-full flex  gap-3 items-stretch">
           <Controller
             name="comment"
             control={form.control}
@@ -138,12 +139,11 @@ export default function BoardCommentForm({
               />
             )}
           />
-          <button className="relative w-[100px] inline-flex items-center justify-center p-0.5  me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
-            <span className="relative w-full h-full gap-2 flex justify-center items-center  transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
-              <PenBoxIcon size={17} />
-            </span>
-          </button>
         </div>
+        <Button className="ml-auto text-xs" size={"lg"}>
+          <PenBoxIcon />
+          작성하기
+        </Button>
       </form>
     </>
   );

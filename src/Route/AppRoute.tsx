@@ -111,7 +111,7 @@ const AppRoute = (): JSX.Element => {
         className={`glow-5 z-5 absolute pointer-events-none -top-4/5 right-1 size-1/2 md:size-200 ${currentColors.primary} blur-[100px] rounded-full transition-colors duration-700`}
       />
       <div
-        className={`glow-5 z-1 absolute pointer-events-none md:-bottom-130 left-0 size-1/2 md:size-150 ${currentColors.secondary} blur-[100px] rounded-full transition-colors duration-700`}
+        className={`glow-5 z-1 absolute pointer-events-none -bottom-130 left-0 size-1/2 md:size-150 ${currentColors.secondary} blur-[100px] rounded-full transition-colors duration-700`}
       />
 
       <div id="smooth-wrapper">
