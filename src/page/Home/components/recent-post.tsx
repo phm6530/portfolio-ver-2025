@@ -3,7 +3,6 @@ import BlogContentsItem from "@/features/Blog/BlogContents/BlogContentsItem";
 import { POST_STATUS } from "@/features/Blog/BlogList/BlogList";
 import { requestHandler } from "@/utils/apiUtils";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronRight, Milestone } from "lucide-react";
 
 export type PostItemModel = {
   post_id: number;
@@ -34,15 +33,15 @@ export default function RecentPosts() {
 
   return (
     <div className="layout-center py-20">
-      <h3 className="text-sm font-medium tracking-wider mb-3 flex items-center gap-2 group cursor-pointer   pb-2  ">
-        <h1 className="text-3xl md:text-5xl font-Montserrat mt-3 mb-5 font-medium tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-2 ">
-          Dev Blog,
+      <h3 className="text-sm font-medium tracking-wider flex items-center gap-2 group cursor-pointer   pb-2  ">
+        <h1 className="text-3xl md:text-5xl font-Montserrat mt-3 font-medium tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-2 ">
+          Dev Blog
         </h1>
-        <ChevronRight
-          size={15}
-          className="opacity-50 ml-auto group-hover:opacity-100 transition-all text-foreground/30"
-        />
       </h3>
+      <p className="mb-10 text-xs md:text-sm leading-relaxed">
+        개발, 그리고 기술에 관한{" "}
+        <span className="text-teal-300">기록 공간</span> 입니다
+      </p>
       <div className="grid md:grid-cols-3 gap-5">
         {data?.slice(0, 3).map((blogMeta, idx) => {
           return (

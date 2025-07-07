@@ -24,12 +24,20 @@ const Home = () => {
 
   useGSAP(() => {
     const tl = gsap.timeline();
+
     tl.from(spanRefs.current, {
       stagger: 0.05,
       y: 50,
-
       opacity: 0,
       ease: "back(3)",
+    });
+
+    tl.to(spanRefs.current, {
+      stagger: 0.08,
+      color: "#46edd5",
+
+      ease: "power1.inOut",
+      delay: 0.2,
     });
   }, {});
 
@@ -83,6 +91,7 @@ const Home = () => {
       path: "/board",
     },
   ];
+
   return (
     <>
       {/* Main Bg */}
@@ -114,11 +123,11 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="layout-center  min-h-screen  justify-center flex flex-col items-start">
-          <p className="text-sm z-10 text-teal-300 pt-60 md:pt-40 mb-2 font-Montserrat">
+        <div className="layout-center  leading-relaxed  min-h-screen  justify-center flex flex-col items-start">
+          <p className="text-sm z-10  leading-relaxed text-teal-300 pt-60 md:pt-40 mb-2 font-Montserrat">
             FRONT END - PUBLISHER
           </p>
-          <h1 className="inline-block  text-5xl z-10 md:text-6xl  md:leading-tight  font-Montserrat  break-keep  w-full">
+          <h1 className="inline-block leading-tight text-5xl z-10 md:text-6xl    font-Montserrat  break-keep  w-full">
             PHM,
             <div className="inline-block">
               {"FRONTEND".split("").map((e, i) => (
@@ -195,7 +204,7 @@ const Home = () => {
           <div className="flex gap-2 items-center mt-15">
             <button
               className="border-white/60  p-3 gsap-contents z-10 border flex   justify-between gap-15 items-center text-xs article-hover  "
-              // onClick={() => nav("/about")}
+              onClick={() => navigate("/about")}
             >
               자세히보기 <ChevronRight size={12} />
             </button>
