@@ -30,22 +30,22 @@ const ProjectListItem: React.FC<{
     <FadeInAnimation>
       <div
         onClick={() => nav(`${id}`)}
-        className="group relative  py-5   grid md:grid-cols-[minmax(auto,250px)_1fr] overflow-hidden h-full hover:-translate-y-1 transition-all duration-300 article-hover border-x-0  "
+        className="group relative  overflow-hidden h-full  transition-all duration-300 article-hover  "
       >
-        {thumbnail && (
-          <div
-            className="md:w-full   rounded-xl relative bg-no-repeat md:block aspect-[16/8] md:aspect-auto"
-            style={{
-              backgroundImage: `url(${thumbnail ? imgUrlMapper({ thumbnail }) : null})`,
-              backgroundPosition: "top",
-              backgroundSize: "cover",
-            }}
-          ></div>
-        )}
-
         {/* 콘텐츠 영역 */}
-        <div className="flex flex-col flex-1 md:px-7 md:py-4 justify-between">
-          <h3 className="text-xl font-Montserrat md:mt-0 mt-5  group-hover:text-indigo-200 transition-colors mb-3">
+        <div className="flex flex-col flex-1 p-5 justify-between">
+          {" "}
+          {thumbnail && (
+            <div
+              className="rounded-lg  relative bg-no-repeat md:block aspect-[16/8] mb-5"
+              style={{
+                backgroundImage: `url(${thumbnail ? imgUrlMapper({ thumbnail }) : null})`,
+                backgroundPosition: "top",
+                backgroundSize: "cover",
+              }}
+            ></div>
+          )}
+          <h3 className="text-xl font-Montserrat md:mt-0   group-hover:text-indigo-200 transition-colors mb-3">
             {title}
           </h3>
           <div className="mt-auto  pt-3 border-t border-zinc-700/40 flex flex-col gap-4 sm:justify-between mb-4">
@@ -89,9 +89,8 @@ const ProjectListItem: React.FC<{
               </div>
             </div>
           </div>
-
           {/* 설명 */}
-          <p className="text-[13px] break-keep line-clamp-3 leading-relaxed mb-5 text-indigo-100/80 mt-5">
+          <p className="text-[13px] break-keep line-clamp-3 leading-relaxed mb-5 text-indigo-100/80 ">
             {description}
           </p>
         </div>

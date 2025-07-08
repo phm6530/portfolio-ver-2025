@@ -42,7 +42,7 @@ export default function RecentPosts() {
         개발, 그리고 기술에 관한{" "}
         <span className="text-teal-300">기록 공간</span> 입니다
       </p>
-      <div className="grid md:grid-cols-3 gap-5">
+      <div className="grid md:grid-cols-3 md:gap-5">
         {data?.slice(0, 3).map((blogMeta, idx) => {
           return (
             <BlogContentsItem

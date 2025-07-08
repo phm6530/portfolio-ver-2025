@@ -8,10 +8,9 @@ export default function PageTransition({ children }: { children: ReactNode }) {
   const nodeRef = useRef<HTMLDivElement>(null);
 
   const onPageEnter = () => {
-    window.scrollTo(0, 0);
     gsap.fromTo(
       nodeRef.current,
-      { opacity: 0, y: -100 }, // 시작 상태
+      { opacity: 0, y: 50 }, // 시작 상태
       {
         opacity: 1,
         y: 0,
@@ -37,10 +36,12 @@ export default function PageTransition({ children }: { children: ReactNode }) {
       <CSSTransition
         key={location.pathname.split("/")[1]}
         timeout={ANIMATION_DURATION}
-        unmountOnExit
         nodeRef={nodeRef}
         onEnter={onPageEnter}
         onExit={onPageExit}
+        onEntering={() => {
+          window.scrollTo({ top: 0, behavior: "auto" });
+        }}
       >
         <div ref={nodeRef}>{children}</div>
       </CSSTransition>

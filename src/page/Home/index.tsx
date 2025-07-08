@@ -25,20 +25,17 @@ const Home = () => {
   useGSAP(() => {
     const tl = gsap.timeline();
 
-    tl.from(spanRefs.current, {
-      stagger: 0.05,
-      y: 50,
-      opacity: 0,
-      ease: "back(3)",
-    });
-
-    tl.to(spanRefs.current, {
-      stagger: 0.08,
-      color: "#46edd5",
-
-      ease: "power1.inOut",
-      delay: 0.2,
-    });
+    tl.fromTo(
+      spanRefs.current,
+      { y: 50, opacity: 0 },
+      {
+        stagger: 0.05,
+        y: 0,
+        opacity: 1,
+        color: "#46edd5",
+        ease: "back(3)",
+      }
+    );
   }, {});
 
   useGSAP(() => {
@@ -107,7 +104,7 @@ const Home = () => {
             className="absolute bg-bottom bg-no-repeat pointer-events-none"
             style={{
               width: "100vw",
-              height: "100dvh", // 동적 뷰포트 높이
+              height: "100dvh",
               minHeight: "100vh",
             }}
           >

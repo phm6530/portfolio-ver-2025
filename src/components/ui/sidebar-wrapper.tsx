@@ -12,7 +12,7 @@ export default function SidebarWrapper({ children }: { children: ReactNode }) {
   const onPageEnter = () => {
     gsap.fromTo(
       nodeRef.current,
-      { opacity: 0, y: -100 }, // 시작 상태
+      { opacity: 0, y: -100 },
       {
         opacity: 1,
         y: 0,
@@ -44,9 +44,6 @@ export default function SidebarWrapper({ children }: { children: ReactNode }) {
         nodeRef={nodeRef}
         onEnter={onPageEnter}
         onExit={onPageExit}
-        onEntering={() => {
-          window.scrollTo(0, 0);
-        }}
       >
         <div ref={nodeRef}>
           {isMain ? (

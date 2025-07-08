@@ -144,7 +144,7 @@ const ProjectList = () => {
       </div>
 
       <div
-        className="grid md:grid-cols-1 grid-cols-1 mt-5  ani"
+        className="grid md:grid-cols-2 grid-cols-1 mt-5 gap-3 "
         key={curFilter}
       >
         {!isLoading && isError && "error"}

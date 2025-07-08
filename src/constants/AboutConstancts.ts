@@ -101,7 +101,7 @@ export const EDUCATION = [
     year: "2021",
   },
   {
-    name: "그린컴퓨터아트학원 웹앱 UX/UI 퍼블리싱 과정",
+    name: "그린컴퓨터아트학원 웹앱 UX/UI 퍼블리싱 ",
     year: "2019",
   },
   {

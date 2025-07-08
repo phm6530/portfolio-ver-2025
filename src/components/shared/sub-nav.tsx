@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import BlogSvg from "@/asset/blog.svg?react";
 import GitSvg from "@/asset/git.svg?react";
 import Kakao from "@/asset/kakao.svg?react";
-import { Button } from "@/components/ui/button";
+
 import {
   Tooltip,
   TooltipContent,

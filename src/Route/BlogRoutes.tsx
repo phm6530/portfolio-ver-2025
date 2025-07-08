@@ -13,13 +13,7 @@ const BlogRoutes = (): JSX.Element => {
 
   return (
     <>
-      <AnimatePresence
-        mode="wait"
-        initial={false}
-        onExitComplete={() => {
-          window.scrollTo(0, 0);
-        }}
-      >
+      <AnimatePresence mode="wait" initial={false}>
         <Routes location={location} key={location.pathname}>
           {PATHS.map((path) => {
             return (

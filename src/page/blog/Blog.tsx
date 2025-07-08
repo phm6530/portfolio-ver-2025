@@ -1,4 +1,3 @@
-import { AnimatedBackgroundGlows } from "../about/tttt";
 import { Route, Routes, useLocation } from "react-router-dom";
 import BlogPage from "./pages/blog-page";
 import BlogDetail from "./pages/BlogDetail";
@@ -15,13 +14,7 @@ const Blog = (): JSX.Element => {
     <>
       {/* Grow 효과 애니메이션 */}
       {/* <AnimatedBackgroundGlows /> */}
-      <AnimatePresence
-        mode="wait"
-        initial={false}
-        onExitComplete={() => {
-          window.scrollTo(0, 0);
-        }}
-      >
+      <AnimatePresence mode="wait" initial={false}>
         <Routes location={location} key={location.pathname}>
           {PATHS.map((path) => {
             return (
