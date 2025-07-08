@@ -1232,6 +1232,10 @@
   .simple-editor-content img {
     width: 100% !important;
   }
+
+  .tiptap p {
+    font-size: 14px !important;
+  }
 }
 
 .tiptap {
@@ -1284,6 +1288,7 @@
 .tiptap h6 {
   font-size: calc(1rem * var(--font-scale));
 }
+
 .tiptap p code {
   border-radius: 0.4rem;
   font-family: "Montserrat";

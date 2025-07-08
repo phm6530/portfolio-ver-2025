@@ -208,15 +208,15 @@ const ProjectDetail = () => {
               <h1 className="font-semibold border-border relative font-Montserrat inline-flex gap-4 items-center hover:text-indigo-100 text-3xl md:text-5xl leading-tight text-white  transition-all cursor-pointer tracking-tight">
                 {title}
               </h1>{" "}
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-2">
                 <p className=" text-sm text-muted-foreground">프로젝트 설명</p>
 
                 <span className="text-sm max-w-[500px] leading-relaxed break-keep">
                   {description}
                 </span>
               </div>
-              <article className="items-center flex gap-10">
-                <div className="flex flex-col gap-3">
+              <article className=" flex flex-col  md:flex-row gap-4 md:gap-10 justify-start items-start">
+                <div className="flex flex-col gap-2">
                   <p className="text-sm text-muted-foreground  ">
                     작업기간 & 유지보수
                   </p>
@@ -224,16 +224,16 @@ const ProjectDetail = () => {
                     {DateUtils.getDurationDays(start_date, end_date)}일
                   </p>
                 </div>
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
                   <p className="text-sm text-muted-foreground ">투입인원</p>
                   <span className="text-sm">{project_member}</span>
                 </div>
 
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
                   <p className="text-sm text-muted-foreground ">Deply URL</p>
 
                   <button
-                    className="text-sm w-full items-center justify-center  gap-1 bg-transparent! border-b flex text-indigo-300 hover:text-teal-300"
+                    className="text-sm  items-center  gap-1 bg-transparent! border-b flex text-indigo-300 hover:text-teal-300"
                     onClick={() => window.open(project_url, "_blank")}
                   >
                     <span className="rotate-135">
