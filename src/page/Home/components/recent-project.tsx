@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 import ProjectItemSkeleton from "./project-item-skeleton";
 
-import { Box, ChevronRight } from "lucide-react";
+import { Box } from "lucide-react";
 
 export default function RecentProject() {
   const { data: projectOne, isLoading } = useQuery<ProjectPostProps[]>({
@@ -32,7 +32,7 @@ export default function RecentProject() {
   const nav = useNavigate();
 
   return (
-    <div className="layout-center grid md:grid-cols-2  pt-20">
+    <div className="layout-center grid  pt-20">
       <div className=" animate-topIn ani-delay-0.5 opacity-0">
         {/* <p className="text-sm z-10 text-teal-300">프로젝트</p> */}
         <h1 className="text-3xl md:text-5xl font-Montserrat mt-3  font-medium tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-2 ">
@@ -44,13 +44,6 @@ export default function RecentProject() {
           <span className="text-teal-300">프로젝트 기록</span>
           입니다
         </p>
-
-        <button
-          className="border-white/60 md:flex hidden  p-3 gsap-contents z-10 border    justify-between gap-15 items-center text-xs article-hover  "
-          onClick={() => nav("/project")}
-        >
-          자세히보기 <ChevronRight size={12} />
-        </button>
       </div>
 
       <div className=" flex-col flex space-y-3">

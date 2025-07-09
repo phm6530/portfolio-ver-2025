@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useRef } from "react";
 
 type MotionChildren = ReactNode;
 
@@ -49,7 +49,26 @@ export const FadeInOut: React.FC<MotionProps> = ({ className, children }) => {
 };
 
 export const Page: React.FC<MotionProps> = ({ className, children }) => {
-  const scrollOffsetY = () => {
+  const scrollBlockedRef = useRef(false);
+
+  const preventScroll = (e: Event) => {
+    if (scrollBlockedRef.current) {
+      e.preventDefault();
+    }
+  };
+
+  const handleAnimationStart = () => {
+    scrollBlockedRef.current = true;
+    window.addEventListener("wheel", preventScroll, { passive: false });
+    window.addEventListener("touchmove", preventScroll, { passive: false });
+    window.addEventListener("keydown", preventScroll, { passive: false });
+  };
+
+  const handleAnimationComplete = () => {
+    scrollBlockedRef.current = false;
+    window.removeEventListener("wheel", preventScroll);
+    window.removeEventListener("touchmove", preventScroll);
+    window.removeEventListener("keydown", preventScroll);
     window.scrollTo({ top: 0 });
   };
 
@@ -59,10 +78,11 @@ export const Page: React.FC<MotionProps> = ({ className, children }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 50 }}
-      onAnimationComplete={scrollOffsetY}
+      onAnimationStart={handleAnimationStart}
+      onAnimationComplete={handleAnimationComplete}
       transition={{
-        duration: 0.6,
-        ease: "backInOut",
+        duration: 0.3,
+        ease: "easeIn",
       }}
     >
       {children}

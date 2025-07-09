@@ -95,7 +95,7 @@ const ProjectList = () => {
 
   return (
     <div className="flex-1 max-w-3xl">
-      <div className="mb-6  ">
+      <div className="mb-6 animate-topIn ani-delay-0.1 opacity-0">
         <Box size={40} className="text-teal-300 mb-3" />
         <PageMainText>
           WORK,<br></br>
@@ -103,7 +103,7 @@ const ProjectList = () => {
         </PageMainText>
       </div>
 
-      <div className="text-white/80 text-sm   mb-12 leading-6 break-keep ani">
+      <div className="text-white/80 text-sm animate-topIn ani-delay-0.2 opacity-0 mb-12 leading-6 break-keep ">
         <p>외주, 토이 프로젝트, 직장에서 및 작업하였던 프로젝트 기록 입니다.</p>
         <p>
           외부로 공개된 참여한 프로젝트만 게시하며, 공개 불가한 프로젝트는
@@ -111,7 +111,7 @@ const ProjectList = () => {
         </p>
       </div>
 
-      <div className="mb-5 ani-delay-0.2  flex justify-between ani">
+      <div className="mb-5 ani-delay-0.2  flex justify-between">
         <div className=" flex gap-2 flex-wrap">
           {FILTER_LABEL.map((e) => {
             return (

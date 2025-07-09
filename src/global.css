@@ -127,7 +127,7 @@
 /* Base.. */
 @layer base {
   body {
-    @apply bg-background text-foreground font-SUIT-Regular;
+    @apply bg-background text-foreground font-SUIT-Regular min-h-screen;
     @apply bg-gradient-to-br from-[#383838] to-[#080808];
   }
 

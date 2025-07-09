@@ -33,11 +33,10 @@ export default function RecentPosts() {
 
   return (
     <div className="layout-center py-20">
-      <h3 className="text-sm font-medium tracking-wider flex items-center gap-2 group cursor-pointer   pb-2  ">
-        <h1 className="text-3xl md:text-5xl font-Montserrat mt-3 font-medium tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-2 ">
-          Dev Blog
-        </h1>
-      </h3>
+      <h1 className="text-3xl md:text-5xl font-Montserrat mt-3 font-medium tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-2 ">
+        Dev Blog
+      </h1>
+
       <p className="mb-10 text-xs md:text-sm leading-relaxed">
         개발, 그리고 기술에 관한{" "}
         <span className="text-teal-300">기록 공간</span> 입니다

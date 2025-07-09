@@ -21,7 +21,7 @@ const Blog = (): JSX.Element => {
               <Route
                 path={path.path}
                 key={path.path}
-                element={<Motion.FadeInOut>{path.Component}</Motion.FadeInOut>}
+                element={<Motion.Page>{path.Component}</Motion.Page>}
               />
             );
           })}

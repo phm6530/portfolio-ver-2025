@@ -1,6 +1,6 @@
 import RecentProject from "./components/recent-project";
 import RecentPosts from "./components/recent-post";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -9,18 +9,74 @@ import BlogSvg from "@/asset/blog.svg?react";
 import GitSvg from "@/asset/git.svg?react";
 import Kakao from "@/asset/kakao.svg?react";
 import { ChevronRight } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+
+import { Button } from "@/components/ui/button";
 
 gsap.registerPlugin(ScrollTrigger);
 const Home = () => {
   const spanRefs = useRef<HTMLSpanElement[]>([]);
   const ref = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const refs = useRef<HTMLElement[]>([]);
+  const [page, setPage] = useState<number>(0);
+  const isScrolling = useRef(false);
+  const DURATION = 1500;
+  const mainRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
+  useGSAP(
+    () => {
+      const target = mainRef.current?.children[page] as HTMLElement;
+      if (!target) return;
+
+      gsap.to(mainRef.current, {
+        y: -target.offsetTop,
+        duration: DURATION / 1000,
+        ease: "expo.inOut",
+        onComplete: () => {
+          isScrolling.current = false;
+        },
+      });
+    },
+    { dependencies: [page] }
+  );
+
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (isScrolling.current) return;
+      isScrolling.current = true;
+
+      const direction = e.deltaY < 0 ? "up" : "down";
+      const maxPage = mainRef.current?.children.length
+        ? mainRef.current.children.length - 1
+        : 0;
+
+      setPage((prev) => {
+        const next = direction === "up" ? prev - 1 : prev + 1;
+        const maxPage = mainRef.current?.children.length
+          ? mainRef.current.children.length - 1
+          : 0;
+
+        if (next < 0 || next > maxPage) {
+          isScrolling.current = false;
+          return prev;
+        }
+
+        return next;
+      });
+    };
+
+    const container = mainRef.current;
+    container?.addEventListener("wheel", handleWheel);
+    return () => container?.removeEventListener("wheel", handleWheel);
+  }, []);
 
   useGSAP(() => {
     const tl = gsap.timeline();
@@ -40,31 +96,13 @@ const Home = () => {
 
   useGSAP(() => {
     gsap.to(ref.current, {
-      y: 300,
+      y: 100,
       scrollTrigger: {
         trigger: "",
         scrub: 1,
       },
     });
   }, {});
-
-  const MY_LINKS = [
-    {
-      to: "https://open.kakao.com/o/sq4skkTf",
-      svg: Kakao,
-      label: "오픈 카카오톡",
-    },
-    {
-      to: "https://github.com/phm6530/",
-      svg: GitSvg,
-      label: "git",
-    },
-    {
-      to: "https://blog.h-creations.com/",
-      svg: BlogSvg,
-      label: "개인 블로그",
-    },
-  ];
 
   const MAIN_BTN = [
     {
@@ -90,13 +128,16 @@ const Home = () => {
   ];
 
   return (
-    <>
+    <main ref={mainRef}>
       {/* Main Bg */}
-      <div className="w-screen relative overflow-hidden ">
+      <section
+        ref={(el) => el && refs.current.push(el)}
+        className=" relative overflow-hidden sticky top-0"
+      >
         {/* overlay */}
         <div
-          className=" absolute  translate-y-1 
-                 bg-gradient-to-t from-zinc-950 via-transparent to-transparent  box-border w-full h-full z-5"
+          className=" absolute  
+                 bg-gradient-to-t from-zinc-900 via-transparent to-transparent  box-border w-full h-full z-5"
         />
         <div className="  items-start gap-3   textContainer w-full  overflow-hidden box-border">
           <div
@@ -104,7 +145,7 @@ const Home = () => {
             className="absolute bg-bottom bg-no-repeat pointer-events-none"
             style={{
               width: "100vw",
-              height: "100dvh",
+              height: "120dvh",
               minHeight: "100vh",
             }}
           >
@@ -129,6 +170,7 @@ const Home = () => {
             <div className="inline-block">
               {"FRONTEND".split("").map((e, i) => (
                 <span
+                  key={`word:${i}`}
                   ref={(el) => {
                     if (el) {
                       spanRefs.current[i] = el;
@@ -153,6 +195,7 @@ const Home = () => {
             {MAIN_BTN.map((e, idx) => {
               return (
                 <div
+                  key={`btn:${e.name}`}
                   onClick={() => navigate(e.path)}
                   className="grid grid-cols-[auto_1fr] md:grid-cols-1  gap-5 md:gap-2 pb-5 group cursor-pointer"
                 >
@@ -175,38 +218,56 @@ const Home = () => {
             })}
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="bg-zinc-950 -translate-y-1 pb-2 border-t-2 ">
-        <div className="layout-center pt-40 pb-40 md:pb-40 md:gap-30 items-start">
-          {/* 왼쪽 텍스트 영역 */}
-          <div className="text-foreground font-Montserrat mb-5">
-            {" "}
-            {/* <UserCheck2 size={30} className="text-teal-300" /> */}
-            <h1 className="text-4xl mb-4 flex items-center gap-2">ABOUT ME</h1>
+      <section
+        ref={(el) => el && refs.current.push(el)}
+        className="bg-zinc-900  pb-2 h-screen "
+      >
+        <div className="layout-center pb-30 pt-40 md:pb-40 md:gap-30 ">
+          <div className="text-foreground font-Montserrat mb-5 ">
+            <h1 className="text-3xl md:text-5xl  mb-4  gap-2">ABOUT ME</h1>
           </div>
-          {/* 오른쪽 시각 요소 */}
-          <div className="flex flex-col gap-6">
+
+          <div className="flex flex-col gap-6 ">
             <div className="text-base md:text-lg flex flex-col gap-5 leading-relaxed">
               <p className="break-keep">
                 프론트엔드 개발자 <strong>‘PHM’</strong>입니다. <br />
                 <span className="text-teal-300">Next.js</span>,{" "}
                 <span className="text-teal-300">React</span>를 주력으로 개발하고
-                있으며, 넓은 협업과 이해를 위해 새로 배우는 것에 흥미를
-                느낍니다.
+                있으며, <br></br>
+                <br></br>
               </p>
+              <div>
+                <p className="text-sm leading-relaxed break-keep  text-muted-foreground">
+                  React 기반 컴포넌트 설계 및 협업 환경에 강점을 가진 프론트엔드
+                  개발자입니다.
+                </p>
+                <p className="text-sm leading-relaxed break-keep  text-muted-foreground">
+                  React 기반 컴포넌트 설계 및 협업 환경
+                </p>
+              </div>
             </div>
           </div>
 
-          <div className="flex gap-2 items-center mt-15">
-            <button
-              className="border-white/60  p-3 gsap-contents z-10 border flex   justify-between gap-15 items-center text-xs article-hover  "
+          <div className="flex gap-2    mt-10">
+            <Button
+              className="text-xs p-5 px-5! "
+              size={"sm"}
               onClick={() => navigate("/about")}
             >
               자세히보기 <ChevronRight size={12} />
-            </button>
-
-            {MY_LINKS.map((btn) => {
+            </Button>{" "}
+            <Button
+              className="text-xs p-5 px-5! "
+              variant={"outline"}
+              size={"sm"}
+              onClick={() => navigate("/board")}
+            >
+              {" "}
+              응원의 한줄평 남기기 <ChevronRight size={12} />
+            </Button>
+            {/* {MY_LINKS.map((btn) => {
               return (
                 <TooltipProvider key={`:links${btn.label}`}>
                   <Tooltip>
@@ -227,18 +288,24 @@ const Home = () => {
                   </Tooltip>
                 </TooltipProvider>
               );
-            })}
+            })} */}
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className=" pb-20 pt-10 bg-zinc-900 ">
+      <section
+        ref={(el) => el && refs.current.push(el)}
+        className="pb-20 pt-10 bg-zinc-700 min-h-screen"
+      >
         <RecentProject />
-      </div>
-      <div className="bg-zinc-950">
+      </section>
+      <section
+        ref={(el) => el && refs.current.push(el)}
+        className="bg-zinc-950 h-screen"
+      >
         <RecentPosts />
-      </div>
-    </>
+      </section>
+    </main>
   );
 };
 
