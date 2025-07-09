@@ -11,6 +11,7 @@ export default function Test() {
   const [page, setPage] = useState(0);
   const secRefs = useRef<HTMLElement[]>([]);
   const canScroll = useRef(true);
+  const DURATION = 1.4;
 
   // body styled 제거
   useEffect(() => {
@@ -22,6 +23,7 @@ export default function Test() {
 
   useGSAP(
     () => {
+      // 초기값 세팅
       gsap.utils.toArray(secRefs.current).forEach((e, idx) => {
         if (idx !== 0) {
           gsap.set(e as HTMLElement, { y: innerHeight });
@@ -91,15 +93,15 @@ export default function Test() {
       if (idx <= targetPage) {
         gsap.to(section as HTMLElement, {
           y: 0,
-          duration: 0.8,
-          ease: "expo.inOut",
+          duration: DURATION,
+          ease: "expo.out",
           delay: idx * 0.1,
         });
       } else {
         gsap.to(section as HTMLElement, {
           y: innerHeight,
-          duration: 0.8,
-          ease: "expo.inOut",
+          duration: DURATION,
+          ease: "expo.out",
           delay: (idx - targetPage) * 0.1,
         });
       }
