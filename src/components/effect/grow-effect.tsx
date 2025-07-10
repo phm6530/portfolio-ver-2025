@@ -31,10 +31,10 @@ export default function GrowEffect({ pageKey }: { pageKey: ROUTE_KEY }) {
   return (
     <>
       <div
-        className={`glow-5 z-5 absolute pointer-events-none md:-top-4/5 -top-2/5 right-1 size-1/2 md:size-200 ${currentColors.primary} blur-[100px] rounded-full transition-colors duration-700`}
+        className={`glow-5 z-15 absolute pointer-events-none md:-top-4/5 -top-2/5 right-1 size-1/2 md:size-200 ${currentColors.primary} blur-[100px] rounded-full transition-colors duration-700`}
       />
       <div
-        className={`glow-5 z-1 fixed pointer-events-none -bottom-70 -left-1/4 size-1/2 md:size-150 ${currentColors.secondary} blur-[100px] rounded-full transition-colors duration-700`}
+        className={`glow-5 z-15 fixed pointer-events-none -bottom-70 -left-1/4 size-1/2 md:size-150 ${currentColors.secondary} blur-[100px] rounded-full transition-colors duration-700`}
       />
     </>
   );

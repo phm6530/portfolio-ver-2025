@@ -59,10 +59,9 @@ const AppRoute = (): JSX.Element => {
         <AnimatePresence mode="wait">
           {/* Main-page */}
           {isMainPage ? (
-            <Motion.Page key="main">
-              {/* <Home /> */}
-              <Test />
-            </Motion.Page>
+            <Motion.FadeInOut key="main">
+              <Home />
+            </Motion.FadeInOut>
           ) : (
             <>
               {/* Sub-Page */}

@@ -1,273 +1,194 @@
 import RecentProject from "./components/recent-project";
 import RecentPosts from "./components/recent-post";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useNavigate } from "react-router-dom";
-import BlogSvg from "@/asset/blog.svg?react";
-import GitSvg from "@/asset/git.svg?react";
-import Kakao from "@/asset/kakao.svg?react";
 import { ChevronRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import HeroSection from "./hero";
 
 gsap.registerPlugin(ScrollTrigger);
 const Home = () => {
-  const spanRefs = useRef<HTMLSpanElement[]>([]);
-  const ref = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
-  const refs = useRef<HTMLElement[]>([]);
-  const [page, setPage] = useState<number>(0);
-  const isScrolling = useRef(false);
-  const DURATION = 1500;
+  const nav = useNavigate();
+
   const mainRef = useRef<HTMLDivElement>(null);
+  const secRefs = useRef<HTMLElement[]>([]);
+  const [page, setPage] = useState(0);
+  const SECTION_DURATION = 900;
+  const scrollingRef = useRef<boolean>(false);
+  const isResizing = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
+  // body styled 제거
+  useLayoutEffect(() => {
     document.body.style.overflow = "hidden";
-
     return () => {
       document.body.style.overflow = "auto";
     };
   }, []);
 
-  useGSAP(
-    () => {
-      const target = mainRef.current?.children[page] as HTMLElement;
-      if (!target) return;
+  const pageMoveHandler = (targetPage: number) => {
+    scrollingRef.current = true; // 상태
 
-      gsap.to(mainRef.current, {
-        y: -target.offsetTop,
-        duration: DURATION / 1000,
-        ease: "expo.inOut",
-        onComplete: () => {
-          isScrolling.current = false;
-        },
-      });
-    },
-    { dependencies: [page] }
-  );
+    gsap.utils.toArray(secRefs.current).forEach((sec, idx) => {
+      if (idx <= targetPage) {
+        const tl = gsap.timeline();
+        tl.to(sec as HTMLElement, {
+          y: 0,
+          ease: "power3.inOut",
+          duration: SECTION_DURATION / 1000,
+          delay: idx * 0.1,
+        });
+      } else {
+        gsap.to(sec as HTMLElement, {
+          y: window.innerHeight,
+          ease: "expo.inOut",
+          duration: SECTION_DURATION / 1000,
+          delay: idx * 0.1,
+        });
+      }
+    });
 
+    setTimeout(() => {
+      scrollingRef.current = false; // 종료 시키기
+    }, SECTION_DURATION);
+  };
+
+  // wheel Handler
   useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      if (isScrolling.current) return;
-      isScrolling.current = true;
+    const wheelEvent = (e: WheelEvent) => {
+      if (scrollingRef.current) return; // 스크롤 중일땐 리턴시키고
 
-      const direction = e.deltaY < 0 ? "up" : "down";
-      const maxPage = mainRef.current?.children.length
-        ? mainRef.current.children.length - 1
-        : 0;
+      // 해당섹션이 콘텐츠가 넘을 때는 잠시 일단 중지
+      const currentSection = secRefs.current[page];
 
-      setPage((prev) => {
-        const next = direction === "up" ? prev - 1 : prev + 1;
-        const maxPage = mainRef.current?.children.length
-          ? mainRef.current.children.length - 1
-          : 0;
+      const scrollHeight = currentSection.scrollHeight;
+      const clientHeight = currentSection.clientHeight;
+      const scrollTop = currentSection.scrollTop;
 
-        if (next < 0 || next > maxPage) {
-          isScrolling.current = false;
-          return prev;
+      // over 되는지 확인
+      const isOverflowSection = scrollHeight > clientHeight;
+      const isBottom = scrollHeight - 1 <= clientHeight + scrollTop;
+      const isAtTop = scrollTop <= 0;
+
+      if (isOverflowSection) {
+        if (e.deltaY > 0 && secRefs.current.length - 1 > page && isBottom) {
+          const nextPage = page + 1;
+          setPage(nextPage);
+          pageMoveHandler(nextPage);
+        } else if (!(page <= 0) && e.deltaY < 0 && isAtTop) {
+          const prevPage = page - 1;
+          setPage(prevPage);
+          pageMoveHandler(prevPage);
         }
-
-        return next;
-      });
+      } else {
+        if (e.deltaY > 0 && secRefs.current.length - 1 > page) {
+          const nextPage = page + 1;
+          setPage(nextPage);
+          pageMoveHandler(nextPage);
+        } else if (!(page <= 0) && e.deltaY < 0) {
+          const prevPage = page - 1;
+          setPage(prevPage);
+          pageMoveHandler(prevPage);
+        }
+      }
     };
 
-    const container = mainRef.current;
-    container?.addEventListener("wheel", handleWheel);
-    return () => container?.removeEventListener("wheel", handleWheel);
-  }, []);
+    window.addEventListener("wheel", wheelEvent, { passive: false });
+    return () => {
+      window.removeEventListener("wheel", wheelEvent);
+    };
+  }, [page]);
 
-  useGSAP(() => {
-    const tl = gsap.timeline();
-
-    tl.fromTo(
-      spanRefs.current,
-      { y: 50, opacity: 0 },
-      {
-        stagger: 0.05,
-        y: 0,
-        opacity: 1,
-        color: "#46edd5",
-        ease: "back(3)",
+  // Resize 대응
+  useEffect(() => {
+    const handleResize = () => {
+      if (isResizing.current) {
+        clearTimeout(isResizing.current);
       }
-    );
-  }, {});
+      isResizing.current = setTimeout(() => {
+        gsap.utils.toArray(secRefs.current).forEach((sec, idx) => {
+          if (idx <= page) {
+            gsap.set(sec as HTMLElement, { y: 0 });
+          } else {
+            gsap.set(sec as HTMLElement, { y: window.innerHeight });
+          }
+        });
+      }, 100);
+    };
 
-  useGSAP(() => {
-    gsap.to(ref.current, {
-      y: 100,
-      scrollTrigger: {
-        trigger: "",
-        scrub: 1,
-      },
-    });
-  }, {});
+    window.addEventListener("resize", handleResize);
+    return () => {
+      if (isResizing.current) {
+        clearTimeout(isResizing.current);
+      }
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [page]);
 
-  const MAIN_BTN = [
-    {
-      name: "About",
-      des: "퍼블리셔와 프론트엔드 그 사이 어딘가",
-      path: "/about",
+  // inital set
+  useGSAP(
+    () => {
+      gsap.utils.toArray(secRefs.current).forEach((e, idx) => {
+        if (idx !== 0) {
+          gsap.set(e as HTMLElement, { y: window.innerHeight });
+        }
+      });
     },
-    {
-      name: "Work",
-      des: "Project ARCHIVE, 저의 작업 리스트 입니다.",
-      path: "/project",
-    },
-    {
-      name: "Blog",
-      des: "개발, 그리고 기술에 관한 기록 공간 입니다",
-      path: "/blog",
-    },
-    {
-      name: "Board",
-      des: "방명록' 여러분의 한줄의 응원은 저에게 큰 힘이 됩니다",
-      path: "/board",
-    },
-  ];
+    { scope: mainRef, dependencies: [secRefs.current] }
+  );
 
   return (
-    <main ref={mainRef}>
-      {/* Main Bg */}
-      <section
-        ref={(el) => el && refs.current.push(el)}
-        className=" relative overflow-hidden sticky top-0"
-      >
-        {/* overlay */}
-        <div
-          className=" absolute  
-                 bg-gradient-to-t from-zinc-900 via-transparent to-transparent  box-border w-full h-full z-5"
-        />
-        <div className="  items-start gap-3   textContainer w-full  overflow-hidden box-border">
-          <div
-            ref={ref}
-            className="absolute bg-bottom bg-no-repeat pointer-events-none"
-            style={{
-              width: "100vw",
-              height: "120dvh",
-              minHeight: "100vh",
-            }}
-          >
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="video-element w-full h-full object-cover block" // block 추가
-            >
-              <source src="/main_2.mp4" type="video/mp4" />
-            </video>
-          </div>
-        </div>
+    <main ref={mainRef} className="min-h-screen relative">
+      {/* Hero - main */}
+      <HeroSection ref={secRefs} />
 
-        <div className="layout-center  leading-relaxed  min-h-screen  justify-center flex flex-col items-start">
-          <p className="text-sm z-10  leading-relaxed text-teal-300 pt-60 md:pt-40 mb-2 font-Montserrat">
-            FRONT END - PUBLISHER
-          </p>
-          <h1 className="inline-block leading-tight text-5xl z-10 md:text-6xl    font-Montserrat  break-keep  w-full">
-            PHM,
-            <div className="inline-block">
-              {"FRONTEND".split("").map((e, i) => (
-                <span
-                  key={`word:${i}`}
-                  ref={(el) => {
-                    if (el) {
-                      spanRefs.current[i] = el;
-                    }
-                  }}
-                  className="relative inline-block  font-bold  "
-                >
-                  {e}
-                </span>
-              ))}
+      {/* About */}
+      <section
+        ref={(el) => {
+          if (el && !secRefs.current.includes(el)) {
+            secRefs.current.push(el);
+          }
+        }}
+        className="h-screen flex flex-col justify-center items-center  bg-zinc-900 z-11 w-screen absolute overflow-y-auto"
+      >
+        <div className="layout-center  md:gap-30 grid grid-cols-2">
+          <div>
+            <div className="text-foreground font-Montserrat mb-5 ">
+              <h1 className="text-3xl md:text-5xl  mb-4  gap-2">ABOUT ME</h1>
             </div>
-            <br></br>
-            DEVELOPER
-          </h1>
 
-          <p className="z-10 text-sm md:text-base opacity-80 mt-10 mb-20 md:mb-25">
-            프론트앤드 개발과 퍼블리싱을 주로 다룹니다<br></br> 해당 사이트는
-            'React'와 'Supabase'로 제작되었습니다.
-          </p>
-
-          <div className="button   z-10   w-full  space-x-10 grid md:grid-cols-4 grid-cols-1">
-            {MAIN_BTN.map((e, idx) => {
-              return (
-                <div
-                  key={`btn:${e.name}`}
-                  onClick={() => navigate(e.path)}
-                  className="grid grid-cols-[auto_1fr] md:grid-cols-1  gap-5 md:gap-2 pb-5 group cursor-pointer"
-                >
-                  <h1 className="text-3xl md:text-4xl  font-semibold font-Montserrat opacity-20 md:border-l md:pl-3">
-                    0{idx + 1}
-                  </h1>
-                  <div className="flex flex-col gap-2">
-                    <h1
-                      className="font-Montserrat text-xl md:text-2xl md:border-l md:pl-3 group-hover:text-teal-300 group-hover:pl-5 "
-                      style={{ transition: "padding-left .2s ease" }}
-                    >
-                      {e.name}
-                    </h1>
-                    <p className="text-xs text-muted-foreground leading-tight md:col-auto col-span-2">
-                      {e.des}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section
-        ref={(el) => el && refs.current.push(el)}
-        className="bg-zinc-900  pb-2 h-screen "
-      >
-        <div className="layout-center pb-30 pt-40 md:pb-40 md:gap-30 ">
-          <div className="text-foreground font-Montserrat mb-5 ">
-            <h1 className="text-3xl md:text-5xl  mb-4  gap-2">ABOUT ME</h1>
-          </div>
-
-          <div className="flex flex-col gap-6 ">
-            <div className="text-base md:text-lg flex flex-col gap-5 leading-relaxed">
-              <p className="break-keep">
-                프론트엔드 개발자 <strong>‘PHM’</strong>입니다. <br />
-                <span className="text-teal-300">Next.js</span>,{" "}
-                <span className="text-teal-300">React</span>를 주력으로 개발하고
-                있으며, <br></br>
-                <br></br>
-              </p>
-              <div>
-                <p className="text-sm leading-relaxed break-keep  text-muted-foreground">
-                  React 기반 컴포넌트 설계 및 협업 환경에 강점을 가진 프론트엔드
-                  개발자입니다.
-                </p>
-                <p className="text-sm leading-relaxed break-keep  text-muted-foreground">
-                  React 기반 컴포넌트 설계 및 협업 환경
+            <div className="flex flex-col gap-6 ">
+              <div className="text-base md:text-lg flex flex-col gap-5 leading-relaxed">
+                <p className="break-keep">
+                  프론트엔드 개발자 <strong>‘PHM’</strong>입니다. <br />
+                  <span className="text-teal-300">Next.js</span>,{" "}
+                  <span className="text-teal-300">React</span>를 주력으로
+                  개발하고 있으며, <br></br>
                 </p>
               </div>
             </div>
-          </div>
 
-          <div className="flex gap-2    mt-10">
-            <Button
-              className="text-xs p-5 px-5! "
-              size={"sm"}
-              onClick={() => navigate("/about")}
-            >
-              자세히보기 <ChevronRight size={12} />
-            </Button>{" "}
-            <Button
-              className="text-xs p-5 px-5! "
-              variant={"outline"}
-              size={"sm"}
-              onClick={() => navigate("/board")}
-            >
-              {" "}
-              응원의 한줄평 남기기 <ChevronRight size={12} />
-            </Button>
-            {/* {MY_LINKS.map((btn) => {
+            <div className="flex gap-2    mt-10">
+              <Button
+                className="text-xs p-5 px-5! "
+                size={"sm"}
+                onClick={() => nav("/about")}
+              >
+                자세히보기 <ChevronRight size={12} />
+              </Button>{" "}
+              <Button
+                className="text-xs p-5 px-5! "
+                variant={"outline"}
+                size={"sm"}
+                onClick={() => nav("/board")}
+              >
+                {" "}
+                응원의 한줄평 남기기 <ChevronRight size={12} />
+              </Button>
+              {/* {MY_LINKS.map((btn) => {
               return (
                 <TooltipProvider key={`:links${btn.label}`}>
                   <Tooltip>
@@ -289,22 +210,80 @@ const Home = () => {
                 </TooltipProvider>
               );
             })} */}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <h1 className="text-xl">퍼블리싱</h1>
+              <p>
+                견고한 퍼블리싱과 GSap, Framer을 통한 인터렉티브한 UI 구현에
+                흥미가 많습니다.
+              </p>
+            </div>
+
+            <div>
+              <h1 className="text-xl">React, Next</h1>
+              <p>
+                견고한 퍼블리싱과 GSap, Framer을 통한 인터렉티브한 UI 구현에
+                흥미가 많습니다.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       <section
-        ref={(el) => el && refs.current.push(el)}
-        className="pb-20 pt-10 bg-zinc-700 min-h-screen"
+        ref={(el) => {
+          if (el && !secRefs.current.includes(el)) {
+            secRefs.current.push(el);
+          }
+        }}
+        className="h-screen flex flex-col items-center justify-start bg-indigo-700 z-11 w-screen absolute overflow-y-auto"
       >
         <RecentProject />
       </section>
+
       <section
-        ref={(el) => el && refs.current.push(el)}
-        className="bg-zinc-950 h-screen"
+        ref={(el) => {
+          if (el && !secRefs.current.includes(el)) {
+            secRefs.current.push(el);
+          }
+        }}
+        className="min-h-screen overflow-y-scroll flex items-center  justify-center bg-zinc-900 z-13 w-screen absolute"
       >
         <RecentPosts />
       </section>
+
+      <section
+        ref={(el) => {
+          if (el && !secRefs.current.includes(el)) {
+            secRefs.current.push(el);
+          }
+        }}
+        className="h-screen flex items-center justify-center bg-lime-800 z-14 w-screen absolute"
+      >
+        <div className="text-center">
+          <h1 className="text-4xl text-white mb-4">Section 5 (Footer)</h1>
+          <p className="text-white/60">마지막 섹션입니다</p>
+        </div>
+      </section>
+
+      {/* 페이지 인디케이터 */}
+      <div className="fixed right-8 top-1/2 z-50">
+        {Array.from({ length: 5 }, (_, idx) => (
+          <div
+            key={idx}
+            className={`w-3 h-3 rounded-full mb-2 cursor-pointer transition-all duration-300 ${
+              idx === page ? "bg-white" : "bg-white/30"
+            }`}
+            onClick={() => {
+              setPage(idx);
+              pageMoveHandler(idx);
+            }}
+          />
+        ))}
+      </div>
     </main>
   );
 };

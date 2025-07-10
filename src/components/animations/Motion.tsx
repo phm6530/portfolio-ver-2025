@@ -34,12 +34,12 @@ export const FadeInOut: React.FC<MotionProps> = ({ className, children }) => {
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: -100 }}
+      initial={{ opacity: 0 }}
       style={{ width: "100%" }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 100 }}
+      exit={{ opacity: 0 }}
       transition={{
-        duration: 0.5,
+        duration: 0.8,
         ease: [0.6, -0.05, 0.01, 0.99], // 예시 큐빅 베지어 값
       }}
     >

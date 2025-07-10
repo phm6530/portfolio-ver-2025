@@ -1,129 +1,136 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Test() {
   const mainRef = useRef<HTMLDivElement>(null);
-  const isScrolling = useRef(false);
-  const [page, setPage] = useState(0);
   const secRefs = useRef<HTMLElement[]>([]);
-  const canScroll = useRef(true);
-  const DURATION = 1.4;
+  const [page, setPage] = useState(0);
+  const SECTION_DURATION = 1200;
+  const scrollingRef = useRef<boolean>(false);
+  const isResizing = useRef<NodeJS.Timeout | null>(null);
 
   // body styled 제거
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "auto";
     };
   }, []);
 
-  useGSAP(
-    () => {
-      // 초기값 세팅
-      gsap.utils.toArray(secRefs.current).forEach((e, idx) => {
-        if (idx !== 0) {
-          gsap.set(e as HTMLElement, { y: innerHeight });
-        }
-      });
+  const pageMoveHandler = (targetPage: number) => {
+    scrollingRef.current = true; // 상태
 
-      // 긴 콘텐츠가 있는 섹션에 ScrollTrigger 설정
-      const longContentSection = secRefs.current[1];
-      if (longContentSection) {
-        ScrollTrigger.create({
-          trigger: longContentSection,
-          start: "top top",
-          end: "bottom bottom",
-          onEnter: () => {
-            canScroll.current = false; // 섹션 내부 스크롤 활성화
-            document.body.style.overflow = "auto";
-          },
-          onLeave: () => {
-            canScroll.current = true; // 페이지 스크롤 활성화
-            document.body.style.overflow = "hidden";
-            // 다음 섹션으로 자동 이동
-            if (page < secRefs.current.length - 1) {
-              setPage(page + 1);
-              animateToPage(page + 1);
-            }
-          },
-          onEnterBack: () => {
-            canScroll.current = false;
-            document.body.style.overflow = "auto";
-          },
-          onLeaveBack: () => {
-            canScroll.current = true;
-            document.body.style.overflow = "hidden";
-          },
-        });
-      }
-    },
-    { scope: mainRef, dependencies: [secRefs.current] }
-  );
-
-  // 휠 이벤트 핸들러
-  const handleWheel = (e: WheelEvent) => {
-    if (isScrolling.current || !canScroll.current) return;
-
-    const delta = e.deltaY;
-    const totalPages = secRefs.current.length;
-
-    if (delta > 0 && page < totalPages - 1) {
-      // 아래로 스크롤 - 다음 페이지
-      setPage((prev) => prev + 1);
-      animateToPage(page + 1);
-    } else if (delta < 0 && page > 0) {
-      // 위로 스크롤 - 이전 페이지
-      setPage((prev) => prev - 1);
-      animateToPage(page - 1);
-    }
-  };
-
-  // 페이지 애니메이션
-  const animateToPage = (targetPage: number) => {
-    if (isScrolling.current) return;
-
-    isScrolling.current = true;
-
-    // 현재 페이지부터 타겟 페이지까지 순차적으로 애니메이션
-    gsap.utils.toArray(secRefs.current).forEach((section, idx) => {
+    gsap.utils.toArray(secRefs.current).forEach((sec, idx) => {
       if (idx <= targetPage) {
-        gsap.to(section as HTMLElement, {
+        const tl = gsap.timeline();
+        tl.to(sec as HTMLElement, {
           y: 0,
-          duration: DURATION,
-          ease: "expo.out",
+          ease: "expo.inOut",
+          duration: SECTION_DURATION / 1000,
           delay: idx * 0.1,
         });
       } else {
-        gsap.to(section as HTMLElement, {
-          y: innerHeight,
-          duration: DURATION,
-          ease: "expo.out",
-          delay: (idx - targetPage) * 0.1,
+        gsap.to(sec as HTMLElement, {
+          y: window.innerHeight,
+          ease: "expo.inOut",
+          duration: SECTION_DURATION / 1000,
+          delay: idx * 0.1,
         });
       }
     });
 
-    // 애니메이션 완료 후 스크롤 허용
     setTimeout(() => {
-      isScrolling.current = false;
-    }, 1000);
+      scrollingRef.current = false; // 종료 시키기
+    }, SECTION_DURATION);
   };
 
-  // 휠 이벤트 리스너 등록
+  // wheel Handler
   useEffect(() => {
-    const mainElement = mainRef.current;
-    if (mainElement) {
-      mainElement.addEventListener("wheel", handleWheel, { passive: false });
-      return () => {
-        mainElement.removeEventListener("wheel", handleWheel);
-        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      };
-    }
+    const wheelEvent = (e: WheelEvent) => {
+      if (scrollingRef.current) return; // 스크롤 중일땐 리턴시키고
+
+      // 해당섹션이 콘텐츠가 넘을 때는 잠시 일단 중지
+      const currentSection = secRefs.current[page];
+
+      const scrollHeight = currentSection.scrollHeight;
+      const clientHeight = currentSection.clientHeight;
+      const scrollTop = currentSection.scrollTop;
+
+      // over 되는지 확인
+      const isOverflowSection = scrollHeight > clientHeight;
+      const isBottom = scrollHeight - 1 <= clientHeight + scrollTop;
+      const isAtTop = scrollTop <= 0;
+
+      if (isOverflowSection) {
+        if (e.deltaY > 0 && isBottom) {
+          const nextPage = page + 1;
+          setPage(nextPage);
+          pageMoveHandler(nextPage);
+        } else if (e.deltaY < 0 && isAtTop) {
+          const prevPage = page - 1;
+          setPage(prevPage);
+          pageMoveHandler(prevPage);
+        }
+      } else {
+        if (e.deltaY > 0 && secRefs.current.length - 1 > page) {
+          const nextPage = page + 1;
+          setPage(nextPage);
+          pageMoveHandler(nextPage);
+        } else if (!(page <= 0) && e.deltaY < 0) {
+          const prevPage = page - 1;
+          setPage(prevPage);
+          pageMoveHandler(prevPage);
+        }
+      }
+    };
+
+    window.addEventListener("wheel", wheelEvent, { passive: false });
+    return () => {
+      window.removeEventListener("wheel", wheelEvent);
+    };
   }, [page]);
+
+  // Resize 대응
+  useEffect(() => {
+    const handleResize = () => {
+      if (isResizing.current) {
+        clearTimeout(isResizing.current);
+      }
+      isResizing.current = setTimeout(() => {
+        gsap.utils.toArray(secRefs.current).forEach((sec, idx) => {
+          if (idx <= page) {
+            gsap.set(sec as HTMLElement, { y: 0 });
+          } else {
+            gsap.set(sec as HTMLElement, { y: window.innerHeight });
+          }
+        });
+      }, 100);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      if (isResizing.current) {
+        clearTimeout(isResizing.current);
+      }
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [page]);
+
+  // inital set
+  useGSAP(
+    () => {
+      gsap.utils.toArray(secRefs.current).forEach((e, idx) => {
+        if (idx !== 0) {
+          gsap.set(e as HTMLElement, { y: window.innerHeight });
+        }
+      });
+    },
+    { scope: mainRef, dependencies: [secRefs.current] }
+  );
 
   return (
     <main ref={mainRef} className="min-h-screen relative">
@@ -149,48 +156,52 @@ export default function Test() {
             secRefs.current[1] = el;
           }
         }}
-        className="h-auto  min-h-screen flex flex-col items-center justify-start bg-cyan-950 z-11 w-screen absolute overflow-y-auto"
+        className="h-screen flex flex-col items-center justify-start bg-cyan-950 z-11 w-screen absolute overflow-y-auto"
       >
-        <div className="text-center py-20">
-          <h1 className="text-4xl text-white mb-4">Section 2 - 스크롤 가능</h1>
-          <p className="text-white/60 mb-8">
-            이 섹션에서는 일반 스크롤이 됩니다
-          </p>
-          <p className="text-white/40">
-            맨 아래까지 스크롤하면 다음 섹션으로 넘어갑니다
-          </p>
-        </div>
+        <div className="py-30 ">
+          <div className="text-center ">
+            <h1 className="text-4xl text-white mb-4">
+              Section 2 - 스크롤 가능
+            </h1>
+            <p className="text-white/60 mb-8">
+              이 섹션에서는 일반 스크롤이 됩니다
+            </p>
+            <p className="text-white/40">
+              맨 아래까지 스크롤하면 다음 섹션으로 넘어갑니다
+            </p>
+          </div>
 
-        <div className="text-center py-20 border-t border-white/10">
-          <h2 className="text-3xl text-white mb-4">콘텐츠 블록 1</h2>
-          <p className="text-white/60 max-w-2xl mx-auto leading-relaxed">
-            여기는 긴 콘텐츠가 들어갑니다. 일반적인 스크롤이 가능합니다.
-            ScrollTrigger를 사용해서 이 섹션에서만 일반 스크롤이 동작하도록
-            했습니다.
-          </p>
-        </div>
+          <div className="text-center py-20 border-t border-white/10">
+            <h2 className="text-3xl text-white mb-4">콘텐츠 블록 1</h2>
+            <p className="text-white/60 max-w-2xl mx-auto leading-relaxed">
+              여기는 긴 콘텐츠가 들어갑니다. 일반적인 스크롤이 가능합니다.
+              ScrollTrigger를 사용해서 이 섹션에서만 일반 스크롤이 동작하도록
+              했습니다.
+            </p>
+          </div>
 
-        <div className="text-center py-20 border-t border-white/10">
-          <h2 className="text-3xl text-white mb-4">콘텐츠 블록 2</h2>
-          <p className="text-white/60 max-w-2xl mx-auto leading-relaxed">
-            계속 스크롤해보세요. 각 블록 사이에는 적절한 간격이 있어서 충분히
-            스크롤할 수 있습니다.
-          </p>
-        </div>
+          <div className="text-center py-20 border-t border-white/10">
+            <h2 className="text-3xl text-white mb-4">콘텐츠 블록 2</h2>
+            <p className="text-white/60 max-w-2xl mx-auto leading-relaxed">
+              계속 스크롤해보세요. 각 블록 사이에는 적절한 간격이 있어서 충분히
+              스크롤할 수 있습니다.
+            </p>
+          </div>
 
-        <div className="text-center py-20 border-t border-white/10">
-          <h2 className="text-3xl text-white mb-4">콘텐츠 블록 3</h2>
-          <p className="text-white/60 max-w-2xl mx-auto leading-relaxed">
-            이제 거의 다 왔습니다. 다음 블록이 마지막이에요.
-          </p>
-        </div>
+          <div className="text-center py-20 border-t border-white/10">
+            <h2 className="text-3xl text-white mb-4">콘텐츠 블록 3</h2>
+            <p className="text-white/60 max-w-2xl mx-auto leading-relaxed">
+              이제 거의 다 왔습니다. 다음 블록이 마지막이에요.
+            </p>
+          </div>
 
-        <div className="text-center py-20 border-t border-white/10">
-          <h2 className="text-3xl text-white mb-4">콘텐츠 블록 4 (마지막)</h2>
-          <p className="text-white/60 max-w-2xl mx-auto leading-relaxed">
-            여기가 마지막 블록입니다. 이제 스크롤하면 ScrollTrigger가 섹션의
-            끝을 감지해서 자동으로 다음 섹션(Section 3)으로 넘어갑니다.
-          </p>
+          <div className="text-center py-20 border-t border-white/10">
+            <h2 className="text-3xl text-white mb-4">콘텐츠 블록 4 (마지막)</h2>
+            <p className="text-white/60 max-w-2xl mx-auto leading-relaxed">
+              여기가 마지막 블록입니다. 이제 스크롤하면 ScrollTrigger가 섹션의
+              끝을 감지해서 자동으로 다음 섹션(Section 3)으로 넘어갑니다.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -237,8 +248,8 @@ export default function Test() {
       </section>
 
       {/* 페이지 인디케이터 */}
-      <div className="fixed right-8 top-1/2 transform -translate-y-1/2 z-50">
-        {Array.from({ length: secRefs.current.length }, (_, idx) => (
+      <div className="fixed right-8 top-1/2 z-50">
+        {Array.from({ length: 5 }, (_, idx) => (
           <div
             key={idx}
             className={`w-3 h-3 rounded-full mb-2 cursor-pointer transition-all duration-300 ${
@@ -246,7 +257,7 @@ export default function Test() {
             }`}
             onClick={() => {
               setPage(idx);
-              animateToPage(idx);
+              pageMoveHandler(idx);
             }}
           />
         ))}
