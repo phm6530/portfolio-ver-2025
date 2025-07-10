@@ -2,6 +2,9 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { forwardRef, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { CustomEase } from "gsap/CustomEase";
+gsap.registerPlugin(CustomEase);
+CustomEase.create("myBezier", "0,0.45,0,0.62");
 
 const MAIN_BTN = [
   {
@@ -37,17 +40,25 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
     () => {
       const tl = gsap.timeline();
 
-      tl.fromTo(
-        videoRef.current,
-        {
-          opacity: 0,
-          scale: 1.2,
-          ease: "expo.in",
-        },
-        {
-          opacity: 1,
-          scale: 1,
-        }
+      tl.add(
+        [
+          gsap.fromTo(
+            videoRef.current,
+            { opacity: 0 },
+            { opacity: 1, duration: 0.5, ease: "sine.out", delay: 0.3 }
+          ),
+          gsap.fromTo(
+            videoRef.current,
+            { scale: 1 },
+            {
+              delay: 0.3,
+              scale: 1.4,
+              duration: 5,
+              ease: "myBezier",
+            }
+          ),
+        ],
+        0
       );
 
       tl.from(overlayRef.current, {
