@@ -57,8 +57,7 @@ export default function RecentProject() {
         ) : (
           projectOne?.map((project, idx) => {
             return (
-              <div>
-                {" "}
+              <div key={idx}>
                 {/* <img src={`${IMG_URL}/${project.thumbnail}`} alt="" /> */}
                 <div
                   onClick={() => nav(`/project/${project.id}`)}

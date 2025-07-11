@@ -32,21 +32,69 @@ const Home = () => {
   const pageMoveHandler = (targetPage: number) => {
     scrollingRef.current = true; // 상태
 
+    // 이전 페이지와 비교하여 방향 결정
+    const isMovingDown = targetPage > page;
+    const isMovingUp = targetPage < page;
+
     gsap.utils.toArray(secRefs.current).forEach((sec, idx) => {
+      const tl = gsap.timeline();
+      const doms = (sec as HTMLElement).querySelectorAll("[data-animate]");
+
       if (idx <= targetPage) {
-        const tl = gsap.timeline();
         tl.to(sec as HTMLElement, {
           y: 0,
           ease: "power3.inOut",
           duration: SECTION_DURATION / 1000,
           delay: idx * 0.1,
         });
+
+        doms.forEach((el, conIdx) => {
+          if (idx === targetPage) {
+            // 현재 활성 섹션의 애니메이션
+            const startY = isMovingDown ? 50 : isMovingUp ? -50 : 0;
+
+            gsap.fromTo(
+              el,
+              {
+                opacity: 0,
+                y: startY,
+              },
+              {
+                opacity: 1,
+                y: 0,
+                delay: 0.8 + conIdx * 0.05,
+                duration: 0.6,
+                ease: "power3.out",
+              }
+            );
+          } else {
+            // 이전 섹션들은 페이드아웃
+            gsap.to(el, {
+              opacity: 0,
+              y: -20,
+              delay: conIdx * 0.05,
+              duration: 0.3,
+              ease: "power3.inOut",
+            });
+          }
+        });
       } else {
+        // 아래 섹션들은 화면 밖으로
         gsap.to(sec as HTMLElement, {
           y: window.innerHeight,
           ease: "expo.inOut",
           duration: SECTION_DURATION / 1000,
           delay: idx * 0.1,
+        });
+
+        doms.forEach((el) => {
+          gsap.to(el, {
+            opacity: 0,
+            y: 50,
+            delay: 0,
+            duration: 0.3,
+            ease: "power3.inOut",
+          });
         });
       }
     });
@@ -156,11 +204,11 @@ const Home = () => {
       >
         <div className="layout-center  md:gap-30 grid grid-cols-2">
           <div>
-            <div className="text-foreground font-Montserrat mb-5 ">
+            <div data-animate className="text-foreground font-Montserrat mb-5 ">
               <h1 className="text-3xl md:text-5xl  mb-4  gap-2">ABOUT ME</h1>
             </div>
 
-            <div className="flex flex-col gap-6 ">
+            <div data-animate className="flex flex-col gap-6 ">
               <div className="text-base md:text-lg flex flex-col gap-5 leading-relaxed">
                 <p className="break-keep">
                   프론트엔드 개발자 <strong>‘PHM’</strong>입니다. <br />
@@ -171,7 +219,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="flex gap-2    mt-10">
+            <div data-animate className="flex gap-2    mt-10">
               <Button
                 className="text-xs p-5 px-5! "
                 size={"sm"}
@@ -213,7 +261,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div data-animate className="grid grid-cols-2 gap-4">
             <div>
               <h1 className="text-xl">퍼블리싱</h1>
               <p>

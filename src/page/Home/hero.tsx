@@ -1,6 +1,6 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { forwardRef, useRef } from "react";
+import { forwardRef, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { CustomEase } from "gsap/CustomEase";
 gsap.registerPlugin(CustomEase);
@@ -40,31 +40,26 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
     () => {
       const tl = gsap.timeline();
 
-      tl.add(
-        [
-          gsap.fromTo(
-            videoRef.current,
-            { opacity: 0 },
-            { opacity: 1, duration: 0.5, ease: "sine.out", delay: 0.3 }
-          ),
-          gsap.fromTo(
-            videoRef.current,
-            { scale: 1 },
-            {
-              delay: 0.3,
-              scale: 1.4,
-              duration: 5,
-              ease: "myBezier",
-            }
-          ),
-        ],
-        0
-      );
-
-      tl.from(overlayRef.current, {
-        opacity: 0,
-        delay: 1,
-      });
+      // tl.add(
+      //   [
+      //     gsap.fromTo(
+      //       videoRef.current,
+      //       { opacity: 0 },
+      //       { opacity: 1, duration: 0.5, ease: "sine.out", delay: 0.3 }
+      //     ),
+      //     gsap.fromTo(
+      //       videoRef.current,
+      //       { scale: 1 },
+      //       {
+      //         delay: 0.3,
+      //         scale: 1.4,
+      //         duration: 5,
+      //         ease: "myBezier",
+      //       }
+      //     ),
+      //   ],
+      //   0
+      // );
 
       tl.fromTo(
         spanRefs.current,
@@ -125,10 +120,16 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
       >
         <div className="layout-center grid justify-end ">
           <div className=" leading-relaxed text-right   justify-center flex flex-col items-end ">
-            <p className="text-sm z-10  leading-relaxed text-teal-300  mb-2 font-Montserrat">
+            <p
+              data-animate
+              className="text-sm z-10  leading-relaxed text-teal-300  mb-2 font-Montserrat"
+            >
               프론트엔드 & 퍼블리셔
             </p>
-            <h1 className="inline-block leading-tight text-4xl z-10 md:text-6xl    font-Montserrat!  break-keep  w-full">
+            <h1
+              data-animate
+              className="inline-block leading-tight text-4xl z-10 md:text-6xl    font-Montserrat!  break-keep  w-full"
+            >
               PHM,
               <div className="inline-block">
                 {"FRONTEND".split("").map((e, i) => (
@@ -152,7 +153,10 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
               DEVELOPER
             </h1>
 
-            <p className="z-10 text-sm md:text-base opacity-80 my-10 md:mb-25 leading-relaxed border-b border-border pb-5">
+            <p
+              data-animate
+              className="z-10 text-sm md:text-base opacity-80 my-10 md:mb-25 leading-relaxed border-b border-border pb-5"
+            >
               프론트앤드 개발과 퍼블리싱을 주로 다룹니다<br></br> 해당 사이트는
               <span className="text-indigo-300">'React'</span>와 'Supabase'로
               제작되었습니다.
@@ -163,6 +167,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
             {MAIN_BTN.map((e, idx) => {
               return (
                 <div
+                  data-animate
                   key={`btn:${e.name}`}
                   onClick={() => nav(e.path)}
                   className="border-r border-white/30 pr-5 grid grid-cols-[auto_1fr] md:grid-cols-1  gap-5 md:gap-2  group cursor-pointer"
