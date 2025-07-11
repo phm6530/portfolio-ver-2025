@@ -65,6 +65,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
         spanRefs.current,
         { y: 50, opacity: 0 },
         {
+          delay: 0.4,
           stagger: 0.05,
           y: 0,
           opacity: 1,
