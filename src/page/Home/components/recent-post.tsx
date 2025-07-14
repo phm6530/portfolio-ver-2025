@@ -1,8 +1,9 @@
+import { Button } from "@/components/ui/button";
 import { axiosApi } from "@/config/axios.config";
-import BlogContentsItem from "@/features/Blog/BlogContents/BlogContentsItem";
-import { POST_STATUS } from "@/features/Blog/BlogList/BlogList";
 import { requestHandler } from "@/utils/apiUtils";
 import { useQuery } from "@tanstack/react-query";
+import { ChevronRight, Heart, PersonStanding } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export type PostItemModel = {
   post_id: number;
@@ -18,6 +19,7 @@ export type PostItemModel = {
 };
 
 export default function RecentPosts() {
+  const nav = useNavigate();
   const { data } = useQuery({
     queryKey: ["MAIN_CONTENTS"],
     queryFn: async () => {
@@ -32,47 +34,81 @@ export default function RecentPosts() {
   });
 
   return (
-    <div className="layout-center py-20">
-      <h1 className="text-3xl md:text-5xl font-Montserrat mt-3 font-medium tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-2 ">
-        Dev Blog
-      </h1>
-
-      <p className="mb-10 text-xs md:text-sm leading-relaxed">
-        개발, 그리고 기술에 관한{" "}
-        <span className="text-teal-300">기록 공간</span> 입니다
-      </p>
-      <div className="grid md:grid-cols-3 md:gap-5">
-        {data?.slice(0, 3).map((blogMeta, idx) => {
+    <div className="layout-center py-20 grid  gap-10 pt-50 ">
+      <div className="">
+        <h1
+          data-animate
+          className="text-3xl text-zinc-900 md:text-6xl font-Montserrat mt-3 tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-2 "
+        >
+          Dev Blog
+        </h1>
+        <div data-animate className="flex gap-6 mb-10 justify-between">
+          <div className="text-base md:text-xl flex flex-col gap-3 mt-5">
+            <p className="break-keep leading-relaxed text-zinc-900">
+              개발, 그리고 기술에 관한{" "}
+              <span className="text-teal-300 ">'기록공간'</span> 입니다.{" "}
+            </p>
+            <p className="text-sm text-secondary">
+              해당 리스트는 개인 블로그의 고정 콘텐츠 Api를 호출합니다.
+            </p>
+          </div>{" "}
+          <Button
+            className="text-xs p-6! px-5! flex gap-10"
+            size={"sm"}
+            onClick={() => nav("/about")}
+          >
+            자세히보기 <ChevronRight size={12} />
+          </Button>{" "}
+        </div>{" "}
+        {/* <div className="mt-10 flex gap-2">
+          <button className="article-hover p-5 flex items-center gap-10">
+            자세히보기 <ChevronRight size={22} />
+          </button>
+          <button className="article-hover p-5 flex items-center gap-10">
+            블로그 바로가기 <ChevronRight size={22} />
+          </button>
+        </div> */}
+      </div>
+      <div className="grid grid-cols-3 md:gap-10">
+        {data?.slice(0, 6).map((blogMeta, idx) => {
+          console.log(blogMeta);
           return (
-            <BlogContentsItem
-              key={`pinned-${idx}`}
-              status={POST_STATUS.PUBLISHED}
-              {...blogMeta}
-            />
-            // <div
-            //   key={`post:${blogMeta.post_id}:${idx}`}
-            //   className="flex flex-col gap-2 group cursor-pointer border p-5 article-hover rounded-lg"
-            //   onClick={() => nav(`/blog/${blogMeta.post_id}`)}
-            // >
-            //   <h4 className="text-foreground flex text-base items-center gap-3 font-medium my-3 group-hover:text-indigo-200 transition-colors">
-            //     {blogMeta.post_title}
-            //   </h4>
-            //   <p className="text-xs text-foreground/50 mb-2 line-clamp-2">
-            //     {blogMeta.post_description}
-            //   </p>
-            //   <div className="flex items-center gap-3 mt-auto">
-            //     <span className="text-[10px] text-foreground/40">
-            //       {DateUtils.formatStyledShort(blogMeta.created_at)}
-            //     </span>
-            //     <span className="text-[10px] py-0.5 px-2 bg-white/10 text-foreground/60 rounded-full">
-            //       {blogMeta.sub_group_name}
-            //     </span>
-            //     {DateUtils.isNew(blogMeta.created_at) && <PostNewIcon />}
-            //   </div>
-            // </div>
+            <div
+              data-animate
+              key={`post:${idx}`}
+              className="grid gap-4 items-center"
+            >
+              <div
+                className="aspect-[16/9] rounded-xl bg-cover bg-center"
+                style={{ backgroundImage: `url(${blogMeta.thumbnail_url})` }}
+              />
+              <div className="flex flex-col gap-4">
+                <h1 className="text-xl text-zinc-900">{blogMeta.post_title}</h1>
+                <p className="line-clamp-2 text-sm text-secondary leading-relaxed">
+                  {blogMeta.post_description}
+                </p>
+                <div className="flex gap-5 text-xs opacity-70">
+                  <div className="flex  items-center text-zinc-900">
+                    <span className="flex ">
+                      <PersonStanding
+                        size={20}
+                        className="text-muted-foreground"
+                      />{" "}
+                    </span>
+                    {blogMeta.comment_count}
+                  </div>
+                  <div className="flex items-center gap-2 text-zinc-900">
+                    <span className="flex">
+                      <Heart size={15} className="text-muted-foreground" />
+                    </span>
+                    {blogMeta.like_cnt}
+                  </div>
+                </div>
+              </div>
+            </div>
           );
         })}
-      </div>
+      </div>{" "}
     </div>
   );
 }

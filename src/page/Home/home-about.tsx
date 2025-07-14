@@ -24,7 +24,7 @@ export default function HomeAbout() {
 
   return (
     <div className="layout-center grid  pt-40 md:pt-50 pb-30">
-      <div>
+      <div className="mb-5">
         <div data-animate className="text-foreground font-Montserrat  ">
           <h1 className="text-5xl font-bold md:text-5xl font-Montserrat mt-3  tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-2 ">
             ABOUT

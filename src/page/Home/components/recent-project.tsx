@@ -5,7 +5,7 @@ import { type ProjectPostProps } from "@/type/ProjectTypes";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import ProjectItemSkeleton from "./project-item-skeleton";
-import { Box } from "lucide-react";
+import { Box, ChevronRight } from "lucide-react";
 import { IMG_URL } from "@/constants/apiUrl";
 import CarouselOrientation from "../home-project-list";
 
@@ -29,21 +29,20 @@ export default function RecentProject() {
     },
     staleTime: Infinity,
   });
-  const nav = useNavigate();
 
   return (
-    <div className=" grid  pt-40 md:pt-40 pb-30 w-full">
+    <div className=" grid   pt-40 md:pt-60 pb-30 w-full">
       <div className="layout-center animate-topIn ani-delay-0.5 opacity-0 mb-10">
         <h1
           data-animate
-          className="text-5xl font-bold  md:text-6xl font-Montserrat mt-3  tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-2 "
+          className="text-5xl  md:text-7xl font-Montserrat mt-3  tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-2 "
         >
           PROJECT
         </h1>
 
-        <div data-animate className="text-xs md:text-lg mb-5 mt-3">
+        <div data-animate className="text-xs md:text-xl mb-5 mt-3">
           <p className="  leading-relaxed ">
-            저의 <span className="text-teal-500">"프로젝트 기록"</span>
+            저의 <span className="text-teal-300">"프로젝트 기록"</span>
             입니다.
           </p>
           <p className="">
@@ -51,7 +50,11 @@ export default function RecentProject() {
           </p>
         </div>
       </div>
-      {isLoading ? <> </> : <CarouselOrientation projectlist={projectOne} />}
+      {isLoading ? (
+        <> </>
+      ) : (
+        <CarouselOrientation projectlist={projectOne || []} />
+      )}
     </div>
   );
 }

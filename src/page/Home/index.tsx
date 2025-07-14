@@ -5,9 +5,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useNavigate } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
 import HeroSection from "./hero";
 import HomeAbout from "./home-about";
 
@@ -208,12 +205,20 @@ const Home = () => {
 
       {/* Project */}
       <section
+        style={{
+          backgroundImage: `
+linear-gradient(#1d191ccc, rgb(24 22 22 / 75%)), url(/img/keyboard_7.jpg)
+    `,
+          backgroundSize: "cover",
+          backgroundPosition: "bottom 200px",
+          // filter: "grayscale(100%)",
+        }}
         ref={(el) => {
           if (el && !secRefs.current.includes(el)) {
             secRefs.current.push(el);
           }
         }}
-        className="h-screen flex flex-col items-center justify-start bg-zinc-50  z-11 w-screen absolute overflow-y-auto"
+        className="h-screen flex bg-bottom flex-col bg-cover items-center justify-start bg-zinc-950  z-11 w-screen absolute overflow-y-auto"
       >
         <RecentProject />
       </section>
@@ -225,7 +230,7 @@ const Home = () => {
             secRefs.current.push(el);
           }
         }}
-        className="min-h-screen overflow-y-scroll flex items-center  justify-center bg-zinc-900 z-13 w-screen absolute"
+        className="h-screen flex flex-col items-center justify-start bg-zinc-50  z-11 w-screen absolute overflow-y-auto"
       >
         <RecentPosts />
       </section>

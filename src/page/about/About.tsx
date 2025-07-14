@@ -16,7 +16,7 @@ const AboutPage = () => {
 
         <div className="mt-10 text-base text-white/90 leading-relaxed  animate-topIn ani-delay-0.3 opacity-0  break-keep">
           <h1 className="my-0 text-2xl md:text-3xl mb-5">
-            프론트엔드 개발자 <strong>‘PHM’</strong>입니다. 🖐️{" "}
+            프론트엔드 개발자 <strong>‘PHM’</strong>입니다. 🖐️
           </h1>
           <div className=" flex flex-col gap-5">
             <p className="break-keep">
