@@ -37,7 +37,7 @@ const HomeAbout = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
       }}
       className="h-screen flex flex-col justify-center items-center  bg-zinc-900 z-11 w-screen absolute overflow-y-auto"
     >
-      <div className="layout-center grid  pt-40 md:pt-50 pb-30">
+      <div className="layout-center grid  pt-120 md:pt-50 pb-30">
         <div className="mb-5">
           <div data-animate className="text-foreground font-Montserrat  ">
             <h1 className="text-5xl font-bold md:text-5xl font-Montserrat mt-3  tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-2 ">
@@ -57,7 +57,7 @@ const HomeAbout = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-15 mt-15">
+        <div className="grid md:grid-cols-3 gap-15 mt-15">
           {about_cont.map((e, idx) => {
             return (
               <div key={`abouts-${idx}`} data-animate className=" rounded-lg ">

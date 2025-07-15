@@ -119,7 +119,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
         }}
         className="h-screen  flex flex-col items-center pt-60 md:pt-30 md:pb-0 pb-20 justify-center z-11 w-screen absolute overflow-y-auto"
       >
-        <div className="layout-center grid justify-end ">
+        <div className="layout-center grid justify-end pt-20 md:pt-0">
           <div className=" leading-relaxed text-right   justify-center flex flex-col items-end ">
             <p
               data-animate
@@ -129,7 +129,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
             </p>
             <h1
               data-animate
-              className="inline-block leading-tight text-4xl z-10 md:text-6xl    font-Montserrat!  break-keep  w-full"
+              className="inline-block leading-tight text-5xl z-10 md:text-6xl    font-Montserrat!  break-keep  w-full"
             >
               PHM,
               <div className="inline-block">
@@ -156,7 +156,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
 
             <p
               data-animate
-              className="z-10 text-sm md:text-base opacity-80 my-10 md:mb-25 leading-relaxed border-b border-border pb-5"
+              className="z-10 text-sm md:text-lg opacity-80 my-10 md:mb-25 leading-relaxed border-b border-border pb-5"
             >
               프론트앤드 개발과 퍼블리싱을 주로 다룹니다<br></br> 해당 사이트는
               <span className="text-indigo-300">'React'</span>와 'Supabase'로
@@ -164,7 +164,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
             </p>
           </div>
 
-          <div className="button   z-10 gap-4  w-full  space-x-10 grid grid-cols-4 text-right">
+          <div className=" z-10 gap-4  w-full  md:space-x-10 gap-10 grid md:grid-cols-4 text-right mt-10">
             {MAIN_BTN.map((e, idx) => {
               return (
                 <div

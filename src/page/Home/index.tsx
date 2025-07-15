@@ -14,7 +14,7 @@ const Home = () => {
   const mainRef = useRef<HTMLDivElement>(null);
   const secRefs = useRef<HTMLElement[]>([]);
   const [page, setPage] = useState(0);
-  const SECTION_DURATION = 900;
+  const SECTION_DURATION = 800;
   const scrollingRef = useRef<boolean>(false);
   const isResizing = useRef<NodeJS.Timeout | null>(null);
 
@@ -39,15 +39,14 @@ const Home = () => {
 
       // Background
       if (idx === targetPage) {
-        const el = sec as HTMLElement;
-        const hasBg = el.dataset.bg;
+        const hasBg = (sec as HTMLElement).querySelector("[data-bg]");
 
         if (hasBg) {
           gsap.fromTo(
-            el,
-            { backgroundSize: "100%" },
+            hasBg,
+            { scale: 1 },
             {
-              backgroundSize: "110%",
+              scale: 1.2,
               duration: 5,
               ease: "sine",
               repeat: -1,

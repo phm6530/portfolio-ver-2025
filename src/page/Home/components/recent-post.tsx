@@ -50,7 +50,7 @@ const RecentPosts = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
         <div className="">
           <h1
             data-animate
-            className="text-3xl font-semibold  md:text-6xl font-Montserrat mt-3 tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-2 "
+            className="text-5xl font-semibold  md:text-6xl font-Montserrat mt-3 tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-2 "
           >
             Dev Blog
           </h1>
@@ -66,8 +66,8 @@ const RecentPosts = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
             </div>{" "}
           </div>{" "}
         </div>
-        <div className="grid grid-cols-2  md:gap-2">
-          {data?.slice(0, 6).map((blogMeta, idx) => {
+        <div className="grid md:grid-cols-3 gap-2  md:gap-2">
+          {data?.slice(0, 3).map((blogMeta, idx) => {
             return (
               <div
                 data-animate
@@ -112,17 +112,17 @@ const RecentPosts = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
                 </div>
               </div>
             );
-          })}
-        </div>
-
-        <div>
-          <Button
-            className="text-xs p-6! px-5! flex gap-10"
-            size={"sm"}
-            onClick={() => nav("/about")}
-          >
-            자세히보기 <ChevronRight size={12} />
-          </Button>{" "}
+          })}{" "}
+          <div>
+            <Button
+              data-animate
+              className="text-xs p-6! px-5! flex gap-10 mt-10"
+              size={"sm"}
+              onClick={() => nav("/about")}
+            >
+              자세히보기 <ChevronRight size={12} />
+            </Button>{" "}
+          </div>
         </div>
       </div>
     </section>

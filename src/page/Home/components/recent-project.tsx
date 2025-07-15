@@ -33,7 +33,7 @@ const RecentProject = forwardRef(
         data-bg
         style={{
           backgroundImage: `
-      linear-gradient(#1d191ccc, rgb(24 22 22 / 55%)), url(/img/keyboard_8.jpg)
+      linear-gradient(#1d191ccc, rgb(24 22 22 / 35%)), url(/img/k1.jpg)
           `,
           backgroundSize: "cover",
           backgroundPosition: "top",
@@ -58,8 +58,11 @@ const RecentProject = forwardRef(
               WORK
             </h1>
 
-            <div data-animate className="text-xs md:text-xl mb-5 mt-3">
-              <p className="  leading-relaxed ">
+            <div
+              data-animate
+              className="text-sm md:text-xl mb-5 mt-3  leading-relaxed"
+            >
+              <p className="  ">
                 저의 <span className="text-teal-300">"프로젝트 기록"</span>
                 입니다.
               </p>
