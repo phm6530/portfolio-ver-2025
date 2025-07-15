@@ -29,7 +29,7 @@ const BlogContentsItem: React.FC<PostItemModel> = ({
         "grid  gap-5 items-center  md:grid-cols-1 border-x-0 md:border-x-1 py-4 md:gap-0 article-hover md:p-5 md:flex-col  hover:-translate-y-1",
         thumbnail_url && "grid-cols-[minmax(0,5fr)_minmax(100px,2fr)]"
       )}
-      onClick={() => navigate(`${post_id}`)}
+      onClick={() => navigate(`/blog/${post_id}`)}
     >
       {thumbnail_url && (
         <div
@@ -51,7 +51,7 @@ const BlogContentsItem: React.FC<PostItemModel> = ({
         <div className="flex items-center">{post_title}</div>
 
         {/* Company */}
-        <p className="text-xs line-clamp-2 leading-relaxed text-muted-foreground">
+        <p className="text-xs line-clamp-2 leading-relaxed text-muted-foreground break-keep">
           {post_description}
         </p>
         {/* <HashTag>{subcategory}</HashTag> */}

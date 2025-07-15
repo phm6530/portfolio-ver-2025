@@ -156,11 +156,11 @@ const ProjectDetail = () => {
 
   return (
     <>
-      <section className="flex flex-col gap-12 max-w-4xl mx-auto -mt-[70px] md:mt-auto border-b pb-10 border-border">
+      <section className=" flex flex-col gap-12 max-w-4xl mx-auto -mt-[70px] md:mt-auto border-b pb-10 border-border">
         {/* 헤더 및 네비게이션 */}
-        <div className="flex items-center gap-4 border-b pb-3 border-border  ani-delay-0.1 ">
+        <div className=" animate-topIn ani-delay-0.1 opacity-0 flex items-center gap-4 border-b pb-3 border-border   ">
           <div
-            className="items-center gap-2 text-sm hidden md:flex border p-2 rounded-xl border-border"
+            className="items-center article-hover cursor-pointer gap-2 text-sm hidden md:flex  p-2 rounded-xl "
             onClick={() => nav("/project")}
           >
             <ChevronLeft size={15} />
@@ -205,18 +205,18 @@ const ProjectDetail = () => {
             {/* <img src="/public/img/gear.png" className="w-22" /> */}
 
             <div className="flex flex-col gap-10">
-              <h1 className="font-semibold border-border relative font-Montserrat inline-flex gap-4 items-center hover:text-indigo-100 text-3xl md:text-5xl leading-tight text-white  transition-all cursor-pointer tracking-tight">
+              <h1 className="animate-topIn ani-delay-0.2 opacity-0 font-semibold border-border relative font-Montserrat inline-flex gap-4 items-center  text-3xl md:text-5xl leading-tight text-white  transition-all cursor-pointer tracking-tight">
                 {title}
               </h1>{" "}
-              <div className="flex flex-col">
+              <div className="animate-topIn ani-delay-0.3 opacity-0 flex flex-col gap-2">
                 <p className=" text-sm text-muted-foreground">프로젝트 설명</p>
 
                 <span className="text-sm max-w-[500px] leading-relaxed break-keep">
                   {description}
                 </span>
               </div>
-              <article className="items-center flex gap-10">
-                <div className="flex flex-col gap-3">
+              <article className="animate-topIn ani-delay-0.4 opacity-0 flex flex-col  md:flex-row gap-4 md:gap-10 justify-start items-start">
+                <div className="flex flex-col gap-2">
                   <p className="text-sm text-muted-foreground  ">
                     작업기간 & 유지보수
                   </p>
@@ -224,16 +224,16 @@ const ProjectDetail = () => {
                     {DateUtils.getDurationDays(start_date, end_date)}일
                   </p>
                 </div>
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
                   <p className="text-sm text-muted-foreground ">투입인원</p>
                   <span className="text-sm">{project_member}</span>
                 </div>
 
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
                   <p className="text-sm text-muted-foreground ">Deply URL</p>
 
                   <button
-                    className="text-sm w-full items-center justify-center  gap-1 bg-transparent! border-b flex text-indigo-300 hover:text-teal-300"
+                    className="text-sm  items-center  gap-1 bg-transparent! border-b flex text-indigo-300 hover:text-teal-300"
                     onClick={() => window.open(project_url, "_blank")}
                   >
                     <span className="rotate-135">
@@ -243,7 +243,7 @@ const ProjectDetail = () => {
                   </button>
                 </div>
               </article>
-              <div className="flex flex-col gap-4   rounded-lg ">
+              <div className="animate-topIn ani-delay-0.5 opacity-0 flex flex-col gap-4   rounded-lg ">
                 <article className="space-y-2  md:col-span-2 mt-1">
                   <div className="flex flex-col gap-3">
                     <p className="text-sm text-muted-foreground ">사용스택</p>
@@ -285,7 +285,7 @@ const ProjectDetail = () => {
                   </div>
                 </article>
               </div>
-              <div className="w-full border border-border">
+              <div className="animate-topIn ani-delay-0.6 w-full border border-border">
                 <ProjectImgWrapper url={thumbnail} alt={title} />
               </div>
             </div>

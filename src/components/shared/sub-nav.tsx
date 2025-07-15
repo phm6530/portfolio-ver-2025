@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import BlogSvg from "@/asset/blog.svg?react";
 import GitSvg from "@/asset/git.svg?react";
 import Kakao from "@/asset/kakao.svg?react";
-import { Button } from "@/components/ui/button";
+
 import {
   Tooltip,
   TooltipContent,
@@ -57,7 +57,7 @@ export default function SubNav() {
   const { pathname } = useLocation();
 
   return (
-    <div className="space-y-7 animate-leftIn ani-delay-0.1 opacity-0 sticky top-30 transition-all textContainer">
+    <div className="space-y-7 animate-leftIn ani-delay-0.1 opacity-0 sticky top-40 transition-all textContainer">
       {SUB_PAGES.map((page, idx) => {
         const active = "/" + pathname.split("/")[1] === page.to;
 

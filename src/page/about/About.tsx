@@ -11,35 +11,34 @@ const AboutPage = () => {
   const nav = useNavigate();
   return (
     <>
-      {/* <AnimatedBackgroundGlows /> */}
-      {/* Main Content */}
-
       <div className="flex-1 max-w-3xl ">
         <UserCheck2 size={40} className="text-teal-300" />
 
         <div className="mt-10 text-base text-white/90 leading-relaxed  animate-topIn ani-delay-0.3 opacity-0  break-keep">
           <h1 className="my-0 text-2xl md:text-3xl mb-5">
-            프론트엔드 개발자 <strong>‘PHM’</strong>입니다. 🖐️{" "}
+            프론트엔드 개발자 <strong>‘PHM’</strong>입니다. 🖐️
           </h1>
-          <p className="break-keep">
-            <span className="text-teal-300">Next.js</span>,{" "}
-            <span className="text-teal-300">React</span>를 주력으로 개발하며,
-            UI/UX와 기술을 아우르는 하이브리드 전문가로 성장하고 있습니다.
-          </p>
-          <p className="mb-5">
-            퍼블리셔 경험을 기반으로 한 역량 확장형 전환을 통해, 사용자 중심의
-            직관적인 인터페이스 설계부터 최적화된 개발까지, 개발자와 사용자
-            모두의 경험을 중요하게 생각합니다
-          </p>{" "}
-          <div className="mt-10">
-            <Button
-              className="text-xs p-5 px-5!"
-              size={"sm"}
-              onClick={() => nav("/board")}
-            >
-              응원의 한줄평 남기기 <ChevronRight size={12} />
-            </Button>{" "}
+          <div className=" flex flex-col gap-5">
+            <p className="break-keep">
+              <span className="text-teal-300">Next.js</span>,{" "}
+              <span className="text-teal-300">React</span>를 주력으로 개발하며,
+              <br></br>
+              UI/UX와 기술을 아우르는 하이브리드 전문가로 성장하고 있습니다.
+            </p>
+            <p className=" leading-relaxed">
+              퍼블리셔 경험을 기반으로 한 역량 확장형 전환을 통해,<br></br>
+              사용자 중심의 직관적인 인터페이스 설계부터 최적화된 개발까지,
+              <br></br>
+              개발자와 사용자 모두의 경험을 중요하게 생각합니다
+            </p>{" "}
           </div>
+          <Button
+            className="text-xs p-5 px-5! mt-10"
+            size={"sm"}
+            onClick={() => nav("/board")}
+          >
+            응원의 한줄평 남기기 <ChevronRight size={12} />
+          </Button>{" "}
           <div className="flex flex-col gap-25 mt-5">
             <div className="pt-12 mt-12  border-white/10">
               {/* Skill-list */}
@@ -75,7 +74,7 @@ const AboutPage = () => {
                                 className="text-sm grid grid-cols-[auto_1fr] items-center gap-3"
                               >
                                 <span className="bg-zinc-500 rounded-full inline-block size-1" />
-                                <span className="text-muted-foreground text-xs md:text-sm">
+                                <span className="text-zinc-300 text-xs md:text-sm">
                                   {desc}
                                 </span>
                               </p>

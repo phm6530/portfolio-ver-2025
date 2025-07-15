@@ -29,7 +29,7 @@ export default function LinksWiget() {
   ];
   return (
     <div className="flex flex-col pt-5">
-      <span className="text-xs mb-3 text-white/40 relative ">Links</span>
+      {/* <span className="text-xs mb-3 text-white/40 relative ">Links</span> */}
       <div className="flex gap-2">
         {MY_LINKS.map((btn) => {
           return (

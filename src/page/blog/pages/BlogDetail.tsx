@@ -13,7 +13,7 @@ import {
 } from "@squirrel309/my-testcounter";
 import { HtmlContentNormalizer } from "@/utils/HtmlContentNormalizer";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, List, NotebookPen } from "lucide-react";
+import { ExternalLink, List } from "lucide-react";
 import imgUrlMapper from "@/utils/imgUrl-mapping";
 
 import LoadingSpiner from "@/components/ui/loading-spiner";
@@ -104,7 +104,7 @@ const BlogDetail = (): JSX.Element => {
   }
 
   const { blog_metadata, blog_contents, blog_sub_group } = data;
-  const { post_title, created_at, post_id } = blog_metadata;
+  const { post_title, created_at } = blog_metadata;
   const { contents } = blog_contents;
   const { sub_group_name } = blog_sub_group;
 

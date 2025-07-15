@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useRef } from "react";
 
 type MotionChildren = ReactNode;
 
@@ -34,12 +34,12 @@ export const FadeInOut: React.FC<MotionProps> = ({ className, children }) => {
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: -100 }}
+      initial={{ opacity: 0 }}
       style={{ width: "100%" }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 100 }}
+      exit={{ opacity: 0 }}
       transition={{
-        duration: 0.5,
+        duration: 0.8,
         ease: [0.6, -0.05, 0.01, 0.99], // 예시 큐빅 베지어 값
       }}
     >
@@ -49,19 +49,40 @@ export const FadeInOut: React.FC<MotionProps> = ({ className, children }) => {
 };
 
 export const Page: React.FC<MotionProps> = ({ className, children }) => {
-  const scrollOffsetY = () => {
-    window.scrollTo(0, window.scrollY);
+  const scrollBlockedRef = useRef(false);
+
+  const preventScroll = (e: Event) => {
+    if (scrollBlockedRef.current) {
+      e.preventDefault();
+    }
+  };
+
+  const handleAnimationStart = () => {
+    scrollBlockedRef.current = true;
+    window.addEventListener("wheel", preventScroll, { passive: false });
+    window.addEventListener("touchmove", preventScroll, { passive: false });
+    window.addEventListener("keydown", preventScroll, { passive: false });
+  };
+
+  const handleAnimationComplete = () => {
+    scrollBlockedRef.current = false;
+    window.removeEventListener("wheel", preventScroll);
+    window.removeEventListener("touchmove", preventScroll);
+    window.removeEventListener("keydown", preventScroll);
+    window.scrollTo({ top: 0 });
   };
 
   return (
     <motion.div
       className={className}
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onAnimationStart={scrollOffsetY}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 50 }}
+      onAnimationStart={handleAnimationStart}
+      onAnimationComplete={handleAnimationComplete}
       transition={{
-        duration: 0.4,
+        duration: 0.3,
+        ease: "easeIn",
       }}
     >
       {children}
