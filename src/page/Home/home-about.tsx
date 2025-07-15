@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
+import { forwardRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function HomeAbout() {
+const HomeAbout = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
   const nav = useNavigate();
   const about_cont = [
     {
@@ -23,56 +24,72 @@ export default function HomeAbout() {
   ];
 
   return (
-    <div className="layout-center grid  pt-40 md:pt-50 pb-30">
-      <div className="mb-5">
-        <div data-animate className="text-foreground font-Montserrat  ">
-          <h1 className="text-5xl font-bold md:text-5xl font-Montserrat mt-3  tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-2 ">
-            ABOUT
-          </h1>
-        </div>
-
-        <div data-animate className="flex flex-col gap-6 ">
-          <div className="text-base md:text-xl flex flex-col gap-5 ">
-            <p className="break-keep leading-relaxed">
-              프론트엔드 개발자 <strong>‘PHM’</strong>입니다. <br />
-              <span className="text-teal-300 text-lg">'Next.js'</span>,{" "}
-              <span className="text-teal-300 text-lg">'React'</span>를 주력으로
-              개발하고 있습니다. <br></br>
-            </p>
+    <section
+      ref={(el) => {
+        if (el) {
+          if (ref && "current" in ref) {
+            const arrayRef = ref.current!;
+            if (!arrayRef.includes(el)) {
+              arrayRef.push(el);
+            }
+          }
+        }
+      }}
+      className="h-screen flex flex-col justify-center items-center  bg-zinc-900 z-11 w-screen absolute overflow-y-auto"
+    >
+      <div className="layout-center grid  pt-40 md:pt-50 pb-30">
+        <div className="mb-5">
+          <div data-animate className="text-foreground font-Montserrat  ">
+            <h1 className="text-5xl font-bold md:text-5xl font-Montserrat mt-3  tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-2 ">
+              ABOUT
+            </h1>
           </div>
-        </div>
-      </div>
 
-      <div className="grid grid-cols-3 gap-15 mt-15">
-        {about_cont.map((e, idx) => {
-          return (
-            <div key={`abouts-${idx}`} data-animate className=" rounded-lg ">
-              <h1 className="text-base border-b pb-2 border-border flex  items-center gap-3 mb-3">
-                {/* <PaintRoller className="text-cyan-300" /> */}
-                <span className="text-3xl font-semibold opacity-50 text-shadow text-shadow-amber-100">
-                  0{idx + 1}
-                </span>
-                <span className="text-lg text-cyan-300/80">/</span>
-
-                {e.title}
-              </h1>
-              <p className="whitespace-pre-line text-sm text-secondary-foreground/80 leading-relaxed break-keep">
-                {e.description}
+          <div data-animate className="flex flex-col gap-6 ">
+            <div className="text-base md:text-xl flex flex-col gap-5 ">
+              <p className="break-keep leading-relaxed">
+                프론트엔드 개발자 <strong>‘PHM’</strong>입니다. <br />
+                <span className="text-teal-300 text-lg">'Next.js'</span>,{" "}
+                <span className="text-teal-300 text-lg">'React'</span>를
+                주력으로 개발하고 있습니다. <br></br>
               </p>
             </div>
-          );
-        })}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-3 gap-15 mt-15">
+          {about_cont.map((e, idx) => {
+            return (
+              <div key={`abouts-${idx}`} data-animate className=" rounded-lg ">
+                <h1 className="text-base border-b pb-2 border-border flex  items-center gap-3 mb-3">
+                  {/* <PaintRoller className="text-cyan-300" /> */}
+                  <span className="text-3xl font-semibold opacity-50 text-shadow text-shadow-amber-100">
+                    0{idx + 1}
+                  </span>
+                  <span className="text-lg text-cyan-300/80">/</span>
+
+                  {e.title}
+                </h1>
+                <p className="whitespace-pre-line text-sm text-secondary-foreground/80 leading-relaxed break-keep">
+                  {e.description}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+        <div data-animate className=" mt-20 flex gap-2">
+          {" "}
+          <Button
+            className="text-xs p-6! px-5! flex gap-10"
+            size={"sm"}
+            onClick={() => nav("/about")}
+          >
+            자세히보기 <ChevronRight size={12} />
+          </Button>{" "}
+        </div>
       </div>
-      <div data-animate className=" mt-20 flex gap-2">
-        {" "}
-        <Button
-          className="text-xs p-6! px-5! flex gap-10"
-          size={"sm"}
-          onClick={() => nav("/about")}
-        >
-          자세히보기 <ChevronRight size={12} />
-        </Button>{" "}
-      </div>
-    </div>
+    </section>
   );
-}
+});
+
+export default HomeAbout;

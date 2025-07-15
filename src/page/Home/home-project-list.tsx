@@ -1,15 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import StackBadge from "@/components/ui/stack-badge";
-import { IMG_URL } from "@/constants/apiUrl";
-import { cn } from "@/lib/utils";
+
 import { ProjectPostProps } from "@/type/ProjectTypes";
 import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -46,7 +36,7 @@ export default function CarouselOrientation({
           style={{
             backdropFilter: "blur(10px)",
           }}
-          className="group relative  py-12 cursor-pointer grid grid-cols-[1fr_3fr_1fr] items-center border-b border-white/10   p-5  "
+          className="group relative  py-10 cursor-pointer grid grid-cols-[1fr_3fr_1fr] items-center border-b border-white/10   p-5  "
         >
           {/* 인덱스 */}
           <div className="font-mono text-3xl font-light text-zinc-500 transition-colors duration-300">
@@ -55,7 +45,7 @@ export default function CarouselOrientation({
 
           {/* 메인 콘텐츠 */}
           <div className="grid gap-3">
-            <h4 className="text-3xl md:text-4xl mb-4  group-hover:text-teal-300 font-Montserrat font-light  transition-all duration-300 ">
+            <h4 className="text-3xl mb-4  group-hover:text-teal-300 font-Montserrat font-light  transition-all duration-300 ">
               {project.title}
             </h4>
             <p className="text-sm leading-relaxed max-w-[500px] text-muted-foreground group-hover:text-white/90 break-keep transition-all duration-300">

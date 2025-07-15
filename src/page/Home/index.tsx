@@ -7,11 +7,10 @@ import { useGSAP } from "@gsap/react";
 import { useNavigate } from "react-router-dom";
 import HeroSection from "./hero";
 import HomeAbout from "./home-about";
+import HomeContact from "./home-contact";
 
 gsap.registerPlugin(ScrollTrigger);
 const Home = () => {
-  const nav = useNavigate();
-
   const mainRef = useRef<HTMLDivElement>(null);
   const secRefs = useRef<HTMLElement[]>([]);
   const [page, setPage] = useState(0);
@@ -37,6 +36,26 @@ const Home = () => {
     gsap.utils.toArray(secRefs.current).forEach((sec, idx) => {
       const tl = gsap.timeline();
       const doms = (sec as HTMLElement).querySelectorAll("[data-animate]");
+
+      // Background
+      if (idx === targetPage) {
+        const el = sec as HTMLElement;
+        const hasBg = el.dataset.bg;
+
+        if (hasBg) {
+          gsap.fromTo(
+            el,
+            { backgroundSize: "100%" },
+            {
+              backgroundSize: "110%",
+              duration: 5,
+              ease: "sine",
+              repeat: -1,
+              yoyo: true,
+            }
+          );
+        }
+      }
 
       if (idx <= targetPage) {
         tl.to(sec as HTMLElement, {
@@ -192,62 +211,15 @@ const Home = () => {
       <HeroSection ref={secRefs} />
 
       {/* About */}
-      <section
-        ref={(el) => {
-          if (el && !secRefs.current.includes(el)) {
-            secRefs.current.push(el);
-          }
-        }}
-        className="h-screen flex flex-col justify-center items-center  bg-zinc-900 z-11 w-screen absolute overflow-y-auto"
-      >
-        <HomeAbout />
-      </section>
+      <HomeAbout ref={secRefs} />
 
       {/* Project */}
-      <section
-        style={{
-          backgroundImage: `
-linear-gradient(#1d191ccc, rgb(24 22 22 / 75%)), url(/img/keyboard_7.jpg)
-    `,
-          backgroundSize: "cover",
-          backgroundPosition: "bottom 200px",
-          // filter: "grayscale(100%)",
-        }}
-        ref={(el) => {
-          if (el && !secRefs.current.includes(el)) {
-            secRefs.current.push(el);
-          }
-        }}
-        className="h-screen flex bg-bottom flex-col bg-cover items-center justify-start bg-zinc-950  z-11 w-screen absolute overflow-y-auto"
-      >
-        <RecentProject />
-      </section>
+      <RecentProject ref={secRefs} />
 
       {/* Blog */}
-      <section
-        ref={(el) => {
-          if (el && !secRefs.current.includes(el)) {
-            secRefs.current.push(el);
-          }
-        }}
-        className="h-screen flex flex-col items-center justify-start bg-zinc-50  z-11 w-screen absolute overflow-y-auto"
-      >
-        <RecentPosts />
-      </section>
+      <RecentPosts ref={secRefs} />
 
-      <section
-        ref={(el) => {
-          if (el && !secRefs.current.includes(el)) {
-            secRefs.current.push(el);
-          }
-        }}
-        className="h-screen flex items-center justify-center bg-lime-800 z-14 w-screen absolute"
-      >
-        <div className="text-center">
-          <h1 className="text-4xl text-white mb-4">Section 5 (Footer)</h1>
-          <p className="text-white/60">마지막 섹션입니다</p>
-        </div>
-      </section>
+      <HomeContact ref={secRefs} />
 
       {/* 페이지 인디케이터 */}
       <div className="fixed right-8 top-1/2 z-50">
