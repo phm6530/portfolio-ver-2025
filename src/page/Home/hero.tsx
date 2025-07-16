@@ -40,27 +40,6 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
     () => {
       const tl = gsap.timeline();
 
-      // tl.add(
-      //   [
-      //     gsap.fromTo(
-      //       videoRef.current,
-      //       { opacity: 0 },
-      //       { opacity: 1, duration: 0.5, ease: "sine.out", delay: 0.3 }
-      //     ),
-      //     gsap.fromTo(
-      //       videoRef.current,
-      //       { scale: 1 },
-      //       {
-      //         delay: 0.3,
-      //         scale: 1.4,
-      //         duration: 5,
-      //         ease: "myBezier",
-      //       }
-      //     ),
-      //   ],
-      //   0
-      // );
-
       tl.fromTo(
         spanRefs.current,
         { y: 50, opacity: 0 },
@@ -79,15 +58,6 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
 
   return (
     <>
-      <div
-        ref={overlayRef}
-        className="absolute top-0  z-10
-                 w-full h-full box-border bg-gradient-to-b from-zinc-950 via-black/20 to-transparent"
-        // style={{
-        //   backdropFilter: "blur(5px)",
-        // }}
-      />
-
       {/* overlay */}
       <video
         ref={videoRef}
@@ -106,6 +76,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
       </video>
 
       <section
+        // Page 기준
         ref={(el) => {
           if (el) {
             // forwardRef로 받은 ref가 배열 ref라면
@@ -117,79 +88,92 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
             }
           }
         }}
-        className="h-screen  flex flex-col items-center pt-60 md:pt-30 md:pb-0 pb-20 justify-center z-11 w-screen absolute overflow-y-auto"
+        className="h-screen absolute"
       >
-        <div className="layout-center grid justify-end pt-20 md:pt-0">
-          <div className=" leading-relaxed text-right   justify-center flex flex-col items-end ">
-            <p
-              data-animate
-              className="text-sm z-10  leading-relaxed text-teal-300  mb-2 font-Montserrat"
-            >
-              프론트엔드 & 퍼블리셔
-            </p>
-            <h1
-              data-animate
-              className="inline-block leading-tight text-5xl z-10 md:text-6xl    font-Montserrat!  break-keep  w-full"
-            >
-              PHM,
-              <div className="inline-block">
-                {"FRONTEND".split("").map((e, i) => (
-                  <span
-                    key={`word:${i}`}
-                    ref={(el) => {
-                      if (el) {
-                        spanRefs.current[i] = el;
-                      }
-                    }}
-                    className="relative inline-block font-bold font-Montserrat hover:text-teal-300 transition-colors duration-300"
-                    style={{
-                      textShadow: "0 0 30px rgba(45, 212, 191, 0.3)",
-                    }}
-                  >
-                    {e}
-                  </span>
-                ))}
-              </div>
-              <br></br>
-              DEVELOPER
-            </h1>
+        <div
+          ref={overlayRef}
+          className="absolute bottom-0  z-10
+                 w-full h-1/2 box-border bg-gradient-to-t from-black via-transparent to-transparent"
+        />
 
-            <p
-              data-animate
-              className="z-10 text-sm md:text-lg opacity-80 my-10 md:mb-25 leading-relaxed border-b border-border pb-5"
-            >
-              프론트앤드 개발과 퍼블리싱을 주로 다룹니다<br></br> 해당 사이트는
-              <span className="text-indigo-300">'React'</span>와 'Supabase'로
-              제작되었습니다.
-            </p>
-          </div>
-
-          <div className=" z-10 gap-4  w-full  md:space-x-10 gap-10 grid md:grid-cols-4 text-right mt-10">
-            {MAIN_BTN.map((e, idx) => {
-              return (
-                <div
-                  data-animate
-                  key={`btn:${e.name}`}
-                  onClick={() => nav(e.path)}
-                  className="border-r border-white/30 pr-5 grid grid-cols-[auto_1fr] md:grid-cols-1  gap-5 md:gap-2  group cursor-pointer"
-                >
-                  <div className="flex gap-2 justify-between items-center">
-                    <h1 className="text-4xl md:text-4xl  font-semibold font-Montserrat opacity-20 md:pl-3">
-                      0{idx + 1}
-                    </h1>
-                    <h1
-                      className="font-Montserrat text-xl md:text-2xl   group-hover:text-teal-300  "
-                      style={{ transition: "padding-left .2s ease" }}
+        {/* 레퍼 분리 */}
+        <div
+          data-sec
+          className="h-screen flex flex-col items-center pt-60 md:pt-30 md:pb-0 pb-20 justify-center z-11 w-screen  overflow-y-auto"
+        >
+          <div className="layout-center grid justify-end pt-20 md:pt-0">
+            <div className=" leading-relaxed text-right   justify-center flex flex-col items-end ">
+              <p
+                data-animate
+                className="text-sm z-10  leading-relaxed text-teal-300  mb-2 font-Montserrat"
+              >
+                프론트엔드 & 퍼블리셔
+              </p>
+              <h1
+                data-animate
+                className="inline-block leading-tight text-5xl z-10 md:text-6xl    font-Montserrat!  break-keep  w-full"
+              >
+                PHM,
+                <div className="inline-block">
+                  {"FRONTEND".split("").map((e, i) => (
+                    <span
+                      key={`word:${i}`}
+                      ref={(el) => {
+                        if (el) {
+                          spanRefs.current[i] = el;
+                        }
+                      }}
+                      className="relative inline-block font-bold font-Montserrat hover:text-teal-300 transition-colors duration-300"
+                      style={{
+                        textShadow: "0 0 30px rgba(45, 212, 191, 0.3)",
+                      }}
                     >
-                      {e.name}
-                    </h1>
-                  </div>{" "}
-                  <p className=" text-xs text-muted-foreground  md:col-auto break-keep whitespace-pre-line leading-relaxed">
-                    {e.des}
-                  </p>
+                      {e}
+                    </span>
+                  ))}
                 </div>
-              );
-            })}
+                <br></br>
+                DEVELOPER
+              </h1>
+
+              <p
+                data-animate
+                className="z-10 text-sm md:text-lg opacity-80 my-10 md:mb-25 leading-relaxed border-b border-border pb-5"
+              >
+                프론트앤드 개발과 퍼블리싱을 주로 다룹니다<br></br> 해당
+                사이트는
+                <span className="text-indigo-300">'React'</span>와 'Supabase'로
+                제작되었습니다.
+              </p>
+            </div>
+
+            <div className=" z-10 gap-4  w-full  md:space-x-10 gap-10 grid md:grid-cols-4 text-right mt-10">
+              {MAIN_BTN.map((e, idx) => {
+                return (
+                  <div
+                    data-animate
+                    key={`btn:${e.name}`}
+                    onClick={() => nav(e.path)}
+                    className="border-r border-white/30 pr-5 grid grid-cols-[auto_1fr] md:grid-cols-1  gap-5 md:gap-2  group cursor-pointer"
+                  >
+                    <div className="flex gap-2 justify-between items-center">
+                      <h1 className="text-4xl md:text-4xl  font-semibold font-Montserrat opacity-20 md:pl-3">
+                        0{idx + 1}
+                      </h1>
+                      <h1
+                        className="font-Montserrat text-xl md:text-2xl   group-hover:text-teal-300  "
+                        style={{ transition: "padding-left .2s ease" }}
+                      >
+                        {e.name}
+                      </h1>
+                    </div>{" "}
+                    <p className=" text-xs text-muted-foreground  md:col-auto break-keep whitespace-pre-line leading-relaxed">
+                      {e.des}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>

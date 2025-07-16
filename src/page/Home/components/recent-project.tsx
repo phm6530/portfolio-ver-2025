@@ -30,15 +30,6 @@ const RecentProject = forwardRef(
 
     return (
       <section
-        data-bg
-        style={{
-          backgroundImage: `
-      linear-gradient(#1d191ccc, rgb(24 22 22 / 35%)), url(/img/k1.jpg)
-          `,
-          backgroundSize: "cover",
-          backgroundPosition: "top",
-          // filter: "grayscale(100%)",
-        }}
         ref={(el) => {
           if (el && ref && "current" in ref) {
             const arrayRef = ref.current!;
@@ -47,36 +38,53 @@ const RecentProject = forwardRef(
             }
           }
         }}
-        className="h-screen flex bg-bottom flex-col bg-cover items-center justify-start bg-zinc-950  z-11 w-screen absolute overflow-y-auto"
+        className="h-screen absolute   z-11  "
       >
-        <div className=" grid   pt-40 md:pt-60 pb-30 w-full">
-          <div className="layout-center animate-topIn ani-delay-0.5 opacity-0 mb-5">
-            <h1
-              data-animate
-              className="text-5xl  md:text-6xl font-black  font-Montserrat mt-3  tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-5 "
-            >
-              WORK
-            </h1>
+        {/* BackGround */}
+        <div
+          data-bg
+          className="top-0  w-full h-full bg-cover absolute pointer-events-none"
+          style={{
+            backgroundImage: `
+      linear-gradient(#1d191ccc, rgb(24 22 22 / 55%)), url(/img/k1.jpg)
+          `,
+          }}
+        />
 
-            <div
-              data-animate
-              className="text-sm md:text-xl mb-5 mt-3  leading-relaxed"
-            >
-              <p className="  ">
-                저의 <span className="text-teal-300">"프로젝트 기록"</span>
-                입니다.
-              </p>
-              <p className="">
-                Next와 React를 학습하고 실전에 녹여낸 개인 프로젝트 입니다.
-              </p>
+        {/* Wrapper */}
+        <div
+          data-sec
+          className=" overflow-y-auto  max-h-screen flex flex-col bg-cover items-center justify-start  w-screen "
+        >
+          <div className=" grid layout-center   pt-40 md:pt-60 pb-30 w-full ">
+            <div className=" mb-5">
+              <h1
+                data-animate
+                className="text-5xl  md:text-6xl font-black  font-Montserrat mt-3  tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-5 "
+              >
+                WORK
+              </h1>
+
+              <div
+                data-animate
+                className="text-sm md:text-xl mb-5 mt-3  leading-relaxed"
+              >
+                <p className="  ">
+                  저의 <span className="text-teal-300">"프로젝트 기록"</span>
+                  입니다.
+                </p>
+                <p className="">
+                  Next와 React를 학습하고 실전에 녹여낸 개인 프로젝트 입니다.
+                </p>
+              </div>
             </div>
+            {isLoading ? (
+              <> </>
+            ) : (
+              <CarouselOrientation projectlist={projectOne || []} />
+            )}
           </div>
-          {isLoading ? (
-            <> </>
-          ) : (
-            <CarouselOrientation projectlist={projectOne || []} />
-          )}
-        </div>{" "}
+        </div>
       </section>
     );
   }

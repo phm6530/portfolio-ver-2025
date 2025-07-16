@@ -1,10 +1,15 @@
 import RecentProject from "./components/recent-project";
 import RecentPosts from "./components/recent-post";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { useNavigate } from "react-router-dom";
 import HeroSection from "./hero";
 import HomeAbout from "./home-about";
 import HomeContact from "./home-contact";
@@ -26,111 +31,115 @@ const Home = () => {
     };
   }, []);
 
-  const pageMoveHandler = (targetPage: number) => {
-    scrollingRef.current = true; // 상태
-
-    // 이전 페이지와 비교하여 방향 결정
-    const isMovingDown = targetPage > page;
-    const isMovingUp = targetPage < page;
-
-    gsap.utils.toArray(secRefs.current).forEach((sec, idx) => {
-      const tl = gsap.timeline();
-      const doms = (sec as HTMLElement).querySelectorAll("[data-animate]");
-
-      // Background
-      if (idx === targetPage) {
-        const hasBg = (sec as HTMLElement).querySelector("[data-bg]");
-
-        if (hasBg) {
-          gsap.fromTo(
-            hasBg,
-            { scale: 1 },
-            {
-              scale: 1.2,
-              duration: 5,
-              ease: "sine",
-              repeat: -1,
-              yoyo: true,
-            }
-          );
-        }
-      }
-
-      if (idx <= targetPage) {
-        tl.to(sec as HTMLElement, {
-          y: 0,
-          ease: "power3.inOut",
-          duration: SECTION_DURATION / 1000,
-          delay: idx * 0.1,
-        });
-
-        doms.forEach((el, conIdx) => {
-          if (idx === targetPage) {
-            // 현재 활성 섹션의 애니메이션
-            const startY = isMovingDown ? 50 : isMovingUp ? -50 : 0;
-
-            gsap.fromTo(
-              el,
-              {
-                opacity: 0,
-                y: startY,
-              },
-              {
-                opacity: 1,
-                y: 0,
-                delay: 0.8 + conIdx * 0.03,
-                duration: 0.6,
-                ease: "power3.out",
-              }
-            );
-          } else {
-            // 이전 섹션들은 페이드아웃
-            gsap.to(el, {
-              opacity: 0,
-              y: -20,
-              delay: conIdx * 0.03,
-              duration: 0.3,
-              ease: "power3.inOut",
-            });
-          }
-        });
-      } else {
-        // 아래 섹션들은 화면 밖으로
-        gsap.to(sec as HTMLElement, {
-          y: window.innerHeight,
-          ease: "expo.inOut",
-          duration: SECTION_DURATION / 1000,
-          delay: idx * 0.1,
-        });
-
-        doms.forEach((el) => {
-          gsap.to(el, {
-            opacity: 0,
-            y: 50,
-            delay: 0,
-            duration: 0.4,
-            ease: "power3.inOut",
-          });
-        });
-      }
-    });
-
-    setTimeout(() => {
-      scrollingRef.current = false; // 종료 시키기
-    }, SECTION_DURATION);
-  };
-
   // wheel Handler
   useEffect(() => {
+    const pageMoveHandler = (targetPage: number) => {
+      scrollingRef.current = true; // 상태
+
+      // 이전 페이지와 비교하여 방향 결정
+      const isMovingDown = targetPage > page;
+      const isMovingUp = targetPage < page;
+
+      gsap.utils.toArray(secRefs.current).forEach((sec, idx) => {
+        const tl = gsap.timeline();
+        const doms = (sec as HTMLElement).querySelectorAll("[data-animate]");
+
+        // Background
+        if (idx === targetPage) {
+          const hasBg = (sec as HTMLElement).querySelector("[data-bg]");
+
+          if (hasBg) {
+            gsap.fromTo(
+              hasBg,
+              { scale: 1 },
+              {
+                scale: 1.2,
+                duration: 10,
+                ease: "sine",
+                repeat: -1,
+                yoyo: true,
+              }
+            );
+          }
+        }
+
+        if (idx <= targetPage) {
+          tl.to(sec as HTMLElement, {
+            y: 0,
+            ease: "power3.inOut",
+            duration: SECTION_DURATION / 1000,
+            delay: idx * 0.1,
+          });
+
+          doms.forEach((el, conIdx) => {
+            if (idx === targetPage) {
+              // 현재 활성 섹션의 애니메이션
+              const startY = isMovingDown ? 50 : isMovingUp ? -50 : 0;
+
+              gsap.fromTo(
+                el,
+                {
+                  opacity: 0,
+                  y: startY,
+                },
+                {
+                  opacity: 1,
+                  y: 0,
+                  delay: 0.8 + conIdx * 0.03,
+                  duration: 0.6,
+                  ease: "power3.out",
+                }
+              );
+            } else {
+              // 이전 섹션들은 페이드아웃
+              gsap.to(el, {
+                opacity: 0,
+                y: -20,
+                delay: conIdx * 0.03,
+                duration: 0.3,
+                ease: "power3.inOut",
+              });
+            }
+          });
+        } else {
+          // 아래 섹션들은 화면 밖으로
+          gsap.to(sec as HTMLElement, {
+            y: window.innerHeight,
+            ease: "expo.inOut",
+            duration: SECTION_DURATION / 1000,
+            delay: idx * 0.1,
+          });
+
+          doms.forEach((el) => {
+            gsap.to(el, {
+              opacity: 0,
+              y: 50,
+              delay: 0,
+              duration: 0.4,
+              ease: "power3.inOut",
+            });
+          });
+        }
+      });
+
+      setTimeout(() => {
+        scrollingRef.current = false; // 종료 시키기
+      }, SECTION_DURATION);
+    };
+
     const wheelEvent = (e: WheelEvent) => {
       if (scrollingRef.current) return; // 스크롤 중일땐 리턴시키고
 
       // 해당섹션이 콘텐츠가 넘을 때는 잠시 일단 중지
       const currentSection = secRefs.current[page];
 
-      const scrollHeight = currentSection.scrollHeight;
+      const sectionWrapper = currentSection.querySelector(
+        "[data-sec]"
+      ) as HTMLElement;
+
+      const scrollHeight = sectionWrapper.scrollHeight;
       const clientHeight = currentSection.clientHeight;
-      const scrollTop = currentSection.scrollTop;
+      const scrollTop = sectionWrapper.scrollTop;
 
       // over 되는지 확인
       const isOverflowSection = scrollHeight > clientHeight;
@@ -221,16 +230,15 @@ const Home = () => {
       <HomeContact ref={secRefs} />
 
       {/* 페이지 인디케이터 */}
-      <div className="fixed right-8 top-1/2 z-50">
+      <div className="fixed right-8 top-1/2  z-50">
         {Array.from({ length: 5 }, (_, idx) => (
           <div
             key={idx}
-            className={`w-3 h-3 rounded-full mb-2 cursor-pointer transition-all duration-300 ${
+            className={`w-[2px] h-[20px] rounded-full mb-2 cursor-pointer transition-all duration-300 ${
               idx === page ? "bg-white" : "bg-white/30"
             }`}
             onClick={() => {
               setPage(idx);
-              pageMoveHandler(idx);
             }}
           />
         ))}
