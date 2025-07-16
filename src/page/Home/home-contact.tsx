@@ -91,23 +91,29 @@ const HomeContact = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
 
           <div
             data-animate
-            className="z-10  pb-40 border-t md:border-t-0 md:border-l border-border pt-10 md:pt-0 md:mt-0 mt-10 md:pl-10 flex flex-col gap-10"
+            className="z-10  pb-40 md:pb-0 border-t md:border-t-0 md:border-l border-border pt-10 md:pt-0 md:mt-0 mt-10 md:pl-10 flex flex-col gap-10"
           >
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1">
               <div className="text-muted-foreground text-sm border-border">
                 Contact
               </div>
               <div className="flex gap-3 items-center text-sm md:text-base ">
-                <PhoneCall size={15} className="opacity-50" />
+                <div className="relative p-2">
+                  <PhoneCall size={15} className="opacity-50" />
+                </div>
+
                 <span>+82 10 5027 8530</span>
               </div>
               <div className="flex gap-3 items-center text-sm md:text-base">
-                <Mail size={15} className="opacity-50" />
+                <div className="relative p-2">
+                  <Mail size={15} className="opacity-50" />
+                </div>
+
                 <span>squirrel309@naver.com</span>
               </div>
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1">
               <div className="text-muted-foreground text-sm  border-border">
                 Social
               </div>
