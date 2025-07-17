@@ -127,6 +127,8 @@
 /* Base.. */
 @layer base {
   body {
+    min-height: 100svh;
+    max-height: 100lvh;
     @apply util-scrollbar;
     @apply bg-background text-foreground font-SUIT-Regular min-h-screen;
     @apply bg-gradient-to-br from-[#383838] to-[#080808];
