@@ -10,22 +10,22 @@ CustomEase.create("myBezier", "0,0.45,0,0.62");
 const MAIN_BTN = [
   {
     name: "About",
-    des: "퍼블리셔와 프론트엔드\n 그 사이 어딘가",
+    des: "퍼블리셔와 프론트엔드 그 사이 어딘가",
     path: "/about",
   },
   {
     name: "Work",
-    des: "Project ARCHIVE,\n 저의 작업 리스트 입니다.",
+    des: "Project ARCHIVE, 저의 작업 리스트 입니다.",
     path: "/project",
   },
   {
     name: "Blog",
-    des: "개발, 그리고 기술에 관한\n기록 공간 입니다",
+    des: "개발, 그리고 기술에 관한 기록 공간 입니다",
     path: "/blog",
   },
   {
     name: "Board",
-    des: "방명록' 여러분의 한줄의 응원은\n저에게 큰 힘이 됩니다",
+    des: "방명록' 여러분의 한줄의 응원은 저에게 큰 힘이 됩니다",
     path: "/board",
   },
 ];
@@ -37,45 +37,42 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const spanRefs = useRef<HTMLSpanElement[]>([]);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const loadingRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(
-    () => {
-      const tl = gsap.timeline();
-
-      tl.fromTo(
-        spanRefs.current,
-        { y: 50, opacity: 0 },
-        {
-          delay: 0.4,
-          stagger: 0.05,
-          y: 0,
-          opacity: 1,
-          color: "#46edd5",
-          ease: "back(3)",
-        }
-      );
-    },
-    { dependencies: [spanRefs] }
-  );
   useEffect(() => {
-    const videoElement = videoRef.current;
-    if (videoElement) {
-      const handleVideoLoad = () => {
-        setIsVideoLoaded(true);
-      };
+    const tl = gsap.timeline();
+    if (!isVideoLoaded) return;
+    tl.to(loadingRef.current, {
+      y: "-100vh",
+      delay: 1,
+      ease: "expo.inOut",
+      duration: 1.2,
+    });
 
-      // 'loadeddata' 이벤트는 비디오가 재생을 시작할 수 있는 충분한 데이터를 받았을 때 발생합니다.
-      videoElement.addEventListener("loadeddata", handleVideoLoad);
-
-      // 컴포넌트가 언마운트될 때 이벤트 리스너를 정리합니다.
-      return () => {
-        videoElement.removeEventListener("loadeddata", handleVideoLoad);
-      };
-    }
-  }, []);
+    tl.fromTo(
+      spanRefs.current,
+      { y: 50, opacity: 0 },
+      {
+        stagger: 0.05,
+        y: 0,
+        opacity: 1,
+        color: "#46edd5",
+        ease: "back(3)",
+      },
+      "-=.5"
+    );
+  }, [isVideoLoaded]);
 
   return (
     <>
+      {/* loading.. */}
+      <div
+        ref={loadingRef}
+        className=" fixed inset-0 bg-zinc-800 z-10 flex justify-center items-center"
+      >
+        <span className="tracking-wider">loading....</span>
+      </div>
+
       {/* overlay */}
       <img
         // ❗️ 여기에 사용할 이미지 경로를 입력하세요.
@@ -94,6 +91,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
         autoPlay
         loop
         muted
+        onLoadedData={() => setIsVideoLoaded(true)}
         playsInline
         className={cn(
           "video-element w-screen h-screen object-cover block fixed",
@@ -103,7 +101,6 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
       >
         <source src="/neon_5.mp4" type="video/mp4" />
       </video>
-
       <section
         // Page 기준
         ref={(el) => {
@@ -117,22 +114,21 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
             }
           }
         }}
-        className="h-screen absolute w-full"
+        className="h-screen w-screen absolute "
       >
         {/* overlay */}
         <div
           ref={overlayRef}
-          className="absolute bottom-0  z-2
-                 w-full h-1/2 box-border bg-gradient-to-t from-black via-black/30 to-transparent pointer-events-none"
+          className="absolute bottom-0  
+                 w-full h-1/2 bg-gradient-to-t from-black via-black/30 to-transparent z-2 pointer-events-none"
         />
-
         {/* 레퍼 분리 */}
         <div
           data-sec
-          className=" h-screen flex z-2 flex-col absolute top-0  items-center pt-40 md:pt-30 md:pb-0 pb-30 justify-center  w-screen  overflow-y-auto util-scrollbar"
+          className=" h-screen flex z-2 flex-col absolute top-0  items-center pt-10 md:pt-30 md:pb-0  md:justify-center  w-screen  overflow-y-auto util-scrollbar"
         >
-          <div className="layout-center md:grid  relative  md:justify-end pt-45 md:pt-0">
-            <div className="animate-topIn ani-delay-0.1 opacity-0 leading-relaxed text-center md:text-right   justify-center flex flex-col items-end ">
+          <div className="layout-center md:grid  relative  md:justify-end pt-45 pb-30 md:pb-0 md:pt-0">
+            <div className="animate-topIn ani-delay-0.1 opacity-0 leading-relaxed text-center md:text-right    flex flex-col items-end ">
               <p
                 data-animate
                 className="text-xs md:text-sm z-10  leading-relaxed text-teal-300  mb-2 font-Montserrat mx-auto md:mx-0"
@@ -176,7 +172,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
                 제작되었습니다.
               </p>
             </div>{" "}
-            <div className="animate-topIn opacity-0  ani-delay-0.3 z-10 pt-20 md:pt-0 grid gap-2 grid-cols-2 md:grid-cols-4  text-right ">
+            <div className="animate-topIn opacity-0  ani-delay-0.3 z-10 pt-20 md:pt-0 grid gap-2 grid-cols-1 md:grid-cols-4  text-right ">
               {MAIN_BTN.map((e, idx) => {
                 return (
                   <div
@@ -187,14 +183,14 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
                       backdropFilter: "blur(5px)",
                     }}
                     className={cn(
-                      "p-5  rounded-xl md:rounded-none border-border  grid border-r   gap-1  group cursor-pointer bg-zinc-50/5 md:bg-transparent"
+                      "md:p-5  rounded-xl md:rounded-none border-border  grid border-r   gap-1  group cursor-pointer md:bg-zinc-50/5 md:bg-transparent"
                     )}
                   >
                     <div className="items-center flex gap-10 justify-between">
-                      <h1 className="text-2xl md:text-4xl group-hover:opacity-100 group-hover:text-teal-200 transition-all  shadow-2xl text-shadow-black font-semibold font-Montserrat opacity-40   ">
+                      <h1 className="text-3xl md:text-4xl group-hover:opacity-100 group-hover:text-teal-200 transition-all  shadow-2xl text-shadow-black font-semibold font-Montserrat opacity-40   ">
                         0{idx + 1}
                       </h1>{" "}
-                      <h1 className="font-Montserrat text-lg md:text-2xl   group-hover:text-teal-300 transition-all ">
+                      <h1 className="font-Montserrat text-xl md:text-2xl   group-hover:text-teal-300 transition-all ">
                         {e.name}
                       </h1>
                     </div>
