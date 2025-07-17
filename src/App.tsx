@@ -6,7 +6,7 @@ import AppRoute from "./Route/AppRoute";
 import { ToastContainer } from "react-toastify";
 
 import useAddTransition from "./hooks/useAddTransition";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import QueryProviderClient from "./react-query/query-provider";
 
@@ -18,6 +18,20 @@ function App(): JSX.Element {
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual";
     }
+  }, []);
+
+  useLayoutEffect(() => {
+    const setVh = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+    };
+
+    setVh();
+    window.addEventListener("resize", setVh);
+
+    return () => {
+      window.removeEventListener("resize", setVh);
+    };
   }, []);
 
   return (
