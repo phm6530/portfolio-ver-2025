@@ -3,7 +3,6 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CustomEase } from "gsap/CustomEase";
 import { cn } from "@/lib/utils";
-import { Check } from "lucide-react";
 gsap.registerPlugin(CustomEase);
 CustomEase.create("myBezier", "0,0.45,0,0.62");
 
