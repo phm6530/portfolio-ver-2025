@@ -25,7 +25,12 @@ const Home = () => {
     };
   }, []);
 
-  // wheel Handler
+  // Home 컴포넌트 내부
+
+  const touchStartRef = useRef(0); // 터치 시작 Y좌표를 저장할 ref
+  const SWIPE_THRESHOLD = 50; // 최소 스와이프 거리 (px)
+
+  // wheel Handler 및 touch Handler를 포함하는 useEffect
   useEffect(() => {
     const pageMoveHandler = (targetPage: number) => {
       scrollingRef.current = true; // 상태
@@ -120,54 +125,100 @@ const Home = () => {
         scrollingRef.current = false; // 종료 시키기
       }, SECTION_DURATION);
     };
+    // --- 공통 로직: 페이지 이동 함수 ---
+    const goToNextPage = () => {
+      if (scrollingRef.current || page >= secRefs.current.length - 1) return;
+      const nextPage = page + 1;
+      setPage(nextPage);
+      pageMoveHandler(nextPage);
+    };
 
+    const goToPrevPage = () => {
+      if (scrollingRef.current || page <= 0) return;
+      const prevPage = page - 1;
+      setPage(prevPage);
+      pageMoveHandler(prevPage);
+    };
+
+    // --- 기존 wheel 이벤트 핸들러 (리팩토링) ---
     const wheelEvent = (e: WheelEvent) => {
-      if (scrollingRef.current) return; // 스크롤 중일땐 리턴시키고
+      if (scrollingRef.current) return;
 
-      // 해당섹션이 콘텐츠가 넘을 때는 잠시 일단 중지
       const currentSection = secRefs.current[page];
-
       const sectionWrapper = currentSection.querySelector(
         "[data-sec]"
       ) as HTMLElement;
-
-      const scrollHeight = sectionWrapper.scrollHeight;
-      const clientHeight = currentSection.clientHeight;
-      const scrollTop = sectionWrapper.scrollTop;
-
-      // over 되는지 확인
+      const { scrollHeight, clientHeight, scrollTop } = sectionWrapper;
       const isOverflowSection = scrollHeight > clientHeight;
       const isBottom = scrollHeight - 1 <= clientHeight + scrollTop;
       const isAtTop = scrollTop <= 0;
 
-      if (isOverflowSection) {
-        if (e.deltaY > 0 && secRefs.current.length - 1 > page && isBottom) {
-          const nextPage = page + 1;
-          setPage(nextPage);
-          pageMoveHandler(nextPage);
-        } else if (!(page <= 0) && e.deltaY < 0 && isAtTop) {
-          const prevPage = page - 1;
-          setPage(prevPage);
-          pageMoveHandler(prevPage);
-        }
-      } else {
-        if (e.deltaY > 0 && secRefs.current.length - 1 > page) {
-          const nextPage = page + 1;
-          setPage(nextPage);
-          pageMoveHandler(nextPage);
-        } else if (!(page <= 0) && e.deltaY < 0) {
-          const prevPage = page - 1;
-          setPage(prevPage);
-          pageMoveHandler(prevPage);
-        }
+      if (e.deltaY > 0) {
+        // 아래로 스크롤
+        if (isOverflowSection && !isBottom) return; // 스크롤 가능 영역에선 페이지 이동 방지
+        goToNextPage();
+      } else if (e.deltaY < 0) {
+        // 위로 스크롤
+        if (isOverflowSection && !isAtTop) return; // 스크롤 가능 영역에선 페이지 이동 방지
+        goToPrevPage();
       }
     };
 
-    window.addEventListener("wheel", wheelEvent, { passive: false });
+    // --- 새로운 터치 이벤트 핸들러 ---
+    const touchStartEvent = (e: TouchEvent) => {
+      if (scrollingRef.current) return;
+      // 터치 시작 Y좌표 저장
+      touchStartRef.current = e.touches[0].clientY;
+    };
+
+    const touchMoveEvent = (e: TouchEvent) => {
+      if (scrollingRef.current || touchStartRef.current === 0) return;
+
+      const currentY = e.touches[0].clientY;
+      const deltaY = touchStartRef.current - currentY; // 양수: 위로 스와이프, 음수: 아래로 스와이프
+
+      const currentSection = secRefs.current[page];
+      const sectionWrapper = currentSection.querySelector(
+        "[data-sec]"
+      ) as HTMLElement;
+      const { scrollHeight, clientHeight, scrollTop } = sectionWrapper;
+      const isOverflowSection = scrollHeight > clientHeight;
+      const isBottom = scrollHeight - 1 <= clientHeight + scrollTop;
+      const isAtTop = scrollTop <= 0;
+
+      // 위로 스와이프 (다음 페이지로)
+      if (deltaY > SWIPE_THRESHOLD) {
+        if (isOverflowSection && !isBottom) return;
+        goToNextPage();
+        touchStartRef.current = 0; // 페이지 이동 후 리셋
+      }
+      // 아래로 스와이프 (이전 페이지로)
+      else if (deltaY < -SWIPE_THRESHOLD) {
+        if (isOverflowSection && !isAtTop) return;
+        goToPrevPage();
+        touchStartRef.current = 0; // 페이지 이동 후 리셋
+      }
+    };
+
+    const touchEndEvent = () => {
+      // 터치가 끝나면 시작점 초기화
+      touchStartRef.current = 0;
+    };
+
+    // 이벤트 리스너 등록
+    window.addEventListener("wheel", wheelEvent);
+    window.addEventListener("touchstart", touchStartEvent);
+    window.addEventListener("touchmove", touchMoveEvent);
+    window.addEventListener("touchend", touchEndEvent);
+
+    // 클린업 함수
     return () => {
       window.removeEventListener("wheel", wheelEvent);
+      window.removeEventListener("touchstart", touchStartEvent);
+      window.removeEventListener("touchmove", touchMoveEvent);
+      window.removeEventListener("touchend", touchEndEvent);
     };
-  }, [page]);
+  }, [page]); // 의존성 배열은 page로 유지
 
   // Resize 대응
   useEffect(() => {

@@ -101,7 +101,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
         {/* 레퍼 분리 */}
         <div
           data-sec
-          className=" h-screen flex z-2 flex-col absolute top-0  items-center pt-50 md:pt-30 md:pb-0 pb-20 justify-center  w-screen  overflow-y-auto util-scrollbar"
+          className=" h-screen flex z-2 flex-col absolute top-0  items-center pt-40 md:pt-30 md:pb-0 pb-30 justify-center  w-screen  overflow-y-auto util-scrollbar"
         >
           <div className="layout-center md:grid  relative  md:justify-end pt-45 md:pt-0">
             <div className="animate-topIn ani-delay-0.1 opacity-0 leading-relaxed text-center md:text-right   justify-center flex flex-col items-end ">
@@ -163,13 +163,10 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
                     )}
                   >
                     <div className="items-center flex gap-10 justify-between">
-                      <h1 className="text-4xl group-hover:opacity-100 group-hover:text-teal-200 transition-all md:text-3xl shadow-2xl text-shadow-black font-semibold font-Montserrat opacity-40   ">
+                      <h1 className="text-2xl md:text-4xl group-hover:opacity-100 group-hover:text-teal-200 transition-all  shadow-2xl text-shadow-black font-semibold font-Montserrat opacity-40   ">
                         0{idx + 1}
                       </h1>{" "}
-                      <h1
-                        className="font-Montserrat text-xl md:text-2xl   group-hover:text-teal-300 transition-all "
-                        style={{ transition: "padding-left .2s ease" }}
-                      >
+                      <h1 className="font-Montserrat text-lg md:text-2xl   group-hover:text-teal-300 transition-all ">
                         {e.name}
                       </h1>
                     </div>
