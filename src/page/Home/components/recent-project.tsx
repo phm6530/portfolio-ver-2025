@@ -38,12 +38,12 @@ const RecentProject = forwardRef(
             }
           }
         }}
-        className="h-screen absolute   z-11  "
+        className="h-screen w-screen absolute overflow-hidden z-11"
       >
         {/* BackGround */}
         <div
           data-bg
-          className="top-0  w-full h-full bg-cover absolute pointer-events-none"
+          className="w-screen h-screen bg-cover absolute pointer-events-none"
           style={{
             backgroundImage: `
       linear-gradient(#1d191ccc, rgb(24 22 22 / 55%)), url(/img/k1.jpg)
@@ -52,12 +52,12 @@ const RecentProject = forwardRef(
         />
 
         {/* Wrapper */}
-        <div
-          data-sec
-          className=" overflow-y-auto  max-h-screen flex flex-col bg-cover items-center justify-start  w-screen "
-        >
-          <div className=" grid layout-center   pt-40 md:pt-60 pb-30 w-full ">
-            <div className=" mb-5">
+        <div className="w-screen h-screen absolute">
+          <div
+            data-sec
+            className="h-screen grid util-scrollbar overflow-y-auto   pt-40 md:pt-60 pb-30 w-full "
+          >
+            <div className=" mb-5  layout-center">
               <h1
                 data-animate
                 className="text-5xl  md:text-6xl font-black  font-Montserrat mt-3  tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-5 "

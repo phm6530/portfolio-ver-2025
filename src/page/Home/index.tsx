@@ -1,12 +1,6 @@
 import RecentProject from "./components/recent-project";
 import RecentPosts from "./components/recent-post";
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -53,8 +47,8 @@ const Home = () => {
               hasBg,
               { scale: 1 },
               {
-                scale: 1.2,
-                duration: 10,
+                scale: 1.3,
+                duration: 8,
                 ease: "sine",
                 repeat: -1,
                 yoyo: true,

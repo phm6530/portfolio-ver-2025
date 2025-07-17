@@ -45,7 +45,7 @@ const RecentPosts = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
     >
       <div
         data-sec
-        className=" overflow-y-auto  max-h-screen flex flex-col bg-cover items-center justify-start  w-screen "
+        className=" overflow-y-auto util-scrollbar  max-h-screen flex flex-col bg-cover items-center justify-start  w-screen "
       >
         <div className=" grid layout-center   pt-40 md:pt-60 pb-30 w-full ">
           <div className=" mb-5">

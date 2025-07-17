@@ -59,7 +59,7 @@ const HomeContact = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
       {/* wrapper */}
       <div
         data-sec
-        className=" absolute w-screen flex h-screen overflow-y-scroll md:overflow-hidden justify-center"
+        className=" absolute w-screen util-scrollbar flex h-screen overflow-y-scroll md:overflow-hidden justify-center"
       >
         <div className=" items-center mb-5  grid md:grid-cols-[2fr_1fr] layout-center">
           <div>

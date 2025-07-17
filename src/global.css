@@ -127,6 +127,7 @@
 /* Base.. */
 @layer base {
   body {
+    @apply util-scrollbar;
     @apply bg-background text-foreground font-SUIT-Regular min-h-screen;
     @apply bg-gradient-to-br from-[#383838] to-[#080808];
   }
@@ -410,4 +411,20 @@
 
 @utility ani-delay-* {
   animation-delay: --value(--ani-delay- *);
+}
+
+/* Util Scrollbar */
+@utility util-scrollbar {
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #46edd5;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
 }

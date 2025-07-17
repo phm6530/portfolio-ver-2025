@@ -69,7 +69,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
           height: "100vh",
           width: "100vw",
         }}
-        className="video-element w-full h-full object-cover block fixed "
+        className="video-element w-screen h-screen object-cover block fixed "
       >
         {/* Neon */}
         <source src="/neon_5.mp4" type="video/mp4" />
@@ -88,30 +88,31 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
             }
           }
         }}
-        className="h-screen absolute"
+        className="h-screen absolute w-full"
       >
+        {/* overlay */}
         <div
           ref={overlayRef}
-          className="absolute bottom-0  z-10
+          className="absolute bottom-0  z-1
                  w-full h-1/2 box-border bg-gradient-to-t from-black via-transparent to-transparent"
         />
 
         {/* 레퍼 분리 */}
         <div
           data-sec
-          className="h-screen flex flex-col items-center pt-60 md:pt-30 md:pb-0 pb-20 justify-center z-11 w-screen  overflow-y-auto"
+          className="h-screen flex flex-col absolute top-0  items-center pt-30 md:pt-30 md:pb-0 pb-20 justify-center  w-screen  overflow-y-auto util-scrollbar"
         >
-          <div className="layout-center grid justify-end pt-20 md:pt-0">
-            <div className=" leading-relaxed text-right   justify-center flex flex-col items-end ">
+          <div className="layout-center md:grid   md:justify-end pt-25 md:pt-0">
+            <div className=" leading-relaxed text-center md:text-right   justify-center flex flex-col items-end ">
               <p
                 data-animate
-                className="text-sm z-10  leading-relaxed text-teal-300  mb-2 font-Montserrat"
+                className="text-xs md:text-sm z-10  leading-relaxed text-teal-300  mb-2 font-Montserrat mx-auto md:mx-0"
               >
                 프론트엔드 & 퍼블리셔
               </p>
               <h1
                 data-animate
-                className="inline-block leading-tight text-5xl z-10 md:text-6xl    font-Montserrat!  break-keep  w-full"
+                className="inline-block leading-tight text-[45px] z-10 md:text-6xl    font-Montserrat!  break-keep  w-full"
               >
                 PHM,
                 <div className="inline-block">
@@ -138,7 +139,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
 
               <p
                 data-animate
-                className="z-10 text-sm md:text-lg opacity-80 my-10 md:mb-25 leading-relaxed border-b border-border pb-5"
+                className="z-10 text-sm md:text-lg w-full opacity-80 my-10 md:mb-25 leading-relaxed border-border pb-5"
               >
                 프론트앤드 개발과 퍼블리싱을 주로 다룹니다<br></br> 해당
                 사이트는
@@ -147,7 +148,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
               </p>
             </div>
 
-            <div className=" z-10 gap-4  w-full  md:space-x-10 gap-10 grid md:grid-cols-4 text-right mt-10">
+            <div className=" z-10  w-full grid-cols-2  md:space-x-10 gap-10 grid md:grid-cols-4 text-right mt-10">
               {MAIN_BTN.map((e, idx) => {
                 return (
                   <div
@@ -156,7 +157,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
                     onClick={() => nav(e.path)}
                     className="border-r border-white/30 pr-5 grid grid-cols-[auto_1fr] md:grid-cols-1  gap-5 md:gap-2  group cursor-pointer"
                   >
-                    <div className="flex gap-2 justify-between items-center">
+                    <div className="gap-2 items-center">
                       <h1 className="text-4xl md:text-4xl  font-semibold font-Montserrat opacity-20 md:pl-3">
                         0{idx + 1}
                       </h1>

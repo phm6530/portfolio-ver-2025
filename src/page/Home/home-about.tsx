@@ -41,7 +41,7 @@ const HomeAbout = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
       <div className="w-screen h-screen absolute">
         <div
           data-sec
-          className="h-screen flex flex-col justify-center items-center  bg-zinc-900 z-11 w-screen  overflow-y-auto"
+          className="h-screen flex flex-col justify-center items-center  bg-zinc-900 z-11 w-screen  overflow-y-auto util-scrollbar"
         >
           <div className="layout-center grid  pt-120 md:pt-50 pb-30">
             <div className="mb-5">
@@ -52,7 +52,7 @@ const HomeAbout = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
               </div>
 
               <div data-animate className="flex flex-col gap-6 ">
-                <div className="text-base md:text-xl flex flex-col gap-5 ">
+                <div className="text-base md:text-xl flex flex-col gap-5 mt-5 ">
                   <p className="break-keep leading-relaxed">
                     프론트엔드 개발자 <strong>‘PHM’</strong>입니다. <br />
                     <span className="text-teal-300 text-lg">
@@ -65,7 +65,7 @@ const HomeAbout = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-15 mt-15">
+            <div className="grid  md:grid-cols-3 gap-15 mt-15">
               {about_cont.map((e, idx) => {
                 return (
                   <div

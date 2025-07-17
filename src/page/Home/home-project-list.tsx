@@ -12,7 +12,7 @@ export default function CarouselOrientation({
   const nav = useNavigate();
 
   return (
-    <div className="grid  mt-5 md:mt-10">
+    <div className="grid  mt-5 md:mt-10  layout-center">
       {/* 헤더 */}
       <div
         data-animate
