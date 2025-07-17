@@ -194,7 +194,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
                 제작되었습니다.
               </p>
             </div>{" "}
-            <div className="pb-100 md:pb-0 mx-20 md:mx-0  z-10 pt-20 md:pt-0 grid md:gap-0 grid-cols-1   md:grid-cols-4  md:text-right ">
+            <div className="pb-30 md:pb-0 md:mx-0  z-10 pt-20 md:pt-0 grid md:gap-0 grid-cols-1   md:grid-cols-4  md:text-right ">
               {MAIN_BTN.map((e, idx) => {
                 return (
                   <div
