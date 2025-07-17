@@ -143,10 +143,7 @@ const ProjectList = () => {
         </div>
       </div>
 
-      <div
-        className="grid md:grid-cols-2 grid-cols-1 mt-5 gap-3 "
-        key={curFilter}
-      >
+      <div className="grid  mt-5 gap-3 " key={curFilter}>
         {!isLoading && isError && "error"}
         {!isLoading ? (
           <>

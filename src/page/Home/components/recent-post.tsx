@@ -1,8 +1,7 @@
-import { Button } from "@/components/ui/button";
 import { axiosApi } from "@/config/axios.config";
 import { requestHandler } from "@/utils/apiUtils";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronRight, Heart, PersonStanding } from "lucide-react";
+import { Heart, PersonStanding } from "lucide-react";
 import { forwardRef } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -44,37 +43,44 @@ const RecentPosts = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
           }
         }
       }}
-      className="h-screen flex flex-col items-center justify-start bg-zinc-950  z-11 w-screen absolute overflow-y-auto"
+      className="h-screen flex flex-col items-center justify-start bg-zinc-950  z-11 w-screen absolute "
     >
-      <div className="layout-center py-20 grid  gap-20  pt-50 ">
-        <div className="">
-          <h1
-            data-animate
-            className="text-5xl font-semibold  md:text-6xl font-Montserrat mt-3 tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-2 "
-          >
-            Dev Blog
-          </h1>
-          <div data-animate className="grid gap-10   justify-start">
-            <div className="text-base md:text-xl flex flex-col gap-3 mt-5">
-              <p className="break-keep leading-relaxed ">
-                개발, 그리고 기술에 관한{" "}
-                <span className="text-teal-300 ">'기록공간'</span> 입니다.{" "}
+      <div
+        data-sec
+        className=" overflow-y-auto util-scrollbar  max-h-screen flex flex-col bg-cover items-center justify-start  w-screen "
+      >
+        <div className=" grid layout-center   pt-40 md:pt-60 pb-30 w-full ">
+          <div className=" mb-5">
+            <h1
+              data-animate
+              className="text-5xl  md:text-6xl font-black  font-Montserrat mt-3   leading-tight  flex items-center gap-2 group cursor-pointer  pb-5 "
+            >
+              Dev' Blog
+            </h1>
+
+            <div
+              data-animate
+              className="text-sm md:text-xl mb-5 mt-3  leading-relaxed"
+            >
+              <p className="  ">
+                저를 <span className="text-teal-300">"기록"</span>
+                하는 공간 입니다
               </p>
-              <p className="text-sm text-muted-foreground">
-                해당 리스트는 개인 블로그의 고정 콘텐츠 Api를 호출합니다.
+              <p className="">
+                어제보다 나은 개발자가 되기 위한 고민과 배움을 기록합니다.
               </p>
-            </div>{" "}
-          </div>{" "}
-        </div>
-        <div className="grid md:grid-cols-3 gap-2  md:gap-2">
-          {data?.slice(0, 3).map((blogMeta, idx) => {
-            return (
-              <div
-                data-animate
-                key={`post:${idx}`}
-                className="grid  gap-5 group items-center bg-neutral-800 shadow-2xl shadow-black/40 p-8 rounded-xl"
-              >
-                {/* <div
+            </div>
+          </div>
+          <div className="grid md:grid-cols-3 gap-2  md:gap-2">
+            {data?.slice(0, 3).map((blogMeta, idx) => {
+              return (
+                <div
+                  onClick={() => nav(`/blog/${blogMeta.post_id}`)}
+                  data-animate
+                  key={`post:${idx}`}
+                  className="grid  gap-5 group items-center bg-neutral-900 shadow-2xl shadow-black/40 p-6 md:p-8 rounded-lg"
+                >
+                  {/* <div
                   className="aspect-[9/9] rounded-xl bg-cover bg-center relative"
                   style={{ backgroundImage: `url(${blogMeta.thumbnail_url})` }}
                 >
@@ -82,46 +88,37 @@ const RecentPosts = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
                     {blogMeta.sub_group_name}
                   </span>
                 </div> */}
-                <div className="flex flex-col  h-full  rounded-b-xl cursor-pointer">
-                  <span className=" left-4 top-4  text-xs   rounded-full text-indigo-200">
-                    {blogMeta.sub_group_name}
-                  </span>
-                  <h1 className="text-lg group-hover:text-teal-300  leading-relaxed mt-2 mb-10 max-w-[300px] break-keep">
-                    {blogMeta.post_title}
-                  </h1>
-                  <p className="line-clamp-2 mt-auto text-sm text-muted-foreground leading-relaxed">
-                    {blogMeta.post_description}
-                  </p>
-                  <div className="flex gap-5 text-xs opacity-70 mt-7">
-                    <div className="flex  items-center ">
-                      <span className="flex ">
-                        <PersonStanding
-                          size={20}
-                          className="text-muted-foreground"
-                        />{" "}
-                      </span>
-                      {blogMeta.comment_count}
-                    </div>
-                    <div className="flex items-center gap-2 ">
-                      <span className="flex">
-                        <Heart size={15} className="text-muted-foreground" />
-                      </span>
-                      {blogMeta.like_cnt}
+                  <div className="flex flex-col  h-full  rounded-b-xl cursor-pointer">
+                    <span className=" left-4 top-4  text-xs   rounded-full text-indigo-200">
+                      {blogMeta.sub_group_name}
+                    </span>
+                    <h1 className="text-lg group-hover:text-teal-300  leading-relaxed mt-2 mb-5 max-w-[300px] break-keep">
+                      {blogMeta.post_title}
+                    </h1>
+                    <p className="line-clamp-2 mt-auto text-xs md:text-sm text-muted-foreground leading-relaxed">
+                      {blogMeta.post_description}
+                    </p>
+                    <div className="flex gap-5 text-xs opacity-70 mt-7">
+                      <div className="flex  items-center ">
+                        <span className="flex ">
+                          <PersonStanding
+                            size={20}
+                            className="text-muted-foreground"
+                          />{" "}
+                        </span>
+                        {blogMeta.comment_count}
+                      </div>
+                      <div className="flex items-center gap-2 ">
+                        <span className="flex">
+                          <Heart size={15} className="text-muted-foreground" />
+                        </span>
+                        {blogMeta.like_cnt}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}{" "}
-          <div>
-            <Button
-              data-animate
-              className="text-xs p-6! px-5! flex gap-10 mt-10"
-              size={"sm"}
-              onClick={() => nav("/about")}
-            >
-              자세히보기 <ChevronRight size={12} />
-            </Button>{" "}
+              );
+            })}{" "}
           </div>
         </div>
       </div>

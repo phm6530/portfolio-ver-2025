@@ -7,8 +7,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 
-export default function LinksWiget() {
+type ALIGN_LINKS = "top" | "default";
+
+export default function LinksWiget({ align }: { align?: ALIGN_LINKS }) {
   // Links
   const MY_LINKS = [
     {
@@ -30,7 +33,7 @@ export default function LinksWiget() {
   return (
     <div className="flex flex-col pt-5">
       {/* <span className="text-xs mb-3 text-white/40 relative ">Links</span> */}
-      <div className="flex gap-2">
+      <div className={cn("flex gap-2", align! === "top" && "flex-col")}>
         {MY_LINKS.map((btn) => {
           return (
             <TooltipProvider key={`:links${btn.label}`}>

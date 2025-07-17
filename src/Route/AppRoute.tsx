@@ -11,7 +11,6 @@ import { AnimatePresence } from "framer-motion";
 import Motion from "@/components/animations/Motion";
 import Home from "@/page/Home";
 import SubNav from "@/components/shared/sub-nav";
-import Test from "@/Test";
 
 type ROUTE_KEY = "" | "about" | "project" | "blog" | "board";
 export type PATHNAME<T> = Record<ROUTE_KEY, T>;
