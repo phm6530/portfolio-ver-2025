@@ -1,4 +1,3 @@
-import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { forwardRef, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -127,8 +126,8 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
           data-sec
           className=" h-screen flex z-2 flex-col absolute top-0  items-center pt-10 md:pt-30 md:pb-0  md:justify-center  w-screen  overflow-y-auto util-scrollbar"
         >
-          <div className="layout-center md:grid  relative  md:justify-end pt-45 pb-30 md:pb-0 md:pt-0">
-            <div className="animate-topIn ani-delay-0.1 opacity-0 leading-relaxed text-center md:text-right    flex flex-col items-end ">
+          <div className="layout-center md:grid  relative  md:justify-end pt-45  md:pt-0">
+            <div className=" leading-relaxed text-center md:text-right    flex flex-col items-end ">
               <p
                 data-animate
                 className="text-xs md:text-sm z-10  leading-relaxed text-teal-300  mb-2 font-Montserrat mx-auto md:mx-0"
@@ -172,21 +171,18 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
                 제작되었습니다.
               </p>
             </div>{" "}
-            <div className="animate-topIn opacity-0  ani-delay-0.3 z-10 pt-20 md:pt-0 grid gap-2 grid-cols-1 md:grid-cols-4  text-right ">
+            <div className="pb-30 md:pb-0   z-10 pt-20 md:pt-0 grid md:gap-0 grid-cols-2   md:grid-cols-4  md:text-right ">
               {MAIN_BTN.map((e, idx) => {
                 return (
                   <div
                     data-animate
                     key={`btn:${e.name}`}
                     onClick={() => nav(e.path)}
-                    style={{
-                      backdropFilter: "blur(5px)",
-                    }}
                     className={cn(
-                      "md:p-5  rounded-xl md:rounded-none border-border  grid border-r   gap-1  group cursor-pointer md:bg-zinc-50/5 md:bg-transparent"
+                      "p-5 border md:border-0  rounded-xl md:rounded-none border-border  grid md:border-r   gap-1  group cursor-pointer  md:bg-transparent"
                     )}
                   >
-                    <div className="items-center flex gap-10 justify-between">
+                    <div className="items-center flex gap-4 md:gap-10 md:justify-between">
                       <h1 className="text-3xl md:text-4xl group-hover:opacity-100 group-hover:text-teal-200 transition-all  shadow-2xl text-shadow-black font-semibold font-Montserrat opacity-40   ">
                         0{idx + 1}
                       </h1>{" "}
