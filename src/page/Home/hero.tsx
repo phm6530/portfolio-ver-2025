@@ -3,6 +3,7 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CustomEase } from "gsap/CustomEase";
 import { cn } from "@/lib/utils";
+import { Check } from "lucide-react";
 gsap.registerPlugin(CustomEase);
 CustomEase.create("myBezier", "0,0.45,0,0.62");
 
@@ -37,16 +38,30 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
   const spanRefs = useRef<HTMLSpanElement[]>([]);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const loadingRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const tl = gsap.timeline();
+
     if (!isVideoLoaded) return;
-    tl.to(loadingRef.current, {
-      y: "-100vh",
-      delay: 1,
+    tl.to(progressRef.current, {
+      width: "100%",
+      delay: 0.8,
       ease: "expo.inOut",
       duration: 1.2,
+      backgroundColor: "#46edd5",
     });
+
+    tl.to(
+      loadingRef.current,
+      {
+        y: "-100vh",
+        delay: 0.4,
+        ease: "expo.inOut",
+        duration: 1.2,
+      },
+      "-=.5"
+    );
 
     tl.fromTo(
       spanRefs.current,
@@ -67,9 +82,17 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
       {/* loading.. */}
       <div
         ref={loadingRef}
-        className=" fixed inset-0 bg-zinc-800 z-10 flex justify-center items-center"
+        className=" fixed inset-0  bg-zinc-900 z-10 flex flex-col gap-2 justify-center items-center"
       >
         <span className="tracking-wider">loading....</span>
+
+        {/* progress */}
+        <div className="flex max-w-[100px] h-1 overflow-hidden rounded-full bg-zinc-50/10 w-full">
+          <span
+            ref={progressRef}
+            className="w-1 inline-block bg-white h-full"
+          ></span>
+        </div>
       </div>
 
       {/* overlay */}
@@ -171,7 +194,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
                 제작되었습니다.
               </p>
             </div>{" "}
-            <div className="pb-30 md:pb-0   z-10 pt-20 md:pt-0 grid md:gap-0 grid-cols-2   md:grid-cols-4  md:text-right ">
+            <div className="pb-100 md:pb-0 mx-20 md:mx-0  z-10 pt-20 md:pt-0 grid md:gap-0 grid-cols-1   md:grid-cols-4  md:text-right ">
               {MAIN_BTN.map((e, idx) => {
                 return (
                   <div
@@ -179,11 +202,11 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
                     key={`btn:${e.name}`}
                     onClick={() => nav(e.path)}
                     className={cn(
-                      "p-5 border md:border-0  rounded-xl md:rounded-none border-border  grid md:border-r   gap-1  group cursor-pointer  md:bg-transparent"
+                      "border-b py-3 md:px-5  md:border-0  rounded-xl md:rounded-none border-border  grid md:border-r   gap-1  group cursor-pointer  md:bg-transparent"
                     )}
                   >
-                    <div className="items-center flex gap-4 md:gap-10 md:justify-between">
-                      <h1 className="text-3xl md:text-4xl group-hover:opacity-100 group-hover:text-teal-200 transition-all  shadow-2xl text-shadow-black font-semibold font-Montserrat opacity-40   ">
+                    <div className="items-center flex gap-4 md:gap-10 justify-between">
+                      <h1 className="text-2xl md:text-4xl group-hover:opacity-100 group-hover:text-teal-200 transition-all  shadow-2xl text-shadow-black font-semibold font-Montserrat opacity-40   ">
                         0{idx + 1}
                       </h1>{" "}
                       <h1 className="font-Montserrat text-xl md:text-2xl   group-hover:text-teal-300 transition-all ">
@@ -191,7 +214,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
                       </h1>
                     </div>
                     <div className="flex flex-col gap-5">
-                      <p className=" text-xs text-muted-foreground transition-all group-hover:text-white  md:col-auto break-keep whitespace-pre-line leading-relaxed">
+                      <p className="text-right text-xs text-muted-foreground transition-all group-hover:text-white  md:col-auto break-keep whitespace-pre-line leading-relaxed">
                         {e.des}
                       </p>
                     </div>
