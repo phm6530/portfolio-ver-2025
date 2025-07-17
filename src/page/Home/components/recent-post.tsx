@@ -3,6 +3,7 @@ import { requestHandler } from "@/utils/apiUtils";
 import { useQuery } from "@tanstack/react-query";
 import { Heart, PersonStanding } from "lucide-react";
 import { forwardRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 export type PostItemModel = {
   post_id: number;
@@ -18,6 +19,7 @@ export type PostItemModel = {
 };
 
 const RecentPosts = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
+  const nav = useNavigate();
   const { data } = useQuery({
     queryKey: ["MAIN_CONTENTS"],
     queryFn: async () => {
@@ -51,9 +53,9 @@ const RecentPosts = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
           <div className=" mb-5">
             <h1
               data-animate
-              className="text-5xl  md:text-6xl font-black  font-Montserrat mt-3  tracking-wider leading-tight  flex items-center gap-2 group cursor-pointer  pb-5 "
+              className="text-5xl  md:text-6xl font-black  font-Montserrat mt-3   leading-tight  flex items-center gap-2 group cursor-pointer  pb-5 "
             >
-              DEV' Blog
+              Dev' Blog
             </h1>
 
             <div
@@ -61,21 +63,22 @@ const RecentPosts = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
               className="text-sm md:text-xl mb-5 mt-3  leading-relaxed"
             >
               <p className="  ">
-                저의 <span className="text-teal-300">"프로젝트 기록"</span>
-                입니다.
+                저를 <span className="text-teal-300">"기록"</span>
+                하는 공간 입니다
               </p>
               <p className="">
-                Next와 React를 학습하고 실전에 녹여낸 개인 프로젝트 입니다.
+                어제보다 나은 개발자가 되기 위한 고민과 배움을 기록합니다.
               </p>
             </div>
-          </div>{" "}
+          </div>
           <div className="grid md:grid-cols-3 gap-2  md:gap-2">
             {data?.slice(0, 3).map((blogMeta, idx) => {
               return (
                 <div
+                  onClick={() => nav(`/blog/${blogMeta.post_id}`)}
                   data-animate
                   key={`post:${idx}`}
-                  className="grid  gap-5 group items-center bg-neutral-800 shadow-2xl shadow-black/40 p-8 rounded-xl"
+                  className="grid  gap-5 group items-center bg-neutral-900 shadow-2xl shadow-black/40 p-6 md:p-8 rounded-lg"
                 >
                   {/* <div
                   className="aspect-[9/9] rounded-xl bg-cover bg-center relative"
@@ -89,10 +92,10 @@ const RecentPosts = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
                     <span className=" left-4 top-4  text-xs   rounded-full text-indigo-200">
                       {blogMeta.sub_group_name}
                     </span>
-                    <h1 className="text-lg group-hover:text-teal-300  leading-relaxed mt-2 mb-10 max-w-[300px] break-keep">
+                    <h1 className="text-lg group-hover:text-teal-300  leading-relaxed mt-2 mb-5 max-w-[300px] break-keep">
                       {blogMeta.post_title}
                     </h1>
-                    <p className="line-clamp-2 mt-auto text-sm text-muted-foreground leading-relaxed">
+                    <p className="line-clamp-2 mt-auto text-xs md:text-sm text-muted-foreground leading-relaxed">
                       {blogMeta.post_description}
                     </p>
                     <div className="flex gap-5 text-xs opacity-70 mt-7">

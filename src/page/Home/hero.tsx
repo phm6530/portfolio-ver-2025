@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { forwardRef, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { CustomEase } from "gsap/CustomEase";
+import { cn } from "@/lib/utils";
 gsap.registerPlugin(CustomEase);
 CustomEase.create("myBezier", "0,0.45,0,0.62");
 
@@ -93,17 +94,17 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
         {/* overlay */}
         <div
           ref={overlayRef}
-          className="absolute bottom-0  z-1
-                 w-full h-1/2 box-border bg-gradient-to-t from-black via-transparent to-transparent"
+          className="absolute bottom-0  z-2
+                 w-full h-1/2 box-border bg-gradient-to-t from-black via-black/30 to-transparent pointer-events-none"
         />
 
         {/* 레퍼 분리 */}
         <div
           data-sec
-          className="h-screen flex flex-col absolute top-0  items-center pt-30 md:pt-30 md:pb-0 pb-20 justify-center  w-screen  overflow-y-auto util-scrollbar"
+          className=" h-screen flex z-2 flex-col absolute top-0  items-center pt-50 md:pt-30 md:pb-0 pb-20 justify-center  w-screen  overflow-y-auto util-scrollbar"
         >
-          <div className="layout-center md:grid   md:justify-end pt-25 md:pt-0">
-            <div className=" leading-relaxed text-center md:text-right   justify-center flex flex-col items-end ">
+          <div className="layout-center md:grid  relative  md:justify-end pt-45 md:pt-0">
+            <div className="animate-topIn ani-delay-0.1 opacity-0 leading-relaxed text-center md:text-right   justify-center flex flex-col items-end ">
               <p
                 data-animate
                 className="text-xs md:text-sm z-10  leading-relaxed text-teal-300  mb-2 font-Montserrat mx-auto md:mx-0"
@@ -139,43 +140,49 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
 
               <p
                 data-animate
-                className="z-10 text-sm md:text-lg w-full opacity-80 my-10 md:mb-25 leading-relaxed border-border pb-5"
+                className="z-10 text-sm md:text-base w-full opacity-80 mt-10 md:mb-25 leading-relaxed border-border pb-5"
               >
                 프론트앤드 개발과 퍼블리싱을 주로 다룹니다<br></br> 해당
                 사이트는
                 <span className="text-indigo-300">'React'</span>와 'Supabase'로
                 제작되었습니다.
               </p>
-            </div>
-
-            <div className=" z-10  w-full grid-cols-2  md:space-x-10 gap-10 grid md:grid-cols-4 text-right mt-10">
+            </div>{" "}
+            <div className="animate-topIn opacity-0  ani-delay-0.3 z-10 pt-20 md:pt-0 grid gap-2 grid-cols-2 md:grid-cols-4  text-right ">
               {MAIN_BTN.map((e, idx) => {
                 return (
                   <div
                     data-animate
                     key={`btn:${e.name}`}
                     onClick={() => nav(e.path)}
-                    className="border-r border-white/30 pr-5 grid grid-cols-[auto_1fr] md:grid-cols-1  gap-5 md:gap-2  group cursor-pointer"
+                    style={{
+                      backdropFilter: "blur(5px)",
+                    }}
+                    className={cn(
+                      "p-5  rounded-xl  grid   gap-1  group cursor-pointer bg-zinc-50/5"
+                    )}
                   >
-                    <div className="gap-2 items-center">
-                      <h1 className="text-4xl md:text-4xl  font-semibold font-Montserrat opacity-20 md:pl-3">
+                    <div className="items-center flex gap-10 justify-between">
+                      <h1 className="text-4xl group-hover:opacity-100 group-hover:text-teal-200 transition-all md:text-3xl shadow-2xl text-shadow-black font-semibold font-Montserrat opacity-40   ">
                         0{idx + 1}
-                      </h1>
+                      </h1>{" "}
                       <h1
-                        className="font-Montserrat text-xl md:text-2xl   group-hover:text-teal-300  "
+                        className="font-Montserrat text-xl md:text-2xl   group-hover:text-teal-300 transition-all "
                         style={{ transition: "padding-left .2s ease" }}
                       >
                         {e.name}
                       </h1>
-                    </div>{" "}
-                    <p className=" text-xs text-muted-foreground  md:col-auto break-keep whitespace-pre-line leading-relaxed">
-                      {e.des}
-                    </p>
+                    </div>
+                    <div className="flex flex-col gap-5">
+                      <p className=" text-xs text-muted-foreground transition-all group-hover:text-white  md:col-auto break-keep whitespace-pre-line leading-relaxed">
+                        {e.des}
+                      </p>
+                    </div>
                   </div>
                 );
               })}
             </div>
-          </div>
+          </div>{" "}
         </div>
       </section>
     </>

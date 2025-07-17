@@ -33,11 +33,10 @@ const ProjectListItem: React.FC<{
         className="group relative  overflow-hidden h-full   article-hover  "
       >
         {/* 콘텐츠 영역 */}
-        <div className="grid grid-cols-[2fr_3fr] flex-1 p-3 gap-10">
-          {" "}
+        <div className="grid md:grid-cols-[2fr_3fr] flex-1 p-3 gap-10">
           {thumbnail && (
             <div
-              className="rounded-lg  relative bg-no-repeat md:block aspect-[16/13] "
+              className="rounded-lg  relative bg-no-repeat md:block aspect-[16/8] md:aspect-[16/13] "
               style={{
                 backgroundImage: `url(${thumbnail ? imgUrlMapper({ thumbnail }) : null})`,
                 backgroundPosition: "top",
@@ -45,8 +44,8 @@ const ProjectListItem: React.FC<{
               }}
             ></div>
           )}
-          <div className="flex flex-col">
-            <h3 className="text-2xl font-Montserrat md:mt-5   group-hover:text-indigo-200 transition-colors ">
+          <div className="flex flex-col px-5 md:px-0">
+            <h3 className="text-xl md:text-2xl font-Montserrat md:mt-5  mb-5 md:mb-0  group-hover:text-indigo-200 transition-colors ">
               {title}
             </h3>
             <div className="mt-auto  flex flex-col gap-4 sm:justify-between mb-4">

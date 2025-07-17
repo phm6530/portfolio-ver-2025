@@ -223,12 +223,12 @@ const Home = () => {
 
       <HomeContact ref={secRefs} />
 
-      {/* 페이지 인디케이터 */}
-      <div className="fixed right-8 top-1/2  z-50">
+      {/* 페이지 인디케이터 - pc*/}
+      <div className="fixed right-20 top-1/2 z-20 gap-2  flex-col hidden md:flex">
         {Array.from({ length: 5 }, (_, idx) => (
           <div
             key={idx}
-            className={`w-[2px] h-[20px] rounded-full mb-2 cursor-pointer transition-all duration-300 ${
+            className={`w-[1px] h-[20px] rounded-full  cursor-pointer transition-all duration-300 ${
               idx === page ? "bg-white" : "bg-white/30"
             }`}
             onClick={() => {
@@ -236,6 +236,14 @@ const Home = () => {
             }}
           />
         ))}
+      </div>
+      {/* 페이지 인디케이터 - mobile*/}
+      <div
+        style={{ backdropFilter: "blur(10px)" }}
+        className="block md:hidden fixed left-0 p-4 md:p-0 rounded-tr-2xl bg-indigo-600/30 md:left-8 bottom-0 md:bottom-10  z-50 text-zinc-400"
+      >
+        <span className="md:text-3xl text-white mr-1">{page + 1}</span>
+        <span className="text-xs">/ 5</span>
       </div>
     </main>
   );
