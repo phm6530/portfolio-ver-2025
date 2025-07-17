@@ -159,7 +159,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
                       backdropFilter: "blur(5px)",
                     }}
                     className={cn(
-                      "p-5  rounded-xl  grid   gap-1  group cursor-pointer bg-zinc-50/5"
+                      "p-5  rounded-xl md:rounded-none border-border  grid border-r   gap-1  group cursor-pointer bg-zinc-50/5 md:bg-transparent"
                     )}
                   >
                     <div className="items-center flex gap-10 justify-between">
