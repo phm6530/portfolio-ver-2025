@@ -1,6 +1,6 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { forwardRef, useRef } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CustomEase } from "gsap/CustomEase";
 import { cn } from "@/lib/utils";
@@ -36,6 +36,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
   const overlayRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const spanRefs = useRef<HTMLSpanElement[]>([]);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   useGSAP(
     () => {
@@ -56,23 +57,50 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
     },
     { dependencies: [spanRefs] }
   );
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    if (videoElement) {
+      const handleVideoLoad = () => {
+        setIsVideoLoaded(true);
+      };
+
+      // 'loadeddata' 이벤트는 비디오가 재생을 시작할 수 있는 충분한 데이터를 받았을 때 발생합니다.
+      videoElement.addEventListener("loadeddata", handleVideoLoad);
+
+      // 컴포넌트가 언마운트될 때 이벤트 리스너를 정리합니다.
+      return () => {
+        videoElement.removeEventListener("loadeddata", handleVideoLoad);
+      };
+    }
+  }, []);
 
   return (
     <>
       {/* overlay */}
+      <img
+        // ❗️ 여기에 사용할 이미지 경로를 입력하세요.
+        src="/placeholder-image.jpg"
+        alt="Loading video background"
+        className={cn(
+          "absolute w-full h-full object-cover transition-opacity duration-1000",
+          // 비디오가 로드되면 투명하게 만듭니다.
+          isVideoLoaded ? "opacity-0" : "opacity-100"
+        )}
+      />
+
+      {/* 비디오 요소 */}
       <video
         ref={videoRef}
         autoPlay
         loop
         muted
         playsInline
-        style={{
-          height: "100vh",
-          width: "100vw",
-        }}
-        className="video-element w-screen h-screen object-cover block fixed "
+        className={cn(
+          "video-element w-screen h-screen object-cover block fixed",
+          // 비디오가 로드되면 불투명하게 만듭니다.
+          isVideoLoaded ? "opacity-100" : "opacity-0"
+        )}
       >
-        {/* Neon */}
         <source src="/neon_5.mp4" type="video/mp4" />
       </video>
 
@@ -179,7 +207,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
                 );
               })}
             </div>
-          </div>{" "}
+          </div>
         </div>
       </section>
     </>

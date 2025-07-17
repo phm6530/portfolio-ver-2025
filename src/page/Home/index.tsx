@@ -44,23 +44,23 @@ const Home = () => {
         const doms = (sec as HTMLElement).querySelectorAll("[data-animate]");
 
         // Background
-        if (idx === targetPage) {
-          const hasBg = (sec as HTMLElement).querySelector("[data-bg]");
+        // if (idx === targetPage) {
+        //   const hasBg = (sec as HTMLElement).querySelector("[data-bg]");
 
-          if (hasBg) {
-            gsap.fromTo(
-              hasBg,
-              { scale: 1 },
-              {
-                scale: 1.3,
-                duration: 8,
-                ease: "sine",
-                repeat: -1,
-                yoyo: true,
-              }
-            );
-          }
-        }
+        //   if (hasBg) {
+        //     gsap.fromTo(
+        //       hasBg,
+        //       { scale: 1 },
+        //       {
+        //         scale: 1.3,
+        //         duration: 8,
+        //         ease: "sine",
+        //         repeat: -1,
+        //         yoyo: true,
+        //       }
+        //     );
+        //   }
+        // }
 
         if (idx <= targetPage) {
           tl.to(sec as HTMLElement, {
