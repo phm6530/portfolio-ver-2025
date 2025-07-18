@@ -259,7 +259,7 @@ const Home = () => {
   );
 
   return (
-    <main ref={mainRef} className="util-h-screen relative">
+    <div ref={mainRef} className="util-h-screen relative">
       {/* Hero - main */}
       <HeroSection ref={secRefs} />
 
@@ -296,7 +296,7 @@ const Home = () => {
         <span className="md:text-3xl text-white mr-1">{page + 1}</span>
         <span className="text-xs">/ 5</span>
       </div>
-    </main>
+    </div>
   );
 };
 

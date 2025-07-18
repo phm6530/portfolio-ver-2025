@@ -88,12 +88,12 @@ const AppRoute = (): JSX.Element => {
                       </Routes>
                     </AnimatePresence>
                   </div>
-                </div>
+                </div>{" "}
+                <Footer />
               </Motion.Page>
             </>
           )}
         </AnimatePresence>
-        <Footer />
       </main>
     </>
   );
