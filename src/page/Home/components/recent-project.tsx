@@ -55,7 +55,7 @@ const RecentProject = forwardRef(
         <div className="w-screen absolute">
           <div
             data-sec
-            className="h-screen grid util-scrollbar overflow-y-auto   pt-40 md:pt-60 pb-30 w-full "
+            className="util-h-screen grid util-scrollbar overflow-y-auto   pt-40 md:pt-60 pb-30 w-full "
           >
             <div className=" mb-5  layout-center">
               <h1
