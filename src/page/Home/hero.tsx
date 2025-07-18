@@ -135,7 +135,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
             }
           }
         }}
-        className="h-screen w-screen absolute "
+        className="w-screen absolute "
       >
         {/* overlay */}
         <div
@@ -146,7 +146,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
         {/* 레퍼 분리 */}
         <div
           data-sec
-          className=" h-screen flex z-2 flex-col absolute top-0  items-center pt-10 md:pt-30 md:pb-0  md:justify-center  w-screen  overflow-y-auto util-scrollbar"
+          className=" util-h-screen flex z-2 flex-col absolute top-0  items-center pt-10 md:pt-30 md:pb-0  md:justify-center  w-screen  overflow-y-auto util-scrollbar"
         >
           <div className="layout-center md:grid  relative  md:justify-end pt-45  md:pt-0">
             <div className=" leading-relaxed text-center md:text-right    flex flex-col items-end ">

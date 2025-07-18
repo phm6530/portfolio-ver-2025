@@ -38,12 +38,12 @@ const RecentProject = forwardRef(
             }
           }
         }}
-        className="h-screen w-screen absolute overflow-hidden z-11"
+        className="util-h-screen w-screen absolute overflow-hidden z-11"
       >
         {/* BackGround */}
         <div
           data-bg
-          className="w-screen h-screen bg-cover absolute pointer-events-none"
+          className="w-screen util-h-screen bg-cover absolute pointer-events-none"
           style={{
             backgroundImage: `
       linear-gradient(#1d191ccc, rgb(24 22 22 / 55%)), url(/img/k1.jpg)
@@ -52,7 +52,7 @@ const RecentProject = forwardRef(
         />
 
         {/* Wrapper */}
-        <div className="w-screen h-screen absolute">
+        <div className="w-screen absolute">
           <div
             data-sec
             className="h-screen grid util-scrollbar overflow-y-auto   pt-40 md:pt-60 pb-30 w-full "

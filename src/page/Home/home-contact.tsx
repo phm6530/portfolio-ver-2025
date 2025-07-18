@@ -7,7 +7,6 @@ import { ChevronRight, Mail, PhoneCall } from "lucide-react";
 
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import LinksWiget from "@/components/shared/link-wiget";
 
 const MY_LINKS = [
   {
@@ -43,15 +42,15 @@ const HomeContact = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
           }
         }
       }}
-      className="h-screen w-screen  z-11 min-h-screen  absolute overflow-hidden"
+      className="util-h-screen w-screen  z-11 min-h-screen  absolute overflow-hidden"
     >
       {/* bg */}
       <div
         data-bg
-        className=" absolute top-0  w-full h-full bg-cover "
+        className=" absolute top-0  util-h-screen w-screen bg-cover bg-center "
         style={{
           backgroundImage: `
-      linear-gradient(#1d191ccc, rgb(24 22 22 / 55%)), url(/img/k12.jpg)
+      linear-gradient(#1d191ccc, rgb(24 22 22 / 55%)), url(/img/k6.jpg)
           `,
         }}
       />

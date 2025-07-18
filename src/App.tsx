@@ -20,9 +20,12 @@ function App(): JSX.Element {
     }
   }, []);
 
+  //페인트
   useLayoutEffect(() => {
     const setVh = () => {
-      const vh = window.innerHeight * 0.01;
+      const vh = window.innerHeight;
+
+      console.log(vh);
       document.documentElement.style.setProperty("--vh", `${vh}px`);
     };
 
