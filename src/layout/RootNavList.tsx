@@ -39,7 +39,7 @@ const RootNavList: React.FC<{ drawerView: boolean; scrollOver: boolean }> = ({
       <nav
         className={cn(
           `flex gap-3 md:flex-row md:static top-0 md:bg-transparent md:h-auto md:w-auto md:max-w-none`,
-          "flex-col fixed bg-background  px-5 md:px-0 pt-4 md:pt-0 -right-[100%] items-start  md:items-center h-screen  z-200 w-[calc(100%-50px)] max-w-[400px] ",
+          "flex-col fixed bg-background  px-5 md:px-0 pt-4 md:pt-0 -right-[100%] items-start  md:items-center util-h-screen  z-200 w-[calc(100%-50px)] max-w-[400px] ",
           drawerView && "right-0"
         )}
         style={{

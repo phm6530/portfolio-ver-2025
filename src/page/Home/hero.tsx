@@ -115,7 +115,7 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
         onLoadedData={() => setIsVideoLoaded(true)}
         playsInline
         className={cn(
-          "video-element w-screen h-screen object-cover block fixed",
+          "video-element w-screen util-h-screen object-cover block fixed",
           // 비디오가 로드되면 불투명하게 만듭니다.
           isVideoLoaded ? "opacity-100" : "opacity-0"
         )}
