@@ -26,7 +26,7 @@ function App(): JSX.Element {
       const vh = window.innerHeight;
 
       console.log(vh);
-      document.documentElement.style.setProperty("--vh", `${vh}px`);
+      document.documentElement.style.setProperty("--vh", `${vh / 2}px`);
     };
 
     setVh();

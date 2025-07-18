@@ -127,7 +127,7 @@
 /* Base.. */
 @layer base {
   body {
-    height: calc(var(--vh, 1vh));
+    height: 50vh !important;
     @apply util-scrollbar;
     @apply bg-background text-foreground font-SUIT-Regular;
     @apply bg-gradient-to-br from-[#383838] to-[#080808];
