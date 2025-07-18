@@ -37,13 +37,13 @@ const HomeAbout = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
           }
         }
       }}
-      className="h-screen absolute"
+      className="absolute"
     >
       {/* Wrapper */}
-      <div className="w-screen h-screen absolute">
+      <div className=" absolute">
         <div
           data-sec
-          className="h-screen flex flex-col  items-center  bg-zinc-900 z-11 w-screen  overflow-y-auto util-scrollbar"
+          className="util-h-screen flex flex-col  items-center  bg-zinc-900 z-11 w-screen  overflow-y-auto util-scrollbar"
         >
           <div className="layout-center grid  pt-40 md:pt-40 pb-30">
             <div className="">

@@ -127,11 +127,9 @@
 /* Base.. */
 @layer base {
   body {
-    min-height: 100svh;
-    max-height: 100lvh;
-    height: calc(var(--vh, 1vh) * 100);
+    height: calc(var(--vh, 1vh));
     @apply util-scrollbar;
-    @apply bg-background text-foreground font-SUIT-Regular min-h-screen;
+    @apply bg-background text-foreground font-SUIT-Regular;
     @apply bg-gradient-to-br from-[#383838] to-[#080808];
   }
 
@@ -430,4 +428,8 @@
   &::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
   }
+}
+
+@utility util-h-screen {
+  height: calc(var(--vh, 1vh));
 }

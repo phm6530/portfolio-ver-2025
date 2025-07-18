@@ -43,11 +43,11 @@ const RecentPosts = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
           }
         }
       }}
-      className="h-screen flex flex-col items-center justify-start bg-zinc-950  z-11 w-screen absolute "
+      className="util-h-screen flex flex-col items-center justify-start bg-zinc-950  z-11 w-screen absolute "
     >
       <div
         data-sec
-        className=" overflow-y-auto util-scrollbar  max-h-screen flex flex-col bg-cover items-center justify-start  w-screen "
+        className=" overflow-y-auto util-scrollbar  flex flex-col bg-cover items-center justify-start  w-screen "
       >
         <div className=" grid layout-center   pt-40 md:pt-60 pb-30 w-full ">
           <div className=" mb-5">
