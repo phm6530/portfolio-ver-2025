@@ -259,7 +259,7 @@ const Home = () => {
   );
 
   return (
-    <div ref={mainRef} className="util-h-screen relative">
+    <div ref={mainRef} className="util-h-screen relative overflow-hidden">
       {/* Hero - main */}
       <HeroSection ref={secRefs} />
 

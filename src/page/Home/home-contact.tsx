@@ -42,7 +42,7 @@ const HomeContact = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
           }
         }
       }}
-      className=" w-screen  z-11   absolute overflow-hidden"
+      className="util-h-screen w-screen  z-11   absolute overflow-hidden"
     >
       {/* bg */}
       <div
