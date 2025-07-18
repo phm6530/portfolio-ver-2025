@@ -135,13 +135,13 @@ const HeroSection = forwardRef((_, ref: React.ForwardedRef<HTMLElement[]>) => {
             }
           }
         }}
-        className="w-screen absolute "
+        className="w-screen util-h-screen absolute "
       >
         {/* overlay */}
         <div
           ref={overlayRef}
           className="absolute bottom-0  
-                 w-full h-1/2 bg-gradient-to-t from-black via-black/30 to-transparent z-2 pointer-events-none"
+                 w-screen h-1/2 bg-gradient-to-t from-black via-black/30 to-transparent z-1 pointer-events-none"
         />
         {/* 레퍼 분리 */}
         <div
