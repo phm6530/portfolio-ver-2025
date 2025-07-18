@@ -259,7 +259,7 @@ const Home = () => {
   );
 
   return (
-    <main ref={mainRef} className="min-h-screen relative">
+    <main ref={mainRef} className="util-h-screen relative">
       {/* Hero - main */}
       <HeroSection ref={secRefs} />
 
